@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },'接続詞','不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },'接続詞','不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3034,6 +3034,59 @@ const IM_LESSONS = [
     <p class="small muted">どちらも相手を誘う言い方で、答え方も同じ（Yes, let’s. ／ No, let’s not.）です。</p>
     ${beEx('<b>Shall I</b> take a picture?','（私が）写真をとりましょうか。')}${beEx('<b>May I</b> take a picture?','写真をとってもいいですか。')}
     <p class="small muted">Shall I 〜? は自分が申し出る言い方、May I 〜? は許可を求める言い方です。</p></section>` },
+];
+
+
+/* ===== 英語 文法 💧2 助動詞（ランダム問題） ===== */
+// [指示, 英文(□), 選択肢, 正解, ポイント]
+const RV2 = [
+  ['日本文に合うように：彼女は家にいるかもしれません。','She □ be at home.',['may','must','should'],'may','推量「〜かもしれない」→ may。'],
+  ['日本文に合うように：あなたはいつ出発するべきですか。','When □ you leave?',['should','must','may'],'should','「〜すべきだ」→ should。'],
+  ['日本文に合うように：あなたは先生の話をよく聞かなければなりません。','You □ listen to your teacher carefully.',['have to','may','can'],'have to','「〜しなければならない」→ have to（must）。'],
+  ['日本文に合うように：どうすれば駅へ行くことができますか。','How □ I get to the station?',['can','must','shall'],'can','「〜することができる」→ can。'],
+  ['日本文に合うように：彼は疲れているにちがいありません。','He □ be tired.',['must','may','should'],'must','強い推量「〜にちがいない」→ must。'],
+  ['日本文に合うように：（私たちは）次に何をしましょうか。','What □ we do next?',['shall','will','must'],'shall','Shall we 〜? は「（いっしょに）〜しましょうか」。'],
+  ['日本文に合うように：このシャツを試着してもいいですか。— いいですよ。','□ I try on this shirt? — Sure.',['May','Must','Shall'],'May','許可を求める → May I 〜?'],
+  ['日本文に合うように：ドアを閉めましょうか。— はい、お願いします。','□ I close the door? — Yes, please.',['Shall','May','Must'],'Shall','申し出「（私が）〜しましょうか」→ Shall I 〜?'],
+  ['主語を Ken にかえて：You don’t have to pay now.','Ken □ to pay now.',['doesn’t have','don’t have','hasn’t'],'doesn’t have','主語が三人称単数 → doesn’t have to。'],
+  ['主語を複数にかえて：The boy was able to read the book.','The boys □ able to read the book.',['were','was','are'],'were','複数の主語の過去 → were able to。'],
+  ['「〜すべきだ」という文に：We are kind to old people.','We □ kind to old people.',['should be','should are','should'],'should be','should ＋ 原形。are の原形は be。'],
+  ['「〜しましょうか」と誘う文に：We play tennis after school.','□ play tennis after school?',['Shall we','Will we','Must we'],'Shall we','誘う → Shall we 〜?'],
+  ['yesterday を加えて過去の文に：She must help her mother.','She □ help her mother yesterday.',['had to','must','has to'],'had to','must には過去形がないので had to。'],
+  ['未来の文に：I can’t swim well.','I □ able to swim well.',['won’t be','will can’t','am not'],'won’t be','will と can は並べられない → will not（won’t）be able to。'],
+  ['ほぼ同じ意味に：Don’t swim in this river.','You □ swim in this river.',['must not','don’t have to','should'],'must not','Don’t 〜.（〜してはいけない）＝ must not。'],
+  ['ほぼ同じ意味に：Will you wash the dishes?','□ the dishes, please.',['Wash','Washing','You wash'],'Wash','依頼 → 命令文 ＋ please。'],
+  ['ほぼ同じ意味に：Must I leave now?','□ I have to leave now?',['Do','Must','Am'],'Do','must ＝ have to。疑問文は Do I have to 〜?'],
+  ['ほぼ同じ意味に：Let’s begin the party.','□ begin the party?',['Shall we','Shall I','Will you'],'Shall we','Let’s 〜. ＝ Shall we 〜?'],
+  ['ほぼ同じ意味に：Tom can play the piano.','Tom □ able to play the piano.',['is','are','can'],'is','can ＝ be able to。Tom は単数 → is。'],
+  ['ほぼ同じ意味に：You don’t have to hurry.','You □ hurry.',['need not','must not','should not'],'need not','don’t have to ＝ need not（〜する必要はない）。'],
+  ['正しい答えを：Must I clean the room? — No, you □.',' No, you □.',['don’t have to','must not','aren’t'],'don’t have to','Must I 〜? の「いいえ」は don’t have to（しなくてもいい）。'],
+  ['正しい答えを：Shall we go shopping?','— Yes, □.',['let’s','we shall','please'],'let’s','Shall we 〜? には Yes, let’s.'],
+  ['正しい答えを：Can you help me?','— □, I can’t. I’m busy.',['Sorry','Sure','Yes'],'Sorry','断るときは Sorry, I can’t.'],
+  ['正しい答えを：May I use your pen?','— □. Here you are.',['Sure','No, you may','Yes, I may'],'Sure','許可するときは Sure. ／ Of course. ／ Yes, you may.'],
+  ['正しい形を','He can □ English well.',['speak','speaks','speaking'],'speak','助動詞の後ろは原形。'],
+  ['正しい形を','She □ to get up early every morning.',['has','have','must'],'has','三人称単数 → has to。'],
+  ['正しい形を','You □ be quiet in the library.',['must','must to','musts'],'must','must ＋ 原形。to は付けない。'],
+  ['正しい形を','□ you open the window? — All right.',['Will','Shall','May'],'Will','依頼「〜してくれませんか」→ Will you 〜?'],
+  ['正しい形を','Ken □ come to the party. He is sick.',['can’t','mustn’t','doesn’t have to'],'can’t','病気なので来ることができない → can’t。'],
+  ['正しい形を','You □ take an umbrella. It’s sunny today.',['don’t have to','must not','can’t'],'don’t have to','晴れているので、持っていく必要はない → don’t have to。'],
+];
+Object.assign(G, {
+  rv2Cloze(){ const x=pick(RV2);
+    return { prompt:x[0], expr:x[1].trim(), enExpr:true, en:true, words:true, choices:shuffle([...x[2]]), answer:x[3],
+      hint:'助動詞の意味と、後ろの動詞の形（原形）に注目しよう。', explain:x[4], viz:null }; },
+  rv2Mix(){ return Math.random()<.55 ? G.rv2Cloze() : G[pick(AX_ALL)](); },
+});
+const RV2_LESSONS = [
+  { id:'2-1', t:'ランダム問題', sub:'助動詞の総まとめ', test:true, plan:Array(20).fill('rv2Mix'), body:()=>`
+    <section class="panel"><h3>助動詞のポイント</h3>
+    <p>① 助動詞 ＋ 動詞の原形（主語が何でも同じ形）</p>
+    <p>② must に過去形はない → had to</p>
+    <p>③ will と can は並べられない → will be able to</p>
+    <p>④ must not（してはいけない）と don’t have to（しなくてもいい）のちがい</p></section>
+    <section class="panel"><h3>同じ意味の言いかえ</h3>
+    <div class="kwl"><div><b>can</b><span>＝ be able to</span></div><div><b>must</b><span>＝ have to</span></div><div><b>Don’t 〜.</b><span>＝ You must not 〜.</span></div><div><b>Let’s 〜.</b><span>＝ Shall we 〜?</span></div><div><b>Will you 〜?</b><span>＝ 〜, please.</span></div><div><b>don’t have to</b><span>＝ need not</span></div></div>
+    <p class="small muted">9章の問題と、日本文に合わせる・書きかえる・同じ意味にする問題から、毎回ちがう20問がランダムに出ます。</p></section>` },
 ];
 
 
@@ -11423,6 +11476,7 @@ const UNITS = {
   rv1:{ no:'💧1', title:'現在・過去・未来', subject:'英語', course:'jen', subj:1, lessons:RV1_LESSONS },
   aux:{ no:'文9', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:AX_LESSONS },
   imp:{ no:'文10', title:'命令文', subject:'英語', course:'jen', subj:1, lessons:IM_LESSONS },
+  rv2:{ no:'💧2', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:RV2_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
