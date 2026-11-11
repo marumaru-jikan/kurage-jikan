@@ -1751,6 +1751,9 @@ const QW_WH = [
   ['Which','season do you like?','I like winter.','あなたはどの季節が好きですか。'],
   ['Which','do you want, tea or coffee?','I want tea.','紅茶とコーヒーでは、どちらがほしいですか。'],
   ['Which','bike is yours?','The red one is mine.','どの自転車があなたのものですか。'],
+  ['What','is he writing?','He is writing a song.','彼は何を書いていますか。'],
+  ['What','did you eat for lunch?','I ate curry.','あなたは昼食に何を食べましたか。'],
+  ['Which','season did you like?','I liked summer.','あなたはどの季節が好きでしたか。'],
 ];
 const QW_WHO = [
   ['Who','is your English teacher?','Ms. Brown is.','あなたの英語の先生はだれですか。'],
@@ -1761,6 +1764,8 @@ const QW_WHO = [
   ['Whose','is this bag?','It is Ken’s.','このかばんはだれのものですか。'],
   ['Whose','notebooks are these?','They are mine.','これらはだれのノートですか。'],
   ['Whose','is that umbrella?','It is my mother’s.','あのかさはだれのものですか。'],
+  ['Who','sings this song?','We do.','だれがこの歌を歌いますか。'],
+  ['Who','made this cake?','My sister did.','だれがこのケーキを作りましたか。'],
 ];
 const QW_WWH = [
   ['When','is your birthday?','It is May 5.','あなたの誕生日はいつですか。'],
@@ -1773,6 +1778,10 @@ const QW_WWH = [
   ['Why','does she study English?','Because she likes English songs.','彼女はなぜ英語を勉強するのですか。'],
   ['How','do you come to school?','By bike.','あなたはどうやって学校に来ますか。'],
   ['How','is the weather?','It is sunny.','天気はどうですか。'],
+  ['When','did you visit Niigata?','I visited there two weeks ago.','あなたはいつ新潟を訪れましたか。'],
+  ['Where','did you go yesterday?','I went to the gym.','あなたは昨日どこへ行きましたか。'],
+  ['Why','does he stay up late?','To write a song.','彼はなぜ遅くまで起きているのですか。'],
+  ['How','did you go to Aomori?','By train.','あなたはどうやって青森へ行きましたか。'],
 ];
 const QW_HOW = [
   ['many','cats do you have?','I have two.','あなたはネコを何匹飼っていますか。'],
@@ -1786,6 +1795,7 @@ const QW_HOW = [
   ['tall','is that tower?','It is 300 meters tall.','あのタワーの高さはどのくらいですか。'],
   ['old','are you?','I am fourteen.','あなたは何歳ですか。'],
   ['old','is your sister?','She is ten.','あなたのお姉さんは何歳ですか。'],
+  ['many','songs did he write?','He wrote ten.','彼は曲をいくつ書きましたか。'],
 ];
 const QW_M = { What:'何', Which:'どれ・どちら', Who:'だれ', Whose:'だれの・だれのもの', When:'いつ', Where:'どこ', Why:'なぜ', How:'どのように・どう',
   many:'いくつ（数）', much:'いくら（値段）', long:'どのくらいの長さ・時間', far:'どのくらいの距離', tall:'どのくらいの高さ・身長', old:'何歳' };
@@ -1793,7 +1803,7 @@ const QW_ALL = ['What','Which','Who','Whose','When','Where','Why','How'];
 const qwQ = x => `${x[0]} ${x[1]}`;
 const qwHQ = x => `How ${x[0]} ${x[1]}`;
 const qwJp = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
-const qwWhy = x => x[0]==='Who' && !/^(is|are)\b/.test(x[1]) ? 'Who が主語の文です。Who は三人称単数現在あつかいなので、動詞に s が付きます。' : x[0]==='Why' ? (x[2].startsWith('To')?'目的を答えるときは To ～.':'理由を答えるときは Because ～.') : '';
+const qwWhy = x => x[0]==='Who' && !/^(is|are)\b/.test(x[1]) ? (/^\w+s /.test(x[1])?'Who が主語の文です。Who は三人称単数現在あつかいなので、動詞に s が付きます。':'Who が主語の文です。答えは「主語＋did.」の形。') : x[0]==='Why' ? (x[2].startsWith('To')?'目的を答えるときは To ～.':'理由を答えるときは Because ～.') : '';
 
 function qwBlankG(pool){ const x=pick(pool), ws=shuffle(QW_ALL.filter(w=>w!==x[0])).slice(0,3);
   return { prompt:'□ に入る疑問詞は？', expr:`□ ${x[1]}<br>— ${x[2]}`+qwJp(x[3]), enExpr:true, en:true, choices:shuffle([x[0],...ws]), answer:x[0],
@@ -1806,8 +1816,8 @@ Object.assign(G, {
   qwMean(){ const w=pick(QW_ALL), ws=shuffle(QW_ALL.filter(y=>y!==w)).slice(0,3).map(y=>QW_M[y]);
     return { prompt:'意味は？', expr:w.toLowerCase(), enExpr:true, words:true, choices:shuffle([QW_M[w],...ws]), answer:QW_M[w],
       hint:'wh で始まる語と how が疑問詞です。', explain:`${w.toLowerCase()} は「${QW_M[w]}」。`, viz:null }; },
-  qwOrd(){ const x=pick([...QW_WH,...QW_WWH].filter(y=>/^(do|does|is|are) /.test(y[1])&&!/,/.test(y[1]))), t=x[1].split(' '), aux=t[0], rest=t.slice(1).join(' ');
-    const sw={do:'does',does:'do',is:'are',are:'is'}[aux], ok=qwQ(x);
+  qwOrd(){ const x=pick([...QW_WH,...QW_WWH].filter(y=>/^(do|does|did|is|are) /.test(y[1])&&!/,/.test(y[1]))), t=x[1].split(' '), aux=t[0], rest=t.slice(1).join(' ');
+    const sw={do:'does',does:'do',did:'does',is:'are',are:'is'}[aux], ok=qwQ(x);
     const opts=[ok, `${x[0]} ${rest}`, `${capFirst(aux)} ${x[0].toLowerCase()} ${rest}`, `${x[0]} ${sw} ${rest}`];
     return { prompt:'正しい疑問文は？', expr:x[3], en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
       hint:'疑問詞を文の最初に置き、そのあとは疑問文の形（be動詞や do・does ＋主語）を続けます。', explain:`疑問詞 ${x[0]} ＋ 疑問文 ${capFirst(x[1])}<br>→ ${ok}`, viz:null }; },
@@ -1828,7 +1838,13 @@ const QW_LESSONS = [
     ${QW_ALL.map(w=>`<tr><td><b>${w.toLowerCase()}</b></td><td>${QW_M[w]}</td></tr>`).join('')}</table></section>
     <section class="panel"><h3>文の形</h3>${rule('疑問詞 ＋ 疑問文 ?')}
     ${beEx('Is this a pen?','これはペンですか。')}<p style="text-align:center">↓</p>${beEx('<b>What</b> is this?','これは何ですか。')}
-    ${beEx('Do you like music?','あなたは音楽が好きですか。')}<p style="text-align:center">↓</p>${beEx('<b>What</b> do you like?','あなたは何が好きですか。')}</section>
+    ${beEx('Do you like music?','あなたは音楽が好きですか。')}<p style="text-align:center">↓</p>${beEx('<b>What</b> do you like?','あなたは何が好きですか。')}
+    ${beEx('Did you go to the park?','あなたは公園へ行きましたか。')}<p style="text-align:center">↓</p>${beEx('<b>Where</b> did you go?','あなたはどこへ行きましたか。')}</section>
+    <section class="panel"><h3>基本文</h3>
+    ${beEx('<b>What</b> is he writing? — He is writing a song.','彼は何を書いていますか。— 曲を書いています。')}
+    ${beEx('<b>Who</b> sings this song? — We do.','だれがこの歌を歌いますか。— 私たちが歌います。')}
+    ${beEx('<b>Why</b> does he stay up late? — To write a song.','彼はなぜ遅くまで起きていますか。— 曲を書くためです。')}
+    ${beEx('<b>How many</b> songs did he write? — He wrote ten.','彼は曲をいくつ書きましたか。— 10曲書きました。')}</section>
     <section class="panel"><h3>答え方</h3>${rule('Yes・No ではなく、たずねられたことを具体的に答える')}
     ${beEx('What is this? — It is <b>a dictionary</b>.','これは何ですか。— 辞書です。')}</section>` },
   { id:'5-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
@@ -1850,15 +1866,16 @@ const QW_LESSONS = [
     ${qwRow('whose','だれのもの','Whose is this guitar?','It is <b>mine</b>.')}</table></section>
     <section class="panel"><h3>who が主語のとき</h3>${rule('who は 三人称単数現在 あつかい → 動詞に s')}
     ${beEx('<b>Who plays</b> the piano? — Yui <b>does</b>.','だれがピアノを弾きますか。— ユイです。')}
-    <p class="small muted">答えは「主語 ＋ does（do）.」の形にします。</p></section>
+    ${beEx('<b>Who made</b> this cake? — My sister <b>did</b>.','だれがこのケーキを作りましたか。— 姉です。')}
+    <p class="small muted">答えは「主語 ＋ does（do・did）.」の形にします。</p></section>
     <section class="panel"><h3>「〜のもの」</h3><table class="dtab"><tr><th>私の</th><th>私のもの</th></tr><tr><td>my</td><td><b>mine</b></td></tr><tr><td>your</td><td><b>yours</b></td></tr><tr><td>Ken’s</td><td><b>Ken’s</b></td></tr></table></section>` },
   { id:'5-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
     <section class="panel"><h3>when・where・why・how</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
-    ${qwRow('when','いつ','When is your birthday?','It is <b>May 5</b>.')}
-    ${qwRow('where','どこ','Where do you live?','I live <b>in Hiroshima</b>.')}
+    ${qwRow('when','いつ','When did you visit Niigata?','I visited there <b>two weeks ago</b>.')}
+    ${qwRow('where','どこ','Where did you go yesterday?','I went <b>to the gym</b>.')}
     ${qwRow('why','なぜ','Why do you like Nara?','<b>Because</b> I like old temples.')}
-    ${qwRow('how','どのように<br>どう','How do you come to school?','<b>By bike</b>.')}</table></section>
+    ${qwRow('how','どのように<br>どう','How did you go to Aomori?','<b>By train</b>.')}</table></section>
     <section class="panel"><h3>why の答え方</h3>${rule('理由 → Because 〜.<br>目的 → To 〜.')}
     ${beEx('Why do you like Nara? — <b>Because</b> I like old temples.','なぜ奈良が好きなのですか。— 古いお寺が好きだからです。')}
     ${beEx('Why do you go to Nara? — <b>To</b> see my friend.','なぜ奈良へ行くのですか。— 友だちに会うためです。')}</section>
