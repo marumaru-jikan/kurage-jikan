@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'疑問詞', ready:'qw' },'命令文','現在進行形','can','過去進行形','未来の表現','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'疑問詞', ready:'qw' },'命令文','can','未来の表現','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -1833,7 +1833,7 @@ Object.assign(G, {
 
 const qwRow = (w, m, q, a) => `<tr><td><b>${w}</b></td><td>${m}</td><td style="text-align:left" class="bex"><span class="en" style="font-size:1rem">${q}<br>— ${a}</span></td></tr>`;
 const QW_LESSONS = [
-  { id:'6-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
+  { id:'8-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
     <section class="panel"><h3>疑問詞</h3>${rule('「何」「だれ」「いつ」「どこ」などをたずねる語')}
     <table class="dtab"><tr><th>疑問詞</th><th>意味</th></tr>
     ${QW_ALL.map(w=>`<tr><td><b>${w.toLowerCase()}</b></td><td>${QW_M[w]}</td></tr>`).join('')}</table></section>
@@ -1848,7 +1848,7 @@ const QW_LESSONS = [
     ${beEx('<b>How many</b> songs did he write? — He wrote ten.','彼は曲をいくつ書きましたか。— 10曲書きました。')}</section>
     <section class="panel"><h3>答え方</h3>${rule('Yes・No ではなく、たずねられたことを具体的に答える')}
     ${beEx('What is this? — It is <b>a dictionary</b>.','これは何ですか。— 辞書です。')}</section>` },
-  { id:'6-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
+  { id:'8-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
     <section class="panel"><h3>what・which</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('what','何','What is this?','It is <b>a dictionary</b>.')}
@@ -1859,7 +1859,7 @@ const QW_LESSONS = [
     <section class="panel"><h3>which は「選ぶ」</h3>${beEx('<b>Which</b> do you want, tea or coffee?','紅茶とコーヒーでは、どちらがほしいですか。')}
     <p class="small muted">いくつかの中から選ぶときは which を使います。</p></section>
     <section class="panel"><h3>時刻・天気など</h3><p>時刻・日付・天気・寒暖を表す文では、<b>it</b> を主語にします。</p>${beEx('What time is it? — <b>It</b> is five.','何時ですか。— 5時です。')}</section>` },
-  { id:'6-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
+  { id:'8-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
     <section class="panel"><h3>who・whose</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('who','だれ','Who is your English teacher?','<b>Ms. Brown</b> is.')}
@@ -1870,7 +1870,7 @@ const QW_LESSONS = [
     ${beEx('<b>Who made</b> this cake? — My sister <b>did</b>.','だれがこのケーキを作りましたか。— 姉です。')}
     <p class="small muted">答えは「主語 ＋ does（do・did）.」の形にします。</p></section>
     <section class="panel"><h3>「〜のもの」</h3><table class="dtab"><tr><th>私の</th><th>私のもの</th></tr><tr><td>my</td><td><b>mine</b></td></tr><tr><td>your</td><td><b>yours</b></td></tr><tr><td>Ken’s</td><td><b>Ken’s</b></td></tr></table></section>` },
-  { id:'6-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
+  { id:'8-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
     <section class="panel"><h3>when・where・why・how</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('when','いつ','When did you visit Niigata?','I visited there <b>two weeks ago</b>.')}
@@ -1882,7 +1882,7 @@ const QW_LESSONS = [
     ${beEx('Why do you go to Nara? — <b>To</b> see my friend.','なぜ奈良へ行くのですか。— 友だちに会うためです。')}</section>
     <section class="panel"><h3>how のいろいろな意味</h3>
     ${beEx('<b>How</b> do you come to school? — By bike.','どうやって学校に来ますか。（方法）')}${beEx('<b>How</b> is the weather? — It is sunny.','天気はどうですか。（ようす）')}${beEx('<b>How</b> are you? — I am fine.','元気ですか。（調子）')}</section>` },
-  { id:'6-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
+  { id:'8-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
     <section class="panel"><h3>how＋語</h3>
     <table class="dtab"><tr><th>たずねること</th><th>how＋語</th></tr>
     <tr><td>数</td><td><b>how many</b>＋名詞の複数形（いくつの〜）</td></tr>
@@ -2272,6 +2272,169 @@ const PR_LESSONS = [
     ${beEx('We can help <b>you</b>.','私たちはあなたを手伝うことができます。')}${beEx('Do it <b>yourself</b>.','あなた自身でそれをやりなさい。')}${beEx('I like <b>him</b>.','私は彼が好きです。')}${beEx('<b>Their</b> house is big.','彼らの家は大きいです。')}${beEx('Is this your pen? — No, it’s <b>hers</b>.','これはあなたのペンですか。— いいえ、彼女のものです。')}${beEx('She made it <b>herself</b>.','彼女は自分でそれを作りました。')}</section>
     <section class="panel"><h3>不特定のものを指す代名詞</h3>
     ${beEx('<b>No one</b> went to the shop.','だれもその店に行きませんでした。')}${beEx('<b>Someone</b> is calling you.','だれかがあなたを呼んでいます。')}${beEx('I have <b>nothing</b> to do today.','私は今日することが何もありません。')}${beEx('<b>Everyone</b> likes her.','みんな彼女が好きです。')}</section>` },
+];
+
+
+/* ===== 英語 文法 6章 現在進行形・7章 過去進行形 ===== */
+// [主語, 原形, ing形, 残り, 日本語(〜しています), 答えの代名詞, 日本語(〜します), 過去形, 現在形]
+const PRG_S = [
+  ['He','play','playing','the guitar.','彼はギターを弾いています。','he','彼はギターを弾きます。','played','plays'],
+  ['I','make','making','lunch.','私は昼食を作っています。','','私は昼食を作ります。','made','make'],
+  ['She','have','having','pizza.','彼女はピザを食べています。','she','彼女はピザを食べます。','had','has'],
+  ['You','study','studying','English.','あなたは英語を勉強しています。','I','あなたは英語を勉強します。','studied','study'],
+  ['We','watch','watching','TV.','私たちはテレビを見ています。','','私たちはテレビを見ます。','watched','watch'],
+  ['They','swim','swimming','in the river.','彼らは川で泳いでいます。','they','彼らは川で泳ぎます。','swam','swim'],
+  ['Ken','run','running','in the park.','ケンは公園で走っています。','he','ケンは公園で走ります。','ran','runs'],
+  ['My mother','cook','cooking','dinner.','私の母は夕食を作っています。','she','私の母は夕食を作ります。','cooked','cooks'],
+  ['Yui','write','writing','a letter.','ユイは手紙を書いています。','she','ユイは手紙を書きます。','wrote','writes'],
+  ['The children','sing','singing','a song.','子どもたちは歌を歌っています。','they','子どもたちは歌を歌います。','sang','sing'],
+  ['My father','wash','washing','the car.','私の父は車を洗っています。','he','私の父は車を洗います。','washed','washes'],
+  ['The dog','sleep','sleeping','under the table.','その犬はテーブルの下で眠っています。','it','その犬はテーブルの下で眠ります。','slept','sleeps'],
+  ['Ken and Yui','sit','sitting','on the bench.','ケンとユイはベンチにすわっています。','they','ケンとユイはベンチにすわります。','sat','sit'],
+  ['I','use','using','the computer.','私はコンピューターを使っています。','','私はコンピューターを使います。','used','use'],
+  ['You','read','reading','a book.','あなたは本を読んでいます。','I','あなたは本を読みます。','read','read'],
+  ['She','dance','dancing','in her room.','彼女は部屋でおどっています。','she','彼女は部屋でおどります。','danced','dances'],
+];
+const PRG_ING = [['play','playing'],['study','studying'],['read','reading'],['watch','watching'],['eat','eating'],['sing','singing'],['go','going'],['cook','cooking'],['listen','listening'],['walk','walking'],['wash','washing'],['sleep','sleeping'],['talk','talking'],['help','helping'],['drink','drinking'],
+  ['make','making'],['write','writing'],['use','using'],['dance','dancing'],['come','coming'],['have','having'],['take','taking'],['ride','riding'],['live','living'],['close','closing'],
+  ['swim','swimming'],['run','running'],['sit','sitting'],['get','getting'],['put','putting'],['stop','stopping'],['cut','cutting'],['begin','beginning'],['shop','shopping']];
+const pgPl = x => /^(You|We|They|The children|Ken and Yui)$/.test(x[0]);
+const pgBeOf = (x,t) => t==='p' ? (x[0]==='I'?'am':pgPl(x)?'are':'is') : (pgPl(x)?'were':'was');
+const pgJp = (x,t) => t==='p' ? x[4] : x[4].replace(/います。$/,'いました。');
+const pgJpS = (x,t) => t==='p' ? x[6] : x[6].replace(/ます。$/,'ました。');
+const pgJpNeg = (x,t) => t==='p' ? x[4].replace(/います。$/,'いません。') : x[4].replace(/います。$/,'いませんでした。');
+const pgSub = s => /^(I|Ken|Yui)/.test(s) ? s : lowFirst(s);
+const pgJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const pgWhen = t => t==='p' ? ' now' : ' then';
+const pgR = (x,t) => x[3].replace(/\.$/, pgWhen(t)+'.');
+const pgIngRule = b => /(swim|run|sit|get|put|stop|cut|begin|shop)$/.test(b) ? 'パターン③ 語尾が〈短母音＋子音字〉→ 最後の1字を重ねて ing。' : /e$/.test(b) ? 'パターン② 語尾が e → e をとって ing。' : 'パターン① そのまま ing。';
+const pgBeWhy = (x,t) => t==='p' ? (x[0]==='I'?'主語が I なので am。':pgPl(x)?`主語の ${x[0]} は you か2人以上なので are。`:`主語の ${x[0]} は1人（1つ）なので is。`) : (pgPl(x)?`主語の ${x[0]} は you か2人以上なので were。`:`主語の ${x[0]} は I か1人（1つ）なので was。`);
+
+// 時間のグラフ
+function tlSVG(kind){
+  const now=210, then=95, y=66;
+  let g=`<line x1="14" y1="${y}" x2="306" y2="${y}" stroke="var(--muted)" stroke-width="2"/><path d="M306 ${y}l-8 -5v10z" fill="var(--muted)"/>
+  <text x="22" y="${y+20}" font-size="12" fill="var(--muted)">過去</text><text x="290" y="${y+20}" font-size="12" fill="var(--muted)" text-anchor="end">未来</text>
+  <line x1="${now}" y1="${y-26}" x2="${now}" y2="${y+6}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="${now}" y="${y+20}" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">今</text>`;
+  if(kind==='pres'){ for(const x of [44,86,128,170,212,254]) g+=`<circle cx="${x}" cy="${y-14}" r="6" fill="var(--teal)"/>`; g+=`<text x="160" y="22" font-size="13" text-anchor="middle" fill="var(--teal)" font-weight="700">plays：いつも（くり返し）〜する</text>`; }
+  if(kind==='prog'){ g+=`<rect x="${now-58}" y="${y-22}" width="116" height="16" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="${now}" y="22" font-size="13" text-anchor="middle" fill="var(--accent)" font-weight="700">is playing：今〜しているところ</text>`; }
+  if(kind==='past'||kind==='pprog'){ g+=`<line x1="${then}" y1="${y-26}" x2="${then}" y2="${y+6}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="${then}" y="${y+20}" font-size="12" fill="var(--ink)" text-anchor="middle">その時</text>`; }
+  if(kind==='past'){ g+=`<circle cx="${then}" cy="${y-14}" r="7" fill="var(--teal)"/><text x="${then}" y="22" font-size="13" text-anchor="middle" fill="var(--teal)" font-weight="700">played：〜した</text>`; }
+  if(kind==='pprog'){ g+=`<rect x="${then-58}" y="${y-22}" width="116" height="16" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="${then+20}" y="22" font-size="13" text-anchor="middle" fill="var(--accent)" font-weight="700">was playing：その時〜していた</text>`; }
+  return `<svg viewBox="0 0 320 96" style="width:100%;max-width:360px;display:block;margin:4px auto" role="img" aria-label="時間のグラフ">${g}</svg>`;
+}
+
+function pgGen(t){ return {
+  be(){ const x=pick(PRG_S), b=pgBeOf(x,t), ch=t==='p'?['am','is','are','was']:['was','were','is','are'];
+    return { prompt:'□ に入る be動詞は？', expr:`${x[0]} □ ${x[2]} ${pgR(x,t)}`+pgJ(pgJp(x,t)), enExpr:true, en:true, choices:ch, answer:b,
+      hint:t==='p'?'今していること → am・is・are ＋ ing。':'過去にしていたこと → was・were ＋ ing。', explain:`${pgBeWhy(x,t)}<br>${x[0]} ${b} ${x[2]} ${pgR(x,t)}`, viz:null }; },
+  kind(){ const x=pick(PRG_S), prog=Math.random()<.5, en=prog?`${x[0]} ${pgBeOf(x,t)} ${x[2]} ${x[3]}`:`${x[0]} ${t==='p'?x[8]:x[7]} ${x[3]}`, a=prog?pgJp(x,t):pgJpS(x,t);
+    return { prompt:'日本語の意味は？', expr:en, enExpr:true, words:true, choices:shuffle([pgJp(x,t),pgJpS(x,t)]), answer:a,
+      hint:`be動詞＋ing は「${t==='p'?'（今）〜している':'（その時）〜していた'}」。`, explain:prog?`be動詞＋ing の進行形なので「${a}」。`:`${t==='p'?'現在形':'過去形'}なので「${a}」。`, viz:null }; },
+  ej(){ const x=pick(PRG_S), en=`${x[0]} ${pgBeOf(x,t)} ${x[2]} ${x[3]}`, ws=shuffle(PRG_S.filter(y=>y!==x)).slice(0,2).map(y=>pgJp(y,t));
+    return { prompt:'日本語の意味は？', expr:en, enExpr:true, words:true, choices:shuffle([pgJp(x,t),pgJpS(x,t),...ws]), answer:pgJp(x,t),
+      hint:'進行形は「〜している（いた）」。', explain:`${en}<br>→ ${pgJp(x,t)}`, viz:null }; },
+  fill(){ const x=pick(PRG_S), b=pgBeOf(x,t), ok=`${b} ${x[2]}`, ob=t==='p'?(pgPl(x)?'were':'was'):(x[0]==='I'?'am':pgPl(x)?'are':'is');
+    return { prompt:'□ に入るのは？', expr:`${x[0]} □ ${pgR(x,t)}<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">（${x[1]}）${pgJp(x,t)}</span>`, enExpr:true, en:true, words:true, choices:shuffle([...new Set([ok, `${b} ${x[1]}`, x[2], `${ob} ${x[2]}`])]), answer:ok,
+      hint:`${t==='p'?'am・is・are':'was・were'} ＋ 動詞の ing 形。`, explain:`${pgBeWhy(x,t)} 動詞は ing 形の ${x[2]}。`, viz:null }; },
+  ing(){ const v=pick(PRG_ING), b=v[0];
+    const cand=[v[1], b+'ing', b.replace(/e$/,'')+'ing', b+b.slice(-1)+'ing', b.replace(/e$/,'')+'eing'];
+    const ch=shuffle([...new Set(cand)].filter(o=>o!==v[1])).slice(0,3);
+    return { prompt:'ing 形は？', expr:b, enExpr:true, en:true, choices:shuffle([v[1],...ch]), answer:v[1],
+      hint:'ほとんどはそのまま ing。e で終わる語は e をとる。swim・run などは最後の1字を重ねる。', explain:`${pgIngRule(b)}<br>${b} → ${v[1]}`, viz:null }; },
+  negc(){ const x=pick(PRG_S), b=pgBeOf(x,t);
+    const ok = b==='am' ? 'am not' : b+"n't";
+    const ch = t==='p' ? (b==='am'?['am not',"amn't","isn't","don't"]:["isn't","aren't","doesn't","don't"]) : ["wasn't","weren't","didn't","isn't"];
+    return { prompt:'否定文にしよう。□ に入るのは？', expr:`${x[0]} □ ${x[2]} ${pgR(x,t)}`+pgJ(pgJpNeg(x,t)), enExpr:true, en:true, choices:ch, answer:ok,
+      hint:'進行形の否定文は be動詞の後ろに not。do・does・did は使いません。', explain:b==='am'?'I am not は I’m not と短くできます。':`${b} not を短くして ${ok}。`, viz:null }; },
+  neg(){ const x=pick(PRG_S), b=pgBeOf(x,t), ok=`${x[0]} ${b} not ${x[2]} ${x[3]}`, d=t==='p'?(x[8]!==x[1]?"doesn't":"don't"):"didn't";
+    const opts=[ok, `${x[0]} ${d} ${x[2]} ${x[3]}`, `${x[0]} not ${b} ${x[2]} ${x[3]}`, `${x[0]} ${b} not ${x[1]} ${x[3]}`];
+    return { prompt:'正しい否定文は？', expr:pgJpNeg(x,t), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
+      hint:'be動詞 ＋ not ＋ 動詞の ing 形。', explain:`${b} の後ろに not。動詞は ing 形のまま。<br>${ok}`, viz:null }; },
+  q(){ const x=pick(PRG_S.filter(y=>y[5])), b=pgBeOf(x,t), s=pgSub(x[0]), r=x[3].replace(/\.$/,'?'), ok=`${capFirst(b)} ${s} ${x[2]} ${r}`;
+    const d=t==='p'?(x[8]!==x[1]?'Does':'Do'):'Did', ob={am:'Is',is:'Are',are:'Is',was:'Were',were:'Was'}[b];
+    const opts=[ok, `${d} ${s} ${x[2]} ${r}`, `${capFirst(b)} ${s} ${x[1]} ${r}`, `${ob} ${s} ${x[2]} ${r}`];
+    return { prompt:'正しい疑問文は？', expr:pgJp(x,t).replace(/。$/,'か。'), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
+      hint:'be動詞を主語の前に出して、動詞は ing 形のまま。', explain:`${b} を主語の前に出して ${ok}`, viz:null }; },
+  ans(){ const x=pick(PRG_S.filter(y=>y[5])), yes=Math.random()<.5, p=x[5], b0=pgBeOf(x,t), s=pgSub(x[0]);
+    const q=`${capFirst(b0)} ${s} ${x[2]} ${x[3].replace(/\.$/,'?')}`;
+    const b = p==='I' ? (t==='p'?'am':'was') : b0;
+    const ok = yes ? `Yes, ${p} ${b}.` : (b==='am' ? "No, I’m not." : `No, ${p} ${b}n't.`);
+    const d=t==='p'?(p==='I'||p==='they'?'do':'does'):'did', wb={am:'is',is:'are',are:'is',was:'were',were:'was'}[b];
+    const opts = yes ? [ok, `Yes, ${p} ${d}.`, `Yes, ${p} ${wb}.`, `Yes, ${p} ${x[2]}.`] : [ok, `No, ${p} ${d==='do'?"don't":d==='does'?"doesn't":"didn't"}.`, `No, ${p} not.`, `No, ${p} ${wb}n't.`];
+    return { prompt:`${yes?'「はい」':'「いいえ」'}で答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
+      hint:'be動詞でたずねられたら、be動詞で答えます。', explain:`${x[0]==='You'?'you でたずねられたら I で答えます。':''}答えは ${ok}`, viz:null }; },
+}; }
+const PRG_P = pgGen('p'), PRG_X = pgGen('x');
+Object.assign(G, {
+  pgBe(){ return PRG_P.be(); }, pgKind(){ return PRG_P.kind(); }, pgEJ(){ return PRG_P.ej(); }, pgFill(){ return PRG_P.fill(); }, pgIng(){ return PRG_P.ing(); },
+  pgNegC(){ return PRG_P.negc(); }, pgNeg(){ return PRG_P.neg(); }, pgQ(){ return PRG_P.q(); }, pgAns(){ return PRG_P.ans(); },
+  ppBe(){ return PRG_X.be(); }, ppKind(){ return PRG_X.kind(); }, ppEJ(){ return PRG_X.ej(); }, ppFill(){ return PRG_X.fill(); },
+  ppNegC(){ return PRG_X.negc(); }, ppNeg(){ return PRG_X.neg(); }, ppQ(){ return PRG_X.q(); }, ppAns(){ return PRG_X.ans(); },
+});
+
+const PRG_LESSONS = [
+  { id:'6-1', t:'現在進行形とは', sub:'時間のグラフで考えよう', plan:['pgKind','pgKind','pgBe','pgBe','pgBe'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('He <b>is playing</b> the guitar.','彼はギターを弾いているところです。')}${beEx('He <b>is not</b>（isn’t）<b>playing</b> the piano.','彼はピアノを弾いているところではありません。')}${beEx('<b>Is</b> he <b>playing</b> the guitar now? — Yes, he <b>is</b>.','彼は今、ギターを弾いているところですか。— はい、弾いています。')}</section>
+    <section class="panel"><h3>現在進行形</h3>${rule('am・is・are ＋ 動詞の ing 形<br>→「（今）〜している」')}
+    <p><b>現在形</b>：ふだんのこと・くり返すこと</p>${tlSVG('pres')}${beEx('He <b>plays</b> the guitar.','彼はギターを弾きます。')}
+    <p><b>現在進行形</b>：今この時に、している最中のこと</p>${tlSVG('prog')}${beEx('He <b>is playing</b> the guitar now.','彼は今、ギターを弾いています。')}</section>
+    <section class="panel"><h3>be動詞は主語で決まる</h3>
+    <table class="dtab"><tr><th>主語</th><th>形</th></tr><tr><td>I</td><td><b>am</b> playing</td></tr><tr><td>he・she・it・1人（1つ）</td><td><b>is</b> playing</td></tr><tr><td>you・we・they・2人以上</td><td><b>are</b> playing</td></tr></table>
+    <p class="small muted">be は主語で変わりますが、〜ing 形はいつも同じ形です。</p></section>
+    <section class="panel"><h3>進行形にしない動詞</h3><p>like（好きだ）・know（知っている）・have（持っている）など「状態」を表す動詞は、ふつう進行形にしません。</p>
+    <p class="small"><b style="color:var(--bad)">×</b> I am liking music.　<b style="color:var(--good)">〇</b> I like music.</p>
+    <p class="small muted">have が「食べる」の意味なら進行形にできます：She is having pizza.</p></section>` },
+  { id:'6-2', t:'ing の付け方', sub:'ing・e をとる・重ねる', plan:['pgIng','pgIng','pgIng','pgIng','pgIng'], body:()=>`
+    <section class="panel"><h3>ing の付け方</h3>
+    <table class="dtab"><tr><th></th><th>付け方</th><th>例</th></tr>
+    <tr><td>パターン①</td><td>原形＋<b>ing</b></td><td>play → play<b>ing</b></td></tr>
+    <tr><td>パターン②<br><span class="small">語尾が e</span></td><td>e をとって <b>ing</b></td><td>make → mak<b>ing</b></td></tr>
+    <tr><td>パターン③<br><span class="small">短母音＋子音字</span></td><td>最後の1字を重ねて <b>ing</b></td><td>swim → swim<b>ming</b></td></tr></table>
+    <p class="small muted">ほとんどの動詞はパターン①です。パターン③になる動詞は、下の一覧で確認しておきましょう。</p></section>
+    <section class="panel"><h3>パターン③の動詞</h3>
+    <div class="kwl">${PRG_ING.filter(v=>/(swim|run|sit|get|put|stop|cut|begin|shop)$/.test(v[0])).map(v=>`<div><b>${v[0]}</b><span>→ <b>${v[1]}</b></span></div>`).join('')}</div></section>
+    <section class="panel"><h3>よく使う動詞の ing 形</h3>
+    <table class="dtab"><tr><th>原形</th><th>ing 形</th></tr>${PRG_ING.filter(v=>!/(swim|run|sit|get|put|stop|cut|begin|shop)$/.test(v[0])).map(v=>`<tr><td>${v[0]}</td><td><b>${v[1]}</b></td></tr>`).join('')}</table></section>` },
+  { id:'6-3', t:'例文', sub:'現在進行形の文を読もう', plan:['pgEJ','pgEJ','pgEJ','pgFill','pgFill'], body:()=>`
+    <section class="panel"><h3>例文</h3>
+    ${PRG_S.slice(0,10).map(x=>beEx(`${x[0]} <b>${pgBeOf(x,'p')} ${x[2]}</b> ${x[3]}`, x[4])).join('')}</section>
+    <section class="panel"><h3>現在形とくらべよう</h3>
+    ${beEx('I always <b>make</b> lunch.','私はいつも昼食を作っています。（ふだんのこと）')}${beEx('I <b>am making</b> lunch now.','私は今、昼食を作っています。（今していること）')}
+    <p class="small muted">日本語ではどちらも「〜しています」になることがあります。ふだんのことか、今していることかで見分けよう。now（今）や Look!（見て）は進行形の目印です。</p></section>` },
+  { id:'6-4', t:'否定文', sub:'be動詞 ＋ not ＋ ing', plan:['pgNegC','pgNegC','pgNegC','pgNeg','pgNeg'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('am・is・are ＋ not ＋ 動詞の ing 形<br>→「〜していません」')}
+    ${beEx('He is playing the guitar.','彼はギターを弾いています。')}<p style="text-align:center">↓</p>${beEx('He <b>is not</b> playing the guitar.','彼はギターを弾いていません。')}
+    <p class="small muted">be動詞の否定文と同じ作り方です。isn’t・aren’t・I’m not と短くできます。</p></section>
+    <section class="panel"><h3>よくある間違い</h3><p><b style="color:var(--bad)">×</b> He doesn’t playing the guitar.<br><b style="color:var(--bad)">×</b> He is not play the guitar.<br><b style="color:var(--good)">〇</b> He <b>isn’t playing</b> the guitar.</p></section>` },
+  { id:'6-5', t:'疑問文', sub:'be動詞 ＋ 主語 ＋ ing ?', plan:['pgQ','pgQ','pgAns','pgAns','pgAns'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('am・is・are を主語の前に出す<br>→「〜していますか」')}
+    ${beEx('<b>Is</b> he playing the guitar?','彼はギターを弾いていますか。')}${beEx('— Yes, he <b>is</b>. ／ No, he <b>isn’t</b>.','はい、弾いています。／いいえ、弾いていません。')}
+    <p class="small muted">be動詞の疑問文と同じ作り方です。答えも be動詞を使います。</p></section>
+    <section class="panel"><h3>疑問詞を使って</h3>${beEx('<b>What are</b> you <b>doing</b>? — I’m reading a book.','あなたは何をしていますか。— 本を読んでいます。')}${beEx('<b>Where is</b> Ken <b>running</b>? — He is running in the park.','ケンはどこで走っていますか。— 公園で走っています。')}</section>` },
+];
+const PP_LESSONS = [
+  { id:'7-1', t:'過去進行形とは', sub:'時間のグラフで考えよう', plan:['ppKind','ppKind','ppBe','ppBe','ppBe'], body:()=>`
+    <section class="panel"><h3>過去進行形</h3>${rule('was・were ＋ 動詞の ing 形<br>→「（その時）〜していた」')}
+    <p><b>過去形</b>：過去に1回したこと</p>${tlSVG('past')}${beEx('He <b>played</b> the guitar.','彼はギターを弾きました。')}
+    <p><b>過去進行形</b>：過去のある時に、している最中だったこと</p>${tlSVG('pprog')}${beEx('He <b>was playing</b> the guitar then.','彼はその時、ギターを弾いていました。')}</section>
+    <section class="panel"><h3>現在進行形とくらべよう</h3>
+    <table class="dtab"><tr><th></th><th>現在進行形</th><th>過去進行形</th></tr><tr><td>I</td><td>am playing</td><td><b>was</b> playing</td></tr><tr><td>he・she・it</td><td>is playing</td><td><b>was</b> playing</td></tr><tr><td>you・we・they</td><td>are playing</td><td><b>were</b> playing</td></tr></table>
+    <p class="small muted">then（その時）、at seven yesterday（昨日の7時に）、when I called you（私が電話した時）などといっしょによく使います。</p></section>
+    <section class="panel"><h3>例</h3>${beEx('She <b>was having</b> pizza.','彼女はピザを食べているところでした。')}${beEx('She <b>had</b> pizza.','彼女はピザを食べました。')}</section>` },
+  { id:'7-2', t:'例文', sub:'過去進行形の文を読もう', plan:['ppEJ','ppEJ','ppEJ','ppFill','ppFill'], body:()=>`
+    <section class="panel"><h3>例文</h3>
+    ${PRG_S.slice(0,10).map(x=>beEx(`${x[0]} <b>${pgBeOf(x,'x')} ${x[2]}</b> ${x[3]}`, pgJp(x,'x'))).join('')}</section>
+    <section class="panel"><h3>時を表す言葉といっしょに</h3>${beEx('I <b>was watching</b> TV at seven yesterday.','私は昨日の7時にテレビを見ていました。')}${beEx('They <b>were swimming</b> in the river then.','彼らはその時、川で泳いでいました。')}</section>` },
+  { id:'7-3', t:'否定文', sub:'was・were ＋ not ＋ ing', plan:['ppNegC','ppNegC','ppNegC','ppNeg','ppNeg'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('was・were ＋ not ＋ 動詞の ing 形<br>→「〜していませんでした」')}
+    ${beEx('He was playing the guitar.','彼はギターを弾いていました。')}<p style="text-align:center">↓</p>${beEx('He <b>was not</b> playing the guitar.','彼はギターを弾いていませんでした。')}
+    <p class="small muted">wasn’t・weren’t と短くできます。didn’t は使いません。</p></section>
+    <section class="panel"><h3>よくある間違い</h3><p><b style="color:var(--bad)">×</b> He didn’t playing the guitar.<br><b style="color:var(--bad)">×</b> He wasn’t play the guitar.<br><b style="color:var(--good)">〇</b> He <b>wasn’t playing</b> the guitar.</p></section>` },
+  { id:'7-4', t:'疑問文', sub:'was・were ＋ 主語 ＋ ing ?', plan:['ppQ','ppQ','ppAns','ppAns','ppAns'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('was・were を主語の前に出す<br>→「〜していましたか」')}
+    ${beEx('<b>Was</b> he playing the guitar?','彼はギターを弾いていましたか。')}${beEx('— Yes, he <b>was</b>. ／ No, he <b>wasn’t</b>.','はい、弾いていました。／いいえ、弾いていませんでした。')}</section>
+    <section class="panel"><h3>疑問詞を使って</h3>${beEx('<b>What were</b> you <b>doing</b> then? — I was studying English.','あなたはその時何をしていましたか。— 英語を勉強していました。')}</section>` },
 ];
 
 
@@ -10651,10 +10814,12 @@ const UNITS = {
   irr:{ drill:'irr', no:'動1', title:'動詞の不規則変化', subject:'英語', course:'jen', subj:0, lessons:IRR_LESSONS },
   be:{ no:'文1', title:'be動詞', subject:'英語', course:'jen', subj:1, lessons:BE_LESSONS },
   gv:{ no:'文2', title:'一般動詞', subject:'英語', course:'jen', subj:1, lessons:GV_LESSONS },
-  qw:{ no:'文6', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
+  qw:{ no:'文8', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
   past:{ no:'文5', title:'過去形', subject:'英語', course:'jen', subj:1, lessons:PT_LESSONS },
   pl:{ no:'文3', title:'名詞の複数形', subject:'英語', course:'jen', subj:1, lessons:PL_LESSONS },
   pr:{ no:'文4', title:'代名詞', subject:'英語', course:'jen', subj:1, lessons:PR_LESSONS },
+  prg:{ no:'文6', title:'現在進行形', subject:'英語', course:'jen', subj:1, lessons:PRG_LESSONS },
+  pprg:{ no:'文7', title:'過去進行形', subject:'英語', course:'jen', subj:1, lessons:PP_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
