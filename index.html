@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },'接続詞','不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },'不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3087,6 +3087,125 @@ const RV2_LESSONS = [
     <section class="panel"><h3>同じ意味の言いかえ</h3>
     <div class="kwl"><div><b>can</b><span>＝ be able to</span></div><div><b>must</b><span>＝ have to</span></div><div><b>Don’t 〜.</b><span>＝ You must not 〜.</span></div><div><b>Let’s 〜.</b><span>＝ Shall we 〜?</span></div><div><b>Will you 〜?</b><span>＝ 〜, please.</span></div><div><b>don’t have to</b><span>＝ need not</span></div></div>
     <p class="small muted">9章の問題と、日本文に合わせる・書きかえる・同じ意味にする問題から、毎回ちがう20問がランダムに出ます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 12章 接続詞 ===== */
+const CJ_AB = [
+  ['Meg □ Nancy go to bed early.','メグとナンシーは早く寝ます。','and'],
+  ['John stays up late, □ Meg goes to bed early.','ジョンは遅くまで起きていますが、メグは早く寝ます。','but'],
+  ['Do you go there by bike □ by bus?','あなたはそこへ自転車で行きますか、それともバスで行きますか。','or'],
+  ['John writes a song, □ he stays up late.','ジョンは曲を書くので、遅くまで起きています。','so'],
+  ['I like dogs □ cats.','私は犬とネコが好きです。','and'],
+  ['This bag is nice, □ it is expensive.','このかばんはすてきですが、値段が高いです。','but'],
+  ['Which do you want, tea □ coffee?','紅茶とコーヒーではどちらがほしいですか。','or'],
+  ['It was raining, □ we stayed home.','雨が降っていたので、私たちは家にいました。','so'],
+  ['Ken can swim, □ he can’t ski.','ケンは泳げますが、スキーはできません。','but'],
+  ['I was tired, □ I went to bed early.','私は疲れていたので、早く寝ました。','so'],
+  ['Yui opened the door □ went out.','ユイはドアを開けて、外に出ました。','and'],
+  ['Is this pen yours □ Ken’s?','このペンはあなたのものですか、それともケンのものですか。','or'],
+];
+const CJ_WI = [
+  ['□ it is sunny tomorrow, John will go for a walk.','もし明日晴れたら、ジョンは散歩に行くでしょう。','if'],
+  ['John stays up late □ he writes a song.','ジョンは曲を書くので、遅くまで起きています。','because'],
+  ['□ I came home, my mother was cooking.','私が帰宅したとき、母は料理をしていました。','when'],
+  ['I was sleeping □ you called me.','あなたが電話したとき、私は眠っていました。','when'],
+  ['□ you are hungry, eat this bread.','もしおなかがすいているなら、このパンを食べなさい。','if'],
+  ['I didn’t go out □ it was cold.','寒かったので、私は外出しませんでした。','because'],
+  ['Please call me □ you have time.','もし時間があれば、電話してください。','if'],
+  ['She was happy □ she got a letter.','手紙を受け取ったので、彼女はうれしかった。','because'],
+  ['Wash your hands □ you eat lunch.','昼食を食べる前に手を洗いなさい。','before'],
+  ['I watched TV □ I finished my homework.','私は宿題を終えたあとで、テレビを見ました。','after'],
+  ['Ken lived in Osaka □ he was a child.','ケンは子どものとき、大阪に住んでいました。','when'],
+  ['My father read a book □ I was studying.','私が勉強している間、父は本を読んでいました。','while'],
+];
+const CJ_TN = [
+  ['If it □ sunny tomorrow, we will play tennis.',['is','will be','was'],'is','明日晴れたら、テニスをしましょう。'],
+  ['When he □ home, I will call you.',['comes','will come','came'],'comes','彼が帰ってきたら、あなたに電話します。'],
+  ['If you □ hard, you will pass the test.',['study','will study','studied'],'study','一生けんめい勉強すれば、テストに合格するでしょう。'],
+  ['She’ll be happy if Mike □ her.',['calls','will call','called'],'calls','マイクが彼女に電話をしたら、彼女はうれしいでしょう。'],
+  ['If it □ tomorrow, I will stay home.',['rains','will rain','rained'],'rains','明日雨が降ったら、私は家にいます。'],
+  ['Let’s start when everyone □ here.',['is','will be','was'],'is','みんながここに来たら始めましょう。'],
+];
+const CJ_TH = [
+  ['I □ that John stays up late.','私はジョンが遅くまで起きているということを知っています。','know',0],
+  ['I □ that this book is interesting.','私はこの本はおもしろいと思います。','think',0],
+  ['We □ that it will be sunny tomorrow.','私たちは明日晴れることを望んでいます。','hope',0],
+  ['Ken □ that he is busy.','ケンは忙しいと言っています。','says',1],
+  ['My mother □ that I am tired.','母は私が疲れていることを知っています。','knows',1],
+  ['Do you □ that she is from Canada?','あなたは彼女がカナダ出身だということを知っていますか。','know',0],
+  ['I □ that he is a good teacher.','私は彼はよい先生だと思います。','think',0],
+  ['Yui □ that she wants a cat.','ユイはネコがほしいと言っています。','says',1],
+  ['I □ you can come to the party.','あなたがパーティーに来られることを望みます。','hope',0],
+  ['They □ that the story is true.','彼らはその話は本当だと思っています。','think',0],
+];
+const CJ_M = { and:'〜と・そして', but:'しかし・〜だが', or:'〜か・それとも', so:'それで・だから', when:'〜のとき・〜すると', if:'もし〜ならば', because:'〜なので・なぜなら', that:'〜ということ', before:'〜する前に', after:'〜したあとで', while:'〜する間に' };
+const cjJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const cjFill = (s, w) => s.replace('□', /^□/.test(s) ? capFirst(w) : w);
+Object.assign(G, {
+  cjMean(){ const w=pick(Object.keys(CJ_M)), ws=shuffle(Object.keys(CJ_M).filter(k=>k!==w)).slice(0,3).map(k=>CJ_M[k]);
+    return { prompt:'意味は？', expr:w, enExpr:true, words:true, choices:shuffle([CJ_M[w],...ws]), answer:CJ_M[w], hint:'接続詞は、語と語・文と文をつなぐ語です。', explain:`${w}：${CJ_M[w]}`, viz:null }; },
+  cjFind(){ const x=pick([...CJ_AB,...CJ_WI]), s=cjFill(x[0],x[2]), ok=/^□/.test(x[0])?capFirst(x[2]):x[2];
+    const words=[...new Set(s.replace(/[.,?]/g,'').split(' ').filter(w=>w!==ok&&w.length>1&&!CJ_M[w.toLowerCase()]))];
+    return { prompt:'接続詞はどれ？', expr:s+cjJ(x[1]), enExpr:true, en:true, choices:shuffle([ok,...shuffle(words).slice(0,3)]), answer:ok,
+      hint:'語と語、文と文をつないでいる語を探そう。', explain:`${ok}（${CJ_M[x[2]]}）が接続詞です。`, viz:null }; },
+  cjAB(){ const x=pick(CJ_AB);
+    return { prompt:'□ に入る接続詞は？', expr:x[0]+cjJ(x[1]), enExpr:true, en:true, choices:['and','but','or','so'], answer:x[2],
+      hint:'and〜と・そして ／ but しかし ／ or それとも ／ so だから', explain:`「${CJ_M[x[2]]}」の意味なので ${x[2]}。`, viz:null }; },
+  cjWI(){ const x=pick(CJ_WI), cap=/^□/.test(x[0]), base=['when','if','because'], set=base.includes(x[2])?[...base, pick(['before','after','while'])]:[...base, x[2]], ch=set.map(w=>cap?capFirst(w):w);
+    return { prompt:'□ に入る接続詞は？', expr:x[0]+cjJ(x[1]), enExpr:true, en:true, choices:ch, answer:cap?capFirst(x[2]):x[2],
+      hint:'時 → when、条件 → if、理由 → because。', explain:`「${CJ_M[x[2]]}」の意味なので ${x[2]}。${cap?'接続詞のかたまりを前半に置くときは、コンマ（,）で区切ります。':''}`, viz:null }; },
+  cjTense(){ const x=pick(CJ_TN);
+    return { prompt:'□ に入る形は？', expr:x[0]+cjJ(x[3]), enExpr:true, en:true, words:true, choices:shuffle([...x[1]]), answer:x[2],
+      hint:'時や条件を表す when・if の中では、未来のことでも現在形を使います。', explain:`if・when のかたまりの中なので、未来のことでも現在形の ${x[2]}。`, viz:null }; },
+  cjThat(){ const x=pick(CJ_TH), ch=x[3]?['knows','thinks','hopes','says']:['know','think','hope','say'];
+    return { prompt:'□ に入る語は？', expr:x[0]+cjJ(x[1]), enExpr:true, en:true, choices:ch, answer:x[2],
+      hint:'know that〜 知っている ／ think that〜 思う ／ hope that〜 望む ／ say that〜 言う', explain:`「${x[1]}」なので ${x[2]}。${/ that /.test(x[0])?'':'この文では that が省略されています。'}`, viz:null }; },
+  cjThatPos(){ const x=pick(CJ_TH.filter(y=>/ □ that /.test(y[0])&&!/^Do /.test(y[0]))), s=x[0].split(' □ ')[0], rest=x[0].split(' □ that ')[1], r=rest.split(' ');
+    const ok=`${s} ${x[2]} that ${rest}`, opts=[ok, `${s} ${x[2]} ${r[0]} that ${r.slice(1).join(' ')}`, `${s} that ${x[2]} ${rest}`, `That ${s==='I'?'I':lowFirst(s)} ${x[2]} ${rest}`];
+    return { prompt:'正しい英文は？', expr:x[1], en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'〈主語 ＋ 動詞（know・think など）＋ that ＋ 主語 ＋ 動詞〜〉の順。', explain:ok, viz:null }; },
+});
+const CJ_LESSONS = [
+  { id:'12-1', t:'接続詞とは', sub:'語と語・文と文をつなぐ語', plan:['cjMean','cjMean','cjMean','cjFind','cjFind'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John writes a song, <b>so</b> he stays up late.','ジョンは曲を書くので、遅くまで起きています。')}${beEx('John stays up late <b>because</b> he writes a song.','ジョンは曲を書くので、遅くまで起きています。')}${beEx('<b>If</b> it is sunny tomorrow, John will go for a walk.','もし明日晴れたら、ジョンは散歩に行くでしょう。')}${beEx('I know <b>that</b> John stays up late.','私はジョンが遅くまで起きているということを知っています。')}</section>
+    <section class="panel"><h3>接続詞</h3>${rule('語と語、句と句、文と文をつなぐ語')}
+    ${beEx('Meg <b>and</b> Nancy','メグとナンシー（語と語）')}${beEx('by bike <b>or</b> by bus','自転車で、それともバスで（句と句）')}${beEx('John stays up late, <b>but</b> Meg goes to bed early.','ジョンは遅くまで起きていますが、メグは早く寝ます。（文と文）')}</section>
+    <section class="panel"><h3>2つのグループ</h3>
+    <table class="dtab"><tr><th>グループ</th><th>接続詞</th></tr>
+    <tr><td>対等につなぐ</td><td>and・but・or・so</td></tr>
+    <tr><td>〈接続詞＋主語＋動詞〉で<br>文にくわしい情報を加える</td><td>when・if・because<br>before・after・while<br>that</td></tr></table></section>` },
+  { id:'12-2', t:'and・but・or・so', sub:'対等につなぐ接続詞', plan:['cjAB','cjAB','cjAB','cjAB','cjAB'], body:()=>`
+    <section class="panel"><h3>and・but・or・so</h3>
+    <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
+    <tr><td><b>and</b></td><td>〜と…<br>〜そして…</td><td style="text-align:left">Meg <b>and</b> Nancy go to bed early.<br><span class="small muted">メグとナンシーは早く寝ます。</span></td></tr>
+    <tr><td><b>but</b></td><td>しかし<br>〜だが…</td><td style="text-align:left">John stays up late, <b>but</b> Meg goes to bed early.<br><span class="small muted">ジョンは遅くまで起きていますが、メグは早く寝ます。</span></td></tr>
+    <tr><td><b>or</b></td><td>〜か…<br>〜それとも…</td><td style="text-align:left">Do you go there by bike <b>or</b> by bus?<br><span class="small muted">そこへ自転車で行きますか、それともバスで行きますか。</span></td></tr>
+    <tr><td><b>so</b></td><td>それで〜<br>だから〜</td><td style="text-align:left">John writes a song, <b>so</b> he stays up late.<br><span class="small muted">ジョンは曲を書くので、遅くまで起きています。</span></td></tr></table>
+    <p class="small muted">and・but・or は、語と語、句と句、文と文を対等に結びつけます。so は文と文をつなぎ、「それで〜、だから〜」と結果を表します。</p></section>` },
+  { id:'12-3', t:'when・if・because', sub:'時・条件・理由', plan:['cjWI','cjWI','cjWI','cjTense','cjTense'], body:()=>`
+    <section class="panel"><h3>when・if・because</h3>
+    <table class="dtab"><tr><th></th><th></th><th>意味</th></tr>
+    <tr><td><b>when</b></td><td>時</td><td>〜のとき、〜するとき</td></tr>
+    <tr><td><b>if</b></td><td>条件</td><td>もし〜ならば</td></tr>
+    <tr><td><b>because</b></td><td>理由</td><td>なぜなら〜だから、〜なので</td></tr></table>
+    <p class="small muted">時を表す接続詞には、ほかに before（〜する前に）、after（〜したあとで）、while（〜する間に）などがあります。</p></section>
+    <section class="panel"><h3>置く場所</h3>${rule('〈接続詞＋主語＋動詞〜〉は、文の前半・後半のどちらに置いてもよい<br>前半に置くときは、コンマ（,）で区切る')}
+    ${beEx('<b>If</b> it is sunny tomorrow<b>,</b> John will go for a walk.','')}${beEx('＝ John will go for a walk <b>if</b> it is sunny tomorrow.','もし明日晴れたら、ジョンは散歩に行くでしょう。')}</section>
+    <section class="panel"><h3>注意！ 未来のことでも現在形</h3>${rule('時や条件を表す when・if の中では、未来のことでも現在形')}
+    ${beEx('If it <b>is</b> sunny tomorrow, …','（×If it will be sunny tomorrow）')}
+    ${beEx('Mike <b>will call</b> her.','マイクは彼女に電話をするでしょう。')}${beEx('She’ll be happy if Mike <b>calls</b> her.','マイクが彼女に電話をしたら、彼女はうれしいでしょう。')}</section>` },
+  { id:'12-4', t:'that', sub:'〜ということ', plan:['cjThat','cjThat','cjThat','cjThatPos','cjThatPos'], body:()=>`
+    <section class="panel"><h3>that</h3>${rule('that ＋ 主語 ＋ 動詞 〜 →「〜ということ」')}
+    ${beEx('I know + John stays up late.','私は知っている ＋ ジョンは遅くまで起きている')}<p style="text-align:center">↓</p>${beEx('I know <b>that</b> John stays up late.','私はジョンが遅くまで起きているということを知っています。')}</section>
+    <section class="panel"><h3>that といっしょによく使う動詞</h3>
+    <table class="dtab"><tr><th>形</th><th>意味</th></tr>
+    <tr><td><b>know</b> that 〜</td><td>〜ということを知っている</td></tr>
+    <tr><td><b>think</b> that 〜</td><td>〜だと思う</td></tr>
+    <tr><td><b>hope</b> that 〜</td><td>〜ということを望む</td></tr>
+    <tr><td><b>say</b> that 〜</td><td>〜だと言う</td></tr></table></section>
+    <section class="panel"><h3>that は省略できる</h3>${beEx('I know <b>that</b> John stays up late.','')}${beEx('＝ I know John stays up late.','')}
+    <p class="small muted">「〜ということ」を表す that は、省略することができます。</p></section>` },
 ];
 
 
@@ -11477,6 +11596,7 @@ const UNITS = {
   aux:{ no:'文9', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:AX_LESSONS },
   imp:{ no:'文10', title:'命令文', subject:'英語', course:'jen', subj:1, lessons:IM_LESSONS },
   rv2:{ no:'💧2', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:RV2_LESSONS },
+  conj:{ no:'文12', title:'接続詞', subject:'英語', course:'jen', subj:1, lessons:CJ_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
