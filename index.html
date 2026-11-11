@@ -1706,16 +1706,16 @@ const GV_LESSONS = [
     ${beEx('He <b>plays</b> soccer.','彼はサッカーをします。')}${beEx('Ken <b>studies</b> math.','ケンは数学を勉強します。')}${beEx('My sister <b>watches</b> TV.','私の妹はテレビを見ます。')}${beEx('Yui <b>has</b> a cat.','ユイはネコを飼っています。')}
     <p class="small muted">s・es を付ける主語は、be動詞が is になる主語と同じです。</p></section>` },
   { id:'2-3', t:'一般動詞一覧', sub:'よく使う動詞と s・es の付け方', plan:['gvMean','gvMean','gvMean','gvS','gvS'], body:()=>`
-    <section class="panel"><h3>s・es の付け方</h3>
+    <section class="panel"><h3>よく使う一般動詞</h3>
+    <table class="dtab"><tr><th>動詞</th><th>意味</th><th>3単現</th></tr>
+    ${GV_V.map(v=>`<tr><td><b>${v[0]}</b></td><td style="text-align:left">${v[2]}</td><td>${v[1]}</td></tr>`).join('')}</table></section>
+    <section class="panel">${rule('三人称単数現在（he・she・it など）では s をつける。')}<h3>s の付け方</h3>
     <table class="dtab"><tr><th>動詞の終わり</th><th>付け方</th><th>例</th></tr>
     <tr><td>ふつう</td><td>s</td><td>play → play<b>s</b></td></tr>
     <tr><td>s・x・ch・sh・o</td><td>es</td><td>watch → watch<b>es</b><br>go → go<b>es</b></td></tr>
     <tr><td>子音字＋y</td><td>y → ies</td><td>study → stud<b>ies</b></td></tr>
     <tr><td>have</td><td>特別</td><td><b>has</b></td></tr></table>
-    <p class="small muted">play・enjoy のように「母音字（a・e・i・o・u）＋y」は、そのまま s。</p></section>
-    <section class="panel"><h3>よく使う一般動詞</h3>
-    <table class="dtab"><tr><th>動詞</th><th>意味</th><th>3単現</th></tr>
-    ${GV_V.map(v=>`<tr><td><b>${v[0]}</b></td><td style="text-align:left">${v[2]}</td><td>${v[1]}</td></tr>`).join('')}</table></section>` },
+    <p class="small muted">play・enjoy のように「母音字（a・e・i・o・u）＋y」は、そのまま s。</p></section>` },
   { id:'2-4', t:'否定文', sub:'do not・does not ＋ 動詞の原形', plan:['gvNegC','gvNegC','gvNegC','gvNeg','gvNeg'], body:()=>`
     <section class="panel"><h3>ルール</h3>${rule('動詞の前に do not（don’t）を置く<br>主語が 3人称・単数なら does not（doesn’t）<br>→「〜しません」')}
     ${beEx('I play tennis.','私はテニスをします。')}<p style="text-align:center">↓</p>${beEx('I <b>don’t</b> play tennis.','私はテニスをしません。')}</section>
