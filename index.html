@@ -1954,6 +1954,15 @@ Object.assign(G, {
   ptBe(){ const x=pick(PB_S);
     return { prompt:'□ に入るのは？', expr:`${x[0]} □ ${x[2]}`+ptJ(x[3]), enExpr:true, en:true, choices:['was','were','is','are'], answer:x[1],
       hint:'過去の文。I と1人（1つ）→ was、you と2人以上 → were。', explain:ptBeWhy(x), viz:null }; },
+  ptKind(){ const all=[...PB_S.map(x=>`${x[0]} ${x[1]} ${x[2]}`),...PG_S.map(x=>`${x[0]} ${x[2]} ${x[3]}`)], ok=pick(all);
+    const ws=shuffle([...BE_S.map(x=>beSen(x)),...GV_S.map(x=>gvSen(x))]).slice(0,3);
+    return { prompt:'過去の文はどれ？', expr:'was・were や過去形の動詞を探そう', en:true, words:true, choices:shuffle([ok,...ws]), answer:ok,
+      hint:'be動詞なら was・were、一般動詞なら過去形（ed など）になっている文です。', explain:`${ok} が過去の文です。ほかの文は現在の文です。`, viz:null }; },
+  ptEJ(){ const b=Math.random()<.4, x=b?pick(PB_S):pick(PG_S), en=b?`${x[0]} ${x[1]} ${x[2]}`:`${x[0]} ${x[2]} ${x[3]}`, jp=b?x[3]:x[4];
+    const pres=jp.replace(/かったです。$/,'いです。').replace(/でした。$/,'です。').replace(/ました。$/,'ます。');
+    const ws=shuffle([...PB_S.map(y=>y[3]),...PG_S.map(y=>y[4])].filter(j=>j!==jp)).slice(0,2);
+    return { prompt:'日本語の意味は？', expr:en, enExpr:true, words:true, choices:shuffle([...new Set([jp,pres,...ws])]).slice(0,4).concat([]).filter((v,i,a)=>a.indexOf(v)===i), answer:jp,
+      hint:'過去の文なので「〜でした」「〜しました」になります。', explain:`${en} は「${jp}」です。`, viz:null }; },
   ptReg(){ const v=pick(PT_REG), b=v[0];
     const opts=[v[1], b+'ed', b+'d', b.replace(/y$/,'ied'), b+'s'].filter(o=>o!==b+'s'||true);
     const ch=shuffle([...new Set(opts)]).filter(o=>o!==v[1]).slice(0,3);
@@ -2002,8 +2011,11 @@ Object.assign(G, {
 });
 
 const PT_LESSONS = [
-  { id:'6-1', t:'be動詞の過去形', sub:'was・were', plan:['ptBe','ptBe','ptBe','ptBe','ptBe'], body:()=>`
+  { id:'6-1', t:'過去形とは', sub:'was・were と一般動詞の過去形', plan:['ptKind','ptKind','ptBe','ptBe','ptBe'], body:()=>`
     <section class="panel"><h3>基本文</h3>${beEx('John <b>was</b> a musician.','ジョンは音楽家でした。')}${beEx('He <b>played</b> the guitar.','彼はギターを弾きました。')}${beEx('He <b>wrote</b> a song.','彼は曲を書きました。')}</section>
+    <section class="panel"><h3>過去形とは</h3>${rule('過去のことを表すときは、動詞を過去形にする')}
+    <p><b>be動詞</b></p>${beEx('He <b>is</b> a musician.','彼は音楽家です。（現在）')}<p style="text-align:center">↓</p>${beEx('He <b>was</b> a musician.','彼は音楽家でした。（過去）')}
+    <p><b>一般動詞</b></p>${beEx('He <b>plays</b> the guitar.','彼はギターを弾きます。（現在）')}<p style="text-align:center">↓</p>${beEx('He <b>played</b> the guitar.','彼はギターを弾きました。（過去）')}</section>
     <section class="panel"><h3>be動詞の過去形</h3>${rule('am・is → was　　are → were')}
     <table class="dtab"><tr><th>主語</th><th>現在</th><th>過去</th></tr>
     <tr><td>I</td><td>am</td><td><b>was</b></td></tr>
@@ -2012,7 +2024,7 @@ const PT_LESSONS = [
     <tr><td>we / you / they<br><span class="small">2人・2つ以上</span></td><td>are</td><td><b>were</b></td></tr></table></section>
     <section class="panel"><h3>意味</h3>${beEx('The girl <b>was</b> excited.','その女の子はわくわくしていました。（〜でした）')}${beEx('We <b>were</b> in Kyoto last summer.','私たちは去年の夏、京都にいました。（〜にいた）')}
     <p class="small muted">yesterday（昨日）、last 〜（この前の〜）、〜 ago（〜前）などが過去の目印です。</p></section>` },
-  { id:'6-2', t:'規則動詞の過去形', sub:'ed・d・ied', plan:['ptReg','ptReg','ptReg','ptForm','ptForm'], body:()=>`
+  { id:'6-2', t:'過去形', sub:'ed をつける・不規則変化', plan:['ptReg','ptReg','ptIrrG','ptIrrG','ptIrrG'], body:()=>`
     <section class="panel"><h3>一般動詞の過去形</h3>${rule('主語に関係なく、動詞を過去形にする')}
     ${beEx('He <b>plays</b> the guitar.','彼はギターを弾きます。')}<p style="text-align:center">↓</p>${beEx('He <b>played</b> the guitar.','彼はギターを弾きました。')}
     <p class="small muted">過去形には、三人称単数現在の s は付けません。</p></section>
@@ -2021,14 +2033,19 @@ const PT_LESSONS = [
     <tr><td>パターン①</td><td>原形＋<b>ed</b></td><td>play → play<b>ed</b></td></tr>
     <tr><td>パターン②<br><span class="small">語尾が e</span></td><td>原形＋<b>d</b></td><td>like → like<b>d</b></td></tr>
     <tr><td>パターン③<br><span class="small">子音字＋y</span></td><td>y → <b>ied</b></td><td>study → stud<b>ied</b></td></tr></table>
-    <p class="small"><b style="color:var(--bad)">注意！</b> play → <b>played</b>（a＋y は母音字＋y なので、そのまま ed）</p></section>` },
-  { id:'6-3', t:'不規則動詞の過去形', sub:'形が変わる動詞', plan:['ptIrrG','ptIrrG','ptIrrG','ptForm','ptForm'], body:()=>`
+    <p class="small"><b style="color:var(--bad)">注意！</b> play → <b>played</b>（a＋y は母音字＋y なので、そのまま ed）</p></section>
     <section class="panel"><h3>パターン④　不規則動詞</h3>${rule('ed を付けずに、不規則に形が変わる')}
     ${beEx('He <b>wrote</b> a song.','彼は曲を書きました。（write → wrote）')}${beEx('She <b>took</b> a picture.','彼女は写真をとりました。（take → took）')}
     <p class="small muted">「不規則」といっても、ある程度のパターンはあります。英単語の「不規則変化」でも練習できます。</p></section>
     <section class="panel"><h3>よく使う不規則動詞</h3>
     <table class="dtab"><tr><th>原形</th><th>過去形</th><th>意味</th></tr>
     ${PT_IRR.map(v=>`<tr><td>${v[0]}</td><td><b>${v[1]}</b></td><td style="text-align:left">${v[2]}</td></tr>`).join('')}</table></section>` },
+  { id:'6-3', t:'例文', sub:'過去の文を読もう', plan:['ptEJ','ptEJ','ptEJ','ptForm','ptForm'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John <b>was</b> a musician.','ジョンは音楽家でした。')}${beEx('He <b>played</b> the guitar.','彼はギターを弾きました。')}${beEx('He <b>wrote</b> a song.','彼は曲を書きました。')}</section>
+    <section class="panel"><h3>be動詞の過去の文</h3>
+    ${beEx('I <b>was</b> tired yesterday.','私は昨日疲れていました。')}${beEx('You <b>were</b> busy yesterday.','あなたは昨日忙しかったです。')}${beEx('It <b>was</b> rainy yesterday.','昨日は雨でした。')}${beEx('Ken and Yui <b>were</b> classmates.','ケンとユイはクラスメイトでした。')}${beEx('The books <b>were</b> on the desk.','その本は机の上にありました。')}</section>
+    <section class="panel"><h3>一般動詞の過去の文</h3>
+    ${beEx('I <b>visited</b> Kyoto last year.','私は去年京都を訪れました。')}${beEx('Ken <b>studied</b> English yesterday.','ケンは昨日英語を勉強しました。')}${beEx('You <b>went</b> to the park.','あなたは公園へ行きました。')}${beEx('She <b>took</b> a picture.','彼女は写真をとりました。')}${beEx('The girl <b>had</b> a bird.','その女の子は鳥を飼っていました。')}</section>` },
   { id:'6-4', t:'過去の否定文', sub:'wasn’t・weren’t・didn’t', plan:['ptNegC','ptNegC','ptNegC','ptNeg','ptNeg'], body:()=>`
     <section class="panel"><h3>be動詞</h3>${rule('was・were ＋ not<br>→「〜ではありませんでした」')}
     ${beEx('He <b>was not</b> a musician.','彼は音楽家ではありませんでした。')}</section>
