@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'疑問詞', ready:'qw' },'命令文','can','未来の表現','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'疑問詞', ready:'qw' },'命令文','can','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -1833,7 +1833,7 @@ Object.assign(G, {
 
 const qwRow = (w, m, q, a) => `<tr><td><b>${w}</b></td><td>${m}</td><td style="text-align:left" class="bex"><span class="en" style="font-size:1rem">${q}<br>— ${a}</span></td></tr>`;
 const QW_LESSONS = [
-  { id:'8-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
+  { id:'9-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
     <section class="panel"><h3>疑問詞</h3>${rule('「何」「だれ」「いつ」「どこ」などをたずねる語')}
     <table class="dtab"><tr><th>疑問詞</th><th>意味</th></tr>
     ${QW_ALL.map(w=>`<tr><td><b>${w.toLowerCase()}</b></td><td>${QW_M[w]}</td></tr>`).join('')}</table></section>
@@ -1848,7 +1848,7 @@ const QW_LESSONS = [
     ${beEx('<b>How many</b> songs did he write? — He wrote ten.','彼は曲をいくつ書きましたか。— 10曲書きました。')}</section>
     <section class="panel"><h3>答え方</h3>${rule('Yes・No ではなく、たずねられたことを具体的に答える')}
     ${beEx('What is this? — It is <b>a dictionary</b>.','これは何ですか。— 辞書です。')}</section>` },
-  { id:'8-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
+  { id:'9-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
     <section class="panel"><h3>what・which</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('what','何','What is this?','It is <b>a dictionary</b>.')}
@@ -1859,7 +1859,7 @@ const QW_LESSONS = [
     <section class="panel"><h3>which は「選ぶ」</h3>${beEx('<b>Which</b> do you want, tea or coffee?','紅茶とコーヒーでは、どちらがほしいですか。')}
     <p class="small muted">いくつかの中から選ぶときは which を使います。</p></section>
     <section class="panel"><h3>時刻・天気など</h3><p>時刻・日付・天気・寒暖を表す文では、<b>it</b> を主語にします。</p>${beEx('What time is it? — <b>It</b> is five.','何時ですか。— 5時です。')}</section>` },
-  { id:'8-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
+  { id:'9-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
     <section class="panel"><h3>who・whose</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('who','だれ','Who is your English teacher?','<b>Ms. Brown</b> is.')}
@@ -1870,7 +1870,7 @@ const QW_LESSONS = [
     ${beEx('<b>Who made</b> this cake? — My sister <b>did</b>.','だれがこのケーキを作りましたか。— 姉です。')}
     <p class="small muted">答えは「主語 ＋ does（do・did）.」の形にします。</p></section>
     <section class="panel"><h3>「〜のもの」</h3><table class="dtab"><tr><th>私の</th><th>私のもの</th></tr><tr><td>my</td><td><b>mine</b></td></tr><tr><td>your</td><td><b>yours</b></td></tr><tr><td>Ken’s</td><td><b>Ken’s</b></td></tr></table></section>` },
-  { id:'8-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
+  { id:'9-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
     <section class="panel"><h3>when・where・why・how</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('when','いつ','When did you visit Niigata?','I visited there <b>two weeks ago</b>.')}
@@ -1882,7 +1882,7 @@ const QW_LESSONS = [
     ${beEx('Why do you go to Nara? — <b>To</b> see my friend.','なぜ奈良へ行くのですか。— 友だちに会うためです。')}</section>
     <section class="panel"><h3>how のいろいろな意味</h3>
     ${beEx('<b>How</b> do you come to school? — By bike.','どうやって学校に来ますか。（方法）')}${beEx('<b>How</b> is the weather? — It is sunny.','天気はどうですか。（ようす）')}${beEx('<b>How</b> are you? — I am fine.','元気ですか。（調子）')}</section>` },
-  { id:'8-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
+  { id:'9-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
     <section class="panel"><h3>how＋語</h3>
     <table class="dtab"><tr><th>たずねること</th><th>how＋語</th></tr>
     <tr><td>数</td><td><b>how many</b>＋名詞の複数形（いくつの〜）</td></tr>
@@ -2435,6 +2435,166 @@ const PP_LESSONS = [
     <section class="panel"><h3>ルール</h3>${rule('was・were を主語の前に出す<br>→「〜していましたか」')}
     ${beEx('<b>Was</b> he playing the guitar?','彼はギターを弾いていましたか。')}${beEx('— Yes, he <b>was</b>. ／ No, he <b>wasn’t</b>.','はい、弾いていました。／いいえ、弾いていませんでした。')}</section>
     <section class="panel"><h3>疑問詞を使って</h3>${beEx('<b>What were</b> you <b>doing</b> then? — I was studying English.','あなたはその時何をしていましたか。— 英語を勉強していました。')}</section>` },
+];
+
+
+/* ===== 英語 文法 8章 未来 ===== */
+// [主語, 原形, 残り, 日本語(つもり), 日本語(will), 答えの代名詞, 現在形, 日本語(will の否定)]
+const FT_S = [
+  ['He','play','the guitar tomorrow.','彼は明日、ギターを弾くつもりです。','彼は明日、ギターを弾くでしょう。','he','plays','彼は明日、ギターを弾かないでしょう。'],
+  ['She','use','a computer this afternoon.','彼女は今日の午後、コンピューターを使うつもりです。','彼女は今日の午後、コンピューターを使うでしょう。','she','uses','彼女は今日の午後、コンピューターを使わないでしょう。'],
+  ['I','visit','Kyoto next week.','私は来週、京都を訪れるつもりです。','私は来週、京都を訪れます。','','visit','私は来週、京都を訪れません。'],
+  ['You','help','your father tomorrow.','あなたは明日、お父さんを手伝うつもりです。','あなたは明日、お父さんを手伝うでしょう。','I','help','あなたは明日、お父さんを手伝わないでしょう。'],
+  ['We','play','soccer next Sunday.','私たちは次の日曜日にサッカーをするつもりです。','私たちは次の日曜日にサッカーをします。','','play','私たちは次の日曜日にサッカーをしません。'],
+  ['They','watch','a movie tonight.','彼らは今夜、映画を見るつもりです。','彼らは今夜、映画を見るでしょう。','they','watch','彼らは今夜、映画を見ないでしょう。'],
+  ['Ken','study','English after dinner.','ケンは夕食のあと、英語を勉強するつもりです。','ケンは夕食のあと、英語を勉強するでしょう。','he','studies','ケンは夕食のあと、英語を勉強しないでしょう。'],
+  ['Yui','buy','a new bag next month.','ユイは来月、新しいかばんを買うつもりです。','ユイは来月、新しいかばんを買うでしょう。','she','buys','ユイは来月、新しいかばんを買わないでしょう。'],
+  ['My father','cook','dinner tonight.','私の父は今夜、夕食を作るつもりです。','私の父は今夜、夕食を作るでしょう。','he','cooks','私の父は今夜、夕食を作らないでしょう。'],
+  ['Ken and Yui','go','to the zoo next Saturday.','ケンとユイは次の土曜日に動物園へ行くつもりです。','ケンとユイは次の土曜日に動物園へ行くでしょう。','they','go','ケンとユイは次の土曜日に動物園へ行かないでしょう。'],
+  ['I','clean','my room tomorrow.','私は明日、自分の部屋をそうじするつもりです。','私は明日、自分の部屋をそうじします。','','clean','私は明日、自分の部屋をそうじしません。'],
+  ['She','come','to the party next week.','彼女は来週、パーティーに来るつもりです。','彼女は来週、パーティーに来るでしょう。','she','comes','彼女は来週、パーティーに来ないでしょう。'],
+  ['It','rain','tomorrow.','明日は雨が降りそうです。','明日は雨が降るでしょう。','it','rains','明日は雨が降らないでしょう。'],
+  ['They','swim','in the sea next summer.','彼らは来年の夏、海で泳ぐつもりです。','彼らは来年の夏、海で泳ぐでしょう。','they','swim','彼らは来年の夏、海で泳がないでしょう。'],
+];
+const FT_USE = [
+  ['電話が鳴った。「私が出ます。」','I □ answer it.','w','その場で決めたことなので will。'],
+  ['もうチケットを買ってある。「来週、京都へ行く予定です。」','I □ visit Kyoto next week.','g','前から決めていた予定なので be going to。'],
+  ['天気予報を見て。「明日は晴れるでしょう。」','It □ be sunny tomorrow.','w','予想を表すので will。'],
+  ['荷物が重そうな友だちに。「手伝うよ。」','I □ help you.','w','その場で決めたことなので will。'],
+  ['お金をためている。「この夏、新しい自転車を買うつもりです。」','I □ buy a new bike this summer.','g','前から決めていたことなので be going to。'],
+  ['留学の準備をしている。「彼は来年カナダで勉強する予定です。」','He □ study in Canada next year.','g','前から決めていた予定なので be going to。'],
+  ['「たぶん彼女はパーティーに来るでしょう。」','She □ come to the party.','w','予想を表すので will。'],
+  ['部屋が寒い。「窓を閉めるね。」','I □ close the window.','w','その場で決めたことなので will。'],
+  ['先週から話し合っていた。「私たちは明日、公園でサッカーをする予定です。」','We □ play soccer in the park tomorrow.','g','前から決めていた予定なので be going to。'],
+  ['黒い雲がたくさん出ている。「雨が降りそうだ。」','It □ rain.','g','目の前の様子から「〜しそうだ」というときは be going to。'],
+];
+const ftPl = x => /^(You|We|They|Ken and Yui)$/.test(x[0]);
+const ftBe = x => x[0]==='I'?'am':ftPl(x)?'are':'is';
+const ftG = x => `${x[0]} ${ftBe(x)} going to ${x[1]} ${x[2]}`;
+const ftW = x => `${x[0]} will ${x[1]} ${x[2]}`;
+const ftSub = s => /^(I|Ken|Yui)/.test(s) ? s : lowFirst(s);
+const ftJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const ftGNegJ = jp => jp.replace(/つもりです。$/,'つもりはありません。').replace(/そうです。$/,'そうにありません。');
+const ftGQJ = jp => jp.replace(/です。$/,'ですか。');
+const ftWQJ = jp => jp.replace(/でしょう。$/,'でしょうか。');
+function ftTlSVG(){ const now=150, y=66, f=262;
+  return `<svg viewBox="0 0 320 96" style="width:100%;max-width:360px;display:block;margin:4px auto" role="img" aria-label="時間のグラフ"><line x1="14" y1="${y}" x2="306" y2="${y}" stroke="var(--muted)" stroke-width="2"/><path d="M306 ${y}l-8 -5v10z" fill="var(--muted)"/>
+  <text x="22" y="${y+20}" font-size="12" fill="var(--muted)">過去</text><text x="300" y="${y+20}" font-size="12" fill="var(--muted)" text-anchor="end">未来</text>
+  <line x1="${now}" y1="${y-26}" x2="${now}" y2="${y+6}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="${now}" y="${y+20}" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">今</text>
+  <line x1="${f}" y1="${y-26}" x2="${f}" y2="${y+6}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="${f-14}" y="${y+20}" font-size="12" fill="var(--ink)" text-anchor="middle">明日</text>
+  <path d="M${now+8} ${y-14}Q${(now+f)/2} ${y-38} ${f-10} ${y-16}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3"/><path d="M${f-10} ${y-16}l-9 -1 5 -7z" fill="var(--accent)"/>
+  <circle cx="${f}" cy="${y-14}" r="7" fill="var(--accent)"/><text x="160" y="18" font-size="12" text-anchor="middle" fill="var(--accent)" font-weight="700">will ／ be going to：これから〜する</text></svg>`; }
+
+Object.assign(G, {
+  ftTime(){ const r=Math.random(); let en, a;
+    if(r<.34){ const x=pick(FT_S); en=Math.random()<.5?ftG(x):ftW(x); a='未来'; }
+    else if(r<.67){ const x=pick(GV_S); en=gvSen(x); a='現在'; }
+    else { const x=pick(PG_S); en=`${x[0]} ${x[2]} ${x[3]}`; a='過去'; }
+    return { prompt:'いつのことを表す文？', expr:en, enExpr:true, words:true, choices:['過去','現在','未来'], answer:a,
+      hint:'will や be going to があれば未来。動詞が過去形なら過去。', explain:a==='未来'?'will・be going to ＋ 動詞の原形 は未来の文。':a==='過去'?'動詞が過去形なので過去の文。':'動詞が現在形なので現在の文。', viz:null }; },
+  ftBase(){ const x=pick(FT_S), g=Math.random()<.5, pre=g?`${x[0]} ${ftBe(x)} going to`:`${x[0]} will`;
+    const ing=(PRG_ING.find(v=>v[0]===x[1])||[0,x[1]+'ing'])[1], past=(PT_IRR.find(v=>v[0]===x[1])||PT_REG.find(v=>v[0]===x[1])||[0,x[1]+'ed'])[1];
+    return { prompt:'□ に入る形は？', expr:`${pre} □ ${x[2]}`+ftJ(`（${x[1]}）${g?x[3]:x[4]}`), enExpr:true, en:true, choices:shuffle([...new Set([x[1], x[6]===x[1]?x[1]+'s':x[6], ing, past])]), answer:x[1],
+      hint:'will の後ろも、be going to の後ろも、動詞は原形。', explain:`${g?'be going to':'will'} の後ろは原形の ${x[1]}。`, viz:null }; },
+  ftBg(){ const x=pick(FT_S);
+    return { prompt:'□ に入るのは？', expr:`${x[0]} □ going to ${x[1]} ${x[2]}`+ftJ(x[3]), enExpr:true, en:true, choices:['am','is','are','will'], answer:ftBe(x),
+      hint:'be going to の be は、主語によって am・is・are を使い分けます。', explain:x[0]==='I'?'主語が I なので am。':ftPl(x)?`主語の ${x[0]} は you か2人以上なので are。`:`主語の ${x[0]} は1人（1つ）なので is。`, viz:null }; },
+  ftBgFill(){ const x=pick(FT_S), b=ftBe(x), ok=`${b} going`;
+    return { prompt:'□ に入るのは？', expr:`${x[0]} □ to ${x[1]} ${x[2]}`+ftJ(x[3]), enExpr:true, en:true, words:true, choices:shuffle([ok,'going',`${b} go`,'will going']), answer:ok,
+      hint:'「〜するつもりです」は be going to ＋ 原形。', explain:`${ftG(x)}`, viz:null }; },
+  ftWl(){ const x=pick(FT_S), ok=`will ${x[1]}`, ing=(PRG_ING.find(v=>v[0]===x[1])||[0,x[1]+'ing'])[1];
+    return { prompt:'□ に入るのは？', expr:`${x[0]} □ ${x[2]}`+ftJ(x[4]), enExpr:true, en:true, words:true, choices:shuffle([...new Set([ok, `will ${x[6]===x[1]?x[1]+'s':x[6]}`, `will ${ing}`, `wills ${x[1]}`])]), answer:ok,
+      hint:'will はどんな主語でも同じ形。後ろは原形。', explain:`will ＋ 原形 ${x[1]}<br>${ftW(x)}`, viz:null }; },
+  ftUse(){ const x=pick(FT_USE), be=/^I /.test(x[1])?'am':/^(We|They|You) /.test(x[1])?'are':'is', g=`${be} going to`, ok=x[2]==='w'?'will':g;
+    return { prompt:'場面に合うのは？', expr:x[1]+ftJ(x[0]), enExpr:true, en:true, words:true, choices:['will', g], answer:ok,
+      hint:'前から決めていた予定 → be going to。その場で決めたこと・予想 → will。', explain:x[3], viz:null }; },
+  ftEJ(){ const x=pick(FT_S), g=Math.random()<.5, en=g?ftG(x):ftW(x), a=g?x[3]:x[4];
+    const pair=/でしょう。$/.test(x[4]) ? [g?x[4]:x[3]] : [];
+    const ws=shuffle(FT_S.filter(y=>y!==x)).slice(0,3-pair.length).map(y=>g?y[3]:y[4]);
+    return { prompt:'日本語の意味は？', expr:en, enExpr:true, words:true, choices:shuffle([...new Set([a, ...pair, ...ws])]), answer:a,
+      hint:'be going to は「〜するつもりです（予定）」、will は「〜するでしょう（予想）・〜します（意志）」。', explain:`${en}<br>→ ${a}`, viz:null }; },
+  ftFill(){ const x=pick(FT_S), g=Math.random()<.5, ok=g?ftG(x):ftW(x), b=ftBe(x);
+    const opts = g ? [ok, `${x[0]} going to ${x[1]} ${x[2]}`, `${x[0]} ${b} going to ${x[6]===x[1]?x[1]+'s':x[6]} ${x[2]}`, `${x[0]} will going to ${x[1]} ${x[2]}`]
+                   : [ok, `${x[0]} will ${x[6]===x[1]?x[1]+'s':x[6]} ${x[2]}`, `${x[0]} ${b} will ${x[1]} ${x[2]}`, `${x[0]} will to ${x[1]} ${x[2]}`];
+    return { prompt:'英語にすると？', expr:g?x[3]:x[4], en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
+      hint:'be going to ＋ 原形／will ＋ 原形。', explain:ok, viz:null }; },
+  ftNegC(){ const x=pick(FT_S);
+    if(Math.random()<.5) return { prompt:'否定文にしよう。□ に入るのは？', expr:`${x[0]} □ ${x[1]} ${x[2]}`+ftJ(x[7]), enExpr:true, en:true, choices:["won't","isn't","doesn't","willn't"], answer:"won't",
+      hint:'will の否定文は will not。短くすると won’t。', explain:'will not を短くすると won’t（willn’t ではない）。', viz:null };
+    const b=ftBe(x), ok=b==='am'?'am not':b+"n't";
+    return { prompt:'否定文にしよう。□ に入るのは？', expr:`${x[0]} □ going to ${x[1]} ${x[2]}`+ftJ(ftGNegJ(x[3])), enExpr:true, en:true, choices:b==='am'?['am not',"won't","don't","amn't"]:["isn't","aren't","won't","doesn't"], answer:ok,
+      hint:'be going to の否定文は be の後ろに not。', explain:`${b} not（${ok}）going to ＋ 原形。`, viz:null }; },
+  ftNeg(){ const x=pick(FT_S), b=ftBe(x);
+    if(Math.random()<.5){ const ok=`${x[0]} will not ${x[1]} ${x[2]}`, opts=[ok, `${x[0]} not will ${x[1]} ${x[2]}`, `${x[0]} ${x[6]===x[1]?"don't":"doesn't"} will ${x[1]} ${x[2]}`, `${x[0]} will not ${x[6]===x[1]?x[1]+'s':x[6]} ${x[2]}`];
+      return { prompt:'正しい否定文は？', expr:x[7], en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok, hint:'will の後ろに not。', explain:ok, viz:null }; }
+    const ok=`${x[0]} ${b} not going to ${x[1]} ${x[2]}`, opts=[ok, `${x[0]} ${b} going not to ${x[1]} ${x[2]}`, `${x[0]} ${x[6]===x[1]?"don't":"doesn't"} going to ${x[1]} ${x[2]}`, `${x[0]} not ${b} going to ${x[1]} ${x[2]}`];
+    return { prompt:'正しい否定文は？', expr:ftGNegJ(x[3]), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok, hint:'be の後ろに not。', explain:ok, viz:null }; },
+  ftQ(){ const x=pick(FT_S.filter(y=>y[5])), s=ftSub(x[0]), b=ftBe(x), r=x[2].replace(/\.$/,'?');
+    if(Math.random()<.5){ const ok=`Will ${s} ${x[1]} ${r}`, opts=[ok, `Will ${s} ${x[6]===x[1]?x[1]+'s':x[6]} ${r}`, `${x[6]===x[1]?'Do':'Does'} ${s} will ${x[1]} ${r}`, `${capFirst(b)} ${s} will ${x[1]} ${r}`];
+      return { prompt:'正しい疑問文は？', expr:ftWQJ(x[4]), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok, hint:'will を主語の前に出します。動詞は原形。', explain:ok, viz:null }; }
+    const ok=`${capFirst(b)} ${s} going to ${x[1]} ${r}`, opts=[ok, `${x[6]===x[1]?'Do':'Does'} ${s} going to ${x[1]} ${r}`, `Going ${s} ${b} to ${x[1]} ${r}`, `${capFirst(b)} ${s} going to ${x[6]===x[1]?x[1]+'s':x[6]} ${r}`];
+    return { prompt:'正しい疑問文は？', expr:ftGQJ(x[3]), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok, hint:'be を主語の前に出します。', explain:ok, viz:null }; },
+  ftAns(){ const x=pick(FT_S.filter(y=>y[5])), s=ftSub(x[0]), yes=Math.random()<.5, p=x[5], r=x[2].replace(/\.$/,'?');
+    if(Math.random()<.5){ const q=`Will ${s} ${x[1]} ${r}`, ok=yes?`Yes, ${p} will.`:`No, ${p} won't.`;
+      const opts=yes?[ok,`Yes, ${p} ${p==='I'?'do':p==='they'?'do':'does'}.`,`Yes, ${p} ${p==='I'?'am':p==='they'?'are':'is'}.`,`Yes, ${p} will ${x[1]}s.`]:[ok,`No, ${p} willn't.`,`No, ${p} ${p==='I'||p==='they'?"don't":"doesn't"}.`,`No, ${p} not will.`];
+      return { prompt:`${yes?'「はい」':'「いいえ」'}で答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle(opts), answer:ok, hint:'Will でたずねられたら will・won’t で答えます。', explain:ok, viz:null }; }
+    const b=ftBe(x), q=`${capFirst(b)} ${s} going to ${x[1]} ${r}`, ab=p==='I'?'am':p==='they'?'are':'is', ok=yes?`Yes, ${p} ${ab}.`:(ab==='am'?"No, I’m not.":`No, ${p} ${ab}n't.`);
+    const opts=yes?[ok,`Yes, ${p} will.`,`Yes, ${p} ${p==='I'||p==='they'?'do':'does'}.`,`Yes, ${p} going.`]:[ok,`No, ${p} won't.`,`No, ${p} ${p==='I'||p==='they'?"don't":"doesn't"}.`,`No, ${p} not going.`];
+    return { prompt:`${yes?'「はい」':'「いいえ」'}で答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle(opts), answer:ok, hint:'be going to の疑問文には be動詞で答えます。', explain:`${x[0]==='You'?'you でたずねられたら I で答えます。':''}${ok}`, viz:null }; },
+});
+
+const FT_LESSONS = [
+  { id:'8-1', t:'未来とは', sub:'これからのことを表す', plan:['ftTime','ftTime','ftTime','ftBase','ftBase'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('He <b>is going to play</b> the guitar.','彼はギターを弾くつもりです。')}${beEx('He <b>will play</b> the guitar tomorrow.','彼は明日、ギターを弾くでしょう。')}</section>
+    <section class="panel"><h3>未来の文</h3>${rule('これからのことは be going to か will を使う<br>後ろの動詞は いつも原形')}
+    ${ftTlSVG()}
+    <table class="dtab"><tr><th></th><th>例</th></tr>
+    <tr><td>現在</td><td style="text-align:left">He <b>plays</b> the guitar.<br><span class="small muted">彼はギターを弾きます。</span></td></tr>
+    <tr><td>未来</td><td style="text-align:left">He <b>is going to play</b> the guitar.<br><span class="small muted">彼はギターを弾くつもりです。</span></td></tr>
+    <tr><td>未来</td><td style="text-align:left">He <b>will play</b> the guitar.<br><span class="small muted">彼はギターを弾くでしょう。</span></td></tr></table></section>
+    <section class="panel"><h3>未来を表す言葉</h3>
+    <div class="kwl"><div><b>tomorrow</b><span>明日</span></div><div><b>next 〜</b><span>次の〜・来〜（next week 来週）</span></div><div><b>tonight</b><span>今夜</span></div><div><b>this afternoon</b><span>今日の午後</span></div><div><b>someday</b><span>いつか</span></div></div></section>` },
+  { id:'8-2', t:'be going to', sub:'〜するつもりです・予定です', plan:['ftBg','ftBg','ftBg','ftBgFill','ftBgFill'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('be going to ＋ 動詞の原形<br>→「〜するつもりです」「〜する予定です」')}
+    ${beEx('He <b>is going to</b> <b>play</b> the guitar.','彼はギターを弾くつもりです。')}</section>
+    <section class="panel"><h3>be は主語で変わる</h3>
+    <table class="dtab"><tr><th>主語</th><th>形</th></tr><tr><td>I</td><td><b>am</b> going to play</td></tr><tr><td>he・she・it・1人（1つ）</td><td><b>is</b> going to play</td></tr><tr><td>you・we・they・2人以上</td><td><b>are</b> going to play</td></tr></table>
+    ${beEx('I <b>am going to</b> visit Kyoto next week.','私は来週、京都を訪れるつもりです。')}${beEx('They <b>are going to</b> watch a movie tonight.','彼らは今夜、映画を見るつもりです。')}</section>
+    <section class="panel"><h3>注意</h3><p><b style="color:var(--bad)">×</b> He is going to plays the guitar.<br><b style="color:var(--good)">〇</b> He is going to <b>play</b> the guitar.</p><p class="small muted">to の後ろは、いつも原形です。</p></section>` },
+  { id:'8-3', t:'will', sub:'〜するでしょう・〜します', plan:['ftWl','ftWl','ftWl','ftBase','ftBase'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('will ＋ 動詞の原形<br>→「〜するでしょう」「〜します（するつもりです）」')}
+    ${beEx('He <b>will play</b> the guitar tomorrow.','彼は明日、ギターを弾くでしょう。')}</section>
+    <section class="panel"><h3>will はどんな主語でも同じ</h3>
+    ${beEx('I <b>will</b> help you.','私はあなたを手伝います。')}${beEx('She <b>will</b> come to the party.','彼女はパーティーに来るでしょう。')}${beEx('They <b>will</b> swim in the sea.','彼らは海で泳ぐでしょう。')}
+    <p class="small"><b style="color:var(--bad)">×</b> He wills play.　<b style="color:var(--bad)">×</b> He will plays.</p></section>
+    <section class="panel"><h3>短縮形</h3><table class="dtab"><tr><th>もとの形</th><th>短縮形</th></tr><tr><td>I will</td><td><b>I’ll</b></td></tr><tr><td>you will</td><td><b>you’ll</b></td></tr><tr><td>he will</td><td><b>he’ll</b></td></tr><tr><td>it will</td><td><b>it’ll</b></td></tr></table></section>` },
+  { id:'8-4', t:'使い分け', sub:'be going to と will', plan:['ftUse','ftUse','ftUse','ftUse','ftUse'], body:()=>`
+    <section class="panel"><h3>使い分け</h3>
+    <table class="dtab"><tr><th>be going to</th><th>will</th></tr>
+    <tr><td>前から決めていた<b>予定</b><br>「〜するつもりです」</td><td>その場で決めた<b>意志</b><br>「〜します」</td></tr>
+    <tr><td>目の前の様子から<br>「〜しそうだ」</td><td>これからの<b>予想</b><br>「〜するでしょう」</td></tr></table></section>
+    <section class="panel"><h3>予定 と その場で決めたこと</h3>
+    ${beEx('I <b>am going to</b> visit Kyoto next week.','来週、京都へ行く予定です。（もうチケットを買ってある）')}${beEx('The phone is ringing. — I’<b>ll</b> answer it.','電話が鳴っている。— 私が出ます。（今決めた）')}</section>
+    <section class="panel"><h3>「〜しそう」と予想</h3>
+    ${beEx('Look at those clouds. It <b>is going to</b> rain.','あの雲を見て。雨が降りそうだ。（目の前の様子から）')}${beEx('It <b>will</b> be sunny tomorrow.','明日は晴れるでしょう。（予想）')}
+    <p class="small muted">どちらを使っても意味が通じることも多いですが、場面に合うほうを選べるようにしよう。</p></section>` },
+  { id:'8-5', t:'例文', sub:'未来の文を読もう', plan:['ftEJ','ftEJ','ftEJ','ftFill','ftFill'], body:()=>`
+    <section class="panel"><h3>be going to</h3>${FT_S.slice(0,7).map(x=>beEx(`${x[0]} <b>${ftBe(x)} going to ${x[1]}</b> ${x[2]}`, x[3])).join('')}</section>
+    <section class="panel"><h3>will</h3>${FT_S.slice(7).map(x=>beEx(`${x[0]} <b>will ${x[1]}</b> ${x[2]}`, x[4])).join('')}</section>
+    <section class="panel"><h3>くらべよう</h3>${beEx('She is <b>using</b> a computer now.','彼女は今、コンピューターを使っています。（現在進行形）')}${beEx('She is going to <b>use</b> a computer.','彼女はコンピューターを使うつもりです。（未来）')}
+    ${beEx('He <b>helps</b> his father every Sunday.','彼は毎週日曜日に父親を手伝います。（現在）')}${beEx('He <b>will help</b> his father tomorrow.','彼は明日、父親を手伝います。（未来）')}</section>` },
+  { id:'8-6', t:'否定文', sub:'be not going to・won’t', plan:['ftNegC','ftNegC','ftNegC','ftNeg','ftNeg'], body:()=>`
+    <section class="panel"><h3>be going to の否定文</h3>${rule('be ＋ not ＋ going to ＋ 原形<br>→「〜するつもり（予定）ではありません」')}
+    ${beEx('He <b>is not</b> going to play the guitar.','彼はギターを弾くつもりではありません。')}</section>
+    <section class="panel"><h3>will の否定文</h3>${rule('will ＋ not ＋ 原形<br>→「〜しないでしょう」')}
+    ${beEx('He <b>will not</b> play the guitar.','彼はギターを弾かないでしょう。')}
+    <p><b>will not ＝ won’t</b>（willn’t ではないので注意！）</p>${beEx('He <b>won’t</b> play the guitar.','彼はギターを弾かないでしょう。')}</section>` },
+  { id:'8-7', t:'疑問文', sub:'Is 〜 going to?・Will 〜?', plan:['ftQ','ftQ','ftAns','ftAns','ftAns'], body:()=>`
+    <section class="panel"><h3>be going to の疑問文</h3>${rule('be を主語の前に出す<br>→「〜するつもり（予定）ですか」')}
+    ${beEx('<b>Is</b> he going to play the guitar?','彼はギターを弾くつもりですか。')}${beEx('— Yes, he <b>is</b>. ／ No, he <b>isn’t</b>.','はい、弾くつもりです。／いいえ、弾くつもりではありません。')}</section>
+    <section class="panel"><h3>will の疑問文</h3>${rule('will を主語の前に出す<br>→「〜するでしょうか」')}
+    ${beEx('<b>Will</b> he play the guitar?','彼はギターを弾くでしょうか。')}${beEx('— Yes, he <b>will</b>. ／ No, he <b>won’t</b>.','はい、弾くでしょう。／いいえ、弾かないでしょう。')}</section>
+    <section class="panel"><h3>疑問詞を使って</h3>${beEx('<b>What are</b> you <b>going to do</b> tomorrow? — I’m going to clean my room.','あなたは明日、何をするつもりですか。— 部屋をそうじするつもりです。')}${beEx('<b>When will</b> she come? — She’ll come next week.','彼女はいつ来るでしょうか。— 来週来るでしょう。')}</section>` },
 ];
 
 
@@ -10814,12 +10974,13 @@ const UNITS = {
   irr:{ drill:'irr', no:'動1', title:'動詞の不規則変化', subject:'英語', course:'jen', subj:0, lessons:IRR_LESSONS },
   be:{ no:'文1', title:'be動詞', subject:'英語', course:'jen', subj:1, lessons:BE_LESSONS },
   gv:{ no:'文2', title:'一般動詞', subject:'英語', course:'jen', subj:1, lessons:GV_LESSONS },
-  qw:{ no:'文8', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
+  qw:{ no:'文9', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
   past:{ no:'文5', title:'過去形', subject:'英語', course:'jen', subj:1, lessons:PT_LESSONS },
   pl:{ no:'文3', title:'名詞の複数形', subject:'英語', course:'jen', subj:1, lessons:PL_LESSONS },
   pr:{ no:'文4', title:'代名詞', subject:'英語', course:'jen', subj:1, lessons:PR_LESSONS },
   prg:{ no:'文6', title:'現在進行形', subject:'英語', course:'jen', subj:1, lessons:PRG_LESSONS },
   pprg:{ no:'文7', title:'過去進行形', subject:'英語', course:'jen', subj:1, lessons:PP_LESSONS },
+  futr:{ no:'文8', title:'未来', subject:'英語', course:'jen', subj:1, lessons:FT_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
