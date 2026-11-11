@@ -1670,7 +1670,7 @@ Object.assign(G, {
       hint:'ふつうは s。s・x・ch・sh・o で終わる語は es。子音字＋y は y を i にかえて es。have は has。', explain:`${gvRule(b)}<br>${b} → ${v[1]}`, viz:null }; },
   gvNegC(){ const x=pick(GV_S), ok=gv3(x)?"doesn't":"don't";
     return { prompt:'否定文にしよう。□ に入るのは？', expr:`${x[0]} □ ${x[1]} ${x[3]}`+beJp(gvJpNeg(x[4])), enExpr:true, en:true, choices:["don't","doesn't","isn't","aren't"], answer:ok,
-      hint:'一般動詞の否定文は do not（don’t）、主語が 3人称・単数なら does not（doesn’t）。', explain:gv3(x)?`主語の ${x[0]} は 3人称・単数なので doesn’t。後ろの動詞は原形 ${x[1]} にもどします。`:`主語が ${x[0]} なので don’t。`, viz:null }; },
+      hint:'一般動詞の否定文は do not（don’t）、主語が 三人称単数現在なら does not（doesn’t）。', explain:gv3(x)?`主語の ${x[0]} は 三人称単数現在なので doesn’t。後ろの動詞は原形 ${x[1]} にもどします。`:`主語が ${x[0]} なので don’t。`, viz:null }; },
   gvNeg(){ const x=pick(GV_S), ok=gvNeg(x), t=gv3(x);
     const opts = t ? [ok, `${x[0]} doesn't ${x[2]} ${x[3]}`, `${x[0]} don't ${x[1]} ${x[3]}`, `${x[0]} isn't ${x[1]} ${x[3]}`] : [ok, `${x[0]} doesn't ${x[1]} ${x[3]}`, `${x[0]} ${gvBe(x)} not ${x[1]} ${x[3]}`, `${x[0]} not ${x[1]} ${x[3]}`];
     return { prompt:'正しい否定文は？', expr:gvJpNeg(x[4]), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
@@ -1717,9 +1717,9 @@ const GV_LESSONS = [
     <tr><td>have</td><td>特別</td><td><b>has</b></td></tr></table>
     <p class="small muted">play・enjoy のように「母音字（a・e・i・o・u）＋y」は、そのまま s。</p></section>` },
   { id:'2-4', t:'否定文', sub:'do not・does not ＋ 動詞の原形', plan:['gvNegC','gvNegC','gvNegC','gvNeg','gvNeg'], body:()=>`
-    <section class="panel"><h3>ルール</h3>${rule('動詞の前に do not（don’t）を置く<br>主語が 3人称・単数なら does not（doesn’t）<br>→「〜しません」')}
+    <section class="panel"><h3>ルール</h3>${rule('動詞の前に do not（don’t）を置く<br>主語が 三人称単数現在なら does not（doesn’t）<br>→「〜しません」')}
     ${beEx('I play tennis.','私はテニスをします。')}<p style="text-align:center">↓</p>${beEx('I <b>don’t</b> play tennis.','私はテニスをしません。')}</section>
-    <section class="panel"><h3>3人称・単数のとき</h3>${beEx('John sings.','ジョンは歌います。')}<p style="text-align:center">↓</p>${beEx('John <b>does not</b> <b>sing</b>.','ジョンは歌いません。')}
+    <section class="panel"><h3>三人称単数現在のとき</h3>${beEx('John sings.','ジョンは歌います。')}<p style="text-align:center">↓</p>${beEx('John <b>does not</b> <b>sing</b>.','ジョンは歌いません。')}
     ${rule('doesn’t の後ろの動詞は 原形（s を取る）')}
     <p><b style="color:var(--bad)">×</b> He doesn’t plays soccer.<br><b style="color:var(--good)">〇</b> He doesn’t <b>play</b> soccer.</p></section>
     <section class="panel"><h3>be動詞の否定文とくらべよう</h3>
