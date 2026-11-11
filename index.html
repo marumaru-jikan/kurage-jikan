@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'疑問詞', ready:'qw' },'命令文','接続詞','不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },'接続詞','不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -1833,7 +1833,7 @@ Object.assign(G, {
 
 const qwRow = (w, m, q, a) => `<tr><td><b>${w}</b></td><td>${m}</td><td style="text-align:left" class="bex"><span class="en" style="font-size:1rem">${q}<br>— ${a}</span></td></tr>`;
 const QW_LESSONS = [
-  { id:'10-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
+  { id:'11-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
     <section class="panel"><h3>疑問詞</h3>${rule('「何」「だれ」「いつ」「どこ」などをたずねる語')}
     <table class="dtab"><tr><th>疑問詞</th><th>意味</th></tr>
     ${QW_ALL.map(w=>`<tr><td><b>${w.toLowerCase()}</b></td><td>${QW_M[w]}</td></tr>`).join('')}</table></section>
@@ -1848,7 +1848,7 @@ const QW_LESSONS = [
     ${beEx('<b>How many</b> songs did he write? — He wrote ten.','彼は曲をいくつ書きましたか。— 10曲書きました。')}</section>
     <section class="panel"><h3>答え方</h3>${rule('Yes・No ではなく、たずねられたことを具体的に答える')}
     ${beEx('What is this? — It is <b>a dictionary</b>.','これは何ですか。— 辞書です。')}</section>` },
-  { id:'10-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
+  { id:'11-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
     <section class="panel"><h3>what・which</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('what','何','What is this?','It is <b>a dictionary</b>.')}
@@ -1859,7 +1859,7 @@ const QW_LESSONS = [
     <section class="panel"><h3>which は「選ぶ」</h3>${beEx('<b>Which</b> do you want, tea or coffee?','紅茶とコーヒーでは、どちらがほしいですか。')}
     <p class="small muted">いくつかの中から選ぶときは which を使います。</p></section>
     <section class="panel"><h3>時刻・天気など</h3><p>時刻・日付・天気・寒暖を表す文では、<b>it</b> を主語にします。</p>${beEx('What time is it? — <b>It</b> is five.','何時ですか。— 5時です。')}</section>` },
-  { id:'10-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
+  { id:'11-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
     <section class="panel"><h3>who・whose</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('who','だれ','Who is your English teacher?','<b>Ms. Brown</b> is.')}
@@ -1870,7 +1870,7 @@ const QW_LESSONS = [
     ${beEx('<b>Who made</b> this cake? — My sister <b>did</b>.','だれがこのケーキを作りましたか。— 姉です。')}
     <p class="small muted">答えは「主語 ＋ does（do・did）.」の形にします。</p></section>
     <section class="panel"><h3>「〜のもの」</h3><table class="dtab"><tr><th>私の</th><th>私のもの</th></tr><tr><td>my</td><td><b>mine</b></td></tr><tr><td>your</td><td><b>yours</b></td></tr><tr><td>Ken’s</td><td><b>Ken’s</b></td></tr></table></section>` },
-  { id:'10-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
+  { id:'11-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
     <section class="panel"><h3>when・where・why・how</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('when','いつ','When did you visit Niigata?','I visited there <b>two weeks ago</b>.')}
@@ -1882,7 +1882,7 @@ const QW_LESSONS = [
     ${beEx('Why do you go to Nara? — <b>To</b> see my friend.','なぜ奈良へ行くのですか。— 友だちに会うためです。')}</section>
     <section class="panel"><h3>how のいろいろな意味</h3>
     ${beEx('<b>How</b> do you come to school? — By bike.','どうやって学校に来ますか。（方法）')}${beEx('<b>How</b> is the weather? — It is sunny.','天気はどうですか。（ようす）')}${beEx('<b>How</b> are you? — I am fine.','元気ですか。（調子）')}</section>` },
-  { id:'10-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
+  { id:'11-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
     <section class="panel"><h3>how＋語</h3>
     <table class="dtab"><tr><th>たずねること</th><th>how＋語</th></tr>
     <tr><td>数</td><td><b>how many</b>＋名詞の複数形（いくつの〜）</td></tr>
@@ -2932,6 +2932,91 @@ const AX_LESSONS = [
     <tr><th>have to</th><td>〜しなければならない</td><td>don’t have to<br><span class="small">しなくてもいい</span></td><td>had to</td></tr>
     <tr><th>should</th><td>〜すべきだ</td><td>shouldn’t</td><td></td></tr></table></section>
     <section class="panel"><p class="small muted">9-1〜9-11 の問題から、毎回ちがう15問がランダムに出ます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 10章 命令文 ===== */
+// [動詞＋残り(原形), 三単現の形, ing の形, 〜しなさい, 〜してはいけません, 〜してください, 〜しましょう]
+const IM_S = [
+  ['sing a song','sings a song','singing a song','歌を歌いなさい。','歌を歌ってはいけません。','（どうぞ）歌を歌ってください。','歌を歌いましょう。'],
+  ['open the window','opens the window','opening the window','窓を開けなさい。','窓を開けてはいけません。','窓を開けてください。','窓を開けましょう。'],
+  ['play soccer in the park','plays soccer in the park','playing soccer in the park','公園でサッカーをしなさい。','公園でサッカーをしてはいけません。','公園でサッカーをしてください。','公園でサッカーをしましょう。'],
+  ['clean the room','cleans the room','cleaning the room','部屋をそうじしなさい。','部屋をそうじしてはいけません。','部屋をそうじしてください。','部屋をそうじしましょう。'],
+  ['eat lunch here','eats lunch here','eating lunch here','ここで昼食を食べなさい。','ここで昼食を食べてはいけません。','ここで昼食を食べてください。','ここで昼食を食べましょう。'],
+  ['take a picture','takes a picture','taking a picture','写真をとりなさい。','写真をとってはいけません。','写真をとってください。','写真をとりましょう。'],
+  ['speak English','speaks English','speaking English','英語を話しなさい。','英語を話してはいけません。','英語を話してください。','英語を話しましょう。'],
+  ['wait here','waits here','waiting here','ここで待ちなさい。','ここで待ってはいけません。','ここで待ってください。','ここで待ちましょう。'],
+  ['use this computer','uses this computer','using this computer','このコンピューターを使いなさい。','このコンピューターを使ってはいけません。','このコンピューターを使ってください。','このコンピューターを使いましょう。'],
+  ['go to the library','goes to the library','going to the library','図書館へ行きなさい。','図書館へ行ってはいけません。','図書館へ行ってください。','図書館へ行きましょう。'],
+];
+// be動詞の命令文 [正しい英文, 日本語, まちがい3つ]
+const IM_BE = [
+  ['Be careful.','気をつけなさい。',['Are careful.','Is careful.','Careful.']],
+  ['Be quiet.','静かにしなさい。',['Are quiet.','Quiet be.','Is quiet.']],
+  ['Be kind to your friends.','友だちに親切にしなさい。',['Are kind to your friends.','Kind to your friends.','Is kind to your friends.']],
+  ['Don’t be late.','遅れてはいけません。',['Don’t late.','Not be late.','Don’t are late.']],
+  ['Don’t be afraid.','こわがってはいけません。',['Don’t afraid.','Be not afraid.','Don’t are afraid.']],
+  ['Please be careful.','どうぞ気をつけてください。',['Please are careful.','Please careful.','Please is careful.']],
+];
+const IM_F = ['命令','否定','ていねい','誘い'];
+const imEn = (x,k) => k===0 ? `${capFirst(x[0])}.` : k===1 ? `Don’t ${x[0]}.` : k===2 ? `Please ${x[0]}.` : `Let’s ${x[0]}.`;
+const imJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+Object.assign(G, {
+  imMake(){ const x=pick(IM_S), ok=imEn(x,0);
+    return { prompt:'英語にすると？', expr:x[3], en:true, words:true, choices:shuffle([ok, `${capFirst(x[1])}.`, `${capFirst(x[2])}.`, `To ${x[0]}.`]), answer:ok,
+      hint:'命令文は主語を言わずに、動詞の原形で始めます。', explain:`動詞の原形 ${x[0].split(' ')[0]} で始めて ${ok}`, viz:null }; },
+  imBe(){ const x=pick(IM_BE);
+    return { prompt:'英語にすると？', expr:x[1], en:true, words:true, choices:shuffle([x[0],...x[2]]), answer:x[0],
+      hint:'be動詞の命令文は、原形の Be で始めます。否定は Don’t be 〜。', explain:`${x[0]}<br>${/Don/.test(x[0])?'Don’t の後ろも原形の be。':'am・is・are の原形は be。'}`, viz:null }; },
+  imForm(){ const x=pick(IM_S), k=Math.floor(Math.random()*4), ok=imEn(x,k);
+    return { prompt:'英語にすると？', expr:x[3+k], en:true, words:true, choices:[0,1,2,3].map(i=>imEn(x,i)), answer:ok,
+      hint:'〜しなさい→原形、〜してはいけません→Don’t、〜してください→Please、〜しましょう→Let’s。', explain:`「${x[3+k]}」は${['命令文（原形で始める）','否定の命令文（Don’t ＋ 原形）','ていねいな命令文（Please ＋ 原形）','誘う文（Let’s ＋ 原形）'][k]}。<br>${ok}`, viz:null }; },
+  imEJ(){ const x=pick(IM_S), k=Math.floor(Math.random()*4), en=Math.random()<.3&&k===2?`${capFirst(x[0])}, please.`:imEn(x,k);
+    return { prompt:'日本語の意味は？', expr:en, enExpr:true, words:true, choices:[3,4,5,6].map(i=>x[i]), answer:x[3+k],
+      hint:'文の最初の語に注目しよう。', explain:`${en}<br>→ ${x[3+k]}`, viz:null }; },
+  imLet(){ const x=pick(IM_S), ok=imEn(x,3);
+    return { prompt:'英語にすると？', expr:x[6], en:true, words:true, choices:shuffle([ok, `Let’s ${x[1]}.`, `Let’s to ${x[0]}.`, `Let’s ${x[2]}.`]), answer:ok,
+      hint:'Let’s ＋ 動詞の原形。', explain:`Let’s の後ろは原形の ${x[0].split(' ')[0]}。<br>${ok}`, viz:null }; },
+  imLetAns(){ const x=pick(IM_S), yes=Math.random()<.5, sh=Math.random()<.4, q=sh?`Shall we ${x[0]}?`:imEn(x,3), ok=yes?'Yes, let’s.':'No, let’s not.';
+    return { prompt:`${yes?'「はい、そうしましょう」':'「いいえ、やめましょう」'}と答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle(yes?[ok,'Yes, please.','Yes, I do.','Yes, we shall.']:[ok,'No, thank you.','No, I don’t.','No, let’s don’t.']), answer:ok,
+      hint:'Let’s 〜.・Shall we 〜? への答えは Yes, let’s. ／ No, let’s not.', explain:`${sh?'Shall we 〜? は Let’s 〜. とほぼ同じ意味。':''}答えは ${ok}`, viz:null }; },
+});
+
+const IM_LESSONS = [
+  { id:'10-1', t:'命令文とは', sub:'〜しなさい', plan:['imMake','imMake','imMake','imBe','imBe'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('<b>Help</b> your mother.','お母さんを手伝いなさい。')}${beEx('<b>Let’s sing</b> a song. — Yes, let’s.','歌を歌いましょう。— はい、そうしましょう。')}</section>
+    <section class="panel"><h3>命令文</h3>${rule('主語を言わずに、動詞の原形で始める<br>→「〜しなさい」')}
+    ${beEx('You sing a song.','あなたは歌を歌います。')}<p style="text-align:center">↓</p>${beEx('<b>Sing</b> a song.','歌を歌いなさい。')}
+    <p class="small muted">相手（you）に向かって言うので、主語の you は言いません。</p></section>
+    <section class="panel"><h3>be動詞の命令文</h3>${rule('am・is・are の原形 Be で始める<br>→「…になりなさい」「…でいなさい」')}
+    ${beEx('You are careful.','あなたは注意深いです。')}<p style="text-align:center">↓</p>${beEx('<b>Be</b> careful.','気をつけなさい。')}
+    ${beEx('<b>Be</b> quiet.','静かにしなさい。')}</section>
+    <section class="panel"><h3>よくある間違い</h3><p><b style="color:var(--bad)">×</b> Sings a song.　<b style="color:var(--bad)">×</b> Are careful.<br><b style="color:var(--good)">〇</b> Sing a song.　<b style="color:var(--good)">〇</b> Be careful.</p></section>` },
+  { id:'10-2', t:'表', sub:'命令文のいろいろな形', plan:['imForm','imForm','imForm','imForm','imForm'], body:()=>`
+    <section class="panel"><h3>命令文の形</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th>形</th><th>一般動詞</th><th>be動詞</th></tr>
+    <tr><td>動詞の原形 〜.<br><span class="small">〜しなさい</span></td><td><b>Sing</b> a song.</td><td><b>Be</b> careful.</td></tr>
+    <tr><td>Don’t ＋ 原形 〜.<br><span class="small">〜してはいけません</span></td><td><b>Don’t sing</b> a song.</td><td><b>Don’t be</b> late.</td></tr>
+    <tr><td>Please ＋ 原形 〜.<br>＝ 原形 〜, please.<br><span class="small">（どうぞ）〜してください</span></td><td><b>Please</b> sing a song.<br>＝ Sing a song<b>, please</b>.</td><td><b>Please</b> be careful.<br>＝ Be careful<b>, please</b>.</td></tr>
+    <tr><td>Let’s ＋ 原形 〜.<br><span class="small">〜しましょう</span></td><td colspan="2"><b>Let’s sing</b> a song.<br>— Yes, let’s. ／ No, let’s not.</td></tr></table>
+    <p class="small muted">please を文の終わりに付けるときは、前にコンマ（,）を入れます。</p></section>` },
+  { id:'10-3', t:'例文', sub:'命令文を読もう', plan:['imEJ','imEJ','imEJ','imBe','imForm'], body:()=>`
+    <section class="panel"><h3>〜しなさい</h3>${beEx('<b>Open</b> the window.','窓を開けなさい。')}${beEx('<b>Clean</b> the room.','部屋をそうじしなさい。')}${beEx('Ken, <b>help</b> your mother.','ケン、お母さんを手伝いなさい。')}
+    <p class="small muted">呼びかける人の名前は、文の最初か最後にコンマで区切って置きます。</p></section>
+    <section class="panel"><h3>〜してはいけません</h3>${beEx('<b>Don’t eat</b> lunch here.','ここで昼食を食べてはいけません。')}${beEx('<b>Don’t take</b> a picture.','写真をとってはいけません。')}${beEx('<b>Don’t be</b> late.','遅れてはいけません。')}</section>
+    <section class="panel"><h3>〜してください</h3>${beEx('<b>Please</b> wait here.','ここで待ってください。')}${beEx('Speak English<b>, please</b>.','英語を話してください。')}${beEx('<b>Please be</b> careful.','どうぞ気をつけてください。')}</section>
+    <section class="panel"><h3>〜しましょう</h3>${beEx('<b>Let’s go</b> to the library.','図書館へ行きましょう。')}${beEx('<b>Let’s play</b> soccer in the park.','公園でサッカーをしましょう。')}</section>` },
+  { id:'10-4', t:'誘う文', sub:'Let’s 〜.', plan:['imLet','imLet','imLetAns','imLetAns','imLetAns'], body:()=>`
+    <section class="panel"><h3>Let’s 〜.</h3>${rule('Let’s ＋ 動詞の原形 〜.<br>→「〜しましょう」')}
+    ${beEx('<b>Let’s sing</b> a song.','歌を歌いましょう。')}</section>
+    <section class="panel"><h3>答え方</h3>
+    ${beEx('— Yes, <b>let’s</b>.','はい、そうしましょう。')}${beEx('— No, <b>let’s not</b>.','いいえ、やめましょう。')}
+    <p class="small muted">Sure. ／ OK. ／ Sounds good. などで答えることもあります。</p></section>
+    <section class="panel"><h3>Shall we 〜? とくらべよう</h3>
+    ${beEx('<b>Let’s</b> take a picture.','写真をとりましょう。')}${beEx('<b>Shall we</b> take a picture?','写真をとりましょうか。')}
+    <p class="small muted">どちらも相手を誘う言い方で、答え方も同じ（Yes, let’s. ／ No, let’s not.）です。</p>
+    ${beEx('<b>Shall I</b> take a picture?','（私が）写真をとりましょうか。')}${beEx('<b>May I</b> take a picture?','写真をとってもいいですか。')}
+    <p class="small muted">Shall I 〜? は自分が申し出る言い方、May I 〜? は許可を求める言い方です。</p></section>` },
 ];
 
 
@@ -11311,7 +11396,7 @@ const UNITS = {
   irr:{ drill:'irr', no:'動1', title:'動詞の不規則変化', subject:'英語', course:'jen', subj:0, lessons:IRR_LESSONS },
   be:{ no:'文1', title:'be動詞', subject:'英語', course:'jen', subj:1, lessons:BE_LESSONS },
   gv:{ no:'文2', title:'一般動詞', subject:'英語', course:'jen', subj:1, lessons:GV_LESSONS },
-  qw:{ no:'文10', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
+  qw:{ no:'文11', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
   past:{ no:'文5', title:'過去形', subject:'英語', course:'jen', subj:1, lessons:PT_LESSONS },
   pl:{ no:'文3', title:'名詞の複数形', subject:'英語', course:'jen', subj:1, lessons:PL_LESSONS },
   pr:{ no:'文4', title:'代名詞', subject:'英語', course:'jen', subj:1, lessons:PR_LESSONS },
@@ -11320,6 +11405,7 @@ const UNITS = {
   futr:{ no:'文8', title:'未来', subject:'英語', course:'jen', subj:1, lessons:FT_LESSONS },
   rv1:{ no:'💧1', title:'現在・過去・未来', subject:'英語', course:'jen', subj:1, lessons:RV1_LESSONS },
   aux:{ no:'文9', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:AX_LESSONS },
+  imp:{ no:'文10', title:'命令文', subject:'英語', course:'jen', subj:1, lessons:IM_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
