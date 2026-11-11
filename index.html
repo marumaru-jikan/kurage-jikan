@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'疑問詞', ready:'qw' },'命令文','can','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'疑問詞', ready:'qw' },'命令文','接続詞','不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -1833,7 +1833,7 @@ Object.assign(G, {
 
 const qwRow = (w, m, q, a) => `<tr><td><b>${w}</b></td><td>${m}</td><td style="text-align:left" class="bex"><span class="en" style="font-size:1rem">${q}<br>— ${a}</span></td></tr>`;
 const QW_LESSONS = [
-  { id:'9-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
+  { id:'10-1', t:'疑問詞とは', sub:'疑問詞の種類と文の形', plan:['qwMean','qwMean','qwMean','qwOrd','qwOrd'], body:()=>`
     <section class="panel"><h3>疑問詞</h3>${rule('「何」「だれ」「いつ」「どこ」などをたずねる語')}
     <table class="dtab"><tr><th>疑問詞</th><th>意味</th></tr>
     ${QW_ALL.map(w=>`<tr><td><b>${w.toLowerCase()}</b></td><td>${QW_M[w]}</td></tr>`).join('')}</table></section>
@@ -1848,7 +1848,7 @@ const QW_LESSONS = [
     ${beEx('<b>How many</b> songs did he write? — He wrote ten.','彼は曲をいくつ書きましたか。— 10曲書きました。')}</section>
     <section class="panel"><h3>答え方</h3>${rule('Yes・No ではなく、たずねられたことを具体的に答える')}
     ${beEx('What is this? — It is <b>a dictionary</b>.','これは何ですか。— 辞書です。')}</section>` },
-  { id:'9-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
+  { id:'10-2', t:'what・which', sub:'何・どれ', plan:['qwWh','qwWh','qwWh','qwWhA','qwWhA'], body:()=>`
     <section class="panel"><h3>what・which</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('what','何','What is this?','It is <b>a dictionary</b>.')}
@@ -1859,7 +1859,7 @@ const QW_LESSONS = [
     <section class="panel"><h3>which は「選ぶ」</h3>${beEx('<b>Which</b> do you want, tea or coffee?','紅茶とコーヒーでは、どちらがほしいですか。')}
     <p class="small muted">いくつかの中から選ぶときは which を使います。</p></section>
     <section class="panel"><h3>時刻・天気など</h3><p>時刻・日付・天気・寒暖を表す文では、<b>it</b> を主語にします。</p>${beEx('What time is it? — <b>It</b> is five.','何時ですか。— 5時です。')}</section>` },
-  { id:'9-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
+  { id:'10-3', t:'who・whose', sub:'だれ・だれの', plan:['qwWho','qwWho','qwWho','qwWhoA','qwWhoA'], body:()=>`
     <section class="panel"><h3>who・whose</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('who','だれ','Who is your English teacher?','<b>Ms. Brown</b> is.')}
@@ -1870,7 +1870,7 @@ const QW_LESSONS = [
     ${beEx('<b>Who made</b> this cake? — My sister <b>did</b>.','だれがこのケーキを作りましたか。— 姉です。')}
     <p class="small muted">答えは「主語 ＋ does（do・did）.」の形にします。</p></section>
     <section class="panel"><h3>「〜のもの」</h3><table class="dtab"><tr><th>私の</th><th>私のもの</th></tr><tr><td>my</td><td><b>mine</b></td></tr><tr><td>your</td><td><b>yours</b></td></tr><tr><td>Ken’s</td><td><b>Ken’s</b></td></tr></table></section>` },
-  { id:'9-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
+  { id:'10-4', t:'when・where・why・how', sub:'いつ・どこ・なぜ・どのように', plan:['qwWw','qwWw','qwWw','qwWwA','qwWwA'], body:()=>`
     <section class="panel"><h3>when・where・why・how</h3>
     <table class="dtab"><tr><th></th><th>意味</th><th>例</th></tr>
     ${qwRow('when','いつ','When did you visit Niigata?','I visited there <b>two weeks ago</b>.')}
@@ -1882,7 +1882,7 @@ const QW_LESSONS = [
     ${beEx('Why do you go to Nara? — <b>To</b> see my friend.','なぜ奈良へ行くのですか。— 友だちに会うためです。')}</section>
     <section class="panel"><h3>how のいろいろな意味</h3>
     ${beEx('<b>How</b> do you come to school? — By bike.','どうやって学校に来ますか。（方法）')}${beEx('<b>How</b> is the weather? — It is sunny.','天気はどうですか。（ようす）')}${beEx('<b>How</b> are you? — I am fine.','元気ですか。（調子）')}</section>` },
-  { id:'9-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
+  { id:'10-5', t:'how＋語', sub:'数・値段・長さなどをたずねる', plan:['qwHow','qwHow','qwHow','qwHowA','qwHowA'], body:()=>`
     <section class="panel"><h3>how＋語</h3>
     <table class="dtab"><tr><th>たずねること</th><th>how＋語</th></tr>
     <tr><td>数</td><td><b>how many</b>＋名詞の複数形（いくつの〜）</td></tr>
@@ -2649,14 +2649,289 @@ const RV1_LESSONS = [
   { id:'1-1', t:'ランダム問題', sub:'現在・過去・未来の総まとめ', test:true, plan:Array(20).fill('rv1Mix'), body:()=>`
     <section class="panel"><h3>現在・過去・未来のまとめ</h3>
     <table class="dtab"><tr><th></th><th>be動詞</th><th>一般動詞</th></tr>
-    <tr><td>現在</td><td>He <b>is</b> busy.</td><td>He <b>plays</b> tennis.</td></tr>
     <tr><td>過去</td><td>He <b>was</b> busy.</td><td>He <b>played</b> tennis.</td></tr>
-    <tr><td>現在進行形</td><td colspan="2">He <b>is playing</b> tennis now.</td></tr>
     <tr><td>過去進行形</td><td colspan="2">He <b>was playing</b> tennis then.</td></tr>
+    <tr><td>現在</td><td>He <b>is</b> busy.</td><td>He <b>plays</b> tennis.</td></tr>
+    <tr><td>現在進行形</td><td colspan="2">He <b>is playing</b> tennis now.</td></tr>
     <tr><td>未来</td><td colspan="2">He <b>is going to play</b> tennis.<br>He <b>will play</b> tennis tomorrow.</td></tr></table></section>
     <section class="panel"><h3>時を表す言葉に注目</h3>
-    <div class="kwl"><div><b>every 〜・usually</b><span>現在（ふだんのこと）</span></div><div><b>now・Look!</b><span>現在進行形</span></div><div><b>yesterday・last 〜・〜 ago</b><span>過去</span></div><div><b>then・when 〜</b><span>過去進行形</span></div><div><b>tomorrow・next 〜</b><span>未来</span></div></div>
+    <div class="kwl"><div><b>yesterday・last 〜・〜 ago</b><span>過去</span></div><div><b>then・when 〜</b><span>過去進行形</span></div><div><b>every 〜・usually</b><span>現在（ふだんのこと）</span></div><div><b>now・Look!</b><span>現在進行形</span></div><div><b>tomorrow・next 〜</b><span>未来</span></div></div>
     <p class="small muted">1章〜8章の問題から、毎回ちがう20問がランダムに出ます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 9章 助動詞 ===== */
+// 意味を選ぶ問題 [英文, 正しい日本語, まちがい1, まちがい2, まちがい3, ポイント]
+const AX_CAN = [
+  ['John can play the guitar well.','ジョンは上手にギターを弾くことができます。','ジョンは上手にギターを弾いてもいいです。','ジョンは上手にギターを弾くべきです。','ジョンは上手にギターを弾かなければなりません。','能力「〜することができる」の can。'],
+  ['Can I use your pen?','あなたのペンを使ってもいいですか。','あなたのペンを使ってくれませんか。','あなたのペンを使うべきですか。','あなたのペンを使わなければなりませんか。','Can I 〜? は許可を求める「〜してもいいですか」。'],
+  ['Can you help me?','私を手伝ってくれませんか。','私を手伝ってもいいですか。','私を手伝うべきですか。','私を手伝わなければなりませんか。','Can you 〜? は依頼「〜してくれませんか」。'],
+  ['My sister can swim fast.','私の妹は速く泳ぐことができます。','私の妹は速く泳いでもいいです。','私の妹は速く泳がなければなりません。','私の妹は速く泳ぐかもしれません。','能力「〜することができる」の can。'],
+  ['You can go home now.','あなたはもう家に帰ってもいいです。','あなたはもう家に帰らなければなりません。','あなたはもう家に帰るべきです。','あなたはもう家に帰るかもしれません。','許可「〜してもいい」の can。'],
+  ['I can’t speak French.','私はフランス語を話すことができません。','私はフランス語を話してはいけません。','私はフランス語を話さなくてもいいです。','私はフランス語を話すべきではありません。','can’t（cannot）は「〜することができない」。'],
+  ['Can you open the window?','窓を開けてくれませんか。','窓を開けてもいいですか。','窓を開けなければなりませんか。','窓を開けるべきですか。','Can you 〜? は依頼「〜してくれませんか」。'],
+  ['I could run fast when I was young.','私は若いころ、速く走ることができました。','私は若いころ、速く走ってもよかったです。','私は若いころ、速く走らなければなりませんでした。','私は若いころ、速く走るべきでした。','could は can の過去形「〜することができた」。'],
+];
+const AX_MAY = [
+  ['May I sit here? — Sure.','ここに座ってもいいですか。— いいですよ。','ここに座ってくれませんか。— いいですよ。','ここに座らなければなりませんか。— いいですよ。','ここに座るべきですか。— いいですよ。','May I 〜? は許可を求める「〜してもいいですか」。'],
+  ['You may use this room.','あなたはこの部屋を使ってもいいです。','あなたはこの部屋を使わなければなりません。','あなたはこの部屋を使うべきです。','あなたはこの部屋を使うことができません。','許可「〜してもいい」の may。'],
+  ['It may rain this afternoon.','今日の午後、雨が降るかもしれません。','今日の午後、雨が降ってもいいです。','今日の午後、雨が降らなければなりません。','今日の午後、雨が降るにちがいありません。','推量「〜かもしれない」の may。'],
+  ['He may be at home.','彼は家にいるかもしれません。','彼は家にいてもいいです。','彼は家にいなければなりません。','彼は家にいるべきです。','推量「〜かもしれない」の may。'],
+  ['May I ask a question?','質問してもいいですか。','質問してくれませんか。','質問しなければなりませんか。','質問するべきですか。','May I 〜? は許可を求める「〜してもいいですか」。'],
+  ['She may come to the party.','彼女はパーティーに来るかもしれません。','彼女はパーティーに来なければなりません。','彼女はパーティーに来るべきです。','彼女はパーティーに来ることができません。','推量「〜かもしれない」の may。'],
+  ['You may not swim here.','ここで泳いではいけません。','ここで泳がなくてもいいです。','ここで泳ぐことができます。','ここで泳ぐべきです。','may not は「〜してはいけない」（許可しない）。'],
+  ['The story may be true.','その話は本当かもしれません。','その話は本当でなければなりません。','その話は本当にちがいありません。','その話は本当であるべきです。','推量「〜かもしれない」の may。'],
+];
+const AX_MUST = [
+  ['Kate must work today.','ケイトは今日、働かなければなりません。','ケイトは今日、働いてはいけません。','ケイトは今日、働かなくてもいいです。','ケイトは今日、働くかもしれません。','義務「〜しなければならない」の must。'],
+  ['You must not drive a car.','あなたは車を運転してはいけません。','あなたは車を運転しなくてもいいです。','あなたは車を運転しなければなりません。','あなたは車を運転するかもしれません。','must not は禁止「〜してはいけない」。'],
+  ['We must clean our classroom.','私たちは教室をそうじしなければなりません。','私たちは教室をそうじしてはいけません。','私たちは教室をそうじしなくてもいいです。','私たちは教室をそうじするかもしれません。','義務「〜しなければならない」の must。'],
+  ['You mustn’t run in the hallway.','ろうかを走ってはいけません。','ろうかを走らなくてもいいです。','ろうかを走らなければなりません。','ろうかを走るかもしれません。','mustn’t（must not）は禁止「〜してはいけない」。'],
+  ['He must be tired.','彼は疲れているにちがいありません。','彼は疲れていなければなりません。','彼は疲れていてはいけません。','彼は疲れていなくてもいいです。','強い推量「〜にちがいない」の must。'],
+  ['That must be Ken’s bag.','あれはケンのかばんにちがいありません。','あれはケンのかばんでなければなりません。','あれはケンのかばんであってはいけません。','あれはケンのかばんでなくてもいいです。','強い推量「〜にちがいない」の must。'],
+  ['You must finish your homework by Friday.','あなたは金曜日までに宿題を終えなければなりません。','あなたは金曜日までに宿題を終えてはいけません。','あなたは金曜日までに宿題を終えなくてもいいです。','あなたは金曜日までに宿題を終えるかもしれません。','義務「〜しなければならない」の must。'],
+];
+const AX_HAVE = [
+  ['You don’t have to work today.','あなたは今日、働かなくてもいいです。','あなたは今日、働いてはいけません。','あなたは今日、働かなければなりません。','あなたは今日、働くべきではありません。','don’t have to は「〜しなくてもいい（必要はない）」。must not とのちがいに注意。'],
+  ['She doesn’t have to cook dinner.','彼女は夕食を作らなくてもいいです。','彼女は夕食を作ってはいけません。','彼女は夕食を作らなければなりません。','彼女は夕食を作るべきではありません。','doesn’t have to は「〜しなくてもいい」。'],
+  ['We didn’t have to go to school yesterday.','私たちは昨日、学校へ行かなくてもよかったです。','私たちは昨日、学校へ行ってはいけませんでした。','私たちは昨日、学校へ行かなければなりませんでした。','私たちは昨日、学校へ行くべきではありませんでした。','didn’t have to は「〜しなくてもよかった」。'],
+  ['I have to practice the piano.','私はピアノを練習しなければなりません。','私はピアノを練習しなくてもいいです。','私はピアノを練習してはいけません。','私はピアノを練習するかもしれません。','have to は「〜しなければならない」。'],
+  ['Ken has to clean his room.','ケンは自分の部屋をそうじしなければなりません。','ケンは自分の部屋をそうじしなくてもいいです。','ケンは自分の部屋をそうじしてはいけません。','ケンは自分の部屋をそうじするかもしれません。','主語が三人称単数なので has to。「〜しなければならない」。'],
+  ['They had to wait for the bus.','彼らはバスを待たなければなりませんでした。','彼らはバスを待たなくてもよかったです。','彼らはバスを待ってはいけませんでした。','彼らはバスを待つかもしれません。','had to は「〜しなければならなかった」。'],
+];
+const AX_SHOULD = [
+  ['You should help your mother.','あなたはお母さんを手伝うべきです。','あなたはお母さんを手伝ってもいいです。','あなたはお母さんを手伝うかもしれません。','あなたはお母さんを手伝うことができます。','should は「〜すべきだ」。'],
+  ['You should go to bed early.','あなたは早く寝るべきです。','あなたは早く寝てもいいです。','あなたは早く寝るかもしれません。','あなたは早く寝ることができます。','should は「〜すべきだ（〜したほうがいい）」。'],
+  ['We should read many books.','私たちはたくさんの本を読むべきです。','私たちはたくさんの本を読んでもいいです。','私たちはたくさんの本を読むかもしれません。','私たちはたくさんの本を読むことができます。','should は「〜すべきだ」。'],
+  ['You shouldn’t eat too much.','あなたは食べすぎるべきではありません。','あなたは食べすぎなくてもいいです。','あなたは食べすぎることができません。','あなたは食べすぎるかもしれません。','shouldn’t は「〜すべきではない」。'],
+  ['What should I do?','私は何をするべきですか。','私は何をしてもいいですか。','私は何ができますか。','私は何をするかもしれませんか。','疑問詞 ＋ should I 〜? は「何を〜すべきですか」。'],
+  ['Students should be kind to each other.','生徒はおたがいに親切にするべきです。','生徒はおたがいに親切にしてもいいです。','生徒はおたがいに親切にできます。','生徒はおたがいに親切かもしれません。','should は「〜すべきだ」。be は be動詞の原形。'],
+];
+const AX_WILL = [
+  ['He will play the guitar tomorrow.','彼は明日、ギターを弾くでしょう。','彼は明日、ギターを弾くべきです。','彼は明日、ギターを弾かなければなりません。','彼は明日、ギターを弾いてもいいです。','推量「〜するでしょう」の will。'],
+  ['I will help you.','私があなたを手伝います。','私はあなたを手伝うべきです。','私はあなたを手伝ってもいいです。','私はあなたを手伝わなければなりません。','意志「〜します（するつもりです）」の will。'],
+  ['It will be sunny tomorrow.','明日は晴れるでしょう。','明日は晴れなければなりません。','明日は晴れるべきです。','明日は晴れてもいいです。','推量「〜するでしょう」の will。'],
+  ['I’ll call you tonight.','今夜あなたに電話します。','今夜あなたに電話するべきです。','今夜あなたに電話してもいいです。','今夜あなたに電話しなければなりません。','I’ll ＝ I will。意志「〜します」。'],
+  ['Will you open the door?','ドアを開けてくれませんか。','ドアを開けてもいいですか。','ドアを開けるべきですか。','ドアを開けなければなりませんか。','Will you 〜? は依頼「〜してくれませんか」。'],
+  ['She won’t come to the party.','彼女はパーティーに来ないでしょう。','彼女はパーティーに来てはいけません。','彼女はパーティーに来なくてもいいです。','彼女はパーティーに来るべきではありません。','won’t ＝ will not。「〜しないでしょう」。'],
+  ['Would you help me?','私を手伝っていただけませんか。','私を手伝ってもいいですか。','私を手伝うべきですか。','私を手伝わなければなりませんか。','Would you 〜? はていねいな依頼「〜していただけませんか」。'],
+];
+// can と may の使い分け [日本語, 英文, 答え, ポイント]
+const AX_CM = [
+  ['ジョンは上手にギターを弾くことができます。','John □ play the guitar well.','can','能力「〜できる」→ can。'],
+  ['明日は雪が降るかもしれません。','It □ snow tomorrow.','may','推量「〜かもしれない」→ may。'],
+  ['窓を開けてくれませんか。','□ you open the window?','Can','依頼「〜してくれませんか」→ Can you 〜?'],
+  ['彼は病気かもしれません。','He □ be sick.','may','推量「〜かもしれない」→ may。'],
+  ['私は100メートルを12秒で走ることができます。','I □ run 100 meters in 12 seconds.','can','能力「〜できる」→ can。'],
+  ['（先生に）入ってもよろしいですか。','□ I come in?','May','ていねいに許可を求める → May I 〜?（Can I 〜? よりていねい）'],
+  ['鳥は空を飛ぶことができます。','Birds □ fly.','can','能力「〜できる」→ can。'],
+  ['彼女は遅れて来るかもしれません。','She □ come late.','may','推量「〜かもしれない」→ may。'],
+];
+// must・have to・should の使い分け
+const AX_OBL = [
+  ['あなたは車を運転してはいけません。','You □ drive a car.','must not','禁止「〜してはいけない」→ must not。'],
+  ['あなたは車を運転しなくてもいいです。','You □ drive a car.','don’t have to','「〜しなくてもいい」→ don’t have to。'],
+  ['私たちは規則を守らなければなりません。','We □ follow the rules.','must','義務「〜しなければならない」→ must。'],
+  ['あなたは医者にみてもらうべきです。','You □ see a doctor.','should','「〜すべきだ」→ should。'],
+  ['ここで写真をとってはいけません。','You □ take pictures here.','must not','禁止「〜してはいけない」→ must not。'],
+  ['明日は日曜日なので、早く起きなくてもいいです。','You □ get up early tomorrow.','don’t have to','「〜しなくてもいい」→ don’t have to。'],
+  ['あなたはもっと野菜を食べるべきです。','You □ eat more vegetables.','should','「〜すべきだ」→ should。'],
+  ['私はこの本を今日中に返さなければなりません。','I □ return this book today.','must','義務「〜しなければならない」→ must。'],
+  ['あなたは急がなくてもいいです。','You □ hurry.','don’t have to','「〜しなくてもいい」→ don’t have to。'],
+  ['授業中に話してはいけません。','You □ talk in class.','must not','禁止「〜してはいけない」→ must not。'],
+];
+// have to の形 [英文, 日本語, 答え]
+const AX_HV = [
+  ['I □ work today.','私は今日、働かなければなりません。','have to'],
+  ['Ken □ get up early every day.','ケンは毎日早く起きなければなりません。','has to'],
+  ['We □ wear a uniform at school.','私たちは学校で制服を着なければなりません。','have to'],
+  ['She □ study last night.','彼女は昨夜、勉強しなければなりませんでした。','had to'],
+  ['My father □ go to Tokyo yesterday.','父は昨日、東京へ行かなければなりませんでした。','had to'],
+  ['Yui □ help her mother every Sunday.','ユイは毎週日曜日、母を手伝わなければなりません。','has to'],
+  ['They □ wait for the bus for an hour yesterday.','彼らは昨日、1時間バスを待たなければなりませんでした。','had to'],
+  ['You □ take off your shoes here.','ここではくつをぬがなければなりません。','have to'],
+];
+// be able to の形
+const AX_AB = [
+  ['I □ able to swim.','私は泳ぐことができます。','am'],
+  ['Ken □ able to speak English.','ケンは英語を話すことができます。','is'],
+  ['They □ able to run fast.','彼らは速く走ることができます。','are'],
+  ['She □ able to answer the question yesterday.','彼女は昨日、その質問に答えることができました。','was'],
+  ['We □ able to see the stars last night.','私たちは昨夜、星を見ることができました。','were'],
+  ['You □ able to ski next year.','あなたは来年、スキーができるようになるでしょう。','will be'],
+  ['My brother □ able to drive a car.','私の兄は車を運転することができます。','is'],
+  ['I □ able to finish the work last week.','私は先週その仕事を終えることができました。','was'],
+  ['He □ able to read this book soon.','彼はすぐにこの本が読めるようになるでしょう。','will be'],
+];
+// 助動詞の後ろは原形 [主語＋助動詞, 原形, 三単現, ing, 過去形, 残り, 日本語]
+const AX_B = [
+  ['He can','play','plays','playing','played','the piano.','彼はピアノを弾くことができます。'],
+  ['She must','go','goes','going','went','home now.','彼女は今、家に帰らなければなりません。'],
+  ['You should','study','studies','studying','studied','hard.','あなたは一生けんめい勉強するべきです。'],
+  ['It may','rain','rains','raining','rained','tomorrow.','明日は雨が降るかもしれません。'],
+  ['Ken will','come','comes','coming','came','soon.','ケンはすぐに来るでしょう。'],
+  ['My mother can','make','makes','making','made','a cake.','母はケーキを作ることができます。'],
+  ['He has to','write','writes','writing','wrote','a letter.','彼は手紙を書かなければなりません。'],
+  ['We should','be','are','being','were','quiet here.','ここでは静かにするべきです。'],
+  ['She can’t','swim','swims','swimming','swam','well.','彼女は上手に泳げません。'],
+];
+// 疑問文 [日本語, 正しい英文, まちがい3つ]
+const AX_Q = [
+  ['ここに座ってもいいですか。','May I sit here?',['May I sitting here?','Do I may sit here?','I may sit here?']],
+  ['あなたは泳ぐことができますか。','Can you swim?',['Do you can swim?','Can you swimming?','You can swim?']],
+  ['私は今日、働かなければなりませんか。','Must I work today?',['Do I must work today?','Must I working today?','I must work today?']],
+  ['私は今日、働かなければなりませんか。','Do I have to work today?',['Have I to work today?','Do I have work today?','Does I have to work today?']],
+  ['ケンは早く起きなければなりませんか。','Does Ken have to get up early?',['Does Ken has to get up early?','Has Ken to get up early?','Do Ken have to get up early?']],
+  ['私は何をするべきですか。','What should I do?',['What I should do?','What should I doing?','What do I should do?']],
+  ['（私が）手伝いましょうか。','Shall I help you?',['Shall you help me?','Do I shall help you?','Shall I helping you?']],
+  ['（いっしょに）歌を歌いましょうか。','Shall we sing a song?',['Shall I sing a song?','Do we shall sing a song?','Shall we singing a song?']],
+  ['窓を開けてくれませんか。','Will you open the window?',['Do you will open the window?','Will you opening the window?','Will I open the window?']],
+  ['彼は来るでしょうか。','Will he come?',['Does he will come?','Will he comes?','Will he coming?']],
+];
+// 答え方 [疑問文, はい, いいえ, まちがい(はい), まちがい(いいえ), ポイント]
+const AX_A = [
+  ['Can you swim?','Yes, I can.','No, I can’t.',['Yes, I do.','Yes, you can.'],['No, I don’t.','No, I mustn’t.'],'Can でたずねられたら can で答えます。'],
+  ['Must I work today?','Yes, you must.','No, you don’t have to.',['Yes, I must.','Yes, you do.'],['No, you must not.','No, you mustn’t.'],'「いいえ」は「〜しなくてもいい」なので don’t have to。must not（してはいけない）ではありません。'],
+  ['Do I have to work today?','Yes, you do.','No, you don’t.',['Yes, you have.','Yes, you are.'],['No, you must not.','No, you haven’t.'],'Do 〜 have to? には do・don’t で答えます。'],
+  ['Does Ken have to get up early?','Yes, he does.','No, he doesn’t.',['Yes, he has.','Yes, he do.'],['No, he don’t.','No, he mustn’t.'],'Does 〜 have to? には does・doesn’t で答えます。'],
+  ['Shall I help you?','Yes, please.','No, thank you.',['Yes, let’s.','Yes, you shall.'],['No, let’s not.','No, you don’t.'],'Shall I 〜?（申し出）には Yes, please. ／ No, thank you.'],
+  ['Shall we sing a song?','Yes, let’s.','No, let’s not.',['Yes, please.','Yes, we shall.'],['No, thank you.','No, we don’t.'],'Shall we 〜?（さそい）には Yes, let’s. ／ No, let’s not.'],
+  ['Should I go now?','Yes, you should.','No, you shouldn’t.',['Yes, I should.','Yes, you do.'],['No, I shouldn’t.','No, you don’t.'],'Should でたずねられたら should で答えます。'],
+  ['Will you open the window?','Sure.','Sorry, I can’t.',['Yes, I do.','Yes, you will.'],['No, I don’t.','No, you won’t.'],'Will you 〜?（依頼）には Sure. ／ All right. ／ Sorry, I can’t. などで答えます。'],
+];
+const axJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+function axJpG(pool){ const x=pick(pool);
+  return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],x[2],x[3],x[4]]), answer:x[1],
+    hint:'助動詞がどんな意味をそえているかに注目しよう。', explain:x[5], viz:null }; }
+function axPickG(pool, choices){ const x=pick(pool), cap=/^□/.test(x[1]), ch=choices.map(c=>cap?capFirst(c):c);
+  return { prompt:'□ に入るのは？', expr:x[1]+axJ(x[0]), enExpr:true, en:true, words:true, choices:ch, answer:x[2],
+    hint:'日本語の意味から、どの助動詞を使うかを考えよう。', explain:x[3], viz:null }; }
+Object.assign(G, {
+  axBase(){ const x=pick(AX_B);
+    return { prompt:'□ に入る形は？', expr:`${x[0]} □ ${x[5]}`+axJ(`（${x[1]}）${x[6]}`), enExpr:true, en:true, choices:shuffle([x[1],x[2],x[3],x[4]]), answer:x[1],
+      hint:'助動詞の後ろの動詞は、主語に関係なく原形。', explain:`${x[0].split(' ').slice(-1)[0]==='to'?'have to・has to':x[0].split(' ').slice(-1)[0]} の後ろは原形の ${x[1]}。`, viz:null }; },
+  axRight(){ const x=pick(AX_B.filter(y=>!/has to|can’t/.test(y[0]))), t=x[0].split(' '), m=t.pop(), s=t.join(' '), ok=`${s} ${m} ${x[1]} ${x[5]}`;
+    const opts=[ok, `${s} ${m} ${x[2]} ${x[5]}`, `${s} ${m}s ${x[1]} ${x[5]}`, `${s} ${m} to ${x[1]} ${x[5]}`];
+    return { prompt:'正しい英文は？', expr:x[6], en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'助動詞は主語が何でも同じ形。後ろは原形。to は付けない。', explain:`${m} ＋ 原形 ${x[1]}<br>${ok}`, viz:null }; },
+  axCan(){ return axJpG(AX_CAN); }, axMay(){ return axJpG(AX_MAY); }, axMust(){ return axJpG(AX_MUST); },
+  axHaveJ(){ return axJpG(AX_HAVE); }, axShould(){ return axJpG(AX_SHOULD); }, axWill(){ return axJpG(AX_WILL); },
+  axCM(){ return axPickG(AX_CM, ['can','may']); },
+  axObl(){ return axPickG(AX_OBL, ['must','must not','don’t have to','should']); },
+  axHave(){ const x=pick(AX_HV);
+    return { prompt:'□ に入るのは？', expr:x[0]+axJ(x[1]), enExpr:true, en:true, words:true, choices:['have to','has to','had to','having to'], answer:x[2],
+      hint:'主語が三人称単数なら has to、過去の文なら had to。', explain:x[2]==='had to'?'過去の文なので had to。':x[2]==='has to'?'主語が三人称単数なので has to。':'主語が I・you・複数なので have to。', viz:null }; },
+  axAble(){ const x=pick(AX_AB), ws=shuffle(['am','is','are','was','were','will be'].filter(w=>w!==x[2])).slice(0,3);
+    return { prompt:'□ に入るのは？', expr:x[0]+axJ(x[1]), enExpr:true, en:true, words:true, choices:shuffle([x[2],...ws]), answer:x[2],
+      hint:'be able to の be は、主語と時（現在・過去・未来）で変わります。', explain:x[2]==='will be'?'未来の文 → will be able to（will can とは言えません）。':/was|were/.test(x[2])?`過去の文 → ${x[2]} able to。`:`現在の文。主語に合わせて ${x[2]} able to。`, viz:null }; },
+  axQ(){ const x=pick(AX_Q);
+    return { prompt:'正しい疑問文は？', expr:x[0], en:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1],
+      hint:'助動詞を主語の前に出します。have to は Do・Does を使います。', explain:x[1], viz:null }; },
+  axAns(){ const x=pick(AX_A), yes=Math.random()<.5, ok=yes?x[1]:x[2], ws=yes?[x[2],...x[3]]:[x[1],...x[4]];
+    return { prompt:`${yes?'「はい」':'「いいえ」'}の答えとして正しいのは？`, expr:x[0], enExpr:true, en:true, words:true, choices:shuffle([ok,...ws]), answer:ok,
+      hint:'たずねられた助動詞を使って答えるのが基本です。', explain:x[5], viz:null }; },
+});
+const AX_ALL = ['axBase','axRight','axCan','axMay','axCM','axMust','axHave','axHaveJ','axShould','axObl','axWill','axAble','axQ','axAns'];
+G.axMix = () => G[pick(AX_ALL)]();
+
+const AX_LESSONS = [
+  { id:'9-1', t:'助動詞とは', sub:'動詞に意味をそえる語', plan:['axBase','axBase','axBase','axRight','axRight'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John <b>can play</b> the guitar well.','ジョンは上手にギターを弾くことができます。')}${beEx('<b>May</b> I <b>sit</b> here? — Sure.','ここに座ってもいいですか。— いいですよ。')}${beEx('Kate <b>must work</b> today.','ケイトは今日、働かなければなりません。')}${beEx('I <b>have to work</b> today.','私は今日、働かなければなりません。')}${beEx('You <b>don’t have to work</b> today.','あなたは今日、働かなくてもいいです。')}</section>
+    <section class="panel"><h3>助動詞</h3>${rule('助動詞 ＋ 動詞の原形<br>動詞に「できる」「してもいい」「しなければならない」などの意味をそえる')}
+    ${beEx('He <b>plays</b> the guitar.','彼はギターを弾きます。')}<p style="text-align:center">↓</p>${beEx('He <b>can play</b> the guitar.','彼はギターを弾くことができます。')}</section>
+    <section class="panel"><h3>3つのルール</h3>
+    <p>① どんな主語でも同じ形（<b style="color:var(--bad)">×</b> He cans）</p><p>② 後ろの動詞は原形（<b style="color:var(--bad)">×</b> He can plays）</p><p>③ 否定文は助動詞の後ろに not、疑問文は助動詞を主語の前に</p>
+    ${beEx('He <b>cannot</b>（can’t）play the guitar.','彼はギターを弾くことができません。')}${beEx('<b>Can</b> he play the guitar?','彼はギターを弾くことができますか。')}</section>
+    <section class="panel"><h3>おもな助動詞</h3><div class="kwl"><div><b>can</b><span>〜できる・〜してもいい</span></div><div><b>may</b><span>〜してもいい・〜かもしれない</span></div><div><b>must</b><span>〜しなければならない・〜にちがいない</span></div><div><b>should</b><span>〜すべきだ</span></div><div><b>will</b><span>〜するでしょう・〜します</span></div></div></section>` },
+  { id:'9-2', t:'can', sub:'可能・許可・依頼', plan:['axCan','axCan','axCan','axCan','axCan'], body:()=>`
+    <section class="panel"><h3>can の3つの意味</h3>
+    <table class="dtab"><tr><th>意味</th><th>例</th></tr>
+    <tr><td>能力・可能<br>「〜することができる」</td><td style="text-align:left">John <b>can</b> play the guitar well.<br><span class="small muted">ジョンは上手にギターを弾くことができます。</span></td></tr>
+    <tr><td>許可<br>「〜してもいい」</td><td style="text-align:left">You <b>can</b> go home now.<br><span class="small muted">もう家に帰ってもいいです。</span><br><b>Can I</b> use your pen?<br><span class="small muted">ペンを使ってもいいですか。</span></td></tr>
+    <tr><td>依頼<br>「〜してくれませんか」</td><td style="text-align:left"><b>Can you</b> help me?<br><span class="small muted">手伝ってくれませんか。</span></td></tr></table></section>
+    <section class="panel"><h3>否定形・過去形</h3>${beEx('I <b>cannot</b>（can’t）speak French.','私はフランス語を話すことができません。')}${beEx('I <b>could</b> run fast when I was young.','私は若いころ、速く走ることができました。')}
+    <p class="small muted">cannot は1語で書きます。can の過去形は could。</p></section>` },
+  { id:'9-3', t:'may', sub:'許可・推量', plan:['axMay','axMay','axMay','axMay','axMay'], body:()=>`
+    <section class="panel"><h3>may の2つの意味</h3>
+    <table class="dtab"><tr><th>意味</th><th>例</th></tr>
+    <tr><td>許可<br>「〜してもいい」</td><td style="text-align:left">You <b>may</b> use this room.<br><span class="small muted">この部屋を使ってもいいです。</span><br><b>May I</b> sit here? — Sure.<br><span class="small muted">ここに座ってもいいですか。— いいですよ。</span></td></tr>
+    <tr><td>推量<br>「〜かもしれない」</td><td style="text-align:left">It <b>may</b> rain this afternoon.<br><span class="small muted">今日の午後、雨が降るかもしれません。</span><br>He <b>may</b> be at home.<br><span class="small muted">彼は家にいるかもしれません。</span></td></tr></table></section>
+    <section class="panel"><h3>否定</h3>${beEx('You <b>may not</b> swim here.','ここで泳いではいけません。')}
+    <p class="small muted">May I 〜? への答えは Sure. ／ Yes, you may. ／ Of course. など。</p></section>` },
+  { id:'9-4', t:'使い分け', sub:'can と may', plan:['axCM','axCM','axCM','axCM','axCM'], body:()=>`
+    <section class="panel"><h3>can と may</h3>
+    <table class="dtab"><tr><th>意味</th><th>can</th><th>may</th></tr>
+    <tr><td>〜できる</td><td>〇</td><td>×</td></tr><tr><td>〜してもいい</td><td>〇</td><td>〇（ていねい）</td></tr><tr><td>〜してくれませんか</td><td>〇 Can you 〜?</td><td>×</td></tr><tr><td>〜かもしれない</td><td>×</td><td>〇</td></tr></table></section>
+    <section class="panel"><h3>許可を求めるとき</h3>${beEx('<b>Can I</b> use your pen?','ペンを使ってもいい？（友だちに）')}${beEx('<b>May I</b> come in?','入ってもよろしいですか。（先生や目上の人に）')}
+    <p class="small muted">May I 〜? のほうが、ていねいな言い方です。</p></section>
+    <section class="panel"><h3>見分け方</h3><p>・「〜できる」→ can</p><p>・「〜かもしれない」→ may</p><p>・「〜してくれませんか」→ Can you 〜?</p></section>` },
+  { id:'9-5', t:'must', sub:'義務・禁止・強い推量', plan:['axMust','axMust','axMust','axMust','axMust'], body:()=>`
+    <section class="panel"><h3>must の意味</h3>
+    <table class="dtab"><tr><th>形</th><th>意味・例</th></tr>
+    <tr><td><b>must</b></td><td style="text-align:left">義務「〜しなければならない」<br>Kate <b>must</b> work today.<br><span class="small muted">ケイトは今日、働かなければなりません。</span></td></tr>
+    <tr><td><b>must not</b><br>（mustn’t）</td><td style="text-align:left">禁止「〜してはいけない」<br>You <b>must not</b> drive a car.<br><span class="small muted">あなたは車を運転してはいけません。</span></td></tr>
+    <tr><td><b>must</b></td><td style="text-align:left">強い推量「〜にちがいない」<br>He <b>must</b> be tired.<br><span class="small muted">彼は疲れているにちがいありません。</span></td></tr></table>
+    <p class="small muted">must には過去形がないので、過去の文では had to を使います。</p></section>` },
+  { id:'9-6', t:'have to', sub:'義務・不要', plan:['axHave','axHave','axHave','axHaveJ','axHaveJ'], body:()=>`
+    <section class="panel"><h3>have to</h3>${rule('have to ＋ 動詞の原形 →「〜しなければならない」')}
+    <table class="dtab"><tr><th></th><th>形</th></tr><tr><td>I・you・複数</td><td><b>have to</b> work</td></tr><tr><td>三人称単数</td><td><b>has to</b> work</td></tr><tr><td>過去</td><td><b>had to</b> work</td></tr><tr><td>未来</td><td><b>will have to</b> work</td></tr></table></section>
+    <section class="panel"><h3>否定文：don’t have to</h3>${rule('don’t（doesn’t）have to →「〜しなくてもいい」「〜する必要はない」')}
+    ${beEx('You <b>don’t have to</b> work today.','あなたは今日、働かなくてもいいです。')}
+    <p class="small"><b style="color:var(--bad)">注意！</b> must not（〜してはいけない）と意味がまったくちがいます。</p></section>
+    <section class="panel"><h3>疑問文</h3>${beEx('<b>Do</b> I <b>have to</b> work? — Yes, you <b>do</b>. ／ No, you <b>don’t</b>.','働かなければなりませんか。— はい。／いいえ、働かなくてもいいです。')}</section>` },
+  { id:'9-7', t:'should', sub:'義務・当然', plan:['axShould','axShould','axShould','axShould','axShould'], body:()=>`
+    <section class="panel"><h3>should</h3>${rule('should ＋ 動詞の原形 →「〜すべきだ」「〜したほうがいい」')}
+    ${beEx('You <b>should</b> help your mother.','あなたはお母さんを手伝うべきです。')}${beEx('You <b>should</b> go to bed early.','あなたは早く寝たほうがいいです。')}</section>
+    <section class="panel"><h3>否定文・疑問文</h3>${beEx('You <b>shouldn’t</b> eat too much.','食べすぎるべきではありません。')}${beEx('What <b>should</b> I do?','私は何をするべきですか。')}
+    <p class="small muted">should は must より弱い言い方で、アドバイスによく使います。</p></section>` },
+  { id:'9-8', t:'使い分け', sub:'must・have to・should', plan:['axObl','axObl','axObl','axObl','axObl'], body:()=>`
+    <section class="panel"><h3>くらべよう</h3>
+    <table class="dtab"><tr><th>形</th><th>意味</th></tr>
+    <tr><td><b>must</b>・<b>have to</b></td><td>〜しなければならない</td></tr>
+    <tr><td><b>should</b></td><td>〜すべきだ（〜したほうがいい）</td></tr>
+    <tr><td><b>must not</b></td><td>〜してはいけない（禁止）</td></tr>
+    <tr><td><b>don’t have to</b></td><td>〜しなくてもいい（不要）</td></tr></table></section>
+    <section class="panel"><h3>否定の意味に注意！</h3>${beEx('You <b>must not</b> drive a car.','あなたは車を運転してはいけません。')}${beEx('You <b>don’t have to</b> drive a car.','あなたは車を運転しなくてもいいです。')}
+    <p class="small muted">must と have to は肯定文では同じような意味ですが、否定文では意味が大きくちがいます。</p></section>` },
+  { id:'9-9', t:'will', sub:'推量・意志・依頼', plan:['axWill','axWill','axWill','axWill','axWill'], body:()=>`
+    <section class="panel"><h3>will の意味</h3>
+    <table class="dtab"><tr><th>意味</th><th>例</th></tr>
+    <tr><td>推量<br>「〜するでしょう」</td><td style="text-align:left">It <b>will</b> be sunny tomorrow.<br><span class="small muted">明日は晴れるでしょう。</span></td></tr>
+    <tr><td>意志<br>「〜します」</td><td style="text-align:left">I <b>will</b> help you.<br><span class="small muted">私があなたを手伝います。</span></td></tr>
+    <tr><td>依頼<br>「〜してくれませんか」</td><td style="text-align:left"><b>Will you</b> open the door?<br><span class="small muted">ドアを開けてくれませんか。</span></td></tr></table>
+    <p class="small muted">will not ＝ won’t。will の過去形は would。8章「未来」もふり返ろう。</p></section>
+    <section class="panel"><h3>ていねいな依頼</h3>${beEx('<b>Would you</b> help me?','私を手伝っていただけませんか。')}${beEx('<b>Could you</b> tell me the way?','道を教えていただけませんか。')}
+    <p class="small muted">Will（Can）you 〜? より Would（Could）you 〜? のほうがていねいです。</p></section>` },
+  { id:'9-10', t:'be able to', sub:'〜することができる', plan:['axAble','axAble','axAble','axAble','axAble'], body:()=>`
+    <section class="panel"><h3>be able to</h3>${rule('be able to ＋ 動詞の原形 ＝ can「〜することができる」')}
+    ${beEx('I can swim. ＝ I <b>am able to</b> swim.','私は泳ぐことができます。')}</section>
+    <section class="panel"><h3>be は主語と時で変わる</h3>
+    <table class="dtab"><tr><th></th><th>形</th></tr><tr><td>現在</td><td><b>am・is・are</b> able to</td></tr><tr><td>過去</td><td><b>was・were</b> able to（＝ could）</td></tr><tr><td>未来</td><td><b>will be</b> able to</td></tr></table>
+    ${beEx('She <b>was able to</b> answer the question.','彼女はその質問に答えることができました。')}${beEx('You <b>will be able to</b> ski next year.','あなたは来年、スキーができるようになるでしょう。')}
+    <p class="small"><b style="color:var(--bad)">×</b> will can　助動詞は2つ並べられないので、will be able to を使います。</p></section>` },
+  { id:'9-11', t:'疑問文', sub:'助動詞を主語の前に', plan:['axQ','axQ','axQ','axAns','axAns'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('助動詞 ＋ 主語 ＋ 動詞の原形 〜?')}
+    ${beEx('<b>Can</b> you swim? — Yes, I <b>can</b>. ／ No, I <b>can’t</b>.','泳げますか。')}
+    ${beEx('<b>Must</b> I work? — Yes, you <b>must</b>. ／ No, you <b>don’t have to</b>.','働かなければなりませんか。— はい。／いいえ、働かなくてもいいです。')}
+    ${beEx('<b>Do</b> I <b>have to</b> work? — Yes, you <b>do</b>. ／ No, you <b>don’t</b>.','働かなければなりませんか。')}
+    <p class="small muted">Must I 〜? に「いいえ」と答えるときは don’t have to（〜しなくてもいい）を使います。</p></section>
+    <section class="panel"><h3>申し出・さそい・依頼</h3>
+    <table class="dtab"><tr><th>表現</th><th>意味・答え方</th></tr>
+    <tr><td><b>Shall I</b> 〜?</td><td style="text-align:left">（私が）〜しましょうか<br>— Yes, please. ／ No, thank you.</td></tr>
+    <tr><td><b>Shall we</b> 〜?</td><td style="text-align:left">（いっしょに）〜しましょうか<br>— Yes, let’s. ／ No, let’s not.</td></tr>
+    <tr><td><b>Will</b>（Can）<b>you</b> 〜?</td><td style="text-align:left">〜してくれませんか<br>— Sure. ／ Sorry, I can’t.</td></tr>
+    <tr><td><b>Would</b>（Could）<b>you</b> 〜?</td><td style="text-align:left">〜していただけませんか</td></tr></table></section>` },
+  { id:'9-12', t:'まとめ', sub:'助動詞の総まとめ', test:true, plan:Array(15).fill('axMix'), body:()=>`
+    <section class="panel"><h3>助動詞のまとめ</h3>
+    <table class="dtab" style="font-size:.8rem;width:100%"><tr><th></th><th>意味</th><th>否定形</th><th>過去形</th></tr>
+    <tr><th>will</th><td>〜するだろう<br>〜するつもりだ</td><td>won’t</td><td>would</td></tr>
+    <tr><th>can</th><td>〜できる<br>〜してもいい</td><td>can’t</td><td>could</td></tr>
+    <tr><th>be able to</th><td>〜できる</td><td>be not able to</td><td>was able to</td></tr>
+    <tr><th>may</th><td>〜してもいい<br>〜かもしれない</td><td>may not</td><td></td></tr>
+    <tr><th>must</th><td>〜しなければならない<br>〜にちがいない</td><td>mustn’t<br><span class="small">してはいけない</span></td><td>（had to）</td></tr>
+    <tr><th>have to</th><td>〜しなければならない</td><td>don’t have to<br><span class="small">しなくてもいい</span></td><td>had to</td></tr>
+    <tr><th>should</th><td>〜すべきだ</td><td>shouldn’t</td><td></td></tr></table></section>
+    <section class="panel"><p class="small muted">9-1〜9-11 の問題から、毎回ちがう15問がランダムに出ます。</p></section>` },
 ];
 
 
@@ -11036,7 +11311,7 @@ const UNITS = {
   irr:{ drill:'irr', no:'動1', title:'動詞の不規則変化', subject:'英語', course:'jen', subj:0, lessons:IRR_LESSONS },
   be:{ no:'文1', title:'be動詞', subject:'英語', course:'jen', subj:1, lessons:BE_LESSONS },
   gv:{ no:'文2', title:'一般動詞', subject:'英語', course:'jen', subj:1, lessons:GV_LESSONS },
-  qw:{ no:'文9', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
+  qw:{ no:'文10', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
   past:{ no:'文5', title:'過去形', subject:'英語', course:'jen', subj:1, lessons:PT_LESSONS },
   pl:{ no:'文3', title:'名詞の複数形', subject:'英語', course:'jen', subj:1, lessons:PL_LESSONS },
   pr:{ no:'文4', title:'代名詞', subject:'英語', course:'jen', subj:1, lessons:PR_LESSONS },
@@ -11044,6 +11319,7 @@ const UNITS = {
   pprg:{ no:'文7', title:'過去進行形', subject:'英語', course:'jen', subj:1, lessons:PP_LESSONS },
   futr:{ no:'文8', title:'未来', subject:'英語', course:'jen', subj:1, lessons:FT_LESSONS },
   rv1:{ no:'💧1', title:'現在・過去・未来', subject:'英語', course:'jen', subj:1, lessons:RV1_LESSONS },
+  aux:{ no:'文9', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:AX_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
