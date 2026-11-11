@@ -283,6 +283,7 @@ ol.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
 .pdfbtn{text-decoration:none;padding:9px 14px;font-size:.9rem;display:inline-block}
 .btn.ghost.pdfbtn{background:var(--surface)}
 .subjects .subj:last-child:nth-child(odd){grid-column:1/-1}
+.bex b{color:var(--accent);font-weight:700}
 .subjects.three{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .subjects.three .subj:last-child:nth-child(odd){grid-column:auto}
 .subjects.three .subj{padding:12px 10px;min-width:0}
@@ -1549,7 +1550,7 @@ Object.assign(G, {
       hint:'答えの文でも be動詞を使います。主語は he・she・it・they などの代名詞にします。', explain:`${x[0]==='You'?'you でたずねられたら I で答えます。':`${x[0]} は代名詞 ${p} にします。`}答えは ${ok}`, viz:null }; },
 });
 
-const beEx = (en, jp) => `<div style="margin:2px 0 8px"><p class="en">${en}</p><p class="small muted">${jp}</p></div>`;
+const beEx = (en, jp) => `<div class="bex" style="margin:2px 0 8px"><p class="en">${en}</p><p class="small muted">${jp}</p></div>`;
 const BE_LESSONS = [
   { id:'1-1', t:'be動詞とは', sub:'am・are・is の2つの意味', plan:['beKind','beKind','beMean','beMean','beMean'], body:()=>`
     <section class="panel"><h3>be動詞は3つ</h3>${rule('be動詞 ＝ am・are・is')}
