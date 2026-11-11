@@ -1644,7 +1644,7 @@ const gvDo = x => gv3(x) ? 'does' : 'do';
 const gvNeg = x => `${x[0]} ${gv3(x)?"doesn't":"don't"} ${x[1]} ${x[3]}`;
 const gvQs = x => `${capFirst(gvDo(x))} ${gvSub(x[0])} ${x[1]} ${x[3].replace(/\.$/,'?')}`;
 const gvBe = x => x[0]==='I'?'am':gv3(x)?'is':'are';
-const gvWhy = x => gv3(x) ? `主語の ${x[0]} は 3人称・単数（I・you 以外の1人・1つ）なので、動詞に s・es を付けて ${x[2]}。` : `主語が ${x[0]} なので、動詞はそのままの形（原形）の ${x[1]}。`;
+const gvWhy = x => gv3(x) ? `主語の ${x[0]} は 三人称単数現在（I・you 以外の1人・1つ）なので、動詞に s・es を付けて ${x[2]}。` : `主語が ${x[0]} なので、動詞はそのままの形（原形）の ${x[1]}。`;
 const gvRule = v => v==='have'?'have は特別に has。':/(s|x|ch|sh|o)$/.test(v)?'s・x・ch・sh・o で終わる語は es を付ける。':/[^aeiou]y$/.test(v)?'子音字＋y で終わる語は y を i にかえて es。':'ふつうは s を付ける。';
 
 Object.assign(G, {
@@ -1660,7 +1660,7 @@ Object.assign(G, {
       hint:'主語（だれが）と動詞（どうする）に注目しよう。', explain:`${gvSen(x)} は「${x[4]}」です。`, viz:null }; },
   gvForm(){ const x=pick(GV_S), f3=(GV_V.find(v=>v[0]===x[1])||[0,x[1]+'s'])[1];
     return { prompt:'□ に入る形は？', expr:`${x[0]} □ ${x[3]}<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">（${x[1]}）${x[4]}</span>`, enExpr:true, en:true, words:true, choices:shuffle([x[1], f3, `${gvBe(x)} ${x[1]}`]), answer:x[2],
-      hint:'主語が 3人称・単数（he・she・Ken など）のときだけ、動詞に s・es を付けます。', explain:gvWhy(x), viz:null }; },
+      hint:'主語が 三人称単数現在（he・she・Ken など）のときだけ、動詞に s・es を付けます。', explain:gvWhy(x), viz:null }; },
   gvMean(){ const v=pick(GV_V), ws=shuffle(GV_V.filter(y=>y!==v)).slice(0,3).map(y=>y[2]);
     return { prompt:'意味は？', expr:v[0], enExpr:true, words:true, choices:shuffle([v[2],...ws]), answer:v[2],
       hint:'一覧で意味を確認しよう。', explain:`${v[0]} は「${v[2]}」。3単現は ${v[1]}。`, viz:null }; },
@@ -1702,7 +1702,7 @@ const GV_LESSONS = [
   { id:'2-2', t:'例文', sub:'一般動詞の文を読もう', plan:['gvEJ','gvEJ','gvEJ','gvForm','gvForm'], body:()=>`
     <section class="panel"><h3>主語が I・you・2人以上</h3>
     ${beEx('I <b>like</b> apples.','私はリンゴが好きです。')}${beEx('You <b>speak</b> English well.','あなたは上手に英語を話します。')}${beEx('We <b>live</b> in Hiroshima.','私たちは広島に住んでいます。')}${beEx('My parents <b>drink</b> coffee.','私の両親はコーヒーを飲みます。')}</section>
-    <section class="panel"><h3>主語が 3人称・単数</h3>${rule('he・she・Ken など（I・you 以外の1人・1つ）→ 動詞に s・es')}
+    <section class="panel"><h3>主語が 三人称単数現在</h3>${rule('he・she・Ken など（I・you 以外の1人・1つ）→ 動詞に s・es')}
     ${beEx('He <b>plays</b> soccer.','彼はサッカーをします。')}${beEx('Ken <b>studies</b> math.','ケンは数学を勉強します。')}${beEx('My sister <b>watches</b> TV.','私の妹はテレビを見ます。')}${beEx('Yui <b>has</b> a cat.','ユイはネコを飼っています。')}
     <p class="small muted">s・es を付ける主語は、be動詞が is になる主語と同じです。</p></section>` },
   { id:'2-3', t:'一般動詞一覧', sub:'よく使う動詞と s・es の付け方', plan:['gvMean','gvMean','gvMean','gvS','gvS'], body:()=>`
