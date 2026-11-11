@@ -1114,7 +1114,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },'名詞の複数形','代名詞',{ t:'疑問詞', ready:'qw' },{ t:'過去形', ready:'past' },'命令文','現在進行形','can','過去進行形','未来の表現','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },'代名詞',{ t:'疑問詞', ready:'qw' },{ t:'過去形', ready:'past' },'命令文','現在進行形','can','過去進行形','未来の表現','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -2063,6 +2063,87 @@ const PT_LESSONS = [
     <section class="panel"><h3>くらべよう</h3>
     ${beEx('<b>Was</b> he a baseball player?','彼は野球の選手でしたか。（be動詞）')}${beEx('<b>Did</b> he <b>like</b> baseball?','彼は野球が好きでしたか。（一般動詞）')}
     <p class="small muted">「〜でしたか」でも、like（好きだ）は一般動詞なので Did を使います。</p></section>` },
+];
+
+
+/* ===== 英語 文法 3章 名詞の複数形 ===== */
+// [単数形, 複数形, 意味]
+const PL_REG = [
+  ['book','books','本'],['friend','friends','友だち'],['dog','dogs','犬'],['apple','apples','リンゴ'],['pen','pens','ペン'],['cat','cats','ネコ'],['egg','eggs','卵'],['student','students','生徒'],['day','days','日'],
+  ['boy','boys','男の子'],['key','keys','かぎ'],['toy','toys','おもちゃ'],
+  ['glass','glasses','コップ'],['box','boxes','箱'],['bus','buses','バス'],['dish','dishes','皿'],['watch','watches','腕時計'],['class','classes','クラス'],['potato','potatoes','じゃがいも'],['tomato','tomatoes','トマト'],['bench','benches','ベンチ'],
+  ['country','countries','国'],['city','cities','都市'],['baby','babies','赤ちゃん'],['family','families','家族'],['story','stories','物語'],['library','libraries','図書館'],['cherry','cherries','さくらんぼ'],
+  ['leaf','leaves','葉'],['knife','knives','ナイフ'],['life','lives','命・生活'],['wife','wives','妻'],['wolf','wolves','オオカミ'],['shelf','shelves','たな'],
+];
+const PL_IRR = [['child','children','子ども'],['foot','feet','足'],['man','men','男性'],['woman','women','女性'],['tooth','teeth','歯'],['mouse','mice','ネズミ'],['person','people','人'],['fish','fish','魚'],['sheep','sheep','羊']];
+const PL_UNC = [['milk','牛乳'],['water','水'],['tea','紅茶'],['juice','ジュース'],['bread','パン'],['rice','米・ごはん'],['money','お金'],['paper','紙'],['music','音楽'],['homework','宿題'],['snow','雪'],['rain','雨']];
+const PL_AN = [['apple','an'],['egg','an'],['orange','an'],['umbrella','an'],['eraser','an'],['album','an'],['animal','an'],['old car','an'],['hour','an'],['book','a'],['dog','a'],['pen','a'],['bag','a'],['desk','a'],['banana','a'],['big apple','a'],['cat','a'],['uniform','a']];
+const plRule = sg => PL_IRR.some(v=>v[0]===sg) ? '不規則に変化する名詞。' : /[^aeiou]y$/.test(sg) ? 'パターン③ 語尾が〈子音字＋y〉→ y を i にかえて es。' : /(fe|f)$/.test(sg) ? 'パターン④ 語尾が f・fe → f(e) を v にかえて es。' : /(s|sh|ch|o|x)$/.test(sg) ? 'パターン② 語尾が s・sh・ch・o・x → es。' : 'パターン① ふつうは s。';
+const plJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const PL_NUM = [['I have two □.','私は{}を2つ持っています。',2],['I have a □.','私は{}を1つ持っています。',1],['There are three □ here.','ここに{}が3つあります。',3],['I want one □.','私は{}が1つほしいです。',1],['We need some □.','私たちはいくつかの{}が必要です。',2],['Look at those □.','あれらの{}を見て。',2],['This □ is nice.','この{}はすてきです。',1]];
+
+Object.assign(G, {
+  plKind(){ const c=Math.random()<.5, w=c?pick(PL_REG.concat(PL_IRR)):pick(PL_UNC), a=c?'数えられる名詞':'数えられない名詞';
+    return { prompt:'どちらの名詞？', expr:`${w[0]}<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${c?w[2]:w[1]}</span>`, enExpr:true, words:true, choices:['数えられる名詞','数えられない名詞'], answer:a,
+      hint:'1つ、2つと数えられるかどうか。液体・材料・形の決まっていないものは数えられません。', explain:c?`${w[0]} は数えられる名詞。複数形は ${w[1]}。`:`${w[0]} は数えられない名詞。a・an を付けず、複数形にもしません。`, viz:null }; },
+  plA(){ const r=Math.random(); if(r<.2){ const w=pick(PL_UNC);
+      return { prompt:'□ に入るのは？', expr:`I want □ ${w[0]}.`+plJ(`${w[1]}がほしいです。`), enExpr:true, en:true, words:true, choices:['a','an','何も入らない'], answer:'何も入らない',
+        hint:'数えられない名詞には a・an を付けません。', explain:`${w[0]} は数えられない名詞なので、a・an は付けません。`, viz:null }; }
+    const w=pick(PL_AN), note = w[0]==='hour'?'hour の h は読まないので、発音は「アワー」＝母音で始まる。': w[0]==='uniform'?'uniform は「ユ」の音（子音）で始まるので a。': w[0].includes(' ')?`すぐ後ろの ${w[0].split(' ')[0]} の発音で決まる。`:'';
+    return { prompt:'□ に入るのは？', expr:`This is □ ${w[0]}.`, enExpr:true, en:true, words:true, choices:['a','an','何も入らない'], answer:w[1],
+      hint:'母音（ア・イ・ウ・エ・オの音）で始まる語の前は an。', explain:`${w[1]==='an'?'母音の音で始まるので an。':'子音の音で始まるので a。'}${note}`, viz:null }; },
+  plNum(){ const t=pick(PL_NUM), w=pick(PL_REG.filter(v=>['book','pen','apple','egg','box','watch','potato','tomato','key','toy','dish','cherry','knife','glass','bench','shelf'].includes(v[0]))), ok=t[2]>1?w[1]:w[0];
+    const opts=[w[0], w[1], w[0]+'s'!==w[1]?w[0]+'s':w[0]+'es'];
+    return { prompt:'□ に入る形は？', expr:t[0]+plJ(t[1].replace('{}',w[2])), enExpr:true, en:true, choices:shuffle([...new Set(opts)]), answer:ok,
+      hint:'2つ以上なら複数形、1つなら単数形。', explain:t[2]>1?`2つ以上なので複数形 ${w[1]}。`:`1つなので単数形 ${w[0]}。`, viz:null }; },
+  plForm(){ const w=pick(PL_REG), s=w[0];
+    const cand=[w[1], s+'s', s+'es', s.replace(/y$/,'ies'), s.replace(/fe?$/,'ves'), s];
+    const ch=shuffle([...new Set(cand)].filter(o=>o!==w[1])).slice(0,3);
+    return { prompt:'複数形は？', expr:`${s}<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${w[2]}</span>`, enExpr:true, en:true, choices:shuffle([w[1],...ch]), answer:w[1],
+      hint:'ふつうは s。s・sh・ch・o・x は es。子音字＋y は ies。f・fe は ves。', explain:`${plRule(s)}<br>${s} → ${w[1]}`, viz:null }; },
+  plIrr(){ const w=pick(PL_IRR), s=w[0];
+    const opts = s==='person' ? ['people','person','persones','peoples'] : s==='fish' ? ['fish','fishs','fishies'] : [w[1], s+'s', s==='child'?'childrens':s+'es', s===w[1]?s+'ies':s];
+    return { prompt:'複数形は？', expr:`${s}<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${w[2]}</span>`, enExpr:true, en:true, choices:shuffle([...new Set(opts)]), answer:w[1],
+      hint:'s を付けずに、形が変わる名詞です。', explain:`${s} → ${w[1]}${s===w[1]?'（単数形と同じ形）':''}`, viz:null }; },
+  plIrrS(){ const S=[['My aunt has three □.','child','私のおばには子どもが3人います。'],['Two □ are talking.','man','2人の男性が話しています。'],['Many □ live in this city.','person','この町には多くの人が住んでいます。'],['Brush your □.','tooth','歯をみがきなさい。'],['My □ are cold.','foot','足が冷たい。'],['Three □ are in the room.','woman','部屋に3人の女性がいます。'],['I saw two □ in the kitchen.','mouse','台所で2匹のネズミを見ました。'],['There are five □ in the pond.','fish','池に魚が5匹います。']];
+    const t=pick(S), w=PL_IRR.find(v=>v[0]===t[1]);
+    const opts = t[1]==='person' ? ['people','person','persones'] : t[1]==='fish' ? ['fish','fishs','fishies'] : [w[1], w[0]+'s', w[0], t[1]==='child'?'childrens':w[1]+'s'];
+    return { prompt:'□ に入る形は？', expr:t[0]+plJ(`（${t[1]}）${t[2]}`), enExpr:true, en:true, choices:shuffle([...new Set(opts)]), answer:w[1],
+      hint:'不規則に変化する複数形を思い出そう。', explain:`${w[0]} の複数形は ${w[1]}。${w[0]===w[1]?'単数形と同じ形です。':''}`, viz:null }; },
+});
+
+const PL_LESSONS = [
+  { id:'3-1', t:'複数形とは', sub:'数えられる名詞・数えられない名詞', plan:['plKind','plKind','plA','plA','plNum'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('My aunt has three <b>children</b>.','私のおばには子どもが3人います。')}${beEx('Give me a glass of <b>milk</b>.','私にコップ1杯の牛乳をください。')}</section>
+    <section class="panel"><h3>複数形</h3>${rule('2つ（2人）以上のときは、名詞を複数形にする')}
+    ${beEx('I have a <b>book</b>.','私は本を1冊持っています。（単数形）')}${beEx('I have two <b>books</b>.','私は本を2冊持っています。（複数形）')}</section>
+    <section class="panel"><h3>数えられる名詞・数えられない名詞</h3>
+    <table class="dtab"><tr><th>数えられる名詞</th><th>数えられない名詞</th></tr>
+    <tr><td>book・pen・dog<br>apple・friend</td><td>milk・water・tea<br>bread・money・music</td></tr>
+    <tr><td>a・an が付く<br>複数形がある</td><td>a・an は付かない<br>複数形にしない</td></tr></table>
+    <p class="small muted">数えられない名詞は、入れ物などを使って数えます。</p>
+    ${beEx('<b>a glass of</b> milk ／ <b>two glasses of</b> milk','コップ1杯の牛乳／コップ2杯の牛乳')}${beEx('<b>a cup of</b> tea ／ <b>a piece of</b> paper','カップ1杯の紅茶／1枚の紙')}</section>
+    <section class="panel"><h3>a と an</h3>${rule('母音（ア・イ・ウ・エ・オの音）で始まる語の前は an')}
+    ${beEx('<b>a</b> book ／ <b>a</b> dog ／ <b>a</b> big apple','')}${beEx('<b>an</b> apple ／ <b>an</b> egg ／ <b>an</b> orange','')}
+    <p class="small muted">つづりではなく「音」で決まります。an hour（h を読まない）、a uniform（「ユ」の音）。</p></section>` },
+  { id:'3-2', t:'s の付け方', sub:'s・es・ies・ves', plan:['plForm','plForm','plForm','plForm','plNum'], body:()=>`
+    <section class="panel"><h3>名詞の複数形</h3>
+    <table class="dtab"><tr><th></th><th>付け方</th><th>例</th></tr>
+    <tr><td>パターン①</td><td>単数形＋<b>s</b></td><td>book → book<b>s</b><br>friend → friend<b>s</b></td></tr>
+    <tr><td>パターン②<br><span class="small">s・sh・ch・o・x</span></td><td>単数形＋<b>es</b></td><td>glass → glass<b>es</b><br>box → box<b>es</b></td></tr>
+    <tr><td>パターン③<br><span class="small">子音字＋y</span></td><td>y → <b>ies</b></td><td>country → countr<b>ies</b><br>city → cit<b>ies</b></td></tr>
+    <tr><td>パターン④<br><span class="small">f・fe</span></td><td>f(e) → <b>ves</b></td><td>leaf → lea<b>ves</b><br>life → li<b>ves</b></td></tr></table>
+    <p class="small"><b style="color:var(--bad)">注意！</b> boy → <b>boys</b>（o＋y は母音字＋y なので、そのまま s）</p></section>
+    <section class="panel"><h3>よく使う名詞</h3>
+    <table class="dtab"><tr><th>単数形</th><th>複数形</th><th>意味</th></tr>
+    ${PL_REG.map(v=>`<tr><td>${v[0]}</td><td><b>${v[1]}</b></td><td>${v[2]}</td></tr>`).join('')}</table></section>` },
+  { id:'3-3', t:'不規則変化', sub:'children・feet など', plan:['plIrr','plIrr','plIrr','plIrrS','plIrrS'], body:()=>`
+    <section class="panel"><h3>パターン⑤　不規則に変化する</h3>${rule('s を付けずに、形が変わる名詞')}
+    ${beEx('My aunt has three <b>children</b>.','私のおばには子どもが3人います。（child → children）')}
+    <table class="dtab"><tr><th>単数形</th><th>複数形</th><th>意味</th></tr>
+    ${PL_IRR.map(v=>`<tr><td>${v[0]}</td><td><b>${v[1]}</b></td><td>${v[2]}</td></tr>`).join('')}</table>
+    <p class="small muted">fish・sheep は、単数形と複数形が同じ形です。</p></section>
+    <section class="panel"><h3>よくある間違い</h3><p><b style="color:var(--bad)">×</b> childs ／ childrens ／ foots<br><b style="color:var(--good)">〇</b> children ／ feet</p></section>` },
 ];
 
 
@@ -10444,6 +10525,7 @@ const UNITS = {
   gv:{ no:'文2', title:'一般動詞', subject:'英語', course:'jen', subj:1, lessons:GV_LESSONS },
   qw:{ no:'文5', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
   past:{ no:'文6', title:'過去形', subject:'英語', course:'jen', subj:1, lessons:PT_LESSONS },
+  pl:{ no:'文3', title:'名詞の複数形', subject:'英語', course:'jen', subj:1, lessons:PL_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
