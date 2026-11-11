@@ -10558,7 +10558,16 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape' && S.viewCard!=nul
 window.addEventListener('resize', ()=>{ if(S.view==='quiz') drawPad(); });
 
 render(); flush();
-if('serviceWorker' in navigator && document.querySelector('link[rel="manifest"]')) navigator.serviceWorker.register('sw.js').catch(()=>{});
+if('serviceWorker' in navigator && document.querySelector('link[rel="manifest"]')){
+  // ホーム画面のアプリでも新しい版にすぐ切りかわるように、開くたび・戻るたびに更新を確認する
+  const hadCtl=!!navigator.serviceWorker.controller; let reloaded=false;
+  navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+    const chk=()=>reg.update().catch(()=>{});
+    document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') chk(); });
+    setInterval(chk, 30*60*1000);
+  }).catch(()=>{});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(hadCtl&&!reloaded&&S.view!=='quiz'){ reloaded=true; location.reload(); } });
+}
 })();
 </script>
 

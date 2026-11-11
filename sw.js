@@ -1,6 +1,6 @@
 // オフラインでも開けるように、アプリのファイルを端末に保存しておく
 // 中身を更新したら VERSION の数字を1つ上げてください
-const VERSION = 'kurage-v27';
+const VERSION = 'kurage-v28';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];  // 海月の画像は、一度見たものから順に保存されます
 
 self.addEventListener('install', e => {
@@ -14,7 +14,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
-    fetch(e.request).then(res => {
+    fetch(e.request, (e.request.mode === 'navigate' || /\/(index\.html)?$|sw\.js$/.test(new URL(e.request.url).pathname)) ? { cache: 'no-cache' } : {}).then(res => {
       const copy = res.clone();
       caches.open(VERSION).then(c => c.put(e.request, copy)).catch(() => {});
       return res;
