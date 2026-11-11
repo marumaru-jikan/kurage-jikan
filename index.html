@@ -1114,7 +1114,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },'名詞の複数形','代名詞',{ t:'疑問詞', ready:'qw' },'命令文','現在進行形','can','過去形','過去進行形','未来の表現','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },'名詞の複数形','代名詞',{ t:'疑問詞', ready:'qw' },{ t:'過去形', ready:'past' },'命令文','現在進行形','can','過去進行形','未来の表現','接続詞','不定詞','動名詞','There is ～','助動詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -1898,6 +1898,154 @@ const QW_LESSONS = [
     ${beEx('<b>How far</b> is it from here to the station?','ここから駅までどのくらいの距離ですか。')}${beEx('— It is about three kilometers.','約3キロメートルです。')}
     ${beEx('<b>How long</b> does it take from here to the station?','ここから駅までどのくらい時間がかかりますか。')}${beEx('— It takes about thirty minutes.','約30分かかります。')}
     <p class="small muted">距離は far、かかる時間は long でたずねます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 6章 過去形 ===== */
+// be動詞の過去 [主語, was/were, 残り, 日本語, 答えの代名詞]
+const PB_S = [
+  ['I','was','tired yesterday.','私は昨日疲れていました。',''],
+  ['I','was','at home last night.','私は昨夜家にいました。',''],
+  ['You','were','busy yesterday.','あなたは昨日忙しかったです。','I'],
+  ['You','were','in the library.','あなたは図書館にいました。','I'],
+  ['John','was','a musician.','ジョンは音楽家でした。','he'],
+  ['He','was','a baseball player.','彼は野球の選手でした。','he'],
+  ['She','was','sick last week.','彼女は先週病気でした。','she'],
+  ['The girl','was','excited.','その女の子はわくわくしていました。','she'],
+  ['It','was','rainy yesterday.','昨日は雨でした。','it'],
+  ['My mother','was','in the kitchen.','私の母は台所にいました。','she'],
+  ['We','were','in Kyoto last summer.','私たちは去年の夏、京都にいました。',''],
+  ['They','were','happy.','彼らは幸せでした。','they'],
+  ['Ken and Yui','were','classmates.','ケンとユイはクラスメイトでした。','they'],
+  ['The books','were','on the desk.','その本は机の上にありました。','they'],
+];
+// 一般動詞の過去 [主語, 原形, 過去形, 残り, 日本語, 答えの代名詞]
+const PG_S = [
+  ['He','play','played','the guitar.','彼はギターを弾きました。','he'],
+  ['He','like','liked','baseball.','彼は野球が好きでした。','he'],
+  ['I','visit','visited','Kyoto last year.','私は去年京都を訪れました。',''],
+  ['I','study','studied','English yesterday.','私は昨日英語を勉強しました。',''],
+  ['You','watch','watched','TV last night.','あなたは昨夜テレビを見ました。','I'],
+  ['My father','cook','cooked','dinner.','私の父は夕食を作りました。','he'],
+  ['We','live','lived','in Osaka.','私たちは大阪に住んでいました。',''],
+  ['They','play','played','soccer after school.','彼らは放課後サッカーをしました。','they'],
+  ['She','try','tried','a new sport.','彼女は新しいスポーツに挑戦しました。','she'],
+  ['He','write','wrote','a song.','彼は曲を書きました。','he'],
+  ['The girl','have','had','a bird.','その女の子は鳥を飼っていました。','she'],
+  ['You','go','went','to the park.','あなたは公園へ行きました。','I'],
+  ['She','take','took','a picture.','彼女は写真をとりました。','she'],
+  ['Yui','eat','ate','an apple.','ユイはリンゴを食べました。','she'],
+  ['They','see','saw','a movie.','彼らは映画を見ました。','they'],
+  ['Mr. Sato','make','made','a cake.','佐藤先生はケーキを作りました。','he'],
+  ['Ken','get','got','a letter.','ケンは手紙を受け取りました。','he'],
+  ['I','buy','bought','a new bag.','私は新しいかばんを買いました。',''],
+];
+const PT_REG = [['play','played'],['like','liked'],['study','studied'],['visit','visited'],['watch','watched'],['cook','cooked'],['live','lived'],['use','used'],['try','tried'],['carry','carried'],['enjoy','enjoyed'],['help','helped'],['walk','walked'],['clean','cleaned'],['open','opened'],['want','wanted'],['stay','stayed'],['cry','cried'],['love','loved'],['listen','listened'],['finish','finished'],['wash','washed'],['start','started'],['dance','danced'],['close','closed'],['call','called'],['look','looked'],['talk','talked']];
+const PT_IRR = [['go','went','行く'],['come','came','来る'],['have','had','持っている'],['eat','ate','食べる'],['see','saw','見る'],['write','wrote','書く'],['take','took','取る'],['make','made','作る'],['get','got','手に入れる'],['run','ran','走る'],['buy','bought','買う'],['read','read','読む'],['speak','spoke','話す'],['give','gave','与える'],['know','knew','知っている'],['swim','swam','泳ぐ'],['sing','sang','歌う'],['drink','drank','飲む'],['teach','taught','教える'],['think','thought','思う'],['say','said','言う'],['tell','told','伝える'],['find','found','見つける'],['leave','left','去る'],['meet','met','会う'],['sleep','slept','眠る'],['sit','sat','すわる'],['stand','stood','立つ'],['begin','began','始める'],['do','did','する'],['put','put','置く'],['become','became','なる'],['feel','felt','感じる'],['hear','heard','聞こえる']];
+const ptIrr = b => PT_IRR.some(v=>v[0]===b);
+const ptJpNeg = jp => /でした。$/.test(jp) ? jp.replace(/でした。$/,'ではありませんでした。') : /かったです。$/.test(jp) ? jp.replace(/かったです。$/,'くありませんでした。') : jp.replace(/ました。$/,'ませんでした。');
+const ptJpQ = jp => jp.replace(/。$/,'か。');
+const ptSub = s => /^(I|Ken|Yui|John|Mr\.)/.test(s) ? s : lowFirst(s);
+const ptBeWhy = x => x[1]==='was' ? `主語の ${x[0]} は I か、1人（1つ）なので was。` : x[0]==='You' ? '主語が you なので were。' : `主語の ${x[0]} は2人（2つ）以上なので were。`;
+const ptRule = (b,p) => ptIrr(b) ? `${b} は不規則動詞。過去形は ${p}。` : /[^aeiou]y$/.test(b) ? '語尾が〈子音字＋y〉→ y を i にかえて ed。' : /e$/.test(b) ? '語尾が e → d だけを付ける。' : 'ふつうは ed を付ける。';
+const ptJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+
+Object.assign(G, {
+  ptBe(){ const x=pick(PB_S);
+    return { prompt:'□ に入るのは？', expr:`${x[0]} □ ${x[2]}`+ptJ(x[3]), enExpr:true, en:true, choices:['was','were','is','are'], answer:x[1],
+      hint:'過去の文。I と1人（1つ）→ was、you と2人以上 → were。', explain:ptBeWhy(x), viz:null }; },
+  ptReg(){ const v=pick(PT_REG), b=v[0];
+    const opts=[v[1], b+'ed', b+'d', b.replace(/y$/,'ied'), b+'s'].filter(o=>o!==b+'s'||true);
+    const ch=shuffle([...new Set(opts)]).filter(o=>o!==v[1]).slice(0,3);
+    return { prompt:'過去形は？', expr:b, enExpr:true, en:true, choices:shuffle([v[1],...ch]), answer:v[1],
+      hint:'ふつうは ed。e で終わる語は d。〈子音字＋y〉は y を i にかえて ed。', explain:`${ptRule(b,v[1])}<br>${b} → ${v[1]}`, viz:null }; },
+  ptIrrG(){ const v=pick(PT_IRR), ws=shuffle(PT_IRR.filter(y=>y!==v&&y[1]!==v[1])).slice(0,1).map(y=>y[1]);
+    const opts=[v[1], v[0]+'ed', v[0]==='put'||v[0]==='read'?v[0]+'s':v[0], ...ws];
+    return { prompt:`${v[0]}（${v[2]}）の過去形は？`, expr:v[0], enExpr:true, en:true, choices:shuffle([...new Set(opts)]), answer:v[1],
+      hint:'不規則動詞は、ed を付けずに形が変わります。', explain:`${v[0]} → ${v[1]}${v[0]===v[1]?'（形は同じ）':''}`, viz:null }; },
+  ptForm(){ const x=pick(PG_S), f3=x[0]==='He'||x[0]==='She'||/^(Ken|Yui|My|Mr|The)/.test(x[0]) ? (GV_V.find(v=>v[0]===x[1])||[0,x[1]+'s'])[1] : x[1];
+    const opts=[x[2], x[1], f3, ptIrr(x[1])?x[1]+'ed':`was ${x[1]}`];
+    return { prompt:'□ に入る形は？', expr:`${x[0]} □ ${x[3]}<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">（${x[1]}）${x[4]}</span>`, enExpr:true, en:true, words:true, choices:shuffle([...new Set(opts)]), answer:x[2],
+      hint:'過去の文では、主語に関係なく動詞を過去形にします。', explain:`${ptRule(x[1],x[2])}<br>${x[0]} ${x[2]} ${x[3]}`, viz:null }; },
+  ptNegC(){ if(Math.random()<.5){ const x=pick(PB_S), ok=x[1]==='was'?"wasn't":"weren't";
+      return { prompt:'否定文にしよう。□ に入るのは？', expr:`${x[0]} □ ${x[2]}`+ptJ(ptJpNeg(x[3])), enExpr:true, en:true, choices:["wasn't","weren't","didn't","isn't"], answer:ok,
+        hint:'be動詞の過去の否定文は was not（wasn’t）・were not（weren’t）。', explain:`${x[1]} not を短くして ${ok}。`, viz:null }; }
+    const x=pick(PG_S);
+    return { prompt:'否定文にしよう。□ に入るのは？', expr:`${x[0]} □ ${x[1]} ${x[3]}`+ptJ(ptJpNeg(x[4])), enExpr:true, en:true, choices:["didn't","wasn't","doesn't","don't"], answer:"didn't",
+      hint:'一般動詞の過去の否定文は did not（didn’t）＋動詞の原形。主語が何でも didn’t。', explain:`過去の否定文なので didn’t。後ろの動詞は原形の ${x[1]}。`, viz:null }; },
+  ptNeg(){ if(Math.random()<.4){ const x=pick(PB_S), n=x[1]==='was'?"wasn't":"weren't", ok=`${x[0]} ${n} ${x[2]}`;
+      const opts=[ok, `${x[0]} didn't ${x[2]}`, `${x[0]} not ${x[1]} ${x[2]}`, `${x[0]} didn't be ${x[2]}`];
+      return { prompt:'正しい否定文は？', expr:ptJpNeg(x[3]), en:true, words:true, choices:shuffle(opts), answer:ok,
+        hint:'be動詞の文は、was・were の後ろに not。', explain:`${x[1]} の後ろに not を置いて ${ok}`, viz:null }; }
+    const x=pick(PG_S), ok=`${x[0]} didn't ${x[1]} ${x[3]}`;
+    const opts=[ok, `${x[0]} didn't ${x[2]} ${x[3]}`, `${x[0]} wasn't ${x[1]} ${x[3]}`, `${x[0]} not ${x[2]} ${x[3]}`];
+    return { prompt:'正しい否定文は？', expr:ptJpNeg(x[4]), en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'didn’t の後ろの動詞は原形。', explain:`didn’t ＋ 原形 ${x[1]}<br>${ok}`, viz:null }; },
+  ptQ(){ if(Math.random()<.4){ const x=pick(PB_S.filter(y=>y[4])), s=ptSub(x[0]), r=x[2].replace(/\.$/,'?'), ok=`${capFirst(x[1])} ${s} ${r}`, wb=x[1]==='was'?'Were':'Was';
+      const opts=[ok, `Did ${s} ${r}`, `${wb} ${s} ${r}`, `${x[0]} ${x[1]} ${r}`];
+      return { prompt:'正しい疑問文は？', expr:ptJpQ(x[3]), en:true, words:true, choices:shuffle(opts), answer:ok,
+        hint:'be動詞の文は、was・were を主語の前に出します。', explain:`${x[1]} を主語の前に出して ${ok}`, viz:null }; }
+    const x=pick(PG_S.filter(y=>y[5])), s=ptSub(x[0]), r=x[3].replace(/\.$/,'?'), ok=`Did ${s} ${x[1]} ${r}`;
+    const opts=[ok, `Did ${s} ${x[2]} ${r}`, `Was ${s} ${x[1]} ${r}`, `Does ${s} ${x[1]} ${r}`];
+    return { prompt:'正しい疑問文は？', expr:ptJpQ(x[4]), en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'Did ＋ 主語 ＋ 動詞の原形 〜?', explain:`Did を文の最初に置き、動詞は原形の ${x[1]}。<br>${ok}`, viz:null }; },
+  ptAns(){ const yes=Math.random()<.5;
+    if(Math.random()<.5){ const x=pick(PB_S.filter(y=>y[4])), p=x[4], b=p==='I'?'was':p==='they'?'were':'was', q=`${capFirst(x[1])} ${ptSub(x[0])} ${x[2].replace(/\.$/,'?')}`;
+      const ok=yes?`Yes, ${p} ${b}.`:`No, ${p} ${b}n't.`;
+      const opts=yes?[ok,`Yes, ${p} did.`,`Yes, ${p} ${b==='was'?'were':'was'}.`,`Yes, ${p} is.`]:[ok,`No, ${p} didn't.`,`No, ${p} ${b==='was'?'weren':'wasn'}'t.`,`No, ${p} not.`];
+      return { prompt:`${yes?'「はい」':'「いいえ」'}で答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle(opts), answer:ok,
+        hint:'Was・Were でたずねられたら was・were で答えます。', explain:`${x[0]==='You'?'you でたずねられたら I で答えます。':''}答えは ${ok}`, viz:null }; }
+    const x=pick(PG_S.filter(y=>y[5])), p=x[5], q=`Did ${ptSub(x[0])} ${x[1]} ${x[3].replace(/\.$/,'?')}`, ok=yes?`Yes, ${p} did.`:`No, ${p} didn't.`;
+    const opts=yes?[ok,`Yes, ${p} was.`,`Yes, ${p} does.`,`Yes, ${p} ${x[2]}.`]:[ok,`No, ${p} wasn't.`,`No, ${p} doesn't.`,`No, ${p} not.`];
+    return { prompt:`${yes?'「はい」':'「いいえ」'}で答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'Did でたずねられたら did・didn’t で答えます。', explain:`${x[0]==='You'?'you でたずねられたら I で答えます。':''}答えは ${ok}`, viz:null }; },
+});
+
+const PT_LESSONS = [
+  { id:'6-1', t:'be動詞の過去形', sub:'was・were', plan:['ptBe','ptBe','ptBe','ptBe','ptBe'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John <b>was</b> a musician.','ジョンは音楽家でした。')}${beEx('He <b>played</b> the guitar.','彼はギターを弾きました。')}${beEx('He <b>wrote</b> a song.','彼は曲を書きました。')}</section>
+    <section class="panel"><h3>be動詞の過去形</h3>${rule('am・is → was　　are → were')}
+    <table class="dtab"><tr><th>主語</th><th>現在</th><th>過去</th></tr>
+    <tr><td>I</td><td>am</td><td><b>was</b></td></tr>
+    <tr><td>you</td><td>are</td><td><b>were</b></td></tr>
+    <tr><td>he / she / it<br><span class="small">1人・1つ</span></td><td>is</td><td><b>was</b></td></tr>
+    <tr><td>we / you / they<br><span class="small">2人・2つ以上</span></td><td>are</td><td><b>were</b></td></tr></table></section>
+    <section class="panel"><h3>意味</h3>${beEx('The girl <b>was</b> excited.','その女の子はわくわくしていました。（〜でした）')}${beEx('We <b>were</b> in Kyoto last summer.','私たちは去年の夏、京都にいました。（〜にいた）')}
+    <p class="small muted">yesterday（昨日）、last 〜（この前の〜）、〜 ago（〜前）などが過去の目印です。</p></section>` },
+  { id:'6-2', t:'規則動詞の過去形', sub:'ed・d・ied', plan:['ptReg','ptReg','ptReg','ptForm','ptForm'], body:()=>`
+    <section class="panel"><h3>一般動詞の過去形</h3>${rule('主語に関係なく、動詞を過去形にする')}
+    ${beEx('He <b>plays</b> the guitar.','彼はギターを弾きます。')}<p style="text-align:center">↓</p>${beEx('He <b>played</b> the guitar.','彼はギターを弾きました。')}
+    <p class="small muted">過去形には、三人称単数現在の s は付けません。</p></section>
+    <section class="panel"><h3>(e)d の付け方</h3>
+    <table class="dtab"><tr><th></th><th>付け方</th><th>例</th></tr>
+    <tr><td>パターン①</td><td>原形＋<b>ed</b></td><td>play → play<b>ed</b></td></tr>
+    <tr><td>パターン②<br><span class="small">語尾が e</span></td><td>原形＋<b>d</b></td><td>like → like<b>d</b></td></tr>
+    <tr><td>パターン③<br><span class="small">子音字＋y</span></td><td>y → <b>ied</b></td><td>study → stud<b>ied</b></td></tr></table>
+    <p class="small"><b style="color:var(--bad)">注意！</b> play → <b>played</b>（a＋y は母音字＋y なので、そのまま ed）</p></section>` },
+  { id:'6-3', t:'不規則動詞の過去形', sub:'形が変わる動詞', plan:['ptIrrG','ptIrrG','ptIrrG','ptForm','ptForm'], body:()=>`
+    <section class="panel"><h3>パターン④　不規則動詞</h3>${rule('ed を付けずに、不規則に形が変わる')}
+    ${beEx('He <b>wrote</b> a song.','彼は曲を書きました。（write → wrote）')}${beEx('She <b>took</b> a picture.','彼女は写真をとりました。（take → took）')}
+    <p class="small muted">「不規則」といっても、ある程度のパターンはあります。英単語の「不規則変化」でも練習できます。</p></section>
+    <section class="panel"><h3>よく使う不規則動詞</h3>
+    <table class="dtab"><tr><th>原形</th><th>過去形</th><th>意味</th></tr>
+    ${PT_IRR.map(v=>`<tr><td>${v[0]}</td><td><b>${v[1]}</b></td><td style="text-align:left">${v[2]}</td></tr>`).join('')}</table></section>` },
+  { id:'6-4', t:'過去の否定文', sub:'wasn’t・weren’t・didn’t', plan:['ptNegC','ptNegC','ptNegC','ptNeg','ptNeg'], body:()=>`
+    <section class="panel"><h3>be動詞</h3>${rule('was・were ＋ not<br>→「〜ではありませんでした」')}
+    ${beEx('He <b>was not</b> a musician.','彼は音楽家ではありませんでした。')}</section>
+    <section class="panel"><h3>一般動詞</h3>${rule('did not ＋ 動詞の原形<br>→「〜しませんでした」')}
+    ${beEx('He wrote a song.','彼は曲を書きました。')}<p style="text-align:center">↓</p>${beEx('He <b>did not</b> <b>write</b> a song.','彼は曲を書きませんでした。')}
+    <p class="small"><b style="color:var(--bad)">×</b> He didn’t wrote a song.　didn’t の後ろは原形。</p>
+    <p class="small muted">主語が he でも I でも、didn’t を使います。</p></section>
+    <section class="panel"><h3>短縮形</h3><table class="dtab"><tr><th>もとの形</th><th>短縮形</th></tr><tr><td>was not</td><td><b>wasn’t</b></td></tr><tr><td>were not</td><td><b>weren’t</b></td></tr><tr><td>did not</td><td><b>didn’t</b></td></tr></table></section>` },
+  { id:'6-5', t:'過去の疑問文', sub:'Was・Were・Did ＋ 主語', plan:['ptQ','ptQ','ptAns','ptAns','ptAns'], body:()=>`
+    <section class="panel"><h3>be動詞</h3>${rule('Was・Were ＋ 主語 〜?<br>→「〜でしたか」')}
+    ${beEx('<b>Was</b> he a musician?','彼は音楽家でしたか。')}${beEx('— Yes, he <b>was</b>. ／ No, he <b>wasn’t</b>.','はい、そうでした。／いいえ、ちがいました。')}</section>
+    <section class="panel"><h3>一般動詞</h3>${rule('Did ＋ 主語 ＋ 動詞の原形 〜?<br>→「〜しましたか」')}
+    ${beEx('<b>Did</b> he <b>write</b> a song?','彼は曲を書きましたか。')}${beEx('— Yes, he <b>did</b>. ／ No, he <b>didn’t</b>.','はい、書きました。／いいえ、書きませんでした。')}
+    <p class="small"><b style="color:var(--bad)">×</b> Did he wrote a song?　Did の文の動詞は原形。</p></section>
+    <section class="panel"><h3>くらべよう</h3>
+    ${beEx('<b>Was</b> he a baseball player?','彼は野球の選手でしたか。（be動詞）')}${beEx('<b>Did</b> he <b>like</b> baseball?','彼は野球が好きでしたか。（一般動詞）')}
+    <p class="small muted">「〜でしたか」でも、like（好きだ）は一般動詞なので Did を使います。</p></section>` },
 ];
 
 
@@ -10278,6 +10426,7 @@ const UNITS = {
   be:{ no:'文1', title:'be動詞', subject:'英語', course:'jen', subj:1, lessons:BE_LESSONS },
   gv:{ no:'文2', title:'一般動詞', subject:'英語', course:'jen', subj:1, lessons:GV_LESSONS },
   qw:{ no:'文5', title:'疑問詞', subject:'英語', course:'jen', subj:1, lessons:QW_LESSONS },
+  past:{ no:'文6', title:'過去形', subject:'英語', course:'jen', subj:1, lessons:PT_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
