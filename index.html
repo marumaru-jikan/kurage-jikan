@@ -1678,7 +1678,7 @@ Object.assign(G, {
   gvQ(){ const x=pick(GV_S.filter(y=>y[5])), ok=gvQs(x), t=gv3(x), s=gvSub(x[0]), r=x[3].replace(/\.$/,'?');
     const opts = t ? [ok, `Does ${s} ${x[2]} ${r}`, `Do ${s} ${x[1]} ${r}`, `Is ${s} ${x[1]} ${r}`] : [ok, `Does ${s} ${x[1]} ${r}`, `Are ${s} ${x[1]} ${r}`, `Do ${s} ${x[1]}s ${r}`];
     return { prompt:'正しい疑問文は？', expr:x[4].replace(/。$/,'か。'), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
-      hint:'文の最初に Do（3人称・単数なら Does）を置き、動詞は原形にします。', explain:`${t?'主語が 3人称・単数なので Does。動詞は原形の '+x[1]+'。':'Do を文の最初に置きます。'}<br>${ok}`, viz:null }; },
+      hint:'文の最初に Do（三人称単数現在なら Does）を置き、動詞は原形にします。', explain:`${t?'主語が 三人称単数現在なので Does。動詞は原形の '+x[1]+'。':'Do を文の最初に置きます。'}<br>${ok}`, viz:null }; },
   gvAns(){ const x=pick(GV_S.filter(y=>y[5])), yes=Math.random()<.5, p=x[5], d=gvDo(x)==='do'||p==='I'?'do':'does', ok=yes?`Yes, ${p} ${d}.`:`No, ${p} ${d==='do'?"don't":"doesn't"}.`;
     const wb=p==='I'?'am':p==='they'?'are':'is', wd=d==='do'?'does':'do';
     const opts = yes ? [ok, `Yes, ${p} ${wb}.`, `Yes, ${p} ${wd}.`, `Yes, ${p} ${x[2]}.`] : [ok, `No, ${p} ${p==='I'?"'m not":wb+"n't"}.`.replace(" 'm","'m"), `No, ${p} ${wd==='do'?"don't":"doesn't"}.`, `No, ${p} not.`];
@@ -1726,7 +1726,7 @@ const GV_LESSONS = [
     <table class="dtab"><tr><th>be動詞</th><th>一般動詞</th></tr><tr><td>He <b>isn’t</b> a teacher.</td><td>He <b>doesn’t</b> play soccer.</td></tr></table>
     <p class="small muted"><b style="color:var(--bad)">×</b> He isn’t play soccer.　一般動詞の文に be動詞は使いません。</p></section>` },
   { id:'2-5', t:'疑問文', sub:'Do・Does ＋ 主語 ＋ 動詞の原形', plan:['gvQ','gvQ','gvAns','gvAns','gvAns'], body:()=>`
-    <section class="panel"><h3>ルール</h3>${rule('文の最初に Do（3人称・単数なら Does）<br>動詞は原形、最後に ?<br>→「〜しますか」')}
+    <section class="panel"><h3>ルール</h3>${rule('文の最初に Do（三人称単数現在なら Does）<br>動詞は原形、最後に ?<br>→「〜しますか」')}
     ${beEx('You play tennis.','あなたはテニスをします。')}<p style="text-align:center">↓</p>${beEx('<b>Do</b> you play tennis?','あなたはテニスをしますか。')}
     ${beEx('John sings.','ジョンは歌います。')}<p style="text-align:center">↓</p>${beEx('<b>Does</b> John <b>sing</b>?','ジョンは歌いますか。')}</section>
     <section class="panel"><h3>答え方</h3>${rule('Yes, 主語（代名詞）＋ do（does）.<br>No, 主語（代名詞）＋ don’t（doesn’t）.')}
