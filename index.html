@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },{ t:'分詞・関係代名詞', ready:'rv5', lab:'💧4' },'間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },{ t:'分詞・関係代名詞', ready:'rv5', lab:'💧4' },{ t:'間接疑問文・付加疑問文', ready:'iq' },'原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4946,6 +4946,119 @@ const RV5_LESSONS = [
     <tr><td>人</td><td>who・that</td><td>that</td></tr><tr><td>人以外</td><td>which・that</td><td>which・that</td></tr></table>
     <p>目的格は省略できる（the bag <b>I bought</b>）。主格のあとの動詞は先行詞に合わせる（a bus that <b>goes</b>）。</p>
     <p class="small muted">23章・24章の問題と、2〜3つから選ぶ問題から、毎回ちがう20問がランダムに出ます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 25章 間接疑問文・付加疑問文 ===== */
+// [型 b/g/w, もとの疑問文, 間接疑問文, 日本語, 誤り1, 誤り2, 太字にする部分]
+const IQ_S = [
+  ['b','Why is he a great musician?','I don’t know why he is a great musician.','私はなぜ彼が偉大な音楽家なのかわかりません。','I don’t know why is he a great musician.','I don’t know why does he a great musician.','why he is'],
+  ['b','Where is Ken?','Do you know where Ken is?','あなたはケンがどこにいるか知っていますか。','Do you know where is Ken?','Do you know where does Ken is?','where Ken is'],
+  ['b','What is this?','Do you know what this is?','あなたはこれが何か知っていますか。','Do you know what is this?','Do you know this what is?','what this is'],
+  ['b','Who is that girl?','I know who that girl is.','私はあの女の子がだれか知っています。','I know who is that girl.','I know that girl who is.','who that girl is'],
+  ['b','How old is your sister?','Tell me how old your sister is.','あなたのお姉さんが何歳か教えてください。','Tell me how old is your sister.','Tell me how your sister is old.','how old your sister is'],
+  ['b','When is her birthday?','I don’t know when her birthday is.','私は彼女の誕生日がいつか知りません。','I don’t know when is her birthday.','I don’t know when does her birthday.','when her birthday is'],
+  ['g','When did he write this song?','I know when he wrote this song.','私はいつ彼がこの歌を書いたか知っています。','I know when did he write this song.','I know when he write this song.','when he wrote'],
+  ['g','Where does she live?','Do you know where she lives?','あなたは彼女がどこに住んでいるか知っていますか。','Do you know where does she live?','Do you know where she live?','where she lives'],
+  ['g','What do you want?','Tell me what you want.','あなたが何をほしいか教えてください。','Tell me what do you want.','Tell me what want you.','what you want'],
+  ['g','Why did Ken go there?','I don’t know why Ken went there.','私はなぜケンがそこへ行ったのかわかりません。','I don’t know why did Ken go there.','I don’t know why Ken go there.','why Ken went'],
+  ['g','What time does the movie start?','Do you know what time the movie starts?','あなたは映画が何時に始まるか知っていますか。','Do you know what time does the movie start?','Do you know what time the movie start?','what time the movie starts'],
+  ['g','Where will they go?','Do you know where they will go?','あなたは彼らがどこへ行くか知っていますか。','Do you know where will they go?','Do you know where they go will?','where they will go'],
+  ['g','What can I do?','I want to know what I can do.','私は自分に何ができるか知りたい。','I want to know what can I do.','I want to know what do I can.','what I can do'],
+  ['w','Who wrote this song?','Do you know who wrote this song?','あなたはだれがこの歌を書いたか知っていますか。','Do you know who did write this song?','Do you know who this song wrote?','who wrote'],
+  ['w','What is famous in this town?','Do you know what is famous in this town?','あなたは何がこの町で有名か知っていますか。','Do you know what does famous in this town?','Do you know what famous is in this town?','what is famous'],
+  ['w','Who broke the window?','I don’t know who broke the window.','私はだれが窓を割ったのかわかりません。','I don’t know who did break the window.','I don’t know who the window broke.','who broke'],
+  ['w','Which bus goes to the station?','Tell me which bus goes to the station.','どのバスが駅へ行くか教えてください。','Tell me which bus does go to the station.','Tell me which goes bus to the station.','which bus goes'],
+  ['w','Who can sing this song?','I want to know who can sing this song.','私はだれがこの歌を歌えるのか知りたい。','I want to know who does can sing this song.','I want to know who sing can this song.','who can sing'],
+];
+const IQ_T = { b:'be動詞の疑問文', g:'一般動詞・助動詞の疑問文', w:'疑問詞が主語の疑問文' };
+// [もとの文, 付加疑問, 日本語, 型 p肯定/n否定/i命令/l誘う, はい（事実）, いいえ（事実）]
+const TQ_S = [
+  ['This is his new song,','isn’t it?','これは彼の新しい歌ですね。','p','彼の新しい歌である','彼の新しい歌ではない'],
+  ['Mary can sing the song,','can’t she?','メアリーはその歌を歌うことができますね。','p','歌える','歌えない'],
+  ['You like soccer,','don’t you?','あなたはサッカーが好きですね。','p','好きだ','好きではない'],
+  ['Ken plays the piano,','doesn’t he?','ケンはピアノをひきますね。','p','ひく','ひかない'],
+  ['It was cold yesterday,','wasn’t it?','昨日は寒かったですね。','p','寒かった','寒くなかった'],
+  ['They went to Kyoto,','didn’t they?','彼らは京都に行きましたね。','p','行った','行かなかった'],
+  ['Your sisters are students,','aren’t they?','あなたのお姉さんたちは学生ですね。','p','学生である','学生ではない'],
+  ['Yui will come tomorrow,','won’t she?','ユイは明日来ますね。','p','来る','来ない'],
+  ['The boys don’t sing the song,','do they?','男の子たちはその歌を歌いませんね。','n','歌う','歌わない'],
+  ['You aren’t busy,','are you?','あなたは忙しくないですね。','n','忙しい','忙しくない'],
+  ['Ken didn’t come to school,','did he?','ケンは学校に来ませんでしたね。','n','来た','来なかった'],
+  ['She can’t swim,','can she?','彼女は泳げませんね。','n','泳げる','泳げない'],
+  ['This isn’t your bag,','is it?','これはあなたのかばんではありませんね。','n','私のかばんである','私のかばんではない'],
+  ['Mike doesn’t eat natto,','does he?','マイクは納豆を食べませんね。','n','食べる','食べない'],
+  ['Sing this song for me,','will you?','私のためにこの歌を歌ってくれませんか。','i'],
+  ['Open the window,','will you?','窓を開けてくれませんか。','i'],
+  ['Help me with my homework,','will you?','宿題を手伝ってくれませんか。','i'],
+  ['Let’s sing this song,','shall we?','この歌を歌いましょうよ。','l'],
+  ['Let’s go to the park,','shall we?','公園に行きましょうよ。','l'],
+  ['Let’s have lunch,','shall we?','昼食を食べましょうよ。','l'],
+];
+const TQ_NEG = { 'isn’t':'is','aren’t':'are','wasn’t':'was','don’t':'do','doesn’t':'does','didn’t':'did','can’t':'can','won’t':'will' };
+const TQ_POS = Object.fromEntries(Object.entries(TQ_NEG).map(([a,b])=>[b,a]));
+const tqParts = x => x[1].replace('?','').split(' ');
+const tqJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+Object.assign(G, {
+  iqSel(){ const x=pick(IQ_S);
+    return { prompt:'間接疑問文にすると？', expr:`${x[1]}${tqJ(x[3])}`, enExpr:true, en:true, words:true, choices:shuffle([x[2],x[4],x[5]]), answer:x[2],
+      hint:x[0]==='w'?'疑問詞が主語のときは、語順はそのまま。':'〈疑問詞 ＋ 主語 ＋ 動詞〉の語順。do・does・did は使わない。', explain:`${x[2].replace(x[6],'<b>'+x[6]+'</b>')}<br>${x[0]==='b'?'be動詞は主語のあとに置く。':x[0]==='g'?'do・does・did は使わず、動詞を主語・時制に合わせる。助動詞は主語のあと。':'疑問詞が主語なので、語順はかわらない。'}`, viz:null }; },
+  iqEJ(){ const x=pick(IQ_S), ws=shuffle(IQ_S.filter(y=>y!==x)).slice(0,3).map(y=>y[3]);
+    return { prompt:'日本語の意味は？', expr:x[2], enExpr:true, words:true, choices:shuffle([x[3],...ws]), answer:x[3], hint:'疑問詞のあとが「〜か」の部分。', explain:`${x[2].replace(x[6],'<b>'+x[6]+'</b>')}<br>→ ${x[3]}`, viz:null }; },
+  tqTag(){ const x=pick(TQ_S), a=x[1];
+    let c;
+    if(x[3]==='i') c=['will you?','shall we?','do you?','are you?'];
+    else if(x[3]==='l') c=['shall we?','will you?','don’t we?','are we?'];
+    else { const [aux,pr]=tqParts(x), flip=(TQ_NEG[aux]||TQ_POS[aux]), same=Object.keys(x[3]==='p'?TQ_NEG:TQ_POS).filter(v=>v!==aux), op=['he','she','it','they','you'].filter(v=>v!==pr);
+      c=uniq([a, `${flip} ${pr}?`, `${pick(same)} ${pr}?`, `${aux} ${pick(op)}?`]); }
+    return { prompt:'□ に入る付加疑問は？', expr:`${x[0]} □`+tqJ(x[2]), enExpr:true, en:true, words:true, choices:shuffle(c), answer:a,
+      hint:x[3]==='p'?'肯定文 → 否定の短縮形 ＋ 代名詞?':x[3]==='n'?'否定文 → 肯定形 ＋ 代名詞?':x[3]==='i'?'命令文 → , will you?（依頼）':'Let’s 〜 → , shall we?（勧誘）',
+      explain:`${x[0]} <b>${a}</b><br>${x[2]}`, viz:null }; },
+  tqAns(){ const x=pick(TQ_S.filter(v=>v[4])), [aux,pr]=tqParts(x), pos=TQ_NEG[aux]||aux, neg=TQ_POS[pos], yes=Math.random()<.5;
+    const p=pr==='you'?'I':pr, pa=pr==='you'&&pos==='are'?'am':pos, na=pr==='you'&&pos==='are'?'’m not':' '+neg;
+    const Y=pr==='you'&&pos==='are'?`Yes, I am.`:`Yes, ${p} ${pa}.`, N=pr==='you'&&pos==='are'?`No, I’m not.`:`No, ${p} ${neg}.`, ok=yes?Y:N;
+    return { prompt:`「${yes?x[4]:x[5]}」と答えるとき、正しいのは？`, expr:`${x[0]} ${x[1]}`+tqJ(x[2]), enExpr:true, en:true, words:true, choices:[Y,N], answer:ok,
+      hint:'日本語の「はい・いいえ」ではなく、答えの内容が肯定なら Yes、否定なら No。', explain:`内容が「${yes?x[4]:x[5]}」なので ${ok}${x[3]==='n'?`<br>（否定の質問なので、日本語では「${yes?'いいえ':'はい'}」になる）`:''}`, viz:null }; },
+  tqEJ(){ const x=pick(TQ_S), ws=shuffle(TQ_S.filter(y=>y!==x)).slice(0,3).map(y=>y[2]);
+    return { prompt:'日本語の意味は？', expr:`${x[0]} ${x[1]}`, enExpr:true, words:true, choices:shuffle([x[2],...ws]), answer:x[2], hint:'付加疑問は「〜ですね」と念を押す表現。', explain:`${x[0]} <b>${x[1]}</b><br>→ ${x[2]}`, viz:null }; },
+});
+const iqEx = x => beEx(x[2].replace(x[6],'<b>'+x[6]+'</b>'), x[3]);
+const tqEx = x => beEx(`${x[0]} <b>${x[1]}</b>`, x[2]);
+const IQ_LESSONS = [
+  { id:'25-1', t:'間接疑問文とは', sub:'疑問詞 ＋ 主語 ＋ 動詞', plan:['iqSel','iqSel','iqSel','iqSel','iqSel'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('I know <b>when he wrote</b> this song.','私はいつ彼がこの歌を書いたか知っています。')}${beEx('Do you know <b>who wrote</b> this song?','あなたはだれがこの歌を書いたか知っていますか。')}</section>
+    <section class="panel"><h3>間接疑問文</h3>${rule('疑問詞で始まる疑問文が文の中に入って、<br>know などの目的語になる文 →「間接疑問文」')}
+    <p class="small muted">疑問詞のあとは〈主語 ＋ 動詞〉のふつうの文の語順になります。</p></section>
+    <section class="panel"><h3>〇 be動詞の疑問文</h3>${rule('疑問詞 ＋ 主語 ＋ be動詞 …')}
+    ${beEx('Why <b>is he</b> a great musician?','')}<p style="text-align:center">↓ is と he を入れかえる</p>
+    ${beEx('I don’t know why <b>he is</b> a great musician.','私はなぜ彼が偉大な音楽家なのかわかりません。')}</section>
+    <section class="panel"><h3>〇 一般動詞の疑問文</h3>${rule('疑問詞 ＋ 主語 ＋ 一般動詞 …<br>（助動詞があるとき：疑問詞 ＋ 主語 ＋ 助動詞 ＋ 動詞）')}
+    ${beEx('When <b>did</b> he <b>write</b> this song?','')}<p style="text-align:center">↓ did は使わず、write を過去形 wrote に</p>
+    ${beEx('I know when he <b>wrote</b> this song.','私はいつ彼がこの歌を書いたか知っています。')}
+    <p class="small muted">does を使う疑問文 → 動詞に s をつける（where she <b>lives</b>）。</p></section>
+    <section class="panel"><h3>〇 疑問詞が主語になる疑問文</h3>${rule('疑問詞（who・what・which）＋ 動詞 …<br>語順はかわらない')}
+    ${beEx('<b>Who wrote</b> this song?','')}<p style="text-align:center">↓ 語順はそのまま</p>
+    ${beEx('Do you know <b>who wrote</b> this song?','あなたはだれがこの歌を書いたか知っていますか。')}</section>` },
+  { id:'25-2', t:'間接疑問文例文', sub:'〜か（知っている・教えて）', plan:['iqEJ','iqEJ','iqEJ','iqSel','iqSel'], body:()=>['b','g','w'].map(t=>`
+    <section class="panel"><h3>${IQ_T[t]}</h3>${IQ_S.filter(x=>x[0]===t).map(iqEx).join('')}</section>`).join('') },
+  { id:'25-3', t:'付加疑問文', sub:'〜ですね', plan:['tqTag','tqTag','tqTag','tqAns','tqAns'], body:()=>`
+    <section class="panel"><h3>付加疑問文</h3>${rule('「〜ですね」と念を押したり、同意を求めたりするとき、<br>文末に〈, isn’t it?〉などを付け加える')}</section>
+    <section class="panel"><h3>〇 肯定文</h3>${rule('肯定文, 否定の短縮形 ＋ 主語（代名詞）?')}
+    ${beEx('This <b>is</b> his new song, <b>isn’t it?</b>','これは彼の新しい歌ですね。')}${beEx('Mary <b>can</b> sing the song, <b>can’t she?</b>','メアリーはその歌を歌うことができますね。')}
+    ${beEx('Ken <b>plays</b> the piano, <b>doesn’t he?</b>','ケンはピアノをひきますね。（一般動詞 → do・does・did）')}
+    <p class="small muted">主語は代名詞にかえます（Mary → she、this → it）。</p></section>
+    <section class="panel"><h3>〇 否定文</h3>${rule('否定文, 肯定形 ＋ 主語（代名詞）?')}
+    ${beEx('The boys <b>don’t</b> sing the song, <b>do they?</b>','男の子たちはその歌を歌いませんね。')}</section>
+    <section class="panel"><h3>〇 疑問文（答え方）</h3>${rule('答えの内容が肯定 → Yes、否定 → No')}
+    ${beEx('You aren’t busy, are you? — <b>Yes, I am.</b>','あなたは忙しくないですね。— いいえ、忙しいです。')}
+    ${beEx('You aren’t busy, are you? — <b>No, I’m not.</b>','あなたは忙しくないですね。— はい、忙しくないです。')}
+    <p class="small muted">否定文の付加疑問では、日本語の「はい・いいえ」と Yes・No が逆になるので注意。</p></section>
+    <section class="panel"><h3>〇 命令文</h3>${rule('命令文, will you?（依頼）→「〜してくれませんか」')}
+    ${beEx('Sing this song for me, <b>will you?</b>','私のためにこの歌を歌ってくれませんか。')}</section>
+    <section class="panel"><h3>〇 誘う文</h3>${rule('Let’s 〜, shall we?（勧誘）→「〜しましょうよ」')}
+    ${beEx('Let’s sing this song, <b>shall we?</b>','この歌を歌いましょうよ。')}</section>` },
+  { id:'25-4', t:'付加疑問文例文', sub:'肯定文・否定文・命令文・誘う文', plan:['tqEJ','tqEJ','tqTag','tqTag','tqAns'], body:()=>[['p','肯定文'],['n','否定文'],['i','命令文'],['l','誘う文']].map(([t,h])=>`
+    <section class="panel"><h3>${h}</h3>${TQ_S.filter(x=>x[3]===t).map(tqEx).join('')}</section>`).join('') },
 ];
 
 
@@ -13351,6 +13464,7 @@ const UNITS = {
   ptp:{ no:'文23', title:'分詞', subject:'英語', course:'jen', subj:1, lessons:PTP_LESSONS },
   rel:{ no:'文24', title:'関係代名詞', subject:'英語', course:'jen', subj:1, lessons:REL_LESSONS },
   rv5:{ no:'💧4', title:'分詞・関係代名詞', subject:'英語', course:'jen', subj:1, lessons:RV5_LESSONS },
+  iq:{ no:'文25', title:'間接疑問文・付加疑問文', subject:'英語', course:'jen', subj:1, lessons:IQ_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
