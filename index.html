@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },{ t:'分詞・関係代名詞', ready:'rv5', lab:'💧4' },{ t:'間接疑問文・付加疑問文', ready:'iq' },{ t:'原形不定詞', ready:'bi' },'仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },{ t:'分詞・関係代名詞', ready:'rv5', lab:'💧4' },{ t:'間接疑問文・付加疑問文', ready:'iq' },{ t:'原形不定詞', ready:'bi' },{ t:'仮定法', ready:'sj' }) },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -5140,6 +5140,92 @@ const BI_LESSONS = [
     <p class="small muted">「人」のところには、もの・動物もきます（She saw <b>the sun rise</b>.）。<br>watch（じっと見る）・listen to（聞く）・feel（感じる）も同じ形で使えます。</p></section>` },
   { id:'26-4', t:'例文', sub:'使役・準使役・知覚', plan:['biEJ','biEJ','biEJ','biVerb','biPerc'], body:()=>[['make','make（強制）'],['let','let（許可）'],['have','have（依頼）'],['help','help'],['see','see'],['hear','hear']].map(([t,h])=>`
     <section class="panel"><h3>${h}</h3>${BI_S.filter(x=>x[3]===t).map(biEx).join('')}</section>`).join('') },
+];
+
+
+/* ===== 英語 文法 27章 仮定法 ===== */
+// [If節, 主節, 日本語, If節の動詞, 誤り選択肢, 主節の助動詞, 現実, 誤った現実]
+const SJ_IF = [
+  ['If I were a bird,','I could fly around the world.','もし私が鳥だったら、世界中を飛び回れるのに。','were',['am','be','is'],'could','私は鳥ではないので、世界中を飛び回れない。','私は鳥なので、世界中を飛び回れる。'],
+  ['If I were rich,','I would buy the building.','もし私がお金持ちなら、その建物を買うだろう。','were',['am','be','is'],'would','私はお金持ちではないので、その建物を買わない。','私はお金持ちなので、その建物を買う。'],
+  ['If I practiced hard,','I could win the game.','もし一生懸命練習したなら、その試合に勝つことができるのに。','practiced',['practice','practices','will practice'],'could','私は一生懸命練習していないので、試合に勝てない。','私は一生懸命練習しているので、試合に勝てる。'],
+  ['If I studied every day,','I could pass the exam.','もし毎日勉強したなら、試験に合格することができるのに。','studied',['study','studies','will study'],'could','私は毎日勉強していないので、試験に合格できない。','私は毎日勉強しているので、試験に合格できる。'],
+  ['If I were not busy,','I could go shopping with him.','もし私が忙しくなかったら、彼と買い物に行けるのに。','were',['am','be','is'],'could','私は忙しいので、彼と買い物に行けない。','私は忙しくないので、彼と買い物に行ける。'],
+  ['If I were a dog,','I would play in the park all day.','もし私がイヌだったら、一日中公園で遊ぶのに。','were',['am','be','is'],'would','私はイヌではないので、一日中公園で遊ぶことはない。','私はイヌなので、一日中公園で遊ぶ。'],
+  ['If I had a lot of money,','I could travel to space.','もし私がたくさんのお金を持っていたら、宇宙へ旅行することができるのに。','had',['have','has','will have'],'could','私はたくさんのお金を持っていないので、宇宙へ旅行できない。','私はたくさんのお金を持っているので、宇宙へ旅行できる。'],
+  ['If it snowed a lot today,','we would make a snowman.','もし今日たくさん雪が降れば、私たちは雪だるまを作るのに。','snowed',['snow','snows','will snow'],'would','今日は雪がたくさん降らないので、雪だるまを作らない。','今日は雪がたくさん降るので、雪だるまを作る。'],
+  ['If my mother helped me,','I would bake a cake.','もし母が手伝ってくれるなら、ケーキを焼くのに。','helped',['help','helps','will help'],'would','母は手伝ってくれないので、ケーキを焼かない。','母が手伝ってくれるので、ケーキを焼く。'],
+  ['If I knew his address,','I would send him a letter.','もし彼の住所を知っていたら、手紙を送るのに。','knew',['know','knows','will know'],'would','私は彼の住所を知らないので、手紙を送らない。','私は彼の住所を知っているので、手紙を送る。'],
+  ['If I could go to the future,','I would see new technology.','もし未来に行くことができたら、私は新しい技術を見るだろう。','could',['can','will','am'],'would','私は未来に行けないので、新しい技術を見ることはない。','私は未来に行けるので、新しい技術を見る。'],
+  ['If you were here,','we could talk more.','もしあなたがここにいたら、もっと話せるのに。','were',['are','be','is'],'could','あなたはここにいないので、もっと話せない。','あなたはここにいるので、もっと話せる。'],
+];
+// [□つき英文, 答え, 誤り選択肢, 日本語, 現実, 誤った現実]
+const SJ_W = [
+  ['I wish I □ swim.','could',['can','will'],'私が泳げればいいのになあ。','実際は泳げない。','実際は泳げる。'],
+  ['I wish I □ younger.','were',['am','will be'],'私がもっと若ければいいのになあ。','実際は若くない。','実際は若い。'],
+  ['I wish I □ a sister or a brother.','had',['have','has'],'私にお姉さんかお兄さんがいたらいいのになあ。','実際は兄弟姉妹がいない。','実際は兄弟姉妹がいる。'],
+  ['I wish it □ snow on Christmas.','would',['will','does'],'クリスマスに雪が降ればいいのになあ。','実際は雪が降りそうにない。','実際は雪が降りそうだ。'],
+  ['I wish she □ here to help me.','were',['is','be'],'彼女が私を手伝うためにここにいたらいいのになあ。','実際は彼女はここにいない。','実際は彼女はここにいる。'],
+  ['I wish I □ a high school student.','were',['am','be'],'私が高校生だったらいいのになあ。','実際は高校生ではない。','実際は高校生だ。'],
+  ['I wish it □ sunny today.','were',['is','be'],'今日晴れだったらいいのになあ。','実際は今日は晴れていない。','実際は今日は晴れている。'],
+  ['I wish I □ run fast.','could',['can','will'],'私が速く走ることができたらいいのになあ。','実際は速く走れない。','実際は速く走れる。'],
+  ['I wish you □ go skiing with me.','could',['can','will'],'あなたが私と一緒にスキーに行けたらいいのになあ。','実際はあなたは一緒に行けない。','実際はあなたは一緒に行ける。'],
+  ['I wish he □ enough money to buy a cruiser.','had',['has','have'],'彼がクルーザーを買う十分なお金を持っていたらいいのになあ。','実際は彼には十分なお金がない。','実際は彼には十分なお金がある。'],
+  ['I wish we □ better at singing and dancing.','were',['are','be'],'私たちがもっと歌や踊りが上手だったらいいのになあ。','実際はそれほど上手ではない。','実際はとても上手だ。'],
+];
+const sjJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const sjF = x => `${x[0]} ${x[1]}`;
+const SJ_PRES = { could:'can', would:'will' };
+Object.assign(G, {
+  sjIfV(){ const x=pick(SJ_IF), q=x[0].replace(new RegExp(' '+x[3]+'( |,)'),' □$1');
+    return { prompt:'□ に入る形は？', expr:`${q} ${x[1]}`+sjJ(x[2]), enExpr:true, en:true, words:true, choices:shuffle([x[3],...x[4]]), answer:x[3],
+      hint:'仮定法では、If のあとの動詞を過去形にする。be動詞はふつう were。', explain:`${sjF(x).replace(x[0], x[0].replace(new RegExp(' '+x[3]+'( |,)'),' <b>'+x[3]+'</b>$1'))}<br>現実とちがうことなので、過去形 ${x[3]}。`, viz:null }; },
+  sjAux(){ const x=pick(SJ_IF), q=x[1].replace(new RegExp(' '+x[5]+' '),' □ ');
+    return { prompt:'□ に入る語は？', expr:`${x[0]} ${q}`+sjJ(x[2]), enExpr:true, en:true, words:true, choices:shuffle([x[5], SJ_PRES[x[5]], 'must']), answer:x[5],
+      hint:'仮定法の後半は〈would［could・might］＋ 動詞の原形〉。', explain:`${x[0]} ${x[1].replace(x[5],'<b>'+x[5]+'</b>')}<br>${x[5]==='could'?'「〜できるのに」→ could':'「〜するのに・〜するだろう」→ would'}`, viz:null }; },
+  sjWish(){ const x=pick(SJ_W);
+    return { prompt:'□ に入る語は？', expr:x[0]+sjJ(x[3]), enExpr:true, en:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1],
+      hint:'I wish のあとは過去形（be動詞は were、can は could）。', explain:`${x[0].replace('□','<b>'+x[1]+'</b>')}<br>かなわない願いなので、過去形 ${x[1]}。`, viz:null }; },
+  sjFact(){ const w=Math.random()<.4, x=w?pick(SJ_W):pick(SJ_IF), s=w?x[0].replace('□',x[1]):sjF(x), ok=w?x[4]:x[6], ng=w?x[5]:x[7];
+    return { prompt:'この文からわかる「現実」は？', expr:s, enExpr:true, en:true, words:true, choices:shuffle([ok,ng]), answer:ok,
+      hint:'仮定法は、現実とはちがうことを言う表現。', explain:`${s}<br>→ ${w?x[3]:x[2]}<br>現実：${ok}`, viz:null }; },
+  sjEJ(){ const all=[...SJ_IF.map(x=>[sjF(x),x[2]]), ...SJ_W.map(x=>[x[0].replace('□',x[1]),x[3]])], x=pick(all), ws=shuffle(all.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'If 〜 過去形「もし〜なら…のに」、I wish 〜 過去形「〜ならいいのになあ」', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+const sjEx = x => beEx(`${x[0].replace(new RegExp(' '+x[3]+'( |,)'),' <b>'+x[3]+'</b>$1')} ${x[1].replace(new RegExp(' '+x[5]+' '),' <b>'+x[5]+'</b> ')}`, x[2]);
+const sjWx = x => beEx(x[0].replace('wish','<b>wish</b>').replace('□','<b>'+x[1]+'</b>'), x[3]);
+const SJ_LESSONS = [
+  { id:'27-1', t:'仮定法とは', sub:'現実とはちがうことを言う', plan:['sjFact','sjFact','sjFact','sjEJ','sjEJ'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('If I <b>were</b> a bird, I <b>could</b> fly around the world.','もし私が鳥だったら、世界中を飛び回れるのに。')}${beEx('I <b>wish</b> I <b>could</b> swim.','私が泳げればいいのになあ。')}</section>
+    <section class="panel"><h3>仮定法</h3>${rule('現実とは異なること・現実にはありえないことを<br>仮定したり願ったりするとき →「仮定法」<br>動詞を<b>過去形</b>にする（意味は今のこと）')}</section>
+    <section class="panel"><h3>ふつうの if の文との違い</h3>
+    ${beEx('If it <b>is</b> sunny tomorrow, I <b>will</b> go fishing.','もし明日晴れたら、私は釣りに行きます。（本当に起こるかもしれない）')}
+    ${beEx('If I <b>were</b> a bird, I <b>could</b> fly.','もし私が鳥だったら、飛べるのに。（現実にはありえない）')}
+    <table class="dtab" style="font-size:.85rem"><tr><th></th><th>ふつうの if</th><th>仮定法</th></tr><tr><td>内容</td><td>起こりうること</td><td>現実とちがうこと</td></tr><tr><td>動詞</td><td>現在形</td><td>過去形</td></tr><tr><td>後半</td><td>will など</td><td>would・could など</td></tr></table>
+    <p class="small muted">仮定法の文からは「現実」がわかります。If I were a bird … → 現実は「鳥ではないので、飛べない」。</p></section>` },
+  { id:'27-2', t:'If ＋ 過去形 〜, would ＋ 原形', sub:'もし〜なら…するのに', plan:['sjIfV','sjIfV','sjAux','sjAux','sjFact'], body:()=>`
+    <section class="panel"><h3>If ＋ 主語 ＋ 動詞の過去形 〜, 主語 ＋ would［could / might］＋ 動詞の原形 ….</h3>
+    ${rule('「もし〜なら、…するのに（できるのに）」<br>be動詞は、主語が何でも基本的に <b>were</b>')}
+    <table class="dtab" style="font-size:.85rem"><tr><th>助動詞</th><th>意味</th></tr><tr><td><b>would</b></td><td>…するだろう・…するのに</td></tr><tr><td><b>could</b></td><td>…できるだろう・…できるのに</td></tr><tr><td><b>might</b></td><td>…するかもしれない</td></tr></table></section>
+    <section class="panel"><h3>例文</h3>
+    ${beEx('If I <b>were</b> rich, I <b>would</b> buy the building.','もし私がお金持ちなら、その建物を買うだろう。（be動詞 → were）')}
+    ${beEx('If I <b>practiced</b> hard, I <b>could</b> win the game.','もし一生懸命練習したなら、その試合に勝つことができるのに。（一般動詞 → 過去形）')}
+    ${beEx('If I <b>could</b> go to the future, I <b>would</b> see new technology.','もし未来に行くことができたら、私は新しい技術を見るだろう。（can → could）')}
+    ${beEx('I <b>could</b> pass the exam if I <b>studied</b> every day.','もし毎日勉強したなら、試験に合格することができるのに。')}
+    <p class="small muted">if の部分を後ろに置くときは、コンマは不要です。</p></section>` },
+  { id:'27-3', t:'I wish ＋ 過去形', sub:'〜ならいいのになあ', plan:['sjWish','sjWish','sjWish','sjWish','sjFact'], body:()=>`
+    <section class="panel"><h3>I wish ＋ 主語 ＋ 動詞の過去形（were）〜.</h3>
+    ${rule('実現できないこと・かなわない願いを言うとき<br>→「〜ならいいのになあ」<br>be動詞は基本的に <b>were</b>、can は <b>could</b>')}
+    ${beEx('I wish I <b>could</b> swim.','私が泳げればいいのになあ。（現実：泳げない）')}
+    ${beEx('I wish I <b>were</b> younger.','私がもっと若ければいいのになあ。（現実：若くない）')}
+    ${beEx('I wish I <b>had</b> a sister or a brother.','私にお姉さんかお兄さんがいたらいいのになあ。（現実：いない）')}
+    ${beEx('I wish it <b>would</b> snow on Christmas.','クリスマスに雪が降ればいいのになあ。')}</section>
+    <section class="panel"><h3>hope との違い</h3>
+    ${beEx('I <b>hope</b> it <b>will be</b> sunny tomorrow.','明日晴れるといいな。（実現しそうな願い）')}
+    ${beEx('I <b>wish</b> it <b>were</b> sunny today.','今日晴れだったらいいのになあ。（現実：晴れていない）')}</section>` },
+  { id:'27-4', t:'例文', sub:'If 〜・I wish 〜', plan:['sjEJ','sjEJ','sjEJ','sjIfV','sjWish'], body:()=>`
+    <section class="panel"><h3>If ＋ 過去形 〜, would［could］＋ 原形</h3>${SJ_IF.map(sjEx).join('')}</section>
+    <section class="panel"><h3>I wish ＋ 過去形</h3>${SJ_W.map(sjWx).join('')}</section>` },
 ];
 
 
@@ -13547,6 +13633,7 @@ const UNITS = {
   rv5:{ no:'💧4', title:'分詞・関係代名詞', subject:'英語', course:'jen', subj:1, lessons:RV5_LESSONS },
   iq:{ no:'文25', title:'間接疑問文・付加疑問文', subject:'英語', course:'jen', subj:1, lessons:IQ_LESSONS },
   bi:{ no:'文26', title:'原形不定詞', subject:'英語', course:'jen', subj:1, lessons:BI_LESSONS },
+  sj:{ no:'文27', title:'仮定法', subject:'英語', course:'jen', subj:1, lessons:SJ_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
