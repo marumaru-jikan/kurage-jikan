@@ -7547,6 +7547,26 @@ Object.assign(G, {
     if(t===2) return w4m(`1つの外角が ${360/n}° の正多角形は、正何角形？`, '', '正'+w5NG[n]+'角形', [n+1,n-1,n+2,n-2,n+3,n-3].filter(k=>k>=3&&k<=20).map(k=>'正'+w5NG[k]+'角形'), '360÷(1つの外角)＝角の数', `360÷${360/n}＝${n}`);
     const m=pick([5,6]), vs=[]; for(let i=0;i<m-1;i++) vs.push(ri(8,16)*5); const x=360-vs.reduce((s,v)=>s+v,0); if(x<=15||x>=120) return G.w5PolyEx();
     return w4m(`${w5NG[m]}角形で、${m-1}つの外角が ${vs.join('°、')}° のとき、残りの外角は？`, '', x+'°', [(180*(m-2)-vs.reduce((s,v)=>s+v,0))+'°', (x+10)+'°', (180-x)+'°'].filter(z=>!/^−|^-/.test(z)), '外角の和は 360° です。', `360°−(${vs.join('°＋')}°)＝${x}°`, { words:true }); },
+  w5CongPick(){ const d2=(P,Q)=>(P[0]-Q[0])**2+(P[1]-Q[1])**2, key=T=>[d2(T[0],T[1]),d2(T[1],T[2]),d2(T[2],T[0])].sort((a,b)=>a-b).join(','), area=T=>Math.abs((T[1][0]-T[0][0])*(T[2][1]-T[0][1])-(T[2][0]-T[0][0])*(T[1][1]-T[0][1]))/2;
+    const norm=T=>{ const mx=Math.min(...T.map(p=>p[0])), my=Math.min(...T.map(p=>p[1])); return T.map(([x,y])=>[x-mx,y-my]); }, fits=T=>T.every(([x,y])=>x<=4&&y<=4);
+    const TR=[([x,y])=>[-y,x],([x,y])=>[-x,-y],([x,y])=>[-x,y],([x,y])=>[y,x],([x,y])=>[x,-y]];
+    let base, cp, d1, d2t, guard=0;
+    while(guard++<500){ base=[[ri(0,4),ri(0,3)],[ri(0,4),ri(0,3)],[ri(0,4),ri(0,3)]]; if(area(base)<3) continue; base=norm(base); if(!fits(base)) continue;
+      cp=norm(base.map(pick(TR))); if(!fits(cp)) continue;
+      const mv=T=>{ const k=ri(0,2), U=T.map(p=>[...p]); U[k][pick([0,1])]+=pick([1,-1]); return norm(U); };
+      d1=mv(base); d2t=mv(base);
+      const K=key(base); if(area(d1)<2.5||area(d2t)<2.5||!fits(d1)||!fits(d2t)) continue; if(key(d1)===K||key(d2t)===K||key(d1)===key(d2t)) continue; break; }
+    d2t=norm(d2t.map(pick(TR))); if(!fits(d2t)) d2t=norm(d2t.map(([x,y])=>[y,x]));
+    const M=['ア','イ','ウ','エ'], items=shuffle([['c',base],['c',cp],['x',d1],['x',d2t]]), U=22, CW=5*U, G=26;
+    let g=''; items.forEach(([_,T],i)=>{ const ox=8+(i%2)*(CW+G), oy=22+Math.floor(i/2)*(CW+G);
+      for(let k=0;k<=5;k++){ g+=`<line x1="${ox+k*U}" y1="${oy}" x2="${ox+k*U}" y2="${oy+CW}" style="stroke:var(--line);stroke-width:.7"/><line x1="${ox}" y1="${oy+k*U}" x2="${ox+CW}" y2="${oy+k*U}" style="stroke:var(--line);stroke-width:.7"/>`; }
+      const w=Math.max(...T.map(p=>p[0])), h=Math.max(...T.map(p=>p[1])), sx=Math.floor((5-w)/2), sy=Math.floor((5-h)/2);
+      g+=`<polygon points="${T.map(([x,y])=>`${ox+(x+sx)*U},${oy+(y+sy)*U}`).join(' ')}" style="fill:rgba(159,216,242,.35);stroke:var(--ink);stroke-width:1.8"/>`;
+      g+=`<text x="${ox+4}" y="${oy-6}" style="font-size:15px;font-weight:700;font-style:normal">${M[i]}</text>`; });
+    const fig=`<svg class="gfig" viewBox="0 0 ${16+2*CW+G} ${30+2*CW+G}" style="max-width:300px" role="img" aria-label="4つの三角形">${g}</svg>`;
+    const ci=items.map((it,i)=>it[0]==='c'?i:-1).filter(i=>i>=0), ans=M[ci[0]]+'と'+M[ci[1]];
+    const pairs=[]; for(let a=0;a<4;a++) for(let b=a+1;b<4;b++) pairs.push(M[a]+'と'+M[b]);
+    return Object.assign(mq2('下の三角形の中で、合同な三角形の組はどれ？', fig, ans, shuffle(pairs.filter(z=>z!==ans)).slice(0,3), '方眼のます目を数えて、辺の長さや形をくらべよう。回したり裏返したりしてぴったり重なれば合同。', `${ans}は、回転させたり裏返したりすると、ぴったり重なります。`, { figq:true }), {}); },
   w5Cong(){ const t=ri(0,2);
     if(t===0){ const s=pick([['B','C','F','G'],['A','B','E','F'],['C','D','G','H'],['D','A','H','E']]), L=pick([2.5,3,3.4,4,4.5,5]);
       return w4m(`四角形 ABCD≡四角形 EFGH で、${s[0]}${s[1]}＝${L} cm のとき、${s[2]}${s[3]} の長さは？`, '', `${L} cm`, [`${L+1} cm`, `${(L*2)} cm`, `${(L-.5)} cm`], '記号≡では、対応する頂点が順に並んでいます。', `${s[0]}→${s[2]}、${s[1]}→${s[3]} なので ${s[2]}${s[3]}＝${s[0]}${s[1]}＝${L} cm`); }
@@ -7628,7 +7648,7 @@ const M2C4_LESSONS = [
     <section class="panel"><h3>多角形の外角の和</h3>${rule('多角形の外角の和は 360°（何角形でも同じ）')}
     <svg class="gfig" viewBox="0 0 340 180" role="img" aria-label="多角形の外角の和"><path d="M95 25 L110.5 12.4 A20 20 0 0 1 111.4 36.4 Z" style="fill:#f2a7b5"/><line x1="95" y1="25" x2="127.6" y2="-1.5" style="stroke:var(--ink);stroke-width:1.4;stroke-dasharray:4 3"/><path d="M160 70 L176.4 81.4 A20 20 0 0 1 154.8 89.3 Z" style="fill:#f7c873"/><line x1="160" y1="70" x2="194.5" y2="93.9" style="stroke:var(--ink);stroke-width:1.4;stroke-dasharray:4 3"/><path d="M140 145 L134.8 164.3 A20 20 0 0 1 120.0 146.2 Z" style="fill:#a8dcf5"/><line x1="140" y1="145" x2="129.2" y2="185.6" style="stroke:var(--ink);stroke-width:1.4;stroke-dasharray:4 3"/><path d="M55 150 L35.0 151.2 A20 20 0 0 1 48.4 131.1 Z" style="fill:#b8e3a1"/><line x1="55" y1="150" x2="13.1" y2="152.5" style="stroke:var(--ink);stroke-width:1.4;stroke-dasharray:4 3"/><path d="M30 78 L23.4 59.1 A20 20 0 0 1 45.5 65.4 Z" style="fill:#c9b8ec"/><line x1="30" y1="78" x2="16.2" y2="38.3" style="stroke:var(--ink);stroke-width:1.4;stroke-dasharray:4 3"/><polygon points="95,25 160,70 140,145 55,150 30,78" style="fill:none;stroke:var(--ink);stroke-width:1.8"/><path d="M285 92 L285.0 50.0 A42 42 0 0 1 325.4 80.3 Z" style="fill:#f2a7b5;stroke:#fff;stroke-width:1"/><path d="M285 92 L325.4 80.3 A42 42 0 0 1 309.6 126.0 Z" style="fill:#f7c873;stroke:#fff;stroke-width:1"/><path d="M285 92 L309.6 126.0 A42 42 0 0 1 260.4 126.1 Z" style="fill:#a8dcf5;stroke:#fff;stroke-width:1"/><path d="M285 92 L260.4 126.1 A42 42 0 0 1 245.5 77.6 Z" style="fill:#b8e3a1;stroke:#fff;stroke-width:1"/><path d="M285 92 L245.5 77.6 A42 42 0 0 1 285.0 50.0 Z" style="fill:#c9b8ec;stroke:#fff;stroke-width:1"/><text x="212" y="96" text-anchor="middle" style="font-size:20px;font-style:normal">→</text><text x="285" y="158" text-anchor="middle" style="font-size:13px;font-style:normal;font-weight:700">集めると 360°</text></svg>
     ${w5E('正八角形の1つの外角は　360°÷8＝45°')}<p class="small muted">（内角の和）＋（外角の和）＝180°×n なので、外角の和は 180°×n−180°×(n−2)＝360° になります。</p></section>` },
-  { id:'1-10', t:'合同な図形と記号≡', sub:'対応する頂点を順に', plan:Array(5).fill('w5Cong'), body:()=>`
+  { id:'1-10', t:'合同な図形と記号≡', sub:'対応する頂点を順に', plan:['w5CongPick','w5Cong','w5CongPick','w5Cong','w5CongPick'], body:()=>`
     <section class="panel"><h3>合同な図形の性質</h3>${rule('① 合同な図形では、対応する線分の長さは等しい<br>② 合同な図形では、対応する角の大きさは等しい')}
     ${w5E('四角形 ABCD と 四角形 EFGH が合同 → 四角形 ABCD≡四角形 EFGH')}<p class="small muted">記号≡を使うときは、対応する頂点を同じ順に並べて書きます。</p></section>` },
   { id:'1-11', t:'三角形の合同条件', sub:'3つの条件', plan:Array(5).fill('w5CondT'), body:()=>`
