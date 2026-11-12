@@ -669,6 +669,11 @@ const PDF = {
   'm2c2-lv3': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[7,9], ar:[10,11] },
   'm2c2-lv4': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[12,13], ar:[14,15] },
   'm2c2-lv5': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[16,17], ar:[18,19] },
+  'm2c3-lv1': { q:'pdf/m2c3.pdf', a:'pdf/m2c3.pdf', qr:[1,1], ar:[2,2] },
+  'm2c3-lv2': { q:'pdf/m2c3.pdf', a:'pdf/m2c3.pdf', qr:[3,5], ar:[6,7] },
+  'm2c3-lv3': { q:'pdf/m2c3.pdf', a:'pdf/m2c3.pdf', qr:[8,10], ar:[11,12] },
+  'm2c3-lv4': { q:'pdf/m2c3.pdf', a:'pdf/m2c3.pdf', qr:[13,15], ar:[16,18] },
+  'm2c3-lv5': { q:'pdf/m2c3.pdf', a:'pdf/m2c3.pdf', qr:[19,20], ar:[21,22] },
   'm3c1-lv1': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[1,1], ar:[2,2] },
   'm3c1-lv2': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[3,4], ar:[5,6] },
   'm3c1-lv3': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[7,9], ar:[10,12] },
@@ -1116,7 +1121,7 @@ const CATALOG = [
       { name:'数学', k:'数', units:U({ t:'正負の数', ready:'pn' },'文字の式','方程式','比例と反比例','平面図形','空間図形','データの活用') },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
-      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },'一次関数','図形の調べ方','図形の性質と証明','場合の数と確率','箱ひげ図とデータの活用') },
+      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },{ t:'一次関数', ready:'m2c3' },'図形の調べ方','図形の性質と証明','場合の数と確率','箱ひげ図とデータの活用') },
       { name:'理科', k:'理', units:U('化学変化と原子・分子','生物のからだのつくりとはたらき','天気とその変化','電流とその利用') } ] },
     { id:'j3', name:'中3', k:'3', grade:3, subjects:[
       { name:'数学', k:'数', units:U({ t:'式の展開と因数分解', ready:'m3c1' },{ t:'平方根', ready:'m3c2' },{ t:'二次方程式', ready:'m3c3' },{ t:'関数 y＝ax²', ready:'m3c4' },{ t:'図形と相似', ready:'m3c5' },{ t:'円の性質', ready:'m3c6' },{ t:'三平方の定理', ready:'m3c7' },{ t:'標本調査', ready:'m3c8' }) },
@@ -7107,6 +7112,254 @@ const M2C2_LESSONS = [
     <section class="panel"><h3>大小2つの数</h3><p>大きい方を x、小さい方を y として、問題文の関係を式にします。答えが問題にあっているか（x＞y か）も確かめよう。</p></section>` },
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'2章の総まとめ', test:true, plan:['w3Is2','w3Chk','w3Add1','w3Add2','w3Sub','w3Par','w3Frac','w3ABC','w3Coef','w3Price','w3Pct','w3Spd'], body:()=>`
     <section class="panel"><h3>2章　連立方程式　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
+];
+
+/* ===== 中2数学 3章 一次関数 ===== */
+const w4E = s => `<p class="ex mth">${s}</p>`;
+const w4R = (n,d=1) => { if(d<0){ n=-n; d=-d; } const g=gcd(n,d)||1; return [n/g, d/g]; };
+const w4Q = r => Array.isArray(r) ? w4R(r[0],r[1]) : [r,1];
+const w4v = r => { r=w4Q(r); return r[0]/r[1]; };
+const w4add = (p,q) => { p=w4Q(p); q=w4Q(q); return w4R(p[0]*q[1]+q[0]*p[1], p[1]*q[1]); };
+const w4mul = (p,q) => { p=w4Q(p); q=w4Q(q); return w4R(p[0]*q[0], p[1]*q[1]); };
+const w4div = (p,q) => { p=w4Q(p); q=w4Q(q); return w4R(p[0]*q[1], p[1]*q[0]); };
+const w4neg = p => { p=w4Q(p); return [-p[0], p[1]]; };
+const w4n = r => { r=w4Q(r); const s=r[0]<0?'−':'', m=Math.abs(r[0]); return r[1]===1 ? s+m : s+frH(m,r[1]); };
+const w4ax = (a,v='x') => { a=w4Q(a); if(a[0]===0) return ''; const s=a[0]<0?'−':'', m=Math.abs(a[0]); return s+(a[1]===1?(m===1?'':m):frH(m,a[1]))+v; };
+const w4rhs = (a,b) => { a=w4Q(a); b=w4Q(b); let r=w4ax(a); if(b[0]!==0){ const bs=w4n([Math.abs(b[0]),b[1]]); r = r ? r+(b[0]<0?'−':'+')+bs : w4n(b); } return r||'0'; };
+const w4yx = (a,b=0) => `y＝${w4rhs(a,b)}`;
+const w4P = (x,y) => `(${w4n(x)}, ${w4n(y)})`;
+const w4inv = (k) => `y＝${k<0?'−':''}${frH(Math.abs(k),'x')}`;
+const w4alt = (ans,k) => { const m=[...ans.matchAll(/(−?)(\d+)/g)]; if(!m.length) return null; const t=m[m.length-1], v=(t[1]?-1:1)*(+t[2]), nv=[v+1,v-1,-v,v+2,v-2,v+3,v+4][k]; if(nv===0||nv===v) return null; return ans.slice(0,t.index)+(nv<0?'−':'')+Math.abs(nv)+ans.slice(t.index+t[0].length); };
+function w4m(prompt, expr, ans, wrongs, ...rest){ const w=wrongs.filter(z=>z&&z!==ans); for(let k=0;k<7&&uniq([ans,...w]).length<4;k++){ const z=w4alt(ans,k); if(z&&z!==ans) w.push(z); } return mq2(prompt, expr, ans, w, ...rest); }
+const w4sb = (a,b) => `${w4n(a)}−${w4v(b)<0?'('+w4n(b)+')':w4n(b)}`;
+const w4fr = (n,d) => `${n*d<0?'−':''}${frH(Math.abs(n),Math.abs(d))}`;
+let w4N=0;
+/* 座標平面と直線　ls:[{a,b,c,label,lx}] または {x:h}（y軸に平行） */
+function w4G(ls, o={}){ const X=o.X||5, Y=o.Y||5, W=240, H=240, cx=W/2, cy=H/2, sx=(W/2-14)/X, sy=(H/2-14)/Y;
+  const px=x=>cx+x*sx, py=y=>cy-y*sy; let g='';
+  for(let x=-X;x<=X;x++) g+=`<line x1="${px(x)}" y1="${py(Y)}" x2="${px(x)}" y2="${py(-Y)}" class="pg"/>`;
+  for(let y=-Y;y<=Y;y++) g+=`<line x1="${px(-X)}" y1="${py(y)}" x2="${px(X)}" y2="${py(y)}" class="pg"/>`;
+  g+=`<line x1="4" y1="${cy}" x2="${W-4}" y2="${cy}" class="pa"/><line x1="${cx}" y1="4" x2="${cx}" y2="${H-4}" class="pa"/>`;
+  g+=`<text x="${W-6}" y="${cy-5}" class="pt" text-anchor="end">x</text><text x="${cx+6}" y="12" class="pt">y</text><text x="${cx-4}" y="${cy+13}" class="pt" text-anchor="end">O</text>`;
+  if(o.nums!==false){ const st=X>6?2:1; for(let v=-X;v<=X;v+=st){ if(!v) continue; g+=`<text x="${px(v)}" y="${cy+12}" text-anchor="middle" style="font-size:9px">${N0w(v)}</text>`; }
+    for(let v=-Y;v<=Y;v+=st){ if(!v) continue; g+=`<text x="${cx-3}" y="${py(v)+3}" text-anchor="end" style="font-size:9px">${N0w(v)}</text>`; } }
+  const cid='w4c'+(++w4N); g+=`<clipPath id="${cid}"><rect x="${px(-X)}" y="${py(Y)}" width="${px(X)-px(-X)}" height="${py(-Y)-py(Y)}"/></clipPath>`;
+  ls.forEach((l,i)=>{ if(l.x!=null){ g+=`<line x1="${px(l.x)}" y1="${py(Y)}" x2="${px(l.x)}" y2="${py(-Y)}" class="pc${l.c||''}" clip-path="url(#${cid})"/>`; if(l.label) g+=`<text x="${px(l.x)+5}" y="${py(Y)+12}" class="pl">${l.label}</text>`; return; }
+    const a=w4v(l.a), b=w4v(l.b||0), f=x=>a*x+b; g+=`<line x1="${px(-X-1)}" y1="${py(f(-X-1))}" x2="${px(X+1)}" y2="${py(f(X+1))}" class="pc${l.c||''}" clip-path="url(#${cid})"/>`;
+    if(l.label){ let lx=l.lx; if(lx==null){ lx=X-.6; for(const t of [X-.6,X-1.5,-X+.6,-X+1.5,1,-1]){ if(Math.abs(f(t))<=Y-.6){ lx=t; break; } } } const ly=Math.max(-Y+.5,Math.min(Y-.5,f(lx)));
+      const R=lx>X*.4||(lx<0&&lx>-X*.6); g+=`<text x="${px(lx)+(R?-7:7)}" y="${py(ly)+((a>0)===R?-6:14)}" class="pl" text-anchor="${R?'end':'start'}" style="font-weight:700">${l.label}</text>`; } });
+  (o.pts||[]).forEach(([x,y,lab,L])=>{ g+=`<circle cx="${px(w4v(x))}" cy="${py(w4v(y))}" r="3.2" class="pp"/>`+(lab?`<text x="${px(w4v(x))+(L?-6:6)}" y="${py(w4v(y))-5}" class="pl" text-anchor="${L?'end':'start'}">${lab}</text>`:''); });
+  return `<svg class="parfig" viewBox="0 0 ${W} ${H}" role="img" aria-label="直線のグラフ">${g}</svg>`; }
+const N0w = v => v<0?'−'+(-v):String(v);
+/* 第1象限のグラフ（速さ・料金など） */
+function w4Plot(o){ const W=280, H=210, L=42, B=28, T=14, R=20, xm=o.xm, ym=o.ym, px=x=>L+x*(W-L-R)/xm, py=y=>H-B-y*(H-B-T)/ym; let g='';
+  for(let x=0;x<=xm;x+=o.xs) g+=`<line x1="${px(x)}" y1="${py(0)}" x2="${px(x)}" y2="${py(ym)}" class="pg"/><text x="${px(x)}" y="${py(0)+13}" text-anchor="middle" style="font-size:10px">${x}</text>`;
+  for(let y=o.ys;y<=ym;y+=o.ys) g+=`<line x1="${px(0)}" y1="${py(y)}" x2="${px(xm)}" y2="${py(y)}" class="pg"/><text x="${px(0)-4}" y="${py(y)+3}" text-anchor="end" style="font-size:10px">${y}</text>`;
+  g+=`<line x1="${px(0)}" y1="${py(0)}" x2="${W-6}" y2="${py(0)}" class="pa"/><line x1="${px(0)}" y1="${py(0)}" x2="${px(0)}" y2="6" class="pa"/>`;
+  g+=`<text x="${W-4}" y="${py(0)-5}" text-anchor="end" style="font-size:10px">${o.xl}</text><text x="${px(0)+5}" y="10" style="font-size:10px">${o.yl}</text>`;
+  (o.lines||[]).forEach(l=>{ g+=`<polyline points="${l.p.map(([x,y])=>px(x)+','+py(y)).join(' ')}" class="pc${l.c||''}" style="fill:none"/>`; if(l.label){ const [x,y]=l.lp||l.p[l.at||1]; g+=`<text x="${px(x)+(l.anc==='end'?-6:6)}" y="${py(y)-5}" text-anchor="${l.anc||'start'}" class="pl" style="font-weight:700;font-style:normal;font-size:12px">${l.label}</text>`; } });
+  (o.dash||[]).forEach(([x,y])=>{ g+=`<line x1="${px(x)}" y1="${py(0)}" x2="${px(x)}" y2="${py(y)}" class="pd"/><line x1="${px(0)}" y1="${py(y)}" x2="${px(x)}" y2="${py(y)}" class="pd"/>`; });
+  return `<svg class="parfig" style="max-width:320px" viewBox="0 0 ${W} ${H}" role="img" aria-label="グラフ">${g}</svg>`; }
+/* 長方形と動く点 P（A→B→C→D） */
+function w4Rect(w,h,x){ const W=230, H=150, s=Math.min(150/w,100/h), L=40, T=22, A=[L,T], Bp=[L,T+h*s], C=[L+w*s,T+h*s], D=[L+w*s,T];
+  let P=null; if(x!=null){ if(x<=h) P=[L,T+x*s]; else if(x<=h+w) P=[L+(x-h)*s,T+h*s]; else P=[L+w*s,T+h*s-(x-h-w)*s]; }
+  let g=`<polygon points="${A} ${Bp} ${C} ${D}" style="fill:none;stroke:var(--ink);stroke-width:1.4"/>`;
+  if(P) g+=`<polygon points="${A} ${P} ${D}" style="fill:var(--teal);opacity:.25"/><polyline points="${A} ${P} ${D}" style="fill:none;stroke:var(--teal);stroke-width:1.6"/><circle cx="${P[0]}" cy="${P[1]}" r="3.5" class="pp"/><text x="${P[0]+(P[0]<=L?6:P[0]>=D[0]?6:0)}" y="${P[1]+(P[1]>=Bp[1]-1&&P[0]>L&&P[0]<D[0]?14:4)}" style="font-size:12px">P</text>`;
+  g+=`<text x="${A[0]-14}" y="${A[1]+4}">A</text><text x="${Bp[0]-14}" y="${Bp[1]+4}">B</text><text x="${C[0]+5}" y="${C[1]+4}">C</text><text x="${D[0]+5}" y="${D[1]+4}">D</text>`;
+  g+=`<text x="${(L+D[0])/2}" y="${T-6}" text-anchor="middle" style="font-size:11px;font-style:normal">${w} cm</text><text x="${L-6}" y="${(T+Bp[1])/2+4}" text-anchor="end" style="font-size:11px;font-style:normal">${h} cm</text>`;
+  return `<svg class="parfig" style="max-width:260px" viewBox="0 0 ${W} ${H}" role="img" aria-label="長方形ABCD">${g}</svg>`; }
+const w4SL = [[1,1],[2,1],[3,1],[1,2],[1,3],[2,3],[3,2],[3,4]];
+const w4sl = (fr=true) => { const s=pick(fr?w4SL:w4SL.slice(0,3)); return Math.random()<.5 ? s : [-s[0],s[1]]; };
+const w4IS = () => [ ['y＝3x−2','y＝−x+5','y＝4x','y＝−2x','y＝'+frH('x',2)+'+1','y＝0.5x−3','y＝7−x'], ['y＝'+frH(6,'x'),'y＝x²','y＝'+frH(12,'x')+'+1','y＝2x²−1','xy＝8','y＝−'+frH(4,'x')] ];
+const w4IST = [ ['1本 60 円の鉛筆 x 本と、100 円のノート1冊を買ったときの代金 y 円','長さ 20 cm のろうそくが1分に 2 cm ずつ燃えるとき、x 分後の長さ y cm','5 L の水が入った水そうに毎分 3 L ずつ水を入れたとき、x 分後の水の量 y L','時速 4 km で x 時間歩いたときの道のり y km','1000 円出して1個 120 円のパンを x 個買ったときのおつり y 円'],
+  ['面積 24 cm² の長方形の縦 x cm と横 y cm','1辺 x cm の正方形の面積 y cm²','半径 x cm の円の面積 y cm²','36 km の道のりを時速 x km で進むときにかかる時間 y 時間'] ];
+Object.assign(G, {
+  /* --- 0 復習 --- */
+  w4Prop(){ const t=ri(0,2);
+    if(t===0){ const k=nz(-5,5), x0=nz(-4,4), y0=k*x0;
+      return w4m(`y は x に比例し、x＝${w4n(x0)} のとき y＝${w4n(y0)} です。y を x の式で表しなさい。`, '', w4yx(k), [w4yx(w4R(x0,y0)), w4yx(-k), w4inv(y0*x0), w4yx(y0), w4yx(2*k), w4yx(-2*k)].filter(s=>s!==w4yx(k)), '比例の式 y＝ax に x、y の値を代入して a を求めよう。', `${w4n(y0)}＝a×(${w4n(x0)})　→　a＝${w4n(k)}`); }
+    if(t===1){ const x0=nz(-6,6), y0=nz(-6,6), k=x0*y0;
+      return w4m(`y は x に反比例し、x＝${w4n(x0)} のとき y＝${w4n(y0)} です。y を x の式で表しなさい。`, '', w4inv(k), [w4inv(-k), w4yx(w4R(y0,x0)), w4yx(k), w4inv(k+x0)].filter(s=>s!==w4inv(k)), '反比例の式 y＝'+frH('a','x')+' より、a＝xy です。', `a＝xy＝(${w4n(x0)})×(${w4n(y0)})＝${w4n(k)}`); }
+    const k=nz(-4,4), x1=nz(-5,5);
+    return w4m(`比例 ${w4yx(k)} で、x＝${w4n(x1)} のときの y の値は？`, '', `y＝${w4n(k*x1)}`, [`y＝${w4n(-k*x1)}`, `y＝${w4n(k+x1)}`, `y＝${w4n(k*x1+1)}`, `y＝${w4n(k-x1)}`], 'x の値を式に代入しよう。', `y＝${w4n(k)}×(${w4n(x1)})＝${w4n(k*x1)}`); },
+  w4PGr(){ let a, x0, y0; do{ a=w4sl(); const m=pick([1,2,-1,-2]); x0=a[1]*m; y0=a[0]*m; }while(Math.abs(x0)>5||Math.abs(y0)>5);
+    const fig=w4G([{a}], { pts:[[x0,y0]] });
+    return w4m('下の図の直線は、比例のグラフです。y を x の式で表しなさい。', fig, w4yx(a), [w4yx(w4neg(a)), w4yx(w4div(1,a)), w4yx(w4mul(a,2)), w4yx(w4neg(w4div(1,a))), w4yx(w4mul(a,3)), w4yx(w4mul(a,-2))].filter(s=>s!==w4yx(a)), '原点以外で、グラフが通る格子点（目もりの交点）を見つけよう。', `点 ${w4P(x0,y0)} を通るので、${w4n(y0)}＝a×(${w4n(x0)})　a＝${w4n(a)}`, { figq:true }); },
+  /* --- 1 一次関数とグラフ --- */
+  w4Is(){ if(Math.random()<.5){ const [Y,N]=w4IS(), neg=Math.random()<.4, ans=neg?pick(N):pick(Y), w=shuffle(neg?Y:N).slice(0,3);
+      return w4m(`y が x の一次関数で${neg?'ない':'ある'}ものはどれ？`, '', ans, w, 'y＝ax+b の形で表せるかを考えよう。比例 y＝ax も一次関数です。', neg?`${ans} は y＝ax+b の形で表せない。`:`${ans} は y＝ax+b の形。`); }
+    const neg=Math.random()<.4, ans=neg?pick(w4IST[1]):pick(w4IST[0]), w=shuffle(neg?w4IST[0]:w4IST[1]).slice(0,3);
+    return w4m(`y が x の一次関数で${neg?'ない':'ある'}ものはどれ？`, '', ans, w, '式に表して、y＝ax+b の形になるか調べよう。', neg?'これは y＝ax+b の形で表せない（反比例や2乗の式になる）。':'式に表すと y＝ax+b の形になる。', { words:true }); },
+  w4Expr(){ const t=ri(0,2); let s,a,b;
+    if(t===0){ b=pick([15,18,20,24,30]); a=-pick([1,2,3]); s=`長さ ${b} cm のろうそくが、1分間に ${-a} cm ずつ燃えます。火をつけてから x 分後のろうそくの長さを y cm とします。`; }
+    else if(t===1){ b=pick([4,5,6,8,10]); a=pick([2,3,4,5]); s=`水が ${b} L 入っている水そうに、毎分 ${a} L ずつ水を入れます。x 分後の水の量を y L とします。`; }
+    else { a=pick([50,60,80,90,120]); b=pick([100,150,200,300]); s=`1本 ${a} 円の鉛筆を x 本と、${b} 円の筆箱を1つ買ったときの代金を y 円とします。`; }
+    return w4m(s+'y を x の式で表しなさい。', '', w4yx(a,b), [w4yx(b,a), w4yx(-a,b), w4yx(a), w4yx(a,-b)].filter(z=>z!==w4yx(a,b)), '「変わる量（x に比例する部分）」と「はじめの量（定数）」に分けて考えよう。', `${w4yx(a,b)}（x の係数が${a<0?'減る量':'増える量'}、定数項がはじめの量）`, { words:true }); },
+  w4Rate(){ const t=ri(0,2), a=Math.random()<.7?nz(-5,5):w4sl(), b=nz(-6,6);
+    if(t===0) return w4m(`一次関数 ${w4yx(a,b)} の変化の割合は？`, '', w4n(a), [w4n(b), w4n(w4neg(a)), w4n(w4div(1,a)), w4n(w4add(a,b))], '一次関数 y＝ax+b の変化の割合は一定で、a に等しい。', `変化の割合は x の係数 ${w4n(a)}`);
+    if(t===1){ const aa=w4Q(a), p=ri(-4,3), d=aa[1]*pick([1,2,3]), q=p+d, inc=w4mul(a,d);
+      return w4m(`一次関数 ${w4yx(a,b)} で、x の値が ${w4n(p)} から ${w4n(q)} まで増加するときの y の増加量は？`, '', w4n(inc), [w4n(a), w4n(w4neg(inc)), String(d), w4n(w4add(w4mul(a,q),b))], 'y の増加量＝変化の割合×x の増加量', `x の増加量は ${d}。${w4n(a)}×${d}＝${w4n(inc)}`); }
+    const p=ri(-4,2), d=pick([2,3,4,5]), q=p+d, A=nz(-4,4), yp=A*p+b, dy=pick([A*d, d*w4Q(w4sl())[0]]), yq=yp+dy, r=w4R(dy,d);
+    return w4m(`ある一次関数で、x の値が ${w4n(p)} から ${w4n(q)} まで増加すると、y の値は ${w4n(yp)} から ${w4n(yq)} まで変化します。変化の割合は？`, '', w4n(r), [w4n(w4R(d,dy||1)), w4n(w4neg(r)), w4n(dy), w4n(w4R(yq,q||1))], '変化の割合＝'+frH('y の増加量','x の増加量'), `${frH(w4sb(yq,yp),w4sb(q,p))}＝${w4fr(dy,d)}＝${w4n(r)}`); },
+  w4SI(){ const a=Math.random()<.7?nz(-5,5):w4sl(), b=nz(-7,7), t=ri(0,2);
+    if(t===0) return w4m(`一次関数 ${w4yx(a,b)} のグラフの傾きは？`, '', w4n(a), [w4n(b), w4n(w4neg(a)), w4n(w4neg(b)), w4n(w4div(1,a))], 'y＝ax+b の a が傾き。', `傾きは ${w4n(a)}`);
+    if(t===1) return w4m(`一次関数 ${w4yx(a,b)} のグラフの切片は？`, '', w4n(b), [w4n(a), w4n(-b), w4n(w4neg(a)), w4n(b+1)], 'y＝ax+b の b が切片（y 軸との交点の y 座標）。', `切片は ${w4n(b)}`);
+    const aa=w4Q(a), d=aa[1], inc=aa[0], up=inc>0, ans=`${Math.abs(inc)} ${up?'増加':'減少'}する`;
+    return w4m(`一次関数 ${w4yx(a,b)} のグラフで、x が ${d} 増加すると、y はどうなる？`, '', ans, [`${Math.abs(inc)} ${up?'減少':'増加'}する`, `${Math.abs(b)} ${b>0?'増加':'減少'}する`, `${Math.abs(inc)+1} ${up?'増加':'減少'}する`], '傾きが a のとき、x が1増加すると y は a 増加する。', `${w4n(a)}×${d}＝${w4n(inc)}`, { words:true }); },
+  w4Dir(){ const t=ri(0,3), b0=nz(-5,5);
+    if(t===0){ const down=Math.random()<.5, ls=[]; const A=nz(1,5); const ans=w4yx(down?-A:A,b0); const ws=new Set(); while(ws.size<3){ const z=w4yx(down?nz(1,5):-nz(1,5),nz(-5,5)); if(z!==ans) ws.add(z); }
+      return w4m(`グラフが右${down?'下':'上'}がりの直線になるものは？`, '', ans, [...ws], 'a＞0 なら右上がり、a＜0 なら右下がり。', `傾きが${down?'負':'正'}の ${ans}`); }
+    if(t===1){ const a=nz(-4,4), b1=nz(-5,5); let b2; do{ b2=nz(-6,6); }while(b2===b1); const ans=w4yx(a,b2);
+      return w4m(`一次関数 ${w4yx(a,b1)} のグラフと平行な直線は？`, '', ans, [w4yx(-a,b1), w4yx(b1,a), w4yx(-a,b2), w4yx(a+1,b1)].filter(z=>z!==ans), '傾きが等しい2直線は平行。', `傾きが ${w4n(a)} で等しい ${ans}`); }
+    if(t===2){ const ans=w4yx(nz(-4,4),b0); return w4m(`グラフが点 (0, ${w4n(b0)}) を通る直線は？`, '', ans, [w4yx(b0,nz(-4,4)), w4yx(nz(-4,4),-b0), w4yx(b0), w4yx(nz(-4,4),b0+(b0>0?1:-1))].filter(z=>z!==ans&&z!==w4yx(b0,b0)), '点 (0, b) を通る → 切片が b', `切片が ${w4n(b0)} の ${ans}`); }
+    const a=nz(-4,4), ans=`y 軸の${b0>0?'正':'負'}の方向に ${Math.abs(b0)}`;
+    return w4m(`${w4yx(a,b0)} のグラフは、${w4yx(a)} のグラフをどのように平行移動したもの？`, '', ans, [`y 軸の${b0>0?'負':'正'}の方向に ${Math.abs(b0)}`, `x 軸の${b0>0?'正':'負'}の方向に ${Math.abs(b0)}`, `y 軸の${a>0?'正':'負'}の方向に ${Math.abs(a)}`].filter(z=>z!==ans), 'y＝ax+b のグラフは、y＝ax のグラフを y 軸の方向に b だけ平行移動した直線。', `切片が ${w4n(b0)} なので ${ans}`, { words:true }); },
+  w4OnPt(){ const a=nz(-3,3), b=nz(-5,5), p=nz(-4,4), q=a*p+b, ans=w4P(p,q);
+    return w4m(`一次関数 ${w4yx(a,b)} のグラフ上にある点は？`, '', ans, [w4P(p,q+1), w4P(-p,q), w4P(q,p), w4P(p,-q), w4P(p,a*p-b)].filter(z=>z!==ans), 'x 座標を式に代入して、y 座標と一致するか調べよう。', `x＝${w4n(p)} を代入すると y＝${w4n(q)}`); },
+  w4Pick(){ let a,b,x1,y1; do{ a=w4sl(); b=nz(-4,4); x1=a[1]*pick([1,-1,2,-2]); y1=b+a[0]*x1/a[1]; }while(Math.abs(x1)>5||Math.abs(y1)>5||(Math.abs(b)>4));
+    const fig=w4G([{a,b}], { pts:[[0,b],[x1,y1]] }), ans=w4yx(a,b);
+    return w4m('下の図の直線の式を求めなさい。', fig, ans, [w4yx(w4neg(a),b), w4yx(a,-b), w4yx(w4div(1,a),b), w4yx(a,b+1), w4yx(w4neg(a),-b)].filter(z=>z!==ans), '切片（y 軸との交点）を読み、そこから右へ1（または分母の数）進んだときの上下の動きで傾きを読もう。', `切片 ${w4n(b)}、点 (0, ${w4n(b)}) から点 ${w4P(x1,y1)} へ、x が ${w4n(x1)}、y が ${w4n(y1-b)} 変わるので、傾きは ${w4n(a)}`, { figq:true }); },
+  w4Dom(){ const a=nz(-3,3), b=nz(-5,5); let p=ri(-4,2), q=p+ri(2,4); const sp=Math.random()<.3, sq2=!sp&&Math.random()<.3, f=x=>a*x+b;
+    const [lo,hi,slo,shi] = a>0 ? [f(p),f(q),sp,sq2] : [f(q),f(p),sq2,sp], R=(l,h,s1,s2)=>`${w4n(l)}${s1?'＜':'≦'}y${s2?'＜':'≦'}${w4n(h)}`;
+    const ans=R(lo,hi,slo,shi);
+    return w4m(`一次関数 ${w4yx(a,b)} で、x の変域が ${w4n(p)}${sp?'＜':'≦'}x${sq2?'＜':'≦'}${w4n(q)} のときの y の変域は？`, '', ans, [R(lo,hi,!slo,!shi), R(Math.min(a*p,a*q),Math.max(a*p,a*q),slo,shi), R(lo-1,hi+1,slo,shi), R(Math.min(a*p-b,a*q-b),Math.max(a*p-b,a*q-b),slo,shi), R(lo,hi,shi,slo)].filter(z=>z!==ans), 'x の変域の両はしの値を代入しよう。a＜0 のときは大小が入れかわるので注意。等号（≦・＜）もそのまま対応させる。', `x＝${w4n(p)} のとき y＝${w4n(f(p))}、x＝${w4n(q)} のとき y＝${w4n(f(q))}　→　${ans}`); },
+  w4Find1(){ const t=ri(0,3), a=nz(-4,4), b=nz(-6,6), p=nz(-4,4), q=a*p+b, ans=w4yx(a,b), wr=[w4yx(a,q+a*p), w4yx(a,q), w4yx(-a,q+a*p), w4yx(b,a), w4yx(-a,b)].filter(z=>z!==ans);
+    const P=['傾きが '+w4n(a)+' で、点 '+w4P(p,q)+' を通る直線', '直線 '+w4yx(a,b+(b>0?-3:3))+' に平行で、点 '+w4P(p,q)+' を通る直線', '切片が '+w4n(b)+' で、点 '+w4P(p,q)+' を通る直線', '変化の割合が '+w4n(a)+' で、x＝'+w4n(p)+' のとき y＝'+w4n(q)+' である一次関数'][t];
+    const how=['y＝'+w4ax(a)+'+b に x＝'+w4n(p)+'、y＝'+w4n(q)+' を代入して b を求める', '平行な直線は傾きが等しいので、傾きは '+w4n(a), 'y＝ax'+(b<0?'−':'+')+Math.abs(b)+' に x＝'+w4n(p)+'、y＝'+w4n(q)+' を代入して a を求める', '変化の割合が a なので y＝'+w4ax(a)+'+b に代入'][t];
+    return w4m(`${P}の式を求めなさい。`, '', ans, wr, t===2?'切片がわかっているので、y＝ax+b の a を求めよう。':'傾きがわかっているので、y＝ax+b に点の座標を代入して b を求めよう。', `${how}。<br>${t===2?`${w4n(q)}＝${w4n(p)}a${b<0?'−':'+'}${Math.abs(b)}　a＝${w4n(a)}`:`${w4n(q)}＝${w4n(a)}×(${w4n(p)})+b　b＝${w4n(b)}`}　→　${ans}`, { words:true }); },
+  w4Find2(){ let a,b,p1,p2,q1,q2; do{ a=Math.random()<.7?[nz(-4,4),1]:[pick([1,3,-1,-3,5,-5]),2]; b=nz(-6,6); p1=ri(-4,4); p2=p1+a[1]*pick([1,2,3]); q1=w4v(w4add(w4mul(a,p1),b)); q2=w4v(w4add(w4mul(a,p2),b)); }while(!Number.isInteger(q1)||!Number.isInteger(q2)||Math.abs(q1)>15||Math.abs(q2)>15);
+    if(Math.random()<.5){ [p1,p2]=[p2,p1]; [q1,q2]=[q2,q1]; } const ans=w4yx(a,b), r=w4R(p2-p1,q2-q1||1), b2=w4add(q1,w4mul(r,-p1));
+    const P=Math.random()<.5 ? `2点 ${w4P(p1,q1)}、${w4P(p2,q2)} を通る直線` : `x＝${w4n(p1)} のとき y＝${w4n(q1)}、x＝${w4n(p2)} のとき y＝${w4n(q2)} である一次関数`;
+    return w4m(`${P}の式を求めなさい。`, '', ans, [w4yx(r,b2), w4yx(a,-b), w4yx(w4neg(a),w4add(q1,w4mul(a,p1))), w4yx(a,b+1)].filter(z=>z!==ans), 'まず2点から傾き（'+frH('y の増加量','x の増加量')+'）を求め、次に1点の座標を代入して切片を求めよう。', `傾き＝${frH(w4sb(q2,q1),w4sb(p2,p1))}＝${w4n(a)}<br>y＝${w4ax(a)}+b に ${w4P(p1,q1)} を代入して b＝${w4n(b)}　→　${ans}`, { words:true }); },
+  /* --- 2 一次関数と方程式 --- */
+  w4Lin2(){ if(Math.random()<.5){ let a,b,c; do{ a=nz(-5,5); b=pick([1,2,3,-1,-2,-3,4,-4]); c=nz(-12,12); }while(gcd(gcd(a,b),c)!==1||a===0);
+      const s=w4div(-a,b), k=w4div(c,b), ans=w4yx(s,k);
+      return w4m(`方程式 ${w3eq(a,b,c)} を y について解きなさい。`, '', ans, [w4yx(w4neg(s),k), w4yx(s,w4neg(k)), w4yx(w4div(a,b),k), w4yx(-a,c)].filter(z=>z!==ans), 'x の項を右辺に移項し、両辺を y の係数でわろう。', `${pfmt(mk([b,'y']))}＝${pfmt(mk([-a,'x'],[c,'']))}　→　${ans}`); }
+    let X0,Y0; do{ X0=nz(-5,5); Y0=nz(-5,5); }while(Math.abs(X0)===Math.abs(Y0)&&Math.random()<.7); const g=gcd(X0,Y0), A=Y0/g, B=X0/g, C=X0*Y0/g, s=A<0?-1:1, ax=Math.random()<.5;
+    const ans=ax?w4P(X0,0):w4P(0,Y0);
+    return w4m(`方程式 ${w3eq(s*A,s*B,s*C)} のグラフと ${ax?'x':'y'} 軸との交点の座標は？`, '', ans, [ax?w4P(0,X0):w4P(Y0,0), ax?w4P(Y0,0):w4P(0,X0), ax?w4P(-X0,0):w4P(0,-Y0), ax?w4P(0,Y0):w4P(X0,0)].filter(z=>z!==ans), `${ax?'x 軸上の点は y＝0':'y 軸上の点は x＝0'}。式に代入しよう。`, `${ax?'y':'x'}＝0 を代入すると ${ax?'x':'y'}＝${w4n(ax?X0:Y0)}`); },
+  w4KH(){ const k=nz(-4,4), t=ri(0,2);
+    if(t===0){ const yk=Math.random()<.5, ans=yk?`点 (0, ${w4n(k)}) を通り、x 軸に平行な直線`:`点 (${w4n(k)}, 0) を通り、y 軸に平行な直線`;
+      return w4m(`方程式 ${yk?'y':'x'}＝${w4n(k)} のグラフは？`, '', ans, [`点 (0, ${w4n(k)}) を通り、y 軸に平行な直線`, `点 (${w4n(k)}, 0) を通り、x 軸に平行な直線`, `点 (0, ${w4n(k)}) を通り、x 軸に平行な直線`, `点 (${w4n(k)}, 0) を通り、y 軸に平行な直線`, `原点と点 (1, ${w4n(k)}) を通る直線`].filter(z=>z!==ans), 'y＝k は x 軸に平行、x＝h は y 軸に平行な直線。', ans, { words:true }); }
+    if(t===1){ const yk=Math.random()<.5, m=pick([2,3,4,5]), ans=`${yk?'y':'x'}＝${w4n(k)}`, e=yk?`${m}y＝${w4n(m*k)}`:`${m}x${-m*k<0?'−':'+'}${Math.abs(m*k)}＝0`;
+      return w4m(`方程式 ${e} のグラフの式を簡単にすると？`, '', ans, [`${yk?'x':'y'}＝${w4n(k)}`, `${yk?'y':'x'}＝${w4n(-k)}`, `${yk?'y':'x'}＝${w4n(m*k)}`, w4yx(k)].filter(z=>z!==ans), `${yk?'y':'x'} について解こう。`, `${ans}（${yk?'x 軸':'y 軸'}に平行な直線）`); }
+    const yk=Math.random()<.5, fig=w4G([yk?{a:0,b:k}:{x:k}]), ans=`${yk?'y':'x'}＝${w4n(k)}`;
+    return w4m('下の図の直線の式は？', fig, ans, [`${yk?'x':'y'}＝${w4n(k)}`, `${yk?'y':'x'}＝${w4n(-k)}`, w4yx(k), w4yx(k,k)].filter(z=>z!==ans), 'x 軸に平行 → y＝k、y 軸に平行 → x＝h', `${yk?'x 軸':'y 軸'}に平行で、${yk?'y':'x'} 座標がいつも ${w4n(k)}`, { figq:true }); },
+  w4Cross(){ let a1,a2,x0,y0,b1,b2; do{ a1=nz(-3,3); a2=nz(-3,3); x0=ri(-3,3); y0=ri(-3,3); b1=y0-a1*x0; b2=y0-a2*x0; }while(a1===a2||Math.abs(b1)>5||Math.abs(b2)>5);
+    const ans=w4P(x0,y0), wr=[w4P(y0,x0), w4P(-x0,y0), w4P(x0,-y0), w4P(0,b1), w4P(x0+1,y0)].filter(z=>z!==ans);
+    if(Math.random()<.5) return w4m(`2直線 ${w4yx(a1,b1)}、${w4yx(a2,b2)} の交点の座標は？`, '', ans, wr, '2つの式を連立方程式として解こう。', `${w4rhs(a1,b1)}＝${w4rhs(a2,b2)} を解くと x＝${w4n(x0)}、y＝${w4n(y0)}`);
+    const fig=w4G([{a:a1,b:b1,label:'ℓ'},{a:a2,b:b2,c:'2',label:'m'}]);
+    return w4m(`下の図の直線 ℓ、m は、それぞれ方程式 ${w3eq(a1,-1,-b1)}、${w3eq(a2,-1,-b2)} のグラフです。この2つの式を組にした連立方程式の解は？`, fig, ans, wr, '連立方程式の解は、2つのグラフの交点の座標です。', `交点 ${ans} → x＝${w4n(x0)}、y＝${w4n(y0)}`, { figq:true }); },
+  w4Cross2(){ let a1,a2,b1,b2,x,y; do{ a1=nz(-3,3); a2=nz(-3,3); b1=nz(-4,4); b2=nz(-4,4); }while(a1===a2||Number.isInteger((b2-b1)/(a1-a2))||Math.abs((b2-b1)/(a1-a2))>4);
+    x=w4R(b2-b1,a1-a2); y=w4add(w4mul(a1,x),b1); const fig=w4G([{a:a1,b:b1,label:'ℓ'},{a:a2,b:b2,c:'2',label:'m'}], { pts:[[0,b1],[0,b2]] }), ans=w4P(x,y);
+    return w4m('下の図で、2直線 ℓ、m の交点の座標を求めなさい。', fig, ans, [w4P(y,x), w4P(w4neg(x),y), w4P(x,w4neg(y)), w4P(w4add(x,1),y)].filter(z=>z!==ans), '交点は目もりの上にないので、まず2直線の式を求め、連立方程式を解こう。', `ℓ：${w4yx(a1,b1)}、m：${w4yx(a2,b2)}<br>連立方程式を解くと x＝${w4n(x)}、y＝${w4n(y)}`, { figq:true }); },
+  /* --- 3 一次関数の利用 --- */
+  w4Spd(){ const t=ri(0,2);
+    if(t<2){ const [v,T]=pick([[60,20],[80,15],[50,20],[75,20],[100,15],[60,25],[80,20]]), D=v*T, ys=D>1500?400:D>1000?300:200, ym=Math.ceil(D/ys)*ys;
+      const fig=w4Plot({ xm:30, ym, xs:5, ys, xl:'x（分）', yl:'y（m）', lines:[{p:[[0,0],[T,D],[30,D]]}], dash:[[T,D]] });
+      const s=`みなとさんは家を出発して、${D} m はなれた図書館まで歩きました。下のグラフは、家を出てから x 分後の家からの道のりを y m として、x と y の関係を表したものです。`;
+      if(t===0) return w4m(s+'みなとさんの歩く速さは分速何 m？', fig, `分速 ${v} m`, [`分速 ${v/2} m`, `分速 ${v*2} m`, `分速 ${T} m`, `分速 ${v+10} m`], 'グラフの傾きが速さを表します。', `${D}÷${T}＝${v}　→　分速 ${v} m`, { figq:true });
+      const k=pick([5,10]); return w4m(s+`家を出てから ${k} 分後、みなとさんは家から何 m の地点にいる？`, fig, `${v*k} m`, [`${v*k+100} m`, `${D-v*k} m`, `${v*(k+5)} m`, `${D} m`].filter(z=>z!==`${v*k} m`), `0≦x≦${T} では y＝${v}x です。`, `y＝${v}×${k}＝${v*k}`, { figq:true }); }
+    const [v,u,m]=pick([[60,90,8],[80,70,8],[60,40,12],[50,100,8],[70,80,8],[60,90,10]]), D=(v+u)*m, ys=D>1500?400:300, ym=Math.ceil(D/ys)*ys, Ta=D/v, Tb=D/u, xm=Math.ceil(Math.max(Ta,Tb)/5)*5;
+    const fig=w4Plot({ xm, ym, xs:5, ys, xl:'x（分）', yl:'y（m）', lines:[{p:[[0,0],[Ta,D]],label:'兄',lp:[Ta*.3,D*.3],anc:'end'},{p:[[0,D],[Tb,0]],c:'2',label:'弟',lp:[Tb*.2,D*.8]}] });
+    const ask=Math.random()<.5;
+    return w4m(`兄は家から ${D} m はなれた公園へ分速 ${v} m で、弟は同時に公園から家へ分速 ${u} m で向かいます。グラフは家からの道のり y m と、出発してからの時間 x 分の関係です。2人が出会うのは${ask?'出発してから何分後':'家から何 m の地点'}？`, fig, ask?`${m} 分後`:`${v*m} m`, ask?[`${m+2} 分後`, `${m-2} 分後`, `${Math.round(Ta)} 分後`]:[`${u*m} m`, `${D/2} m`, `${v*m+100} m`], '2人のグラフの交点が出会うところです。それぞれの式をつくって連立方程式を解こう。', `兄：y＝${v}x、弟：y＝−${u}x+${D}<br>${v}x＝−${u}x+${D}　x＝${m}、y＝${v*m}`, { figq:true }); },
+  w4Area(){ const w=pick([4,6,8,10]), h=pick([3,4,5,6]), t=ri(0,3), S=w*h/2, P='長方形 ABCD の辺上を、点 P が A を出発して B、C を通って D まで、毎秒 1 cm の速さで動きます。P が A を出発してから x 秒後の △APD の面積を y cm² とします。';
+    if(t===0) return w4m(P+`0≦x≦${h} のとき、y を x の式で表しなさい。`, w4Rect(w,h,Math.min(h,2)), w4yx(w4R(w,2)), [w4yx(w), w4yx(w4R(h,2)), w4yx(h), w4yx(0,S)].filter(z=>z!==w4yx(w4R(w,2))), 'P が辺 AB 上にあるとき、AD を底辺とすると高さは AP＝x cm。', `y＝${frH(1,2)}×${w}×x＝${w4rhs(w4R(w,2),0)}`, { figq:true, words:true });
+    if(t===1) return w4m(P+`${h}≦x≦${h+w} のとき、y を x の式で表しなさい。`, w4Rect(w,h,h+Math.floor(w/2)), `y＝${S}`, [w4yx(w4R(w,2)), `y＝${w*h}`, w4yx(w4R(h,2),S)].filter(z=>z!==`y＝${S}`), 'P が辺 BC 上にあるとき、△APD の高さは AB の長さで一定。', `y＝${frH(1,2)}×${w}×${h}＝${S}（一定）`, { figq:true });
+    if(t===2){ const k=ri(1,2*h+w-1), y=k<=h?w*k/2:k<=h+w?S:w*(2*h+w-k)/2;
+      return w4m(P+`x＝${k} のときの y の値は？`, w4Rect(w,h,k), `y＝${w4n(w4R(2*y,2))}`, [`y＝${w4n(w4R(2*y+2,2))}`, `y＝${w*k}`, `y＝${S===y?S/2:S}`, `y＝${w4n(w4R(w*k,2))}`].filter(z=>z!==`y＝${w4n(w4R(2*y,2))}`), `P がどの辺上にあるかを考えよう（AB：0〜${h}秒、BC：${h}〜${h+w}秒、CD：${h+w}〜${2*h+w}秒）。`, `${k<=h?'辺 AB 上：y＝'+frH(1,2)+'×'+w+'×'+k:k<=h+w?'辺 BC 上：y＝'+S+'（一定）':'辺 CD 上：PD＝'+(2*h+w-k)+'、y＝'+frH(1,2)+'×'+w+'×'+(2*h+w-k)}＝${w4n(w4R(2*y,2))}`, { figq:true }); }
+    const s=ri(1,h-1), m=w*s/2, x1=s, x2=2*h+w-s;
+    return w4m(P+`y＝${m} となる x の値をすべて求めなさい。`, w4Rect(w,h,null), `x＝${x1}、${x2}`, [`x＝${x1}`, `x＝${x2}`, `x＝${x1}、${h+w-s}`, `x＝${x1+1}、${x2-1}`], 'y が増える区間と減る区間の両方で考えよう。', `辺 AB 上：${frH(1,2)}×${w}×x＝${m}　x＝${x1}<br>辺 CD 上：${frH(1,2)}×${w}×(${2*h+w}−x)＝${m}　x＝${x2}`, { figq:true, words:true }); },
+  w4Plan(){ const t=ri(0,2);
+    if(t===0){ const [a0,pa,b0,pb]=pick([[1000,30,2500,15],[500,40,1500,20],[1200,20,2000,10],[800,25,2000,10],[1000,40,3000,20]]), x0=(b0-a0)/(pa-pb), q=Math.random()<.5;
+      const s=`携帯電話の料金プランで、A プランは基本料金 ${a0} 円で通話1分ごとに ${pa} 円、B プランは基本料金 ${b0} 円で通話1分ごとに ${pb} 円かかります。1か月に x 分通話したときの料金を y 円とします。`;
+      if(q) return w4m(s+'A プランの y を x の式で表しなさい。', '', w4yx(pa,a0), [w4yx(a0,pa), w4yx(pb,b0), w4yx(pa,b0), w4yx(pa)], '基本料金が定数項、1分あたりの料金が x の係数。', w4yx(pa,a0), { words:true });
+      return w4m(s+'通話時間が何分をこえると、B プランのほうが安くなる？', '', `${x0} 分`, [`${x0+10} 分`, `${x0/2} 分`, `${(b0-a0)/pa} 分`, `${x0*2} 分`].filter(z=>z!==`${x0} 分`), '2つの式を連立方程式として解き、グラフが交わる点を求めよう。', `${pa}x+${a0}＝${pb}x+${b0}　x＝${x0}<br>${x0} 分をこえると B プランの料金が低くなる`, { words:true }); }
+    if(t===1){ const a=pick([4,5,6,8]), b=pick([12,14,16,18,20]), t1=pick([1,2]), t2=t1+pick([3,4,5]), T=pick([80,90,100]); if((T-b)%a) return G.w4Plan(); const tt=(T-b)/a;
+      return w4m(`水を熱し始めてから x 分後の水温を y ℃ とすると、y は x の一次関数とみなせます。${t1}分後は ${a*t1+b}℃、${t2}分後は ${a*t2+b}℃ でした。水温が ${T}℃ になるのは何分後？`, '', `${tt} 分後`, [`${tt+1} 分後`, `${tt-1} 分後`, `${Math.round(T/a)} 分後`, `${tt+2} 分後`].filter((z,i,A)=>A.indexOf(z)===i&&z!==`${tt} 分後`), 'まず2つの値から一次関数の式を求めよう。', `傾き＝${frH((a*t2+b)+'−'+(a*t1+b),t2+'−'+t1)}＝${a}、式は ${w4yx(a,b)}<br>${T}＝${a}x+${b}　x＝${tt}`, { words:true }); }
+    const L=pick([18,20,24,30]), r=pick([2,3]), t1=pick([2,3,4]), l1=L-r*t1, end=L/r; if(!Number.isInteger(end)) return G.w4Plan();
+    return w4m(`長さ ${L} cm のろうそくに火をつけると、${t1} 分後に ${l1} cm になりました。ろうそくは一定の割合で燃えるとすると、燃えつきるのは火をつけてから何分後？`, '', `${end} 分後`, [`${end+2} 分後`, `${end-2} 分後`, `${l1} 分後`, `${L} 分後`].filter(z=>z!==`${end} 分後`), '1分あたりに燃える長さを求めて、y＝ax+b の式をつくろう。', `1分に ${r} cm ずつ短くなるので y＝−${r}x+${L}<br>0＝−${r}x+${L}　x＝${end}`, { words:true }); },
+});
+
+const M2C3_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'比例・反比例の式', sub:'中1の復習', plan:['w4Prop','w4Prop','w4Prop','w4Prop','w4Prop'], body:()=>`
+    <section class="panel"><h3>比例と反比例</h3>${rule('比例　→　y＝ax（a は比例定数）<br>反比例　→　y＝'+frH('a','x')+'（a は比例定数）')}
+    ${w4E('y は x に比例し、x＝3 のとき y＝−12<br>y＝ax に代入して　−12＝3a　a＝−4<br>答え　y＝−4x')}
+    ${w4E('y は x に反比例し、x＝2 のとき y＝6<br>a＝xy＝2×6＝12　　答え　y＝'+frH(12,'x'))}</section>` },
+  { id:'0-2', t:'比例のグラフ', sub:'中1の復習', plan:Array(5).fill('w4PGr'), body:()=>`
+    <section class="panel"><h3>比例のグラフ</h3>${rule('y＝ax のグラフは、原点を通る直線<br>a＞0 → 右上がり　　a＜0 → 右下がり')}
+    ${w4G([{a:2,label:'y＝2x',lx:1.7},{a:[-1,2],c:'2',label:'y＝−½x',lx:4.6}])}
+    <p class="small muted">グラフをかくときは、原点ともう1つの点（x 座標・y 座標がともに整数の点）をとって直線で結びます。</p></section>` },
+  { id:'1-1', sec:'1　一次関数とグラフ', t:'一次関数', sub:'y＝ax+b', plan:['w4Is','w4Is','w4Expr','w4Expr','w4Is'], body:()=>`
+    <section class="panel"><h3>一次関数</h3>${rule('y が x の関数で、y が x の一次式で表されるとき、<br>y は x の<b>一次関数</b>である<br>　　　y＝ax+b（a、b は定数、a≠0）')}
+    ${w4E('長さ 20 cm のろうそくが1分間に 2 cm ずつ燃える。<br>x 分後の長さを y cm とすると　y＝−2x+20')}
+    <p class="small muted">y＝ax+b は、x に比例する部分 ax と定数の部分 b の和。b＝0 のとき y＝ax（比例）で、比例は一次関数の特別な場合です。</p></section>` },
+  { id:'1-2', t:'変化の割合', sub:'y の増加量÷x の増加量', plan:['w4Rate','w4Rate','w4Rate','w4Rate','w4Rate'], body:()=>`
+    <section class="panel"><h3>変化の割合</h3>${rule('変化の割合＝'+frH('y の増加量','x の増加量'))}
+    <table class="dtab mth"><tr><th>x</th><td>…</td><td>1</td><td>2</td><td>3</td><td>4</td><td>…</td></tr><tr><th>y＝2x+1</th><td>…</td><td>3</td><td>5</td><td>7</td><td>9</td><td>…</td></tr></table>
+    ${w4E('x が 1 から 4 まで増加すると　x の増加量 3、y の増加量 6<br>変化の割合＝'+frH(6,3)+'＝2')}</section>
+    <section class="panel"><h3>一次関数の変化の割合</h3>${rule('一次関数 y＝ax+b の変化の割合は一定で、a に等しい<br>　変化の割合＝'+frH('y の増加量','x の増加量')+'＝a<br>　y の増加量＝a×x の増加量')}<p class="small muted">x が 1 増加すると、y は a だけ増加します。</p></section>` },
+  { id:'1-3', t:'傾きと切片', sub:'グラフの特徴', plan:['w4SI','w4SI','w4SI','w4Dir','w4Dir'], body:()=>`
+    <section class="panel"><h3>一次関数のグラフ</h3>${rule('y＝ax+b のグラフは、y＝ax のグラフに平行で、<br>点 (0, b) を通る直線<br>a … <b>傾き</b>　　b … <b>切片</b>')}
+    ${w4G([{a:2,label:'y＝2x',lx:1.6},{a:2,b:3,c:'2',label:'y＝2x+3',lx:-3}],{pts:[[0,3,'切片 3','L']]})}
+    <p class="small muted">y＝2x+3 のグラフは、y＝2x のグラフを y 軸の正の方向に 3 だけ平行移動した直線です。</p></section>
+    <section class="panel"><h3>傾きと直線の向き</h3>${rule('a＞0 のとき　右上がりの直線（x が増加すると y も増加）<br>a＜0 のとき　右下がりの直線（x が増加すると y は減少）')}<p class="small muted">傾きが等しい2直線は平行です。</p></section>` },
+  { id:'1-4', t:'グラフのかき方', sub:'切片と傾きを使う', plan:['w4OnPt','w4OnPt','w4Dir','w4OnPt','w4Dir'], body:()=>`
+    <section class="panel"><h3>グラフのかき方</h3>${rule('① 切片 b から、点 (0, b) をとる<br>② 傾き a から、右へ 1（または分母の数）進んで、上下に動いた点をとる<br>③ 2点を通る直線をひく')}
+    ${w4G([{a:[2,3],b:-1,label:'y＝⅔x−1',lx:-3.6}],{pts:[[0,-1],[3,1,'(3, 1)','L']]})}
+    ${w4E('y＝'+frH(2,3)+'x−1 … 点 (0, −1) から右へ 3、上へ 2 進んだ点 (3, 1) を通る')}
+    <p class="small muted">グラフ上の点は、x 座標を式に代入すると y 座標が求められます。</p></section>` },
+  { id:'1-5', t:'変域', sub:'x の変域と y の変域', plan:Array(5).fill('w4Dom'), body:()=>`
+    <section class="panel"><h3>y の変域の求め方</h3>${rule('x の変域の両はしの値を式に代入して、y の値を求める<br>（グラフで考えると確実）')}
+    ${w4E('y＝−2x+3（−1≦x＜2）<br>x＝−1 のとき y＝5、x＝2 のとき y＝−1<br>答え　−1＜y≦5')}
+    <p class="small muted">a＜0 のときは、x の値が大きいほど y の値が小さくなるので、大小が入れかわります。≦ と ＜ の対応にも注意しよう。</p></section>` },
+  { id:'1-6', t:'式を求める①', sub:'グラフから', plan:Array(5).fill('w4Pick'), body:()=>`
+    <section class="panel"><h3>グラフから式を求める</h3>${rule('① y 軸との交点から切片 b を読む<br>② 目もりの交点を通るところから傾き a を読む')}
+    ${w4G([{a:[-3,2],b:2}],{pts:[[0,2],[2,-1]]})}${w4E('切片 2、右へ 2 進むと下へ 3 → 傾き −'+frH(3,2)+'<br>y＝−'+frH(3,2)+'x+2')}</section>` },
+  { id:'1-7', t:'式を求める②', sub:'傾き（切片）と1点から', plan:Array(5).fill('w4Find1'), body:()=>`
+    <section class="panel"><h3>傾きと1点から</h3>${rule('y＝ax+b に、傾き a と点の座標を代入して b を求める')}
+    ${w4E('傾きが 3 で、点 (2, 1) を通る直線<br>y＝3x+b に x＝2、y＝1 を代入　1＝6+b　b＝−5<br>答え　y＝3x−5')}
+    <p class="small muted">「平行な直線」は傾きが等しい。「変化の割合が a」も傾きが a ということ。</p></section>
+    <section class="panel"><h3>切片と1点から</h3>${w4E('切片が −1 で、点 (2, 5) を通る直線<br>y＝ax−1 に代入　5＝2a−1　a＝3<br>答え　y＝3x−1')}</section>` },
+  { id:'1-8', t:'式を求める③', sub:'2点から', plan:Array(5).fill('w4Find2'), body:()=>`
+    <section class="panel"><h3>2点を通る直線</h3>${rule('① 2点の座標から傾きを求める　傾き＝'+frH('y の増加量','x の増加量')+'<br>② 1点の座標を代入して切片を求める')}
+    ${w4E('2点 (1, 3)、(3, 7) を通る直線<br>傾き＝'+frH('7−3','3−1')+'＝2<br>y＝2x+b に (1, 3) を代入　3＝2+b　b＝1<br>答え　y＝2x+1')}
+    <p class="small muted">連立方程式 3＝a+b、7＝3a+b を解いて求めることもできます。</p></section>` },
+  { id:'2-1', sec:'2　一次関数と方程式', t:'方程式 ax+by＝c のグラフ', sub:'二元一次方程式のグラフ', plan:Array(5).fill('w4Lin2'), body:()=>`
+    <section class="panel"><h3>二元一次方程式のグラフ</h3>${rule('二元一次方程式 ax+by＝c のグラフは直線')}
+    ${w4E('2x+3y＝6　→　y について解くと　y＝−'+frH(2,3)+'x+2')}
+    ${w4G([{a:[-2,3],b:2,label:'2x+3y＝6',lx:-4.6}],{pts:[[0,2,'(0, 2)'],[3,0,'(3, 0)']]})}
+    <p class="small muted">x＝0 を代入すると y 軸との交点、y＝0 を代入すると x 軸との交点がわかり、その2点を結んでもかけます。</p></section>` },
+  { id:'2-2', t:'y＝k、x＝h のグラフ', sub:'軸に平行な直線', plan:Array(5).fill('w4KH'), body:()=>`
+    <section class="panel"><h3>軸に平行な直線</h3>${rule('y＝k のグラフ　→　点 (0, k) を通り、x 軸に平行な直線<br>x＝h のグラフ　→　点 (h, 0) を通り、y 軸に平行な直線')}
+    ${w4G([{a:0,b:3,label:'y＝3',lx:4.6},{x:-2,c:'2',label:'x＝−2'}])}
+    <p class="small muted">3y＝9 → y＝3、2x+4＝0 → x＝−2 のように、まず簡単な形にしよう。</p></section>` },
+  { id:'2-3', t:'連立方程式の解とグラフ', sub:'交点の座標', plan:Array(5).fill('w4Cross'), body:()=>`
+    <section class="panel"><h3>連立方程式とグラフ</h3>${rule('連立方程式の解は、それぞれの方程式のグラフの<br><b>交点の x 座標、y 座標の組</b>')}
+    ${w3E(w3sys('x+y＝4','2x−y＝−1'))}${w4G([{a:-1,b:4,label:'x+y＝4',lx:3},{a:2,b:1,c:'2',label:'2x−y＝−1',lx:-2.2}],{pts:[[1,3,'(1, 3)']]})}
+    <p class="small muted">2直線が平行なとき交点はないので、連立方程式の解はありません。</p></section>` },
+  { id:'2-4', t:'2直線の交点', sub:'交点が目もりの上にないとき', plan:Array(5).fill('w4Cross2'), body:()=>`
+    <section class="panel"><h3>2直線の交点の座標の求め方</h3>${rule('① グラフから2直線の式を求める<br>② 2つの式を連立方程式として解く')}
+    ${w4G([{a:1,b:1,label:'ℓ',lx:3.4},{a:-2,b:3,c:'2',label:'m',lx:-1.3}],{pts:[[w4R(2,3),w4R(5,3)]]})}
+    ${w4E('ℓ：y＝x+1、m：y＝−2x+3<br>x+1＝−2x+3　x＝'+frH(2,3)+'、y＝'+frH(5,3)+'<br>交点 ('+frH(2,3)+', '+frH(5,3)+')')}</section>` },
+  { id:'3-1', sec:'3　一次関数の利用', t:'グラフの読みとり', sub:'速さ・時間・道のり', plan:Array(5).fill('w4Spd'), body:()=>`
+    <section class="panel"><h3>道のりのグラフ</h3>${rule('横軸 → 時間、縦軸 → 道のり<br>グラフの傾き → 速さ　　2つのグラフの交点 → 出会う（追いつく）ところ')}
+    ${w4Plot({ xm:30, ym:1500, xs:5, ys:300, xl:'x（分）', yl:'y（m）', lines:[{p:[[0,0],[20,1200],[30,1200]]}], dash:[[20,1200]] })}
+    ${w4E('20分で 1200 m 進む → 分速 '+frH(1200,20)+'＝60 m<br>0≦x≦20 のとき　y＝60x')}
+    <p class="small muted">グラフが横に平らな部分は、止まっている（休んでいる）時間です。</p></section>` },
+  { id:'3-2', t:'動く点と面積', sub:'変域ごとに式をつくる', plan:Array(5).fill('w4Area'), body:()=>`
+    <section class="panel"><h3>図形の上を動く点</h3>${rule('点がどの辺上にあるかで、x の変域を分けて考える')}
+    ${w4Rect(6,4,2)}
+    ${w4E('長方形 ABCD（AB＝4 cm、AD＝6 cm）で、P が A→B→C→D と毎秒 1 cm で動くときの △APD の面積 y cm²<br>辺 AB 上（0≦x≦4）　y＝3x<br>辺 BC 上（4≦x≦10）　y＝12<br>辺 CD 上（10≦x≦14）　y＝−3x+42')}
+    ${w4Plot({ xm:14, ym:14, xs:2, ys:2, xl:'x（秒）', yl:'y（cm²）', lines:[{p:[[0,0],[4,12],[10,12],[14,0]]}], dash:[[4,12],[10,12]] })}</section>` },
+  { id:'3-3', t:'料金・水温などの問題', sub:'一次関数とみなす', plan:Array(5).fill('w4Plan'), body:()=>`
+    <section class="panel"><h3>料金プランの比較</h3>${rule('それぞれの料金を一次関数の式で表し、<br>グラフの交点（連立方程式の解）を境に、どちらが安いかを考える')}
+    ${w4E('A：y＝30x+1000、B：y＝15x+2500<br>30x+1000＝15x+2500　x＝100<br>100 分をこえると B のほうが安い')}</section>
+    <section class="panel"><h3>一次関数とみなす</h3><p>水温の変化や、ろうそくの長さなどは、測定値が直線上にほぼ並ぶとき、一次関数とみなして式をつくり、予想することができます。</p>
+    ${w4E('2分後 26℃、6分後 50℃<br>傾き＝'+frH('50−26','6−2')+'＝6、y＝6x+14')}</section>` },
+  { id:'4-1', sec:'章末テスト', t:'章末テスト', sub:'3章の総まとめ', test:true, plan:['w4Is','w4Rate','w4SI','w4Dir','w4Pick','w4Dom','w4Find1','w4Find2','w4Lin2','w4KH','w4Cross','w4Spd'], body:()=>`
+    <section class="panel"><h3>3章　一次関数　章末テスト</h3><p>1節〜3節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
 ];
 
 /* ===== 中3数学 2章 平方根 ===== */
@@ -14007,6 +14260,7 @@ const UNITS = {
   sj:{ no:'文27', title:'仮定法', subject:'英語', course:'jen', subj:1, lessons:SJ_LESSONS },
   m2c1:{ no:'1', title:'式の計算', subject:'数学', course:'j2', subj:0, lessons:M2C1_LESSONS, drill:'m2c1' },
   m2c2:{ no:'2', title:'連立方程式', subject:'数学', course:'j2', subj:0, lessons:M2C2_LESSONS, drill:'m2c2' },
+  m2c3:{ no:'3', title:'一次関数', subject:'数学', course:'j2', subj:0, lessons:M2C3_LESSONS, drill:'m2c3' },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
