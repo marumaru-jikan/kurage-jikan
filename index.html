@@ -482,6 +482,7 @@ ol.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
 @keyframes bbUp{0%{transform:translateY(62vh) scale(.45);opacity:0}12%{opacity:1}55%{transform:translate(-10px,6vh) scale(.9)}78%{transform:translate(6px,0) scale(1)}86%{transform:scale(1.12);opacity:1}100%{transform:scale(1.6);opacity:0}}
 .bfx .bring{position:absolute;left:calc(50% - 75px);top:calc(42% - 75px);width:150px;height:150px;border-radius:50%;border:3px dotted rgba(207,234,246,.9);opacity:0;animation:bRing .6s ease-out 2s forwards}
 @keyframes bRing{0%{transform:scale(.9);opacity:.9}100%{transform:scale(2);opacity:0}}
+.bfx .bttl{font-size:15px;letter-spacing:.06em;color:#CFEAF6}
 .bfx .bmsg{position:absolute;left:16px;right:16px;top:42%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#F2FAFD;opacity:0;animation:bMsg .7s cubic-bezier(.2,.8,.3,1.2) 2s forwards}
 @keyframes bMsg{from{opacity:0;transform:translateY(-50%) scale(.7)}to{opacity:1;transform:translateY(-50%) scale(1)}}
 .bfx .bmsg p{font-family:var(--f-display);font-weight:700;font-size:1.45rem;line-height:1.6;max-width:16em;text-shadow:0 2px 12px rgba(6,24,39,.8);text-wrap:balance}
@@ -15012,9 +15013,11 @@ function vQuiz(){
 }
 const BUBBLE_MSG=['今日もここまで来れたね','ゆっくりでだいじょうぶ。ちゃんと進んでるよ','最後までやりきったね','その一歩が、ちゃんと力になってる','わからないところに気づけたのも、前進だよ','少しずつ、深いところまで泳げるようになってる','がんばった自分に、ひと休みをあげてね','クラゲもふわっと喜んでるよ','きのうより、ちょっとだけ前へ','自分のペースで、だいじょうぶ','まちがいは、のびしろのしるし','つかれたら、ぷかぷか浮かんでもいいよ','ここまでの時間は、ちゃんと残ってるよ','よくできました。深呼吸しよう','続けているって、それだけですごいこと','今日のあなたに、拍手'];
 function pickBubble(){ const L=BUBBLE_MSG.length; let i; do{ i=Math.floor(Math.random()*L); }while(L>1&&i===S.lastBub); S.lastBub=i; return BUBBLE_MSG[i]; }
-function bubbleFx(msg){
+function grpOf(u,l){ const L=u.lessons; let st=0; for(let i=0;i<=L.indexOf(l);i++) if(L[i].sec) st=i; let en=st+1; while(en<L.length&&!L[en].sec) en++;
+  return { title:L[st].sec||u.title, ids:L.slice(st,en).map(x=>x.id) }; }
+function bubbleFx(msg){ const ttl=typeof msg==='object'?msg.t:''; if(typeof msg==='object') msg=msg.m;
   let sb=''; for(let i=0;i<16;i++){ const s=6+Math.random()*18; sb+=`<span class="sb" style="left:${(Math.random()*94+2).toFixed(1)}%;width:${s.toFixed(0)}px;height:${s.toFixed(0)}px;animation-duration:${(2.6+Math.random()*2.6).toFixed(2)}s;animation-delay:${(Math.random()*1.6).toFixed(2)}s"></span>`; }
-  return `<div class="bfx" data-act="bubbleClose" role="status" aria-live="polite">${sb}<div class="bb"></div><div class="bring"></div><div class="bmsg"><p>${esc(msg)}</p><small>タップでとじる</small></div></div>`;
+  return `<div class="bfx" data-act="bubbleClose" role="status" aria-live="polite">${sb}<div class="bb"></div><div class="bring"></div><div class="bmsg">${ttl?`<b class="bttl">${esc(ttl.replace(/^\d+\s*[　 ]\s*/,''))} クリア！</b>`:''}<p>${esc(msg)}</p><small>タップでとじる</small></div></div>`;
 }
 function vResult(){
   const Q=S.quiz, n=Q.qs.length, u=CU(), l=LX(S.lid), idx=u.lessons.indexOf(l), nx=u.lessons[idx+1];
@@ -15462,11 +15465,12 @@ document.addEventListener('click', e=>{
   else if(a==='next'){ const Q=S.quiz;
     if(Q.i+1<Q.qs.length){ Q.i++; Q.picked=null; Q.hint=false; S.pad={strokes:[]}; S.padImg=''; S.jmsg=''; render(); window.scrollTo(0,0); return; }
     S.reward=null; S.gotDrop=false;
-    if(!Q.retry){ seaInit(); const first=!R.lessons[lkey(S.uid,LX(S.lid).id)], SEC={ title:CU().title, ids:CU().lessons.map(l=>l.id) }, secDone=()=>SEC.ids.every(id=>R.lessons[lkey(S.uid,id)]), wasDone=secDone(); const u=CU(), l=LX(S.lid), n=Q.qs.length, k=lkey(S.uid,l.id), s=R.lessons[k]||{best:0,tries:0,total:n};
+    if(!Q.retry){ seaInit(); const first=!R.lessons[lkey(S.uid,LX(S.lid).id)], SEC={ title:CU().title, ids:CU().lessons.map(l=>l.id) }, secDone=()=>SEC.ids.every(id=>R.lessons[lkey(S.uid,id)]), wasDone=secDone(); const GRP=grpOf(CU(),LX(S.lid)), grpDone=()=>GRP.ids.every(id=>R.lessons[lkey(S.uid,id)]), wasGrp=grpDone(); const u=CU(), l=LX(S.lid), n=Q.qs.length, k=lkey(S.uid,l.id), s=R.lessons[k]||{best:0,tries:0,total:n};
       s.tries++; s.best=Math.max(s.best,Q.score); s.total=n; R.lessons[k]=s; R.lastUnit=S.uid; save();
       report({ subject:u.subject, unit:u.no+' '+u.title, lesson:l.id, title:l.t, score:Q.score, total:n, sec:Math.round((Date.now()-S.lessonStart)/1000) });
-      if(!wasDone&&secDone()){ S.reward=drawReward(); if(S.reward) S.reward.title=SEC.title; } if(first){ const sea=seaInit(); sea.drops++; sea.total++; S.gotDrop=true; save(); } }
-    S.bubble=pickBubble(); S.view='result'; render(); window.scrollTo(0,0); }
+      if(!wasDone&&secDone()){ S.reward=drawReward(); if(S.reward) S.reward.title=SEC.title; } if(first){ const sea=seaInit(); sea.drops++; sea.total++; S.gotDrop=true; save(); }
+      if(!wasGrp&&grpDone()) S.bubble={t:GRP.title, m:pickBubble()}; }
+    S.view='result'; render(); window.scrollTo(0,0); }
   else if(a==='bubbleClose'){ const o=document.querySelector('.bfx'); if(o) o.remove(); }
   else if(a==='retry'){ const list=S.quiz.wrong.map(q=>Object.assign({},q,q.choices?{choices:shuffle([...q.choices])}:{})); S.view=S.stack.pop()||'lesson'; startQuiz(list); }
   else if(a==='again'){ S.view=S.stack.pop()||'lesson'; startQuiz(); }
