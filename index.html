@@ -4677,17 +4677,13 @@ const PFP_LESSONS = [
     ${beEx('<b>Have</b> you <b>been helping</b> her since this morning? — Yes, I <b>have</b>.','あなたはけさからずっと彼女を手伝っているのですか。— はい。')}</section>
     <section class="panel"><h3>How long 〜?</h3>${rule('How long ＋ have（has）＋ 主語 ＋ been ＋ ing?<br>「どのくらいの間ずっと〜していますか」')}
     ${beEx('<b>How long</b> has it been raining? — <b>For</b> five hours.（<b>Since</b> last night.）','どのくらいの間、雨がずっと降っているのですか。— 5時間です。（昨夜からです。）')}</section>` },
-  { id:'22-3', t:'現在完了形【継続】との違い', sub:'状態と動作・完了のニュアンス', plan:['pfpVs','pfpVs','pfpVs','pfpNu','pfpNu'], body:()=>`
-    <section class="panel"><h3>① 状態か、動作か</h3>
+  { id:'22-3', t:'現在完了形【継続】との違い', sub:'状態と動作', plan:['pfpVs','pfpVs','pfpVs','pfpVs','pfpVs'], body:()=>`
+    <section class="panel"><h3>状態か、動作か</h3>
     <table class="dtab" style="font-size:.85rem"><tr><th></th><th>現在完了〈継続〉</th><th>現在完了進行形</th></tr>
     <tr><td>形</td><td>have ＋ 過去分詞</td><td>have been ＋ ing</td></tr>
     <tr><td>使う動詞</td><td><b>状態</b>を表す動詞<br>know・have・like・be・live など</td><td><b>動作</b>を表す動詞<br>study・play・rain・wait・run など</td></tr>
     <tr><td>例</td><td style="text-align:left">I <b>have known</b> Ken for five years.</td><td style="text-align:left">I <b>have been studying</b> for three hours.</td></tr></table>
-    <p class="small muted">状態を表す動詞は、ふつう進行形にしません。×I have been knowing Ken.<br>live（住んでいる）は、どちらの形でも使えます。</p></section>
-    <section class="panel"><h3>② 終わっているか、続いているか</h3>
-    <p><b>現在完了形</b>（完了）</p>${pfpTL('k')}${beEx('I <b>have repaired</b> my car.','私は車を修理しました。→ 修理が完了している（いつ完了したかは分からない）')}
-    <p><b>現在完了進行形</b></p>${pfpTL('p')}${beEx('I <b>have been repairing</b> my car.','私はずっと車を修理しています。→ 直前まで修理していて、修理はまだ完了していない')}
-    ${rule('完了形：「もう終わった」という結果を伝える<br>完了進行形：「ずっとしている」という動作の続きを伝える')}</section>` },
+    <p class="small muted">状態を表す動詞は、ふつう進行形にしません。×I have been knowing Ken.<br>live（住んでいる）は、どちらの形でも使えます。</p></section>` },
   { id:'22-4', t:'例文', sub:'現在完了進行形の文を読もう', plan:['pfpEJ','pfpEJ','pfpEJ','pfpForm','pfpSF'], body:()=>`
     <section class="panel"><h3>例文</h3>${PFP_S.map(x=>beEx(`${x[0]} <b>${pfpH(x)} been ${x[2]}</b> ${x[3].replace(/\b(since|for) (?!the bus)/,'<b>$1</b> ')}`,x[5])).join('')}
     ${beEx('How long has it been raining? — Since last night.','どのくらいの間、雨がずっと降っているのですか。— 昨夜からです。')}</section>` },
