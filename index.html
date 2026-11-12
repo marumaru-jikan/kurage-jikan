@@ -7255,7 +7255,7 @@ Object.assign(G, {
     return w4m(`一次関数 ${w4yx(a,b)} のグラフ上にある点は？`, '', ans, [w4P(p,q+1), w4P(-p,q), w4P(q,p), w4P(p,-q), w4P(p,a*p-b)].filter(z=>z!==ans), 'x 座標を式に代入して、y 座標と一致するか調べよう。', `x＝${w4n(p)} を代入すると y＝${w4n(q)}`); },
   w4Pick(){ let a,b,x1,y1; do{ a=w4sl(); b=nz(-4,4); x1=a[1]*pick([1,-1,2,-2]); y1=b+a[0]*x1/a[1]; }while(Math.abs(x1)>5||Math.abs(y1)>5||(Math.abs(b)>4));
     const fig=w4G([{a,b}], { pts:[[0,b],[x1,y1]] }), ans=w4yx(a,b);
-    return w4m('下の図の直線の式を求めなさい。', fig, ans, [w4yx(w4neg(a),b), w4yx(a,-b), w4yx(w4div(1,a),b), w4yx(a,b+1), w4yx(w4neg(a),-b)].filter(z=>z!==ans), '切片（y 軸との交点）を読み、そこから右へ1（または分母の数）進んだときの上下の動きで傾きを読もう。', `切片 ${w4n(b)}、点 (0, ${w4n(b)}) から点 ${w4P(x1,y1)} へ、x が ${w4n(x1)}、y が ${w4n(y1-b)} 変わるので、傾きは ${w4n(a)}`, { figq:true }); },
+    return w4m('このグラフが表す式は？', fig, ans, [w4yx(w4neg(a),b), w4yx(a,-b), w4yx(w4div(1,a),b), w4yx(a,b+1), w4yx(w4neg(a),-b)].filter(z=>z!==ans), '切片（y 軸との交点）を読み、そこから右へ1（または分母の数）進んだときの上下の動きで傾きを読もう。', `切片 ${w4n(b)}、点 (0, ${w4n(b)}) から点 ${w4P(x1,y1)} へ、x が ${w4n(x1)}、y が ${w4n(y1-b)} 変わるので、傾きは ${w4n(a)}`, { figq:true }); },
   w4Which(){ const a=w4sl(), b=nz(-4,4), C=[[a,b],[w4neg(a),b],[a,-b],[w4neg(a),-b]], ord=shuffle([0,1,2,3]), M=['①','②','③','④'];
     const figs=ord.map((k,i)=>`<div style="text-align:center"><b style="font-size:17px">${M[i]}</b>${w4G([{a:C[k][0],b:C[k][1]}]).replace('class="parfig"','class="parfig" style="max-width:170px;margin:2px auto"')}</div>`).join('');
     const fig=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;max-width:380px;margin:0 auto">${figs}</div>`, ans=M[ord.indexOf(0)];
@@ -7347,7 +7347,7 @@ const M2C3_LESSONS = [
     ${w4G([{a:2,label:'y＝2x',lx:1.6},{a:2,b:3,c:'2',label:'y＝2x+3',lx:-3}],{pts:[[0,3,'切片 3','L']]})}
     <p class="small muted">y＝2x+3 のグラフは、y＝2x のグラフを y 軸の正の方向に 3 だけ平行移動した直線です。</p></section>
     <section class="panel"><h3>傾きと直線の向き</h3>${rule('a＞0 のとき　右上がりの直線（x が増加すると y も増加）<br>a＜0 のとき　右下がりの直線（x が増加すると y は減少）')}<p class="small muted">傾きが等しい2直線は平行です。</p></section>` },
-  { id:'1-4', t:'グラフのかき方', sub:'切片と傾きを使う', plan:['w4OnPt','w4Which','w4OnPt','w4Dir','w4Which'], body:()=>`
+  { id:'1-4', t:'グラフのかき方', sub:'切片と傾きを使う', plan:['w4OnPt','w4Which','w4Pick','w4OnPt','w4Which','w4Pick'], body:()=>`
     <section class="panel"><h3>グラフのかき方</h3>${rule('① 切片 b から、点 (0, b) をとる<br>② 傾き a から、右へ 1（または分母の数）進んで、上下に動いた点をとる<br>③ 2点を通る直線をひく')}
     ${w4G([{a:[2,3],b:-1}],{pts:[[0,-1],[3,1,'(3, 1)','L']],extra:'<line x1="121" y1="141.2" x2="178" y2="141.2" style="stroke:#e07b39;stroke-width:2"/><polygon points="183.6,141.2 175,137 175,145.4" style="fill:#e07b39"/><line x1="183.6" y1="141.2" x2="183.6" y2="105" style="stroke:#e07b39;stroke-width:2"/><polygon points="183.6,98.8 179.4,107.4 187.8,107.4" style="fill:#e07b39"/><text x="152" y="157" text-anchor="middle" style="font-size:11px;font-weight:700;fill:#e07b39">右へ 3</text><text x="188" y="112" style="font-size:11px;font-weight:700;fill:#e07b39">上へ 2</text><g class="pl" style="font-weight:700;font-family:Times New Roman,serif"><text x="50" y="206"><tspan style="font-style:italic">y</tspan>＝</text><text x="75" y="199" text-anchor="middle" style="font-size:10px;font-style:normal">2</text><line x1="70" y1="202" x2="80" y2="202" style="stroke:currentColor;stroke-width:1"/><text x="75" y="212" text-anchor="middle" style="font-size:10px;font-style:normal">3</text><text x="82" y="206"><tspan style="font-style:italic">x</tspan>−1</text></g>'})}
     ${w4E('y＝'+frH(2,3)+'x−1 … 点 (0, −1) から右へ 3、上へ 2 進んだ点 (3, 1) を通る')}
