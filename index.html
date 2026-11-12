@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },'不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'There is ～. ／ There are ～.', ready:'there' },'不定詞','動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3368,6 +3368,86 @@ const PREP_LESSONS = [
     <p class="small muted">左ほどせまく（短く）、右ほど広く（長く）なります。</p></section>` },
   { id:'13-5', t:'例文', sub:'前置詞の文を読もう', plan:['prpEJ','prpEJ','prpEJ','prpMix','prpMix'], body:()=>`
     <section class="panel"><h3>例文</h3>${PP_EX.map(x=>beEx(x[0].replace(/\b(at|on|in|for|by|after|under|until|about|into|along|without)\b/g,'<b>$1</b>'),x[1])).join('')}</section>` },
+];
+
+
+/* ===== 英語 文法 14章 There is ～. / There are ～. ===== */
+// [肯定文の名詞, 否定・疑問の名詞, 場所, 場所(日本語), 名詞(肯定の日本語), 名詞(否定・疑問の日本語), 複数, 生き物]
+const TH_S = [
+  ['a pen','a pen','on the desk','机の上に','ペン','ペン',0,0],
+  ['a cat','a cat','under the table','テーブルの下に','ネコ','ネコ',0,1],
+  ['a park','a park','near my house','私の家の近くに','公園','公園',0,0],
+  ['a big tree','a big tree','in the garden','庭に','大きな木','大きな木',0,0],
+  ['an apple','an apple','on the table','テーブルの上に','1つのリンゴ','リンゴ',0,0],
+  ['a library','a library','in our town','私たちの町に','図書館','図書館',0,0],
+  ['some pictures','any pictures','on the wall','壁に','何枚かの絵','絵',1,0],
+  ['some apples','any apples','in the box','箱の中に','いくつかのリンゴ','リンゴ',1,0],
+  ['many students','any students','in the classroom','教室に','たくさんの生徒','生徒',1,1],
+  ['two dogs','any dogs','in the park','公園に','2匹の犬','犬',1,1],
+  ['three books','any books','in my bag','私のかばんの中に','3冊の本','本',1,0],
+  ['some children','any children','in the pool','プールに','何人かの子ども','子ども',1,1],
+];
+const thBe = (x,p) => p ? (x[6]?'were':'was') : (x[6]?'are':'is');
+const thAru = (x,p,neg) => x[7] ? (neg ? (p?'いませんでした':'いません') : (p?'いました':'います')) : (neg ? (p?'ありませんでした':'ありません') : (p?'ありました':'あります'));
+const thJp = (x,p) => `${x[3]}${x[4]}が${thAru(x,p)}。`;
+const thJpN = (x,p) => `${x[3]}は${x[5]}が${thAru(x,p,1)}。`;
+const thJpQ = (x,p) => `${x[3]}${x[5]}が${thAru(x,p)}か。`;
+const thAff = (x,p) => `There ${thBe(x,p)} ${x[0]} ${x[2]}.`;
+const thJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+Object.assign(G, {
+  thBeG(){ const x=pick(TH_S), p=Math.random()<.3, b=thBe(x,p);
+    return { prompt:'□ に入るのは？', expr:`There □ ${x[0]} ${x[2]}.`+thJ(thJp(x,p)), enExpr:true, en:true, choices:['is','are','was','were'], answer:b,
+      hint:'後ろの名詞が単数なら is、複数なら are。過去なら was・were。', explain:`${x[0]} は${x[6]?'複数':'単数'}${p?'、過去の文':''}なので ${b}。`, viz:null }; },
+  thMake(){ const x=pick(TH_S), b=thBe(x,0), ok=thAff(x,0), wb=x[6]?'is':'are';
+    const opts=[ok, `There ${wb} ${x[0]} ${x[2]}.`, `There have ${x[0]} ${x[2]}.`, `${capFirst(x[0])} ${b} there ${x[2]}.`];
+    return { prompt:'英語にすると？', expr:thJp(x,0), en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'〈There is（are）＋ 名詞 ＋ 場所〉の順。', explain:`${x[6]?'複数なので are':'単数なので is'}。<br>${ok}`, viz:null }; },
+  thNegC(){ const x=pick(TH_S), p=Math.random()<.3, b=thBe(x,p), ok=b+"n’t";
+    const ch = p ? ["wasn’t","weren’t","didn’t","isn’t"] : ["isn’t","aren’t","don’t","doesn’t"];
+    return { prompt:'否定文にしよう。□ に入るのは？', expr:`There □ ${x[1]} ${x[2]}.`+thJ(thJpN(x,p)), enExpr:true, en:true, choices:ch, answer:ok,
+      hint:'be動詞の後ろに not。do・does・did は使いません。', explain:`${b} not を短くして ${ok}。${x[6]?'否定文では some ではなく any を使います。':''}`, viz:null }; },
+  thNeg(){ const x=pick(TH_S), b=thBe(x,0), ok=`There ${b} not ${x[1]} ${x[2]}.`;
+    const opts = x[6] ? [ok, `There ${b} not ${x[0].replace(/^(many|two|three)/,'some')} ${x[2]}.`.replace('some some','some'), `There don’t ${x[1]} ${x[2]}.`, `There not ${b} ${x[1]} ${x[2]}.`]
+                      : [ok, `There are not ${x[1]} ${x[2]}.`, `There doesn’t ${x[1]} ${x[2]}.`, `There not is ${x[1]} ${x[2]}.`];
+    return { prompt:'正しい否定文は？', expr:thJpN(x,0), en:true, words:true, choices:shuffle([...new Set(opts)]), answer:ok,
+      hint:'There is（are）の後ろに not。複数のときは any を使います。', explain:ok, viz:null }; },
+  thQ(){ const x=pick(TH_S), b=thBe(x,0), ok=`${capFirst(b)} there ${x[1]} ${x[2]}?`, wb=x[6]?'Is':'Are';
+    const opts=[ok, `There ${b} ${x[1]} ${x[2]}?`, `${x[6]?'Do':'Does'} there ${x[1]} ${x[2]}?`, `${wb} there ${x[1]} ${x[2]}?`];
+    return { prompt:'正しい疑問文は？', expr:thJpQ(x,0), en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'is・are を there の前に出します。', explain:`${b} を there の前に出して ${ok}`, viz:null }; },
+  thAns(){ const x=pick(TH_S), p=Math.random()<.3, b=thBe(x,p), q=`${capFirst(b)} there ${x[1]} ${x[2]}?`, yes=Math.random()<.5, ok=yes?`Yes, there ${b}.`:`No, there ${b}n’t.`;
+    const wb={is:'are',are:'is',was:'were',were:'was'}[b];
+    const opts = yes ? [ok, `Yes, it ${x[6]?'is':'is'}.`.replace('it is', x[6]?'they are':'it is'), `Yes, there ${wb}.`, `Yes, there ${p?'did':x[6]?'do':'does'}.`] : [ok, `No, ${x[6]?'they aren’t':'it isn’t'}.`, `No, there ${wb}n’t.`, `No, there ${p?'didn’t':x[6]?'don’t':'doesn’t'}.`];
+    return { prompt:`${yes?'「はい」':'「いいえ」'}で答えると？`, expr:q+thJ(thJpQ(x,p)), enExpr:true, en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'答えの文でも there を使います。', explain:`Yes, there ${b}. ／ No, there ${b}n’t. で答えます。`, viz:null }; },
+  thHow(){ const S=[['students','in your class','There are thirty.','あなたのクラスには何人の生徒がいますか。'],['books','in your bag','There are three.','あなたのかばんには何冊の本が入っていますか。'],['days','in a week','There are seven.','1週間は何日ありますか。'],['people','in your family','There are five.','あなたの家族は何人いますか。']], x=pick(S), ok=`How many ${x[0]} are there ${x[1]}?`;
+    const opts=[ok, `How many ${x[0]} there are ${x[1]}?`, `How many ${x[0]} is there ${x[1]}?`, `How many ${x[0]} do there ${x[1]}?`];
+    return { prompt:'正しい疑問文は？', expr:x[3], en:true, words:true, choices:shuffle(opts), answer:ok,
+      hint:'〈How many ＋ 名詞の複数形 ＋ are there 〜?〉', explain:`${ok} — ${x[2]}`, viz:null }; },
+});
+const TH_LESSONS = [
+  { id:'14-1', t:'肯定文', sub:'There is（are）〜.', plan:['thBeG','thBeG','thBeG','thMake','thMake'], body:()=>`
+    <section class="panel"><h3>There is（are）〜.</h3>${rule('There is（are）＋ 名詞 ＋ 場所.<br>→「（場所）に〜があります（います）」')}
+    ${beEx('There <b>is</b> a pen on the desk.','机の上にペンがあります。')}${beEx('There <b>are</b> some pictures on the wall.','壁には絵が何枚か掛かっています。')}</section>
+    <section class="panel"><h3>is と are の使い分け</h3>${rule('〈〜〉にくる名詞が 単数なら is、複数なら are')}
+    <table class="dtab"><tr><th>名詞</th><th>形</th></tr><tr><td>単数（a pen・a cat）</td><td>There <b>is</b> 〜.</td></tr><tr><td>複数（some pictures・two dogs）</td><td>There <b>are</b> 〜.</td></tr><tr><td>過去</td><td>There <b>was</b> 〜. ／ There <b>were</b> 〜.</td></tr></table>
+    <p class="small muted">There is は There’s と短くできます。</p></section>
+    <section class="panel"><h3>注意</h3><p>・there には「そこに」の意味はなく、日本語に訳しません。</p><p>・the・my などがついた特定のものには、ふつう使いません。</p>
+    <p class="small"><b style="color:var(--bad)">×</b> There is my bag on the desk.　<b style="color:var(--good)">〇</b> My bag is on the desk.</p></section>` },
+  { id:'14-2', t:'否定文', sub:'There is（are）not 〜.', plan:['thNegC','thNegC','thNegC','thNeg','thNeg'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('There is（are）＋ not 〜.<br>→「〜がありません（いません）」')}
+    ${beEx('There are some pictures on the wall.','壁には絵が何枚か掛かっています。')}<p style="text-align:center">↓</p>${beEx('There are <b>not any</b> pictures on the wall.','壁には絵が1枚も掛かっていません。')}
+    ${beEx('There <b>isn’t</b> a cat under the table.','テーブルの下にはネコがいません。')}</section>
+    <section class="panel"><h3>some → any</h3><p>否定文では、some のかわりに <b>any</b> を使います。</p>
+    <p class="small muted">not 〜 any は「1つも〜ない」。There are no pictures on the wall. とも言えます。</p>
+    <p class="small"><b style="color:var(--bad)">×</b> There don’t any pictures.　be動詞の文なので do・does は使いません。</p></section>` },
+  { id:'14-3', t:'疑問文', sub:'Is（Are）there 〜?', plan:['thQ','thQ','thAns','thAns','thHow'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('Is（Are）there 〜?<br>→「〜がありますか（いますか）」')}
+    ${beEx('<b>Are there</b> any pictures on the wall?','壁に絵は掛かっていますか。')}${beEx('— Yes, <b>there are</b>. ／ No, <b>there aren’t</b>.','はい、掛かっています。／いいえ、掛かっていません。')}
+    ${beEx('<b>Is there</b> a park near your house? — Yes, <b>there is</b>.','あなたの家の近くに公園はありますか。— はい、あります。')}
+    <p class="small muted">疑問文でも、some のかわりに any を使います。答えの文でも there を使います。</p></section>
+    <section class="panel"><h3>数をたずねる</h3>${rule('How many ＋ 名詞の複数形 ＋ are there 〜?')}
+    ${beEx('<b>How many</b> students <b>are there</b> in your class? — There are thirty.','あなたのクラスには何人の生徒がいますか。— 30人います。')}</section>` },
 ];
 
 
@@ -11760,6 +11840,7 @@ const UNITS = {
   rv2:{ no:'💧2', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:RV2_LESSONS },
   conj:{ no:'文12', title:'接続詞', subject:'英語', course:'jen', subj:1, lessons:CJ_LESSONS },
   prep:{ no:'文13', title:'前置詞', subject:'英語', course:'jen', subj:1, lessons:PREP_LESSONS },
+  there:{ no:'文14', title:'There is ～. ／ There are ～.', subject:'英語', course:'jen', subj:1, lessons:TH_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
