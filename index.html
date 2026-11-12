@@ -7797,9 +7797,8 @@ Object.assign(G, {
 const M2C5_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'二等辺三角形と正三角形', sub:'小学3年の復習', plan:Array(5).fill('w6Word'), body:()=>`
     <section class="panel"><h3>二等辺三角形と正三角形</h3>${rule('2つの辺の長さが等しい三角形 → <b>二等辺三角形</b><br>　2つの角の大きさが等しい<br>3つの辺の長さが等しい三角形 → <b>正三角形</b><br>　3つの角の大きさがみんな等しい')}
-    ${w6IsoF(65,{})}<p class="small muted">二等辺三角形で、長さの等しい2辺の間の角を<b>頂角</b>、残りの2つの角を<b>底角</b>、頂角に対する辺を<b>底辺</b>といいます。</p></section>` },
-  { id:'0-2', t:'三角形の合同条件', sub:'中学2年 4章の復習', plan:Array(5).fill('w5CondT'), body:()=>`
-    <section class="panel"><h3>三角形の合同条件</h3>${rule('① 3組の辺が、それぞれ等しい<br>② 2組の辺とその間の角が、それぞれ等しい<br>③ 1組の辺とその両端の角が、それぞれ等しい')}<p class="small muted">5章の証明では、この3つの合同条件を何度も使います。</p></section>` },
+    ${w6IsoF(65,{})}<p class="small muted">二等辺三角形で、長さの等しい2辺の間の角を<b>頂角</b>、残りの2つの角を<b>底角</b>、頂角に対する辺を<b>底辺</b>といいます。</p></section>
+    <section class="panel"><h3>三角形の合同条件</h3><p class="small muted">5章の証明では、三角形の合同条件を何度も使います。忘れていたら4章で復習しよう。</p><button class="btn ghost wide" data-act="lesson" data-uid="m2c4" data-arg="1-11">4章 1-11 三角形の合同条件へ →</button></section>` },
   { id:'1-1', sec:'1　三角形', t:'二等辺三角形の性質', sub:'2つの底角は等しい', plan:Array(5).fill('w6Iso'), body:()=>`
     <section class="panel"><h3>二等辺三角形の定義と性質</h3>${rule('定義：2つの辺が等しい三角形を二等辺三角形という<br>性質：二等辺三角形の2つの底角は等しい')}
     ${w6IsoF(50,{la:'x',lb:'50'})}${w6E('∠C＝∠B＝50°<br>∠x＝180°−50°×2＝80°')}</section>` },
@@ -14963,7 +14962,7 @@ const CU = () => UNITS[S.uid];
 const LX = id => CU().lessons.find(l=>l.id===id);
 const app = document.getElementById('app'), tabs = document.querySelector('.tabs');
 const go = (v, push=true) => { if (push) S.stack.push(S.view); S.view=v; render(); window.scrollTo(0,0); };
-const back = () => { S.view = S.stack.pop() || 'home'; render(); window.scrollTo(0,0); };
+const back = () => { if(S.jumpFrom&&S.view==='lesson'){ S.uid=S.jumpFrom[0]; S.lid=S.jumpFrom[1]; S.jumpFrom=null; } S.view = S.stack.pop() || 'home'; render(); window.scrollTo(0,0); };
 const top = t => `<div class="top"><button class="back" data-act="back" aria-label="戻る">‹ 戻る</button><span class="ttl">${t}</span></div>`;
 const greet = () => { const h=new Date().getHours(); return h<10?'おはよう':h<17?'こんにちは':'こんばんは'; };
 const lTag = (uid,id) => { const s=R.lessons[lkey(uid,id)]; if(!s) return '<span class="tag">未学習</span>'; return `<span class="tag ${s.best===s.total?'done':'mid'}">${s.best}/${s.total}</span>`; };
@@ -15496,7 +15495,7 @@ document.addEventListener('click', e=>{
   else if(a==='unit'){ S.uid=arg; go('unit'); }
   else if(a==='setupDone'){ const code=normCode(document.getElementById('su-code').value); if(!CODE_RE.test(code)){ document.getElementById('su-err').hidden=false; return; }
     R.code=code; R.name=document.getElementById('su-name').value.trim(); save(); S.stack=[]; S.view='home'; render(); }
-  else if(a==='lesson'){ if(b.dataset.uid) S.uid=b.dataset.uid; S.lid=arg; go('lesson'); }
+  else if(a==='lesson'){ if(b.dataset.uid&&S.view==='lesson'&&b.dataset.uid!==S.uid) S.jumpFrom=[S.uid,S.lid]; if(b.dataset.uid) S.uid=b.dataset.uid; S.lid=arg; go('lesson'); }
   else if(a==='lessonNext'){ const u=CU(); S.lid=arg; S.course=u.course; S.subj=u.subj; S.stack=['home','course','subject','unit']; S.view='lesson'; render(); window.scrollTo(0,0); }
   else if(a==='quiz') startQuiz();
   else if(a==='cards'){ S.deck={cur:deckNext()}; S.flipped=false; markDay(); go('cards'); }
