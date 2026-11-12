@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },'関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },'間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4780,6 +4780,120 @@ const PTP_LESSONS = [
     <section class="panel"><h3>後ろから修飾</h3>${PTP_S.filter(x=>x[2]==='pp'&&x[3]==='post').map(ptpEx).join('')}</section>
     <section class="panel"><h3>前から修飾</h3>${PTP_S.filter(x=>x[2]==='pp'&&x[3]==='pre').map(ptpEx).join('')}
     <p class="small muted">練習問題では、現在分詞と過去分詞のどちらを使うかも出題します。</p></section>` },
+];
+
+
+/* ===== 英語 文法 24章 関係代名詞 ===== */
+// [先行詞 h人/n人以外, 格 s主格/o目的格, □つき英文, 日本語, 先行詞, 文1, 文2, 誤り(□つき)]
+const REL_S = [
+  ['h','s','I know the man □ wrote this song.','私はこの歌を書いた男性を知っています。','the man','I know the man.','He wrote this song.','I know the man □ he wrote this song.'],
+  ['h','s','The girl □ is playing tennis is Yui.','テニスをしている女の子はユイです。','The girl','The girl is Yui.','She is playing tennis.','The girl □ she is playing tennis is Yui.'],
+  ['h','s','I have a friend □ lives in Canada.','私にはカナダに住んでいる友達がいます。','a friend','I have a friend.','He lives in Canada.','I have a friend □ he lives in Canada.'],
+  ['h','s','She is a teacher □ teaches English.','彼女は英語を教える先生です。','a teacher','She is a teacher.','She teaches English.','She is a teacher □ she teaches English.'],
+  ['h','s','The boy □ helped me was Ken.','私を助けてくれた男の子はケンでした。','The boy','The boy was Ken.','He helped me.','The boy □ he helped me was Ken.'],
+  ['n','s','The dog □ helped me was very big.','私を助けた犬はとても大きかった。','The dog','The dog was very big.','It helped me.','The dog □ it helped me was very big.'],
+  ['n','s','This is a word □ makes us happy.','これは私たちを幸せにする言葉です。','a word','This is a word.','It makes us happy.','This is a word □ it makes us happy.'],
+  ['n','s','I have a cat □ has blue eyes.','私は青い目をしたねこを飼っています。','a cat','I have a cat.','It has blue eyes.','I have a cat □ it has blue eyes.'],
+  ['n','s','This is the bus □ goes to the station.','これは駅へ行くバスです。','the bus','This is the bus.','It goes to the station.','This is the bus □ it goes to the station.'],
+  ['n','s','Look at the house □ stands on the hill.','丘の上に建っている家を見て。','the house','Look at the house.','It stands on the hill.','Look at the house □ it stands on the hill.'],
+  ['h','s','This is the singer □ is the most popular among us.','この人は私たちの間で最も人気のある歌手です。','the singer','This is the singer.','She is the most popular among us.','This is the singer □ she is the most popular among us.'],
+  ['n','s','This is the song □ is the most popular among us.','これは私たちの間で最も人気のある歌です。','the song','This is the song.','It is the most popular among us.','This is the song □ it is the most popular among us.'],
+  ['n','o','This is the book □ I bought yesterday.','これは私が昨日買った本です。','the book','This is the book.','I bought it yesterday.','This is the book □ I bought it yesterday.'],
+  ['n','o','The cake □ my mother made was delicious.','母が作ったケーキはおいしかった。','The cake','The cake was delicious.','My mother made it.','The cake □ my mother made it was delicious.'],
+  ['n','o','This is the picture □ Ken took.','これはケンが撮った写真です。','the picture','This is the picture.','Ken took it.','This is the picture □ Ken took it.'],
+  ['n','o','The movie □ we saw last night was exciting.','昨夜私たちが見た映画はわくわくしました。','The movie','The movie was exciting.','We saw it last night.','The movie □ we saw it last night was exciting.'],
+  ['n','o','Is this the bag □ you lost?','これはあなたがなくしたかばんですか。','the bag','Is this the bag?','You lost it.','Is this the bag □ you lost it?'],
+  ['n','o','The song □ I like best is “Sakura.”','私がいちばん好きな歌は「さくら」です。','The song','The song is “Sakura.”','I like it best.','The song □ I like it best is “Sakura.”'],
+  ['h','o','The girl □ I met yesterday was kind.','昨日私が会った女の子は親切でした。','The girl','The girl was kind.','I met her yesterday.','The girl □ I met her yesterday was kind.'],
+  ['h','o','He is a singer □ everyone knows.','彼はみんなが知っている歌手です。','a singer','He is a singer.','Everyone knows him.','He is a singer □ everyone knows him.'],
+  ['h','o','The teacher □ we like is Mr. Sato.','私たちが好きな先生は佐藤先生です。','The teacher','The teacher is Mr. Sato.','We like him.','The teacher □ we like him is Mr. Sato.'],
+];
+const relRp = x => x[1]==='o'&&x[0]==='h' ? 'that' : x[0]==='h' ? 'who' : 'which';
+const relF = (x, rp) => x[2].replace('□', rp||relRp(x));
+const relJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const relOm = x => x[2].replace(' □','');
+const relQ = (L, ch, why) => { const x=pick(L), a=relRp(x)==='that'&&!ch.includes('that')?'who':relRp(x), c=ch.includes(a)?ch:[a,...ch.slice(1)];
+  return { prompt:'□ に入る語は？', expr:x[2]+relJ(x[3]), enExpr:true, en:true, words:true, choices:shuffle(c), answer:a, hint:'先行詞は人？人以外？　関係代名詞のあとは動詞？〈主語＋動詞〉？', explain:`${x[2].replace('□','<b>'+a+'</b>')}<br>先行詞 <b>${x[4]}</b> は${x[0]==='h'?'人':'人以外'}。${why(x)}`, viz:null }; };
+const relComb = L => { const x=pick(L), ok=relF(x), rp=relRp(x), w=rp==='which'?'who':'which';
+  const c=uniq([ok, x[7].replace('□',rp), relF(x,w), x[1]==='s'?x[2].replace(/(\S+) □/, `${rp} $1`).replace(/^the/,'The').replace(/^(.)/,m=>m.toUpperCase()):relF(x,'what')]);
+  return { prompt:'2つの文を1つにすると？', expr:`${x[5]}　＋　${x[6]}`, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+    hint:x[1]==='s'?'2つ目の文の主語（he・she・it）を関係代名詞にかえる。':'2つ目の文の目的語（it・him・her）を関係代名詞にかえて、先行詞のすぐあとに置く。', explain:`${ok}<br>${x[3]}<br>${x[1]==='s'?'主語の代わりなので、he・it などは残さない。':'目的語の代わりなので、it・him・her などは残さない。'}`, viz:null }; };
+Object.assign(G, {
+  relWho(){ return relQ(REL_S.filter(x=>x[1]==='s'), ['who','which','what'], x=>x[0]==='h'?'主格の関係代名詞は who。':'主格の関係代名詞は which。'); },
+  relThat(){ const x=pick(REL_S.filter(x=>x[1]==='s')), c=x[0]==='h'?['that','which','what','he']:['that','who','what','it'];
+    return { prompt:'□ に入る語は？', expr:x[2]+relJ(x[3]), enExpr:true, en:true, words:true, choices:shuffle(c), answer:'that', hint:'先行詞が何であっても使える関係代名詞は？', explain:`${relF(x,'<b>that</b>')}<br>that は先行詞が人でも人以外でも使える。（${relRp(x)} でもよい）`, viz:null }; },
+  relObjW(){ return relQ(REL_S.filter(x=>x[1]==='o'&&x[0]==='n'), ['which','who','what'], ()=>'あとに〈主語＋動詞〉が続くので目的格。人以外なので which。'); },
+  relObjT(){ const x=pick(REL_S.filter(x=>x[1]==='o')), c=x[0]==='h'?['that','which','what','him']:['that','who','what','it'];
+    return { prompt:'□ に入る語は？', expr:x[2]+relJ(x[3]), enExpr:true, en:true, words:true, choices:shuffle(c), answer:'that', hint:'目的格の関係代名詞で、先行詞が人でも人以外でも使えるのは？', explain:`${relF(x,'<b>that</b>')}<br>目的格の that は、先行詞が人でも人以外でも使える。`, viz:null }; },
+  relCombS(){ return relComb(REL_S.filter(x=>x[1]==='s')); },
+  relCombO(){ return relComb(REL_S.filter(x=>x[1]==='o')); },
+  relAnt(){ const x=pick(REL_S), f=relF(x), ws=uniq(shuffle(f.replace(/[.?“”]/g,'').split(' ').filter(w=>/^[a-z]{3,}$/i.test(w)&&!/^(who|which|that|this|the|was|is|are)$/i.test(w)&&!x[4].endsWith(w)))).slice(0,3), a=x[4].split(' ').pop();
+    return { prompt:'関係代名詞の先行詞（修飾される名詞）は？', expr:f+relJ(x[3]), enExpr:true, en:true, words:true, choices:shuffle([a,...ws]), answer:a, hint:'関係代名詞のすぐ前の名詞。', explain:`<b>${x[4]}</b> ${relRp(x)} …<br>関係代名詞のすぐ前の ${a} が先行詞。`, viz:null }; },
+  relCase(){ const x=pick(REL_S);
+    return { prompt:'この関係代名詞は？', expr:relF(x)+relJ(x[3]), enExpr:true, en:true, words:true, choices:['主格','目的格'], answer:x[1]==='s'?'主格':'目的格', hint:'関係代名詞のあとがすぐ動詞 → 主格。あとが〈主語＋動詞〉→ 目的格。', explain:`${relF(x)}<br>${x[1]==='s'?`${relRp(x)} のあとがすぐ動詞なので主格。`:`${relRp(x)} のあとが〈主語＋動詞〉なので目的格。`}`, viz:null }; },
+  relOmit(){ const x=pick(REL_S);
+    return { prompt:'この関係代名詞は省略できる？', expr:relF(x)+relJ(x[3]), enExpr:true, en:true, words:true, choices:['省略できる','省略できない'], answer:x[1]==='o'?'省略できる':'省略できない', hint:'省略できるのは目的格の関係代名詞だけ。', explain:x[1]==='o'?`目的格なので省略できる。<br>→ ${relOm(x)}`:'主格なので省略できない。', viz:null }; },
+  relEJo(){ const all=REL_S.filter(x=>x[1]==='o'), x=pick(all), ws=shuffle(all.filter(y=>y!==x)).slice(0,3).map(y=>y[3]);
+    return { prompt:'日本語の意味は？', expr:relOm(x), enExpr:true, words:true, choices:shuffle([x[3],...ws]), answer:x[3], hint:'名詞のすぐあとに〈主語＋動詞〉があれば、関係代名詞が省略されている。', explain:`${relOm(x)}<br>＝ ${relF(x)}<br>→ ${x[3]}`, viz:null }; },
+  relEJ(){ const x=pick(REL_S), ws=shuffle(REL_S.filter(y=>y!==x)).slice(0,3).map(y=>y[3]);
+    return { prompt:'日本語の意味は？', expr:relF(x), enExpr:true, words:true, choices:shuffle([x[3],...ws]), answer:x[3], hint:'先行詞を、関係代名詞以下が後ろから説明している。', explain:`${relF(x)}<br>→ ${x[3]}`, viz:null }; },
+});
+const relEx = (x, rp) => beEx(x[2].replace(x[4]+' □', `<u>${x[4]}</u> □`).replace('□', `<b>${rp||relRp(x)}</b>`), x[3]);
+const relMk = (x, rp) => `<div class="small" style="margin:-4px 0 8px;color:var(--muted)">${x[5]}　＋　${x[6]}</div>`;
+const REL_LESSONS = [
+  { id:'24-1', t:'関係代名詞とは', sub:'節と名詞をつなぐ語', plan:['relAnt','relAnt','relAnt','relCase','relCase'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('I know <u>the man</u> <b>who</b> wrote this song.','私はこの歌を書いた男性を知っています。')}${beEx('This is <u>a word</u> <b>which</b> makes us happy.','これは私たちを幸せにする言葉です。')}${beEx('This is <u>the song</u> <b>that</b> is the most popular among us.','これは私たちの間で最も人気のある歌です。')}</section>
+    <section class="panel"><h3>関係代名詞</h3>${rule('節（主語＋動詞 …）が前にある名詞を修飾するとき、<br>節と名詞をつなぐ語 →「関係代名詞」')}
+    <p>関係代名詞が修飾する名詞を<b>先行詞</b>といいます。</p>
+    ${beEx('I know <u>the man</u> <b>who</b> wrote this song.','<u>先行詞</u>　＋　<b>関係代名詞</b> ＋ 節（先行詞を説明する）')}</section>
+    <section class="panel"><h3>主格と目的格</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th>先行詞</th><th>主格<br><span class="small">あとに動詞</span></th><th>目的格<br><span class="small">あとに主語＋動詞</span></th></tr>
+    <tr><td>人</td><td>who・that</td><td>that</td></tr><tr><td>人以外</td><td>which・that</td><td>which・that</td></tr></table>
+    <p class="small muted">主格：節の中で主語の働き。目的格：節の中で目的語の働き。</p></section>` },
+  { id:'24-2', t:'主格の関係代名詞 who', sub:'先行詞が人', plan:['relWho','relWho','relWho','relCombS','relCombS'], body:()=>`
+    <section class="panel"><h3>主格の関係代名詞 who</h3>${rule('先行詞が「人」のとき → who<br>人 ＋ who ＋ 動詞 …')}
+    ${beEx('I know the man.　＋　<b>He</b> wrote this song.','私は（その）男性を知っています。＋ 彼はこの歌を書きました。')}<p style="text-align:center">↓ He を who にかえて、the man のすぐあとに置く</p>
+    ${beEx('I know <u>the man</u> <b>who</b> wrote this song.','私は［この歌を書いた］男性を知っています。')}</section>
+    <section class="panel"><h3>例文</h3>${REL_S.filter(x=>x[0]==='h'&&x[1]==='s').slice(1,5).map(x=>relEx(x)+relMk(x)).join('')}</section>` },
+  { id:'24-3', t:'主格の関係代名詞 which', sub:'先行詞が人以外', plan:['relWho','relWho','relCombS','relCombS','relCombS'], body:()=>`
+    <section class="panel"><h3>主格の関係代名詞 which</h3>${rule('先行詞が「人以外」（動物・もの・こと）のとき → which<br>人以外 ＋ which ＋ 動詞 …')}
+    ${beEx('The dog was very big.　＋　<b>It</b> helped me.','その犬はとても大きかった。＋ それは私を助けました。')}<p style="text-align:center">↓ It を which にかえて、The dog のすぐあとに置く</p>
+    ${beEx('<u>The dog</u> <b>which</b> helped me was very big.','［私を助けた］犬はとても大きかった。')}
+    ${beEx('This is <u>a word</u> <b>which</b> makes us happy.','これは［私たちを幸せにする］言葉です。')}</section>
+    <section class="panel"><h3>例文</h3>${REL_S.filter(x=>x[0]==='n'&&x[1]==='s').slice(2,5).map(x=>relEx(x)+relMk(x)).join('')}</section>` },
+  { id:'24-4', t:'主格の関係代名詞 that', sub:'先行詞が何でも使える', plan:['relThat','relThat','relThat','relWho','relEJ'], body:()=>`
+    <section class="panel"><h3>主格の関係代名詞 that</h3>${rule('that は、先行詞が人でも人以外でも使える')}
+    ${beEx('This is <u>the singer</u> <b>that</b> is the most popular among us.','この人は［私たちの間で最も人気のある］歌手です。（先行詞：人）')}
+    ${beEx('This is <u>the song</u> <b>that</b> is the most popular among us.','これは［私たちの間で最も人気のある］歌です。（先行詞：人以外）')}
+    <table class="dtab"><tr><th>関係代名詞</th><th>先行詞</th></tr><tr><td>who</td><td>人</td></tr><tr><td>which</td><td>人以外</td></tr><tr><td><b>that</b></td><td><b>すべて</b></td></tr></table>
+    <p class="small muted">先行詞に最上級・the first・all・the only などがつくときは、that がよく使われます。</p></section>` },
+  { id:'24-5', t:'目的格の関係代名詞 which', sub:'人以外 ＋ which ＋ 主語 ＋ 動詞', plan:['relObjW','relObjW','relObjW','relCombO','relCombO'], body:()=>`
+    <section class="panel"><h3>目的格の関係代名詞 which</h3>${rule('先行詞が「人以外」で、節の中で目的語の働き → which<br>人以外 ＋ which ＋ 主語 ＋ 動詞 …')}
+    ${beEx('This is the book.　＋　I bought <b>it</b> yesterday.','これはその本です。＋ 私は昨日それを買いました。')}<p style="text-align:center">↓ it を which にかえて、the book のすぐあとに置く</p>
+    ${beEx('This is <u>the book</u> <b>which</b> I bought yesterday.','これは［私が昨日買った］本です。')}
+    <p class="small muted">×This is the book which I bought <s>it</s> yesterday.（it は残さない）</p></section>
+    <section class="panel"><h3>例文</h3>${REL_S.filter(x=>x[0]==='n'&&x[1]==='o').slice(1,5).map(x=>relEx(x)+relMk(x)).join('')}</section>` },
+  { id:'24-6', t:'目的格の関係代名詞 that', sub:'先行詞が何でも使える', plan:['relObjT','relObjT','relObjT','relCase','relCase'], body:()=>`
+    <section class="panel"><h3>目的格の関係代名詞 that</h3>${rule('that は、先行詞が人でも人以外でも使える<br>先行詞 ＋ that ＋ 主語 ＋ 動詞 …')}
+    ${beEx('The girl was kind.　＋　I met <b>her</b> yesterday.','その女の子は親切でした。＋ 私は昨日彼女に会いました。')}<p style="text-align:center">↓</p>
+    ${beEx('<u>The girl</u> <b>that</b> I met yesterday was kind.','［昨日私が会った］女の子は親切でした。（先行詞：人）')}
+    ${beEx('This is <u>the book</u> <b>that</b> I bought yesterday.','これは［私が昨日買った］本です。（先行詞：人以外）')}</section>
+    <section class="panel"><h3>主格か、目的格か</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th>主格</th><th>目的格</th></tr><tr><td>関係代名詞 ＋ <b>動詞</b></td><td>関係代名詞 ＋ <b>主語 ＋ 動詞</b></td></tr>
+    <tr><td style="text-align:left">the man <b>that wrote</b> this song</td><td style="text-align:left">the girl <b>that I met</b></td></tr></table></section>` },
+  { id:'24-7', t:'関係代名詞の省略', sub:'目的格は省略できる', plan:['relOmit','relOmit','relOmit','relEJo','relEJo'], body:()=>`
+    <section class="panel"><h3>関係代名詞の省略</h3>${rule('目的格の関係代名詞（which・that）は省略できる<br>名詞 ＋ 主語 ＋ 動詞 …')}
+    ${beEx('This is the book <s>(which)</s> I bought yesterday.','これは私が昨日買った本です。')}<p style="text-align:center">↓</p>
+    ${beEx('This is <u>the book</u> <b>I bought</b> yesterday.','これは［私が昨日買った］本です。')}
+    ${beEx('<u>The girl</u> <b>I met</b> yesterday was kind.','［昨日私が会った］女の子は親切でした。')}
+    <p class="small muted">名詞のすぐあとに〈主語＋動詞〉が続いていたら、関係代名詞が省略されています。</p></section>
+    <section class="panel"><h3>主格は省略できない</h3>
+    ${beEx('I know the man <b>who</b> wrote this song.','×I know the man wrote this song.')}</section>` },
+  { id:'24-8', t:'例文', sub:'主格・目的格', plan:['relEJ','relEJ','relEJ','relCase','relOmit'], body:()=>`
+    <section class="panel"><h3>主格（人）</h3>${REL_S.filter(x=>x[0]==='h'&&x[1]==='s').map(x=>relEx(x)).join('')}</section>
+    <section class="panel"><h3>主格（人以外）</h3>${REL_S.filter(x=>x[0]==='n'&&x[1]==='s').map(x=>relEx(x)).join('')}</section>
+    <section class="panel"><h3>目的格</h3>${REL_S.filter(x=>x[1]==='o').map(x=>relEx(x)).join('')}
+    <p class="small muted">目的格の which・that は省略することもできます。</p></section>` },
 ];
 
 
@@ -13183,6 +13297,7 @@ const UNITS = {
   pf:{ no:'文21', title:'現在完了', subject:'英語', course:'jen', subj:1, lessons:PF_LESSONS },
   pfp:{ no:'文22', title:'現在完了進行形', subject:'英語', course:'jen', subj:1, lessons:PFP_LESSONS },
   ptp:{ no:'文23', title:'分詞', subject:'英語', course:'jen', subj:1, lessons:PTP_LESSONS },
+  rel:{ no:'文24', title:'関係代名詞', subject:'英語', course:'jen', subj:1, lessons:REL_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
