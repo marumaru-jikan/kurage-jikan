@@ -6832,7 +6832,7 @@ const w2SOL = [
 ];
 Object.assign(G, {
   w2Qty(){ const x=pick(w2Q);
-    return { prompt:'次の数量を表す式は？', expr:x[0], math:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'ことばの式をつくってから、文字や数をあてはめよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+    return { prompt:'次の数量を表す式は？', expr:x[0], math:true, rich:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'ことばの式をつくってから、文字や数をあてはめよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
   w2Lin(){ const v=pick(['x','a','y']), A=mk([nz(-7,7),v],[nz(-9,9),'']), B=mk([nz(-7,7),v],[nz(-9,9),'']), s=pick([1,-1]), ans=padd(A,B,s); if(ans.size<2) return G.w2Lin();
     const wr=s<0?(()=>{ const ks=[...B.keys()].sort(pcmp), h=new Map(A); pAddK(h,ks[0],-B.get(ks[0])); pAddK(h,ks[1],B.get(ks[1])); return pfmt(h); })():pfmt(padd(A,B,-1));
     return mq('次の計算をしなさい。', `${par(A)}${s<0?'−':'+'}${par(B)}`, pfmt(ans), [wr, ...perturbs(ans)], s<0?'ひく式の各項の符号を変えて、かっこをはずそう。':'かっこをはずして、文字の項どうし・数の項どうしをまとめよう。', `${par(A)}${s<0?'−':'+'}${par(B)}<br>＝${markLine([A,psc(B,s)])}<br>＝${pfmt(ans)}`); },
@@ -6843,8 +6843,8 @@ Object.assign(G, {
       ['5x−3y', 5*x-3*y, [5*x+3*y, -5*x-3*y, 5*x-y], `5×(${f(x)})−3×(${f(y)})`]][t];
     return mq(`x＝${f(x)}${t===3?`、y＝${f(y)}`:''} のとき、次の式の値は？`, T[0], f(T[1]), T[2].map(f), '負の数を代入するときは、かっこをつけよう。', `${T[3]}＝${f(T[1])}`); },
   w2Mono(){ const k=Math.random()<.5, m=pick(w2MON), ps=shuffle(w2POL), ms=shuffle(w2MON);
-    return k ? { prompt:'単項式はどれ？', expr:'', math:true, choices:shuffle([m,...ps.slice(0,3)]), answer:m, hint:'数や文字の乗法だけでできている式が単項式。1つの文字や数も単項式。', explain:`${m} は単項式。ほかは単項式の和の形なので多項式。`, viz:null }
-      : { prompt:'多項式はどれ？', expr:'', math:true, choices:shuffle([ps[0],...ms.slice(0,3)]), answer:ps[0], hint:'単項式の和の形で表された式が多項式。', explain:`${ps[0]} は単項式の和の形なので多項式。`, viz:null }; },
+    return k ? { prompt:'単項式はどれ？', expr:'', math:true, rich:true, choices:shuffle([m,...ps.slice(0,3)]), answer:m, hint:'数や文字の乗法だけでできている式が単項式。1つの文字や数も単項式。', explain:`${m} は単項式。ほかは単項式の和の形なので多項式。`, viz:null }
+      : { prompt:'多項式はどれ？', expr:'', math:true, rich:true, choices:shuffle([ps[0],...ms.slice(0,3)]), answer:ps[0], hint:'単項式の和の形で表された式が多項式。', explain:`${ps[0]} は単項式の和の形なので多項式。`, viz:null }; },
   w2Term(){ const v=pick(['x','a']), w=v==='x'?'y':'b', T=[[nz(2,6),v+'2'],[nz(-8,8),v],[nz(-9,9),'']]; if(Math.random()<.5) T[0]=[nz(-6,6),v],T[1]=[nz(-6,6),w];
     const e=w2raw(T), ok=T.map(([c,k],i)=>w2T(c,k,true)).join('，'), ab=T.map(([c,k])=>w2T(Math.abs(c),k,true)).join('，'), dr=T.slice(0,2).map(([c,k])=>w2T(c,k,true)).join('，');
     return mq('次の多項式の項は？', e, ok, [ab, dr, T.slice(1).map(([c,k])=>w2T(c,k,true)).join('，')], `${e}＝${T.map(([c,k])=>w2T(c,k,true)).map(t=>t.startsWith('−')?'('+t+')':t).join('+')} と和の形で考えよう。`, `項は ${ok}`, { words:true }); },
@@ -6867,7 +6867,7 @@ Object.assign(G, {
     const show=(P,d)=>{ if(!P.size) return '0'; if(d===1) return pfmt(P); return frH(pfmt(P),d); };
     const ok=show(N,D), wB=psc(B,s*L/n); if(s<0){ const ks=[...B.keys()].sort(pcmp); if(ks[1]) pAddK(wB,ks[1],2*B.get(ks[1])*L/n); }
     const wrong1=show(padd(psc(A,L/m),wB),L), wrong2=show(padd(A,B,s),L), wrong3=show(padd(A,B,s),m+n);
-    return mq('次の計算をしなさい。', `${frH(pfmt(A),m)}${s<0?'−':'+'}${frH(pfmt(B),n)}`, ok, [wrong1,wrong2,wrong3, show(psc(N,-1),D)], `分母を ${L} にそろえて（通分して）、1つの分数にまとめよう。${s<0?'ひく式の分子にはかっこをつけて。':''}`, `${frH(`${L/m===1?'':L/m}${par(A)}${s<0?'−':'+'}${L/n===1?'':L/n}${par(B)}`,L)}<br>＝${frH(pfmt(num),L)}${g>1?`<br>＝${ok}`:''}`); },
+    const t1=Math.random()<.5; return mq2('次の計算をしなさい。', t1?`${frH(1,m)}(${pfmt(A)})${s<0?'−':'+'}${frH(1,n)}(${pfmt(B)})`:`${frH(pfmt(A),m)}${s<0?'−':'+'}${frH(pfmt(B),n)}`, ok, [wrong1,wrong2,wrong3, show(psc(N,-1),D)], `分母を ${L} にそろえて（通分して）、1つの分数にまとめよう。${s<0?'ひく式の分子にはかっこをつけて。':''}`, `${frH(`${L/m===1?'':L/m}${par(A)}${s<0?'−':'+'}${L/n===1?'':L/n}${par(B)}`,L)}<br>＝${frH(pfmt(num),L)}${g>1?`<br>＝${ok}`:''}`); },
   w2Val2(){ const v='x', w='y', A=mk([nz(-6,6),v],[nz(-7,7),w]), B=mk([nz(-6,6),v],[nz(-7,7),w]), s=pick([1,-1]), S=padd(A,B,s); if(S.size<2) return G.w2Val2();
     const a=S.get('x'), b=S.get('y'), xv=pick([-3,-2,-1,2,3]); let yv, ys; const k=[2,3,4,5,6].filter(k=>b%k===0);
     if(k.length && Math.random()<.5){ const kk=pick(k), sg=pick([1,-1]); yv=sg/kk; ys=(sg<0?'−':'')+frH(1,kk); } else { yv=pick([-2,-1,2,3]); ys=yv<0?'−'+(-yv):String(yv); }
@@ -6898,7 +6898,7 @@ Object.assign(G, {
     return mq('次の計算をしなさい。', e, pfmt(ans), [pfmt(mk([-ca,ka])), pfmt(pmul(P,C)), pfmt(mk([ca*2,ka]))], 'わる式を分母にした1つの分数の形にして、符号を先に決めてから約分しよう。', `${frH(`${w2P(A)}×${w2P(B)}`,w2P(C))}＝${pfmt(ans)}`); },
   w2Rep(){ const x=pick(w2REP); return { prompt:x[0], expr:'', math:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'偶数は 2×(整数)、奇数は 2×(整数)+1、2けたの整数は 10×(十の位)+(一の位)。', explain:`→ ${x[1]}`, viz:null }; },
   w2Expl(){ const x=pick(w2EO); return { prompt:`「${x[0]}」の説明で、□ に入る式は？`, expr:x[1], math:true, choices:shuffle([x[2],...x[3]]), answer:x[2], hint:'かっこの中が整数になるように、式を変形しよう。', explain:`${x[1].replace('□',x[2])}<br>${x[2]} は整数だから、${x[0]}`, viz:null }; },
-  w2Solve(){ const x=pick(w2SOL); return { prompt:`次の等式を〔${x[1]}〕について解くと？`, expr:x[0], math:true, words:true, choices:shuffle([x[2],...x[3]]), answer:x[2], hint:`方程式と同じように変形して、${x[1]}＝〜 の形にしよう。`, explain:`${x[0]}<br>→ ${x[2]}`, viz:null }; },
+  w2Solve(){ const x=pick(w2SOL); return { prompt:`次の等式を〔${x[1]}〕について解くと？`, expr:x[0], math:true, rich:true, words:true, choices:shuffle([x[2],...x[3]]), answer:x[2], hint:`方程式と同じように変形して、${x[1]}＝〜 の形にしよう。`, explain:`${x[0]}<br>→ ${x[2]}`, viz:null }; },
 });
 const w2E = s => `<p class="ex mth">${s}</p>`;
 const M2C1_LESSONS = [
@@ -6952,13 +6952,14 @@ const M2C1_LESSONS = [
     <section class="panel"><h3>かっこがある式の計算</h3>${rule('① 分配法則でかっこをはずす<br>② 同類項をまとめる')}
     ${w2E('2(3a+b)+3(a−2b)<br>＝6a+2b+3a−6b<br>＝9a−4b')}${w2E('5(x−3y)−4(2x+y)<br>＝5x−15y−8x−4y<br>＝−3x−19y')}<p class="small muted">かっこをはずすときは、符号に注意します。</p></section>` },
   { id:'1-7', t:'分数をふくむ式の計算', sub:'通分してまとめる', plan:Array(5).fill('w2Frac'), body:()=>`
-    <section class="panel"><h3>方法1　分数の形のまま通分する</h3>${rule('① 通分する → ② 1つの分数にまとめる<br>③ 分子のかっこをはずす → ④ 同類項をまとめる')}
-    ${w2E(frH('2x+y','3')+'−'+frH('x−2y','2')+'<br>＝'+frH('2(2x+y)−3(x−2y)','6')+'<br>＝'+frH('4x+2y−3x+6y','6')+'<br>＝'+frH('x+8y','6'))}</section>
-    <section class="panel"><h3>方法2　分数×多項式の形にする</h3>${w2E(frH('1','3')+'(2x+y)−'+frH('1','2')+'(x−2y)<br>＝'+frH('2','3')+'x+'+frH('1','3')+'y−'+frH('1','2')+'x+y<br>＝'+frH('1','6')+'x+'+frH('4','3')+'y')}
-    <p class="small muted">${frH('2a+3','4')} を ${frH('a+3','2')} のように、分子の一部だけを約分してはいけません。</p></section>` },
+    <section class="panel"><h3>計算のしかた</h3>${rule('① 通分する → ② 1つの分数にまとめる<br>③ 分子のかっこをはずす → ④ 同類項をまとめる')}</section>
+    <section class="panel"><h3>〇 分数×多項式の形</h3>${w2E(frH('1','6')+'(7a−b)−'+frH('1','3')+'(a+4b)<br>＝'+frH('7a−b','6')+'−'+frH('2(a+4b)','6')+'<br>＝'+frH('7a−b−2a−8b','6')+'<br>＝'+frH('5a−9b','6'))}
+    <p class="small muted">${frH('1','3')} を ${frH('2','6')} にして通分します。</p></section>
+    <section class="panel"><h3>〇 分子が多項式の分数の形</h3>${w2E(frH('2x+y','3')+'−'+frH('x−2y','2')+'<br>＝'+frH('2(2x+y)−3(x−2y)','6')+'<br>＝'+frH('4x+2y−3x+6y','6')+'<br>＝'+frH('x+8y','6'))}
+    <p class="small muted">ひく式の分子には、かっこをつけてから計算しよう。${frH('2a+3','4')} を ${frH('a+3','2')} のように、分子の一部だけを約分してはいけません。</p></section>` },
   { id:'1-8', t:'式の値', sub:'簡単にしてから代入', plan:Array(5).fill('w2Val2'), body:()=>`
     <section class="panel"><h3>式の値の計算</h3>${rule('式を計算して簡単にしてから代入する')}
-    ${w2E('x＝2、y＝−'+frH('1','6')+' のとき　(4x−5y)−(8x+7y)<br>＝4x−5y−8x−7y＝−4x−12y<br>＝−4×2−12×(−'+frH('1','6')+')＝−8+2＝−6')}
+    ${w2E('x＝2、y＝−'+frH('1','6')+' のとき<br>(4x−5y)−(8x+7y)<br>＝4x−5y−8x−7y<br>＝−4x−12y<br>＝−4×2−12×(−'+frH('1','6')+')<br>＝−8+2<br>＝−6')}
     <p class="small muted">そのまま代入するとたいへん。先に式を簡単にしよう。</p></section>` },
   { id:'1-9', t:'単項式の乗法', sub:'係数の積×文字の積', plan:Array(5).fill('w2Mul'), body:()=>`
     <section class="panel"><h3>単項式の乗法</h3>${rule('係数の積に、文字の積をかける<br>同じ文字の積は、指数を使って表す')}
