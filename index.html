@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞(1)', ready:'inf1' },{ t:'5文型', ready:'rv4', lab:'💧4' },'動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4', lab:'💧4' },'動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3607,6 +3607,123 @@ Object.assign(G, {
     return { prompt:'日本語の意味は？', expr:infPlain(x[0]), enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'to 〜 の部分の意味に注目しよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
 });
 const infEx = ks => INF_S.filter(x=>ks.includes(x[3])).map(x=>beEx(x[0],x[1])).join('');
+/* ===== 不定詞 15-6〜15-8 ===== */
+const INF2 = {
+  wh:[
+    ['John knows □ to write a song.','ジョンは曲の書き方を知っています。','how'],
+    ['I don’t know □ to do.','私は何をしたらよいかわかりません。','what'],
+    ['Please tell me □ to start.','いつ始めたらよいか教えてください。','when'],
+    ['Do you know □ to buy the ticket?','どこで切符を買えばよいか知っていますか。','where'],
+    ['I can’t decide □ to choose.','私はどれを選んだらよいか決められません。','which'],
+    ['He teaches me □ to play the guitar.','彼は私にギターの弾き方を教えてくれます。','how'],
+    ['She asked me □ to go next.','彼女は私に次にどこへ行けばよいかたずねました。','where'],
+    ['Tell me □ to bring to the party.','パーティーに何を持っていけばよいか教えて。','what'],
+    ['I don’t know □ book to read.','どの本を読んだらよいかわかりません。','which'],
+    ['Do you know □ time to come?','何時に来たらよいか知っていますか。','what'],
+  ],
+  whO:[
+    ['彼は私にギターの弾き方を教えてくれます。','He teaches me how to play the guitar.',['He teaches how me to play the guitar.','He teaches me how play the guitar.','He teaches me to how play the guitar.']],
+    ['私は何をしたらよいかわかりません。','I don’t know what to do.',['I don’t know to do what.','I don’t know what do.','I don’t know what to doing.']],
+    ['どこで切符を買えばよいか教えてください。','Please tell me where to buy a ticket.',['Please tell me to where buy a ticket.','Please tell where me to buy a ticket.','Please tell me where buy a ticket.']],
+    ['どの本を読んだらよいかわかりません。','I don’t know which book to read.',['I don’t know which to read book.','I don’t know to read which book.','I don’t know which book read.']],
+    ['いつ出発したらよいか私に教えてください。','Please tell me when to leave.',['Please tell me to when leave.','Please tell when me to leave.','Please tell me when leave.']],
+  ],
+  it:[
+    ['私たちにとって彼の曲を演奏することは楽しいことです。','It is fun for us to play his song.',['It is fun us for to play his song.','It is fun for us play his song.','It is fun for we to play his song.']],
+    ['本を読むことは大切です。','It is important to read books.',['It is important read books.','It is important for read books.','It is important to reading books.']],
+    ['私にとって英語を話すことは難しい。','It is difficult for me to speak English.',['It is difficult for I to speak English.','It is difficult me for to speak English.','It is difficult for me speak English.']],
+    ['彼にとって泳ぐことは簡単です。','It is easy for him to swim.',['It is easy for he to swim.','It is easy him to swim.','It is easy for him swim.']],
+    ['毎日運動することはよいことです。','It is good to exercise every day.',['It is good exercise every day to.','It is good for exercise every day.','It is good to exercising every day.']],
+  ],
+  vb:[
+    ['He □ us to play this song.','彼は私たちにこの曲を演奏するように言いました。','told',['told','asked','wanted']],
+    ['I □ her to sing this song.','私は彼女にこの歌を歌うように頼みました。','asked',['told','asked','wanted']],
+    ['I □ him to play the guitar.','私は彼にギターを弾いてほしい。','want',['want','tell','ask']],
+    ['My mother □ me to clean my room.','母は私に部屋をそうじするように言いました。','told',['told','asked','wanted']],
+    ['Ken □ me to help him.','ケンは私に手伝ってくれるように頼みました。','asked',['told','asked','wanted']],
+    ['Do you □ me to open the window?','あなたは私に窓を開けてほしいですか。','want',['want','tell','ask']],
+  ],
+  wt:[
+    ['私は切符を買いたい。','I want to buy a ticket.',['I want you to buy a ticket.','I want buy a ticket.','I want to you buy a ticket.']],
+    ['私はあなたに切符を買ってもらいたい。','I want you to buy a ticket.',['I want to buy a ticket.','I want you buy a ticket.','I want to you buy a ticket.']],
+    ['私は医者になりたい。','I want to be a doctor.',['I want him to be a doctor.','I want be a doctor.','I want to a doctor be.']],
+    ['私は彼に医者になってほしい。','I want him to be a doctor.',['I want to be a doctor.','I want he to be a doctor.','I want him be a doctor.']],
+    ['私は彼女に手伝ってもらいたい。','I want her to help me.',['I want to help her.','I want she to help me.','I want her help to me.']],
+  ],
+  te:[
+    ['Her song is □ difficult to play.','彼女の曲は演奏するには難しすぎます。','too'],
+    ['This song is easy □ to play.','この曲は演奏するのに十分簡単です。','enough'],
+    ['I am □ tired to walk.','私は疲れすぎて歩けません。','too'],
+    ['He is old □ to drive a car.','彼は車を運転できる年齢です。','enough'],
+    ['This box is □ heavy to carry.','この箱は重すぎて運べません。','too'],
+    ['She is kind □ to help us.','彼女は私たちを手伝ってくれるほど親切です。','enough'],
+    ['It is □ cold to swim today.','今日は寒すぎて泳げません。','too'],
+    ['The water is warm □ to swim in.','水は泳ぐのに十分あたたかい。','enough'],
+  ],
+  teO:[
+    ['この曲は演奏するのに十分簡単です。','This song is easy enough to play.',['This song is enough easy to play.','This song is easy to enough play.','This song is too easy to play.']],
+    ['この箱は重すぎて運べません。','This box is too heavy to carry.',['This box is heavy too to carry.','This box is too heavy carry.','This box is heavy enough to carry.']],
+    ['彼は車を運転できる年齢です。','He is old enough to drive a car.',['He is enough old to drive a car.','He is old enough drive a car.','He is too old to drive a car.']],
+    ['私は疲れすぎて歩けません。','I am too tired to walk.',['I am tired too to walk.','I am too tired walk.','I am tired enough to walk.']],
+  ],
+};
+const inf2J = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const inf2O = (k, hint, ex) => { const x=pick(INF2[k]); return { prompt:'英語にすると？', expr:x[0], en:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint, explain:`${x[1]}${ex?'<br>'+ex:''}`, viz:null }; };
+const INF2_WHM = { how:'どうやって〜したらよいか・〜のし方', what:'何を〜したらよいか', when:'いつ〜したらよいか', where:'どこで（に・へ）〜したらよいか', which:'どれを〜したらよいか' };
+Object.assign(G, {
+  inf6Wh(){ const x=pick(INF2.wh), cap=/^□/.test(x[0]);
+    return { prompt:'□ に入る疑問詞は？', expr:x[0]+inf2J(x[1]), enExpr:true, en:true, choices:['how','what','when','where','which'], answer:x[2],
+      hint:'how to 〜 し方 ／ what to 〜 何を ／ when to 〜 いつ ／ where to 〜 どこで ／ which to 〜 どれを', explain:`${x[2]} to 〜「${INF2_WHM[x[2]]}」。${/(what|which) [a-z]+ to/.test(x[0].replace('□',x[2]))?'〈疑問詞＋名詞＋to 〜〉の形。':''}`, viz:null }; },
+  inf6O(){ return inf2O('whO','〈疑問詞 ＋ to ＋ 原形〉をひとまとまりにします。人がいるときは〈動詞 ＋ 人 ＋ 疑問詞 ＋ to 〜〉。'); },
+  inf7It(){ return inf2O('it','〈It is … (for 人) to 〜.〉「（人にとって）〜することは…だ」。for の後ろは me・him などの形。','it は to 以下の内容を指す仮の主語なので「それは」と訳しません。'); },
+  inf7Vb(){ const x=pick(INF2.vb);
+    return { prompt:'□ に入るのは？', expr:x[0]+inf2J(x[1]), enExpr:true, en:true, choices:shuffle([...x[3]]), answer:x[2],
+      hint:'tell 人 to 〜 言う ／ ask 人 to 〜 頼む ／ want 人 to 〜 してほしい', explain:`${x[2]} ＋ 人 ＋ to 〜`, viz:null }; },
+  inf7Wt(){ return inf2O('wt','want to 〜 は「（自分が）〜したい」、want 人 to 〜 は「人に〜してほしい」。'); },
+  inf8(){ const x=pick(INF2.te);
+    return { prompt:'□ に入るのは？', expr:x[0]+inf2J(x[1]), enExpr:true, en:true, choices:['too','enough'], answer:x[2],
+      hint:'too … to 〜「〜するには…すぎる（〜できない）」／ … enough to 〜「〜するのに十分…」', explain:x[2]==='too'?'too は形容詞の前に置きます。「〜するには…すぎる」。':'enough は形容詞の後ろに置きます。「〜するのに十分…」。', viz:null }; },
+  inf8O(){ return inf2O('teO','too は形容詞の前、enough は形容詞の後ろ。'); },
+});
+const INF2_LESSONS = [
+  { id:'15-6', t:'疑問詞＋不定詞', sub:'how to 〜 など', plan:['inf6Wh','inf6Wh','inf6Wh','inf6O','inf6O'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John knows <b>how to write</b> a song.','ジョンは曲の書き方を知っています。')}</section>
+    <section class="panel"><h3>〈疑問詞 ＋ to 〜〉</h3>
+    <table class="dtab"><tr><th>形</th><th>意味</th></tr>
+    <tr><td><b>how</b> to 〜</td><td>どうやって〜したらよいか<br>〜のし方</td></tr>
+    <tr><td><b>what</b> to 〜</td><td>何を〜したらよいか</td></tr>
+    <tr><td><b>when</b> to 〜</td><td>いつ〜したらよいか</td></tr>
+    <tr><td><b>where</b> to 〜</td><td>どこで（に・へ）〜したらよいか</td></tr>
+    <tr><td><b>which</b> to 〜</td><td>どれを〜したらよいか</td></tr>
+    <tr><td><b>what ＋ 名詞</b> ＋ to 〜</td><td>どんな…を〜したらよいか</td></tr>
+    <tr><td><b>which ＋ 名詞</b> ＋ to 〜</td><td>どの…を〜したらよいか</td></tr></table></section>
+    <section class="panel"><h3>文の形</h3>
+    <p><b>動詞 ＋〈疑問詞 ＋ to 〜〉</b>（目的語）</p>${beEx('John knows <b>how to write a song</b>.','ジョンは曲の書き方を知っています。')}
+    <p><b>動詞 ＋ 人 ＋〈疑問詞 ＋ to 〜〉</b>（目的語が2つ）</p>${beEx('He teaches <b>me</b> <b>how to write a song</b>.','彼は私に曲の書き方を教えてくれます。')}
+    <div class="kwl"><div><b>know</b><span>知っている</span></div><div><b>tell 人</b><span>人に言う</span></div><div><b>teach 人</b><span>人に教える</span></div><div><b>show 人</b><span>人に教える・見せる</span></div><div><b>ask 人</b><span>人にたずねる</span></div></div></section>` },
+  { id:'15-7', t:'不定詞を使った色々な文', sub:'It is … to 〜／tell 人 to 〜', plan:['inf7It','inf7It','inf7Vb','inf7Vb','inf7Wt'], body:()=>`
+    <section class="panel"><h3>It is …（for 人）to 〜.</h3>${rule('「（人にとって）〜することは…だ」')}
+    ${beEx('<b>It</b> is fun <b>for us</b> <b>to play his song</b>.','私たちにとって彼の曲を演奏することは楽しいことです。')}
+    <p class="small muted">It は to 以下の内容を指す仮の主語なので、「それは」と訳しません。for の後ろの人（us）が to play をする人です。</p>
+    ${beEx('To play his song is fun. ＝ <b>It</b> is fun <b>to play</b> his song.','')}</section>
+    <section class="panel"><h3>動詞 ＋ 人 ＋ to 〜</h3>
+    <table class="dtab"><tr><th>形</th><th>意味・例</th></tr>
+    <tr><td><b>tell</b> 人 to 〜</td><td style="text-align:left">人に〜するように言う<br>He told <b>us</b> to play this song.<br><span class="small muted">彼は私たちにこの曲を演奏するように言いました。</span></td></tr>
+    <tr><td><b>ask</b> 人 to 〜</td><td style="text-align:left">人に〜するように頼む<br>I asked <b>her</b> to sing this song.<br><span class="small muted">私は彼女にこの歌を歌うように頼みました。</span></td></tr>
+    <tr><td><b>want</b> 人 to 〜</td><td style="text-align:left">人に〜してほしい<br>I want <b>him</b> to play the guitar.<br><span class="small muted">私は彼にギターを弾いてほしい。</span></td></tr></table>
+    <p class="small muted">人の部分が to 〜 をする人です。代名詞は me・him などの形にします。</p></section>
+    <section class="panel"><h3>くらべよう</h3>${beEx('I want <b>to buy</b> a ticket.','私は切符を買いたい。（買うのは自分）')}${beEx('I want <b>you to buy</b> a ticket.','私はあなたに切符を買ってもらいたい。（買うのはあなた）')}</section>` },
+  { id:'15-8', t:'too … to ／ enough to 〜', sub:'〜するには…すぎる・〜するのに十分…', plan:['inf8','inf8','inf8','inf8O','inf8O'], body:()=>`
+    <section class="panel"><h3>too … to 〜</h3>${rule('too ＋ 形容詞 ＋ to 〜 →「〜するには…すぎる」「…すぎて〜できない」')}
+    ${beEx('Her song is <b>too</b> difficult <b>to play</b>.','彼女の曲は演奏するには難しすぎます。')}</section>
+    <section class="panel"><h3>… enough to 〜</h3>${rule('形容詞 ＋ enough ＋ to 〜 →「〜するのに十分…」')}
+    ${beEx('This song is easy <b>enough</b> <b>to play</b>.','この曲は演奏するのに十分簡単です。')}</section>
+    <section class="panel"><h3>語順に注意</h3>
+    <p><b>too</b> は形容詞の<b>前</b>：too difficult</p><p><b>enough</b> は形容詞の<b>後ろ</b>：easy enough</p>
+    <p class="small"><b style="color:var(--bad)">×</b> enough easy　<b style="color:var(--good)">〇</b> easy enough</p></section>` },
+];
+
+
 const INF1_LESSONS = [
   { id:'15-1', t:'不定詞とは', sub:'〈to ＋ 動詞の原形〉', plan:['infForm','infForm','infForm','infUse','infUse'], body:()=>`
     <section class="panel"><h3>基本文</h3>${beEx('John wants <b>to write</b> a nice song.','ジョンはすてきな曲を書きたがっています。')}${beEx('John stays up late <b>to write</b> a song.','ジョンは曲を書くために遅くまで起きています。')}${beEx('He has no time <b>to write</b> a song.','彼には曲を書く時間がありません。')}</section>
@@ -12186,7 +12303,7 @@ const UNITS = {
   prep:{ no:'文13', title:'前置詞', subject:'英語', course:'jen', subj:1, lessons:PREP_LESSONS },
   there:{ no:'文14', title:'There is ～. ／ There are ～.', subject:'英語', course:'jen', subj:1, lessons:TH_LESSONS },
   rv3:{ no:'💧3', title:'接続詞・前置詞', subject:'英語', course:'jen', subj:1, lessons:RV3_LESSONS },
-  inf1:{ no:'文15', title:'不定詞(1)', subject:'英語', course:'jen', subj:1, lessons:INF1_LESSONS },
+  inf1:{ no:'文15', title:'不定詞', subject:'英語', course:'jen', subj:1, lessons:[...INF1_LESSONS, ...INF2_LESSONS] },
   rv4:{ no:'💧4', title:'5文型', subject:'英語', course:'jen', subj:1, lessons:RV4_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
