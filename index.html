@@ -7449,11 +7449,13 @@ function w5Cross(dirs, S){ const O=[135,100], R=92; let g='';
   all.forEach((a,i)=>{ const b=all[(i+1)%all.length]+(i===all.length-1?360:0), lab=S[i]; if(lab==null||lab==='') return; const P=[O[0]+Math.cos(w5d(a))*40,O[1]-Math.sin(w5d(a))*40], Q=[O[0]+Math.cos(w5d(b))*40,O[1]-Math.sin(w5d(b))*40]; g+=w5arc(O,P,Q,String(lab),{ r:14, lr:30 }); });
   return w5svg(270,200,g,'1点で交わる直線'); }
 /* ℓ∥m と折れ線 */
-function w5BendF(a,b,la,lb,lx,left=false){ const yl=30, ym=172, P=[left?80:196,100], tA=Math.tan(w5d(a)), tB=Math.tan(w5d(b)), s=left?-1:1;
+function w5BendF(a,b,la,lb,lx,left=false,aux=false){ const yl=30, ym=172, P=[left?80:196,100], tA=Math.tan(w5d(a)), tB=Math.tan(w5d(b)), s=left?-1:1;
   const A=[P[0]-s*(P[1]-yl)/tA, yl], B=[P[0]-s*(ym-P[1])/tB, ym];
   let g=w5L([10,yl],[262,yl])+w5L([10,ym],[262,ym])+w5L(A,P)+w5L(P,B)+w5chev([left?220:40,yl])+w5chev([left?220:40,ym]);
   g+=w5T(266,yl+5,'ℓ','gv','start')+w5T(266,ym+5,'m','gv','start');
-  g+=w5arc(A,[A[0]+s*40,yl],P,la,{r:16,lr:30})+w5arc(B,[B[0]+s*40,ym],P,lb,{r:16,lr:30})+w5arc(P,A,B,lx,{r:14,lr:28});
+  g+=w5arc(A,[A[0]+s*40,yl],P,la,{r:16,lr:30})+w5arc(B,[B[0]+s*40,ym],P,lb,{r:16,lr:30});
+  if(aux){ const Lp=[P[0]-s*60,P[1]]; g+=w5L([10,P[1]],[262,P[1]],'stroke:#e07b39;stroke-dasharray:5 4;stroke-width:1.6')+w5T(266,P[1]+5,'n','gv','start')+w5arc(P,A,Lp,la,{r:22,lr:38})+w5arc(P,Lp,B,lb,{r:22,lr:38}); }
+  else g+=w5arc(P,A,B,lx,{r:14,lr:28});
   return w5svg(280,200,g,'平行な2直線と折れ線'); }
 /* 三角形（∠B＝b、∠C＝c）。o.la/lb/lc：ラベル、o.ext：C の外角のラベル */
 function w5TriF(b,c,o={}){ const a=180-b-c, AB=Math.sin(w5d(c))/Math.sin(w5d(a)), A0=[AB*Math.cos(w5d(b)),-AB*Math.sin(w5d(b))], pts=[[0,0],[1,0],A0]; if(o.ext!=null) pts.push([1.35,0]);
@@ -7464,8 +7466,10 @@ function w5TriF(b,c,o={}){ const a=180-b-c, AB=Math.sin(w5d(c))/Math.sin(w5d(a))
   if(o.la!=null) g+=w5arc(A,B,C,o.la,{r:15,lr:30}); if(o.lb!=null) g+=w5arc(B,C,A,o.lb,{r:15,lr:32}); if(o.lc!=null) g+=w5arc(C,A,B,o.lc,{r:15,lr:30}); if(o.ext!=null&&o.ext!=='') g+=w5arc(C,E,A,o.ext,{r:13,lr:28});
   return w5svg(270,196,g,'三角形'); }
 /* 凹四角形（ブーメラン） */
-function w5Boom(a,b,c,x){ const A=[135,18], B=[24,180], C=[246,180], P=[150,118];
-  const g=w5L(A,B)+w5L(A,C)+w5L(B,P)+w5L(P,C)+w5arc(A,B,C,a,{r:16,lr:30})+w5arc(B,C,A,b,{r:18,lr:34})+w5arc(C,A,B,c,{r:18,lr:34})+w5arc(P,B,C,x,{r:12,lr:24});
+function w5Boom(a,b,c,x,aux){ const A=[135,18], B=[24,180], C=[246,180], P=[150,118];
+  let g=w5L(A,B)+w5L(A,C)+w5L(B,P)+w5L(P,C)+w5arc(A,B,C,a,{r:16,lr:30})+w5arc(B,C,A,b,{r:18,lr:34})+w5arc(C,A,B,c,{r:18,lr:34})+w5arc(P,B,C,x,{r:12,lr:24});
+  if(aux){ const d=[P[0]-B[0],P[1]-B[1]], e=[C[0]-A[0],C[1]-A[1]], den=d[0]*e[1]-d[1]*e[0], t=((A[0]-B[0])*e[1]-(A[1]-B[1])*e[0])/den, Q=[B[0]+d[0]*t,B[1]+d[1]*t];
+    g+=w5L(P,Q,'stroke:#e07b39;stroke-dasharray:5 4;stroke-width:1.6')+w5T(Q[0]+6,Q[1]-4,'Q','gv','start')+w5arc(Q,C,P,aux,{r:14,lr:28}); }
   return w5svg(270,196,g,'へこんだ四角形'); }
 /* 合同条件の図（kind 0：3辺、1：2辺とその間の角、2：1辺とその両端の角） */
 function w5CondF(kind){ const tri=(o,s)=>[[o[0]+s*.34,o[1]-s*.62],[o[0],o[1]],[o[0]+s,o[1]]];
@@ -7602,8 +7606,10 @@ const M2C4_LESSONS = [
     ${w5Trans(70,{b:'70',f:'70'},{})}${w5E('同位角が 70° で等しいので　ℓ∥m')}<p class="small muted">「平行線の性質」と、仮定と結論が入れかわっていることに注意しよう。</p></section>` },
   { id:'1-5', t:'平行線と角の問題', sub:'補助線をひく', plan:Array(5).fill('w5Bend'), body:()=>`
     <section class="panel"><h3>折れ線と角</h3>${rule('折れ曲がった点を通り、ℓ に平行な直線をひくと、<br>錯角を使って求められる')}
-    ${w5BendF(40,35,'40','35','x')}${w5E('∠x＝40°＋35°＝75°')}</section>
-    <section class="panel"><h3>へこんだ四角形</h3>${w5Boom('50','25','30','x')}${w5E('三角形の外角の性質を2回使うと<br>∠x＝50°＋25°＋30°＝105°')}</section>` },
+    ${w5BendF(40,35,'40','35','x')}
+    <h4>補助線をひくと</h4>${w5BendF(40,35,'40','35','x',false,true)}${w5E('折れ曲がった点を通り、ℓ に平行な直線 n をひく<br>錯角は等しいので<br>∠x は 40° と 35° に分かれる<br>∠x＝40°＋35°＝75°')}</section>
+    <section class="panel"><h3>へこんだ四角形</h3>${w5Boom('50','25','30','x')}
+    <h4>補助線をひくと</h4>${w5Boom('50','25','30','x','75')}${w5E('BP を延長して、AC との交点を Q とする<br>△ABQ の外角より<br>∠PQC＝50°＋25°＝75°<br>△PQC の外角より<br>∠x＝75°＋30°＝105°')}</section>` },
   { id:'1-6', t:'三角形の内角・外角', sub:'外角の性質', plan:['w5TriIn','w5TriEx','w5TriEx','w5TriIn','w5TriEx'], body:()=>`
     <section class="panel"><h3>三角形の内角・外角の性質</h3>${rule('① 三角形の3つの内角の和は 180°<br>② 三角形の1つの外角は、そのとなりにない2つの内角の和に等しい')}
     ${w5TriF(50,60,{la:'70',lb:'50',ext:'x'})}${w5E('∠x＝70°＋50°＝120°')}<p class="small muted">内角の和を使うより、外角の性質を使うほうが計算が簡単なことが多いです。</p></section>` },
