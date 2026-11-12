@@ -689,6 +689,11 @@ const PDF = {
   'm2c6-lv3': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[7,8], ar:[9,10] },
   'm2c6-lv4': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[11,12], ar:[13,14] },
   'm2c6-lv5': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[15,15], ar:[16,16] },
+  'm2c7-lv1': { q:'pdf/m2c7.pdf', a:'pdf/m2c7.pdf', qr:[1,1], ar:[2,2] },
+  'm2c7-lv2': { q:'pdf/m2c7.pdf', a:'pdf/m2c7.pdf', qr:[3,4], ar:[5,6] },
+  'm2c7-lv3': { q:'pdf/m2c7.pdf', a:'pdf/m2c7.pdf', qr:[7,8], ar:[9,9] },
+  'm2c7-lv4': { q:'pdf/m2c7.pdf', a:'pdf/m2c7.pdf', qr:[10,10], ar:[11,11] },
+  'm2c7-lv5': { q:'pdf/m2c7.pdf', a:'pdf/m2c7.pdf', qr:[12,12], ar:[13,13] },
   'm3c1-lv1': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[1,1], ar:[2,2] },
   'm3c1-lv2': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[3,4], ar:[5,6] },
   'm3c1-lv3': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[7,9], ar:[10,12] },
@@ -1136,7 +1141,7 @@ const CATALOG = [
       { name:'数学', k:'数', units:U({ t:'正負の数', ready:'pn' },'文字の式','方程式','比例と反比例','平面図形','空間図形','データの活用') },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
-      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },{ t:'一次関数', ready:'m2c3' },{ t:'図形の調べ方', ready:'m2c4' },{ t:'図形の性質と証明', ready:'m2c5' },{ t:'場合の数と確率', ready:'m2c6' },'箱ひげ図とデータの活用') },
+      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },{ t:'一次関数', ready:'m2c3' },{ t:'図形の調べ方', ready:'m2c4' },{ t:'図形の性質と証明', ready:'m2c5' },{ t:'場合の数と確率', ready:'m2c6' },{ t:'箱ひげ図とデータの活用', ready:'m2c7' }) },
       { name:'理科', k:'理', units:U('化学変化と原子・分子','生物のからだのつくりとはたらき','天気とその変化','電流とその利用') } ] },
     { id:'j3', name:'中3', k:'3', grade:3, subjects:[
       { name:'数学', k:'数', units:U({ t:'式の展開と因数分解', ready:'m3c1' },{ t:'平方根', ready:'m3c2' },{ t:'二次方程式', ready:'m3c3' },{ t:'関数 y＝ax²', ready:'m3c4' },{ t:'図形と相似', ready:'m3c5' },{ t:'円の性質', ready:'m3c6' },{ t:'三平方の定理', ready:'m3c7' },{ t:'標本調査', ready:'m3c8' }) },
@@ -7880,6 +7885,84 @@ const M2C6_LESSONS = [
     ${w7E('2つのさいころで同じ目が出る確率は '+frH(6,36)+'＝'+frH(1,6)+'<br>同じ目が出ない確率は 1−'+frH(1,6)+'＝'+frH(5,6))}<p class="small muted">「少なくとも1つは〜」は、反対の「1つも〜ない」を考えると簡単に求められます。</p></section>` },
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'6章の総まとめ', test:true, plan:['w7Comb0','w7Perm0','w7Ball','w7Die1','w7Count','w7Coin','w7Dice2','w7Dice2','w7Card','w7Lot','w7Not','w7Coin'], body:()=>`
     <section class="panel"><h3>6章　場合の数と確率　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
+];
+
+/* ===== 中2数学 7章 箱ひげ図とデータの活用 ===== */
+const w8E = s => `<p class="ex mth">${s}</p>`;
+const w8med = a => { const n=a.length; return n%2 ? a[(n-1)/2] : (a[n/2-1]+a[n/2])/2; };
+const w8Q = a0 => { const a=[...a0].sort((x,y)=>x-y), n=a.length; return [a[0], w8med(a.slice(0,Math.floor(n/2))), w8med(a), w8med(a.slice(Math.ceil(n/2))), a[n-1]]; };
+const w8f = v => String(v);
+const w8data = (n,lo,hi) => Array.from({length:n},()=>ri(lo,hi));
+const w8list = a => a.join('、');
+/* 箱ひげ図（rows：[{l, v:[最小,Q1,Q2,Q3,最大]}]） */
+function w8BoxF(rows, lo, hi, step, o={}){ const W=o.w||290, L=rows.some(r=>r.l)?34:12, R=o.unit?34:14, rh=34, H=rows.length*rh+30, px=x=>L+(x-lo)*(W-L-R)/(hi-lo);
+  let g=''; for(let x=lo;x<=hi;x+=step/(o.sub||2)) g+=`<line x1="${px(x)}" y1="6" x2="${px(x)}" y2="${H-24}" style="stroke:var(--line);stroke-width:${(x-lo)%step===0?1:.5}"/>`;
+  for(let x=lo;x<=hi;x+=step) g+=w5T(px(x),H-8,x,'gn');
+  g+=`<rect x="${L}" y="6" width="${W-L-R}" height="${H-30}" style="fill:none;stroke:var(--teal);stroke-width:1"/>`;
+  rows.forEach((r,i)=>{ const y=10+i*rh+rh/2, [a,b,c,d,e]=r.v, h=rh*.5;
+    g+=`<line x1="${px(a)}" y1="${y}" x2="${px(b)}" y2="${y}" class="gl"/><line x1="${px(d)}" y1="${y}" x2="${px(e)}" y2="${y}" class="gl"/><line x1="${px(a)}" y1="${y-h/3}" x2="${px(a)}" y2="${y+h/3}" class="gl"/><line x1="${px(e)}" y1="${y-h/3}" x2="${px(e)}" y2="${y+h/3}" class="gl"/>`;
+    g+=`<rect x="${px(b)}" y="${y-h/2}" width="${px(d)-px(b)}" height="${h}" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/><line x1="${px(c)}" y1="${y-h/2}" x2="${px(c)}" y2="${y+h/2}" class="gl"/>`;
+    if(r.l) g+=w5T(L-6,y+5,r.l,'gs','end'); });
+  if(o.unit) g+=w5T(W-2,H-8,o.unit,'gs','end');
+  return `<svg class="gfig" viewBox="0 0 ${W} ${H}" style="max-width:${o.max||320}px" role="img" aria-label="箱ひげ図">${g}</svg>`; }
+const w8span = (v) => { const lo=Math.floor(Math.min(...v)/5)*5, hi=Math.ceil(Math.max(...v)/5)*5; return [lo, hi===lo?lo+5:hi]; };
+const w8ctx = () => pick([['生徒','の通学時間','分',5,25],['いちご','の重さ','g',25,50],['日','に売れた弁当の数','個',75,100],['人','の小テストの得点','点',0,20],['人','の1日の読書時間','分',10,60]]);
+Object.assign(G, {
+  /* --- 0 復習 --- */
+  w8Basic(){ const n=ri(7,12), a=w8data(n,10,60), s=[...a].sort((x,y)=>x-y), t=ri(0,3), md=w8med(s);
+    const T=[['最小値',s[0]],['最大値',s[n-1]],['範囲',s[n-1]-s[0]],['中央値',md]][t];
+    return w4m(`次のデータの${T[0]}は？<br>${w8list(a)}`, '', w8f(T[1]), [w8f(s[0]),w8f(s[n-1]),w8f(s[n-1]-s[0]),w8f(md),w8f(s[Math.floor(n/2)]),w8f(Math.round(a.reduce((p,q)=>p+q,0)/n))].filter(z=>z!==w8f(T[1])), '小さい順に並べてから考えよう。範囲＝最大値−最小値。データの個数が偶数のとき、中央値は中央の2つの値の平均。', `小さい順：${w8list(s)}<br>${T[0]}は ${w8f(T[1])}`, { words:true }); },
+  w8Graph(){ const S=[['全体に対する部分の割合','円グラフ（帯グラフ）'],['変化の様子','折れ線グラフ'],['データの散らばりの様子','ヒストグラム（柱状グラフ）'],['数量の大小の比較','棒グラフ']], [q,a]=pick(S);
+    return w4m(`「${q}」を表すのに適しているグラフは？`, '', a, S.map(z=>z[1]).filter(z=>z!==a), 'それぞれのグラフの目的を考えよう。', `${q} → ${a}`, { words:true }); },
+  /* --- 1 箱ひげ図 --- */
+  w8Quart(){ const n=ri(8,15), a=w8data(n,ri(3,10),ri(25,40)), s=[...a].sort((x,y)=>x-y), Q=w8Q(s), k=ri(1,3), nm=['','第1四分位数','第2四分位数（中央値）','第3四分位数'][k];
+    const half=Math.floor(n/2), lo=s.slice(0,half), hi=s.slice(Math.ceil(n/2));
+    return w4m(`次のデータの${nm}は？（小さい順に並べてあります）<br>${w8list(s)}`, '', w8f(Q[k]), [w8f(Q[1]),w8f(Q[2]),w8f(Q[3]),w8f(lo[Math.floor(lo.length/2)]),w8f(s[Math.floor(n/4)]),w8f(hi[Math.floor((hi.length-1)/2)])].filter(z=>z!==w8f(Q[k])), `データは ${n} 個。${n%2?'中央値を除いて':'中央で'}前半 ${half} 個と後半 ${half} 個に分け、それぞれの中央値を求めよう。`, `前半：${w8list(lo)} → 第1四分位数 ${w8f(Q[1])}<br>中央値 ${w8f(Q[2])}<br>後半：${w8list(hi)} → 第3四分位数 ${w8f(Q[3])}`, { words:true }); },
+  w8IQR(){ const n=ri(9,14), a=w8data(n,ri(10,20),ri(40,60)), s=[...a].sort((x,y)=>x-y), Q=w8Q(s), t=Math.random()<.65, ans=t?Q[3]-Q[1]:Q[4]-Q[0];
+    return w4m(`次のデータの${t?'四分位範囲':'範囲'}は？<br>${w8list(a)}`, '', w8f(ans), [w8f(Q[4]-Q[0]),w8f(Q[3]-Q[1]),w8f(Q[3]-Q[2]),w8f(Q[2]-Q[1]),w8f(Q[3])].filter(z=>z!==w8f(ans)), t?'四分位範囲＝第3四分位数−第1四分位数':'範囲＝最大値−最小値', `小さい順：${w8list(s)}<br>Q1＝${w8f(Q[1])}、Q3＝${w8f(Q[3])}、最小値 ${Q[0]}、最大値 ${Q[4]}<br>${t?`${w8f(Q[3])}−${w8f(Q[1])}`:`${Q[4]}−${Q[0]}`}＝${w8f(ans)}`, { words:true }); },
+  w8Make(){ let a,Q; do{ const n=ri(9,13); a=w8data(n,ri(2,6),ri(18,24)); Q=w8Q(a); }while(new Set(Q).size<5);
+    const [lo,hi]=w8span(Q), mk=v=>w8BoxF([{v}],lo,hi,5,{w:220,max:200}), ans=mk(Q), alt=[[Q[0],Q[2],Q[1],Q[3],Q[4]].sort((x,y)=>x-y), [Q[0],Math.max(Q[0],Q[1]-1),Q[2],Math.min(Q[4],Q[3]+1),Q[4]], [Q[0]+1,Q[1],Q[2]+1,Q[3],Q[4]-1], [Q[0],Q[1],(Q[1]+Q[3])/2===Q[2]?Q[2]+1:(Q[1]+Q[3])/2,Q[3],Q[4]]].map(mk).filter(z=>z!==ans);
+    return Object.assign(mq2(`次のデータを箱ひげ図に表したものはどれ？<br>${w8list([...a].sort((x,y)=>x-y))}`, '', ans, alt, '最小値、第1四分位数、中央値、第3四分位数、最大値の5つの値を求めてから、箱ひげ図と比べよう。', `最小値 ${Q[0]}、Q1 ${w8f(Q[1])}、中央値 ${w8f(Q[2])}、Q3 ${w8f(Q[3])}、最大値 ${Q[4]}`), { words:false }); },
+  w8Read(){ const c=w8ctx(); let v; do{ const lo=c[3], hi=c[4], u=(hi-lo)<=25?1:2; v=[0,1,2,3,4].map(()=>lo+u*ri(1,(hi-lo)/u-1)).sort((x,y)=>x-y); }while(new Set(v).size<5);
+    const k=ri(0,6), N=['最小値','第1四分位数','中央値','第3四分位数','最大値','四分位範囲','範囲'], ans=k<5?v[k]:k===5?v[3]-v[1]:v[4]-v[0];
+    return w4m(`下の箱ひげ図は、ある${c[0]}たち${c[1]}を表したものです。${N[k]}は？`, w8BoxF([{v}],c[3],c[4],(c[4]-c[3])<=25?5:10,{sub:5,unit:`(${c[2]})`}), w8f(ans)+' '+c[2], [...v.map(x=>w8f(x)+' '+c[2]), w8f(v[3]-v[1])+' '+c[2], w8f(v[4]-v[0])+' '+c[2]].filter(z=>z!==w8f(ans)+' '+c[2]), '箱の左端が第1四分位数、箱の中の線が中央値、箱の右端が第3四分位数。四分位範囲は箱の横の長さ、範囲はひげをふくめた全体の長さ。', `${N[k]}：${w8f(ans)} ${c[2]}`, { figq:true }); },
+  w8Judge(){ let A,B; do{ A=[0,1,2,3,4].map(()=>ri(1,19)).sort((x,y)=>x-y); B=[0,1,2,3,4].map(()=>ri(1,19)).sort((x,y)=>x-y); }while(new Set(A).size<5||new Set(B).size<5||A[4]-A[0]===B[4]-B[0]||A[3]-A[1]===B[3]-B[1]);
+    const fig=w8BoxF([{l:'A組',v:A},{l:'B組',v:B}],0,20,5,{sub:5,unit:'(点)'});
+    const S=[[`A組の平均値は ${A[2]} 点である。`,'このデータからはわからない'],[`A組では、${A[2]} 点以上の人が半分以上いる。`,'正しい'],[`範囲は、A組の方が B組より大きい。`,A[4]-A[0]>B[4]-B[0]?'正しい':'正しくない'],[`四分位範囲は、A組の方が B組より大きい。`,A[3]-A[1]>B[3]-B[1]?'正しい':'正しくない'],[`B組では、${B[1]} 点以下の人が少なくとも 9 人いる。`,'正しい'],[`B組の最高点は ${B[4]+1} 点である。`,'正しくない'],[`A組には ${A[0]+1} 点の人がいる。`,'このデータからはわからない']];
+    const [s,a]=pick(S);
+    return w4m(`下の箱ひげ図は、A組 35 人と B組 35 人が受けた 20 点満点のテストの得点を表したものです。「${s}」は、正しい・正しくない・このデータからはわからない のどれ？`, fig, a, ['正しい','正しくない','このデータからはわからない'].filter(z=>z!==a), '35 人のとき、中央値は 18 番目、第1四分位数は 9 番目、第3四分位数は 27 番目の値です。平均値や、ひとりひとりの値は箱ひげ図からはわかりません。', `A組：最小 ${A[0]}、Q1 ${A[1]}、中央値 ${A[2]}、Q3 ${A[3]}、最大 ${A[4]}<br>B組：最小 ${B[0]}、Q1 ${B[1]}、中央値 ${B[2]}、Q3 ${B[3]}、最大 ${B[4]}<br>→ ${a}`, { figq:true, words:true }); },
+  w8Concept(){ const S=[['箱ひげ図で、箱の横の長さが表すものは？','四分位範囲',['範囲','中央値','平均値']],['箱ひげ図で、ひげをふくめた全体の長さが表すものは？','範囲',['四分位範囲','最大値','中央値']],['第2四分位数と同じ値は？','中央値',['平均値','最頻値','範囲']],['四分位範囲には、データの中央付近のほぼ何％の値がふくまれる？','50％',['25％','75％','100％']],['データの中に極端に離れた値があるとき、影響を受けにくいのは？','四分位範囲',['範囲','最大値','平均値']],['最小値、四分位数、最大値を1つの図にまとめたものを何という？','箱ひげ図',['ヒストグラム','度数折れ線','ドットプロット']]];
+    const [q,a,w]=pick(S); return w4m(q,'',a,w,'箱ひげ図のしくみを思い出そう。',`${a}`); },
+});
+
+const M2C7_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'代表値と範囲', sub:'中学1年の復習', plan:Array(5).fill('w8Basic'), body:()=>`
+    <section class="panel"><h3>最小値・最大値・範囲</h3>${rule('もっとも小さい値 → 最小値　もっとも大きい値 → 最大値<br>範囲＝最大値−最小値')}</section>
+    <section class="panel"><h3>中央値</h3>${rule('データを大きさの順に並べたときの中央の値<br>個数が偶数のときは、中央に並ぶ2つの値の平均')}
+    ${w8E('20, 30, 30, 30, 30, 40, 45, 60, 60, 90<br>中央値は '+frH('30+40',2)+'＝35（分）')}</section>` },
+  { id:'0-2', t:'グラフの使い分け', sub:'小学6年の復習', plan:Array(5).fill('w8Graph'), body:()=>`
+    <section class="panel"><h3>目的に合ったグラフ</h3>${rule('全体に対する部分の割合 → 円グラフ・帯グラフ<br>変化の様子 → 折れ線グラフ<br>データの散らばりの様子 → ヒストグラム')}</section>` },
+  { id:'1-1', sec:'1　箱ひげ図', t:'四分位数', sub:'データを4等分する', plan:Array(5).fill('w8Quart'), body:()=>`
+    <section class="panel"><h3>四分位数</h3>${rule('小さい順に並べ、中央値を境に前半部分と後半部分に分ける<br>前半部分の中央値 → <b>第1四分位数</b><br>全体の中央値 → <b>第2四分位数</b><br>後半部分の中央値 → <b>第3四分位数</b>')}
+    ${w8E('11 個：1, 2, <b>3</b>, 3, 4, <b>6</b>, 7, 7, <b>8</b>, 9, 9<br>→ 第1四分位数 3、第2四分位数 6、第3四分位数 8')}
+    ${w8E('10 個：1, 2, <b>4</b>, 5, 6 ｜ 6, 7, <b>7</b>, 8, 9<br>→ 第1四分位数 4、第2四分位数 6、第3四分位数 7')}
+    <p class="small muted">データの個数が奇数のときは、中央値を除いて前半と後半に分けます。</p></section>` },
+  { id:'1-2', t:'四分位範囲', sub:'Q3−Q1', plan:Array(5).fill('w8IQR'), body:()=>`
+    <section class="panel"><h3>四分位範囲</h3>${rule('四分位範囲＝第3四分位数−第1四分位数')}
+    <p class="small muted">四分位範囲は、データの中央付近のほぼ 50％がふくまれる区間の大きさです。極端に離れた値があるとき、範囲は大きく影響を受けますが、四分位範囲はほとんど影響を受けません。</p></section>` },
+  { id:'1-3', t:'箱ひげ図のかき方', sub:'5つの値をまとめる', plan:Array(5).fill('w8Make'), body:()=>`
+    <section class="panel"><h3>箱ひげ図</h3>${rule('① 第1四分位数を左端、第3四分位数を右端とする長方形（箱）をかく<br>② 箱の中に中央値を示す縦線をかく<br>③ 最小値・最大値を示す縦線をかき、箱の両端からそれぞれ線分（ひげ）をかく')}
+    ${w8BoxF([{v:[1,3,6,8,9]}],0,10,2,{unit:'(点)'})}${w8E('1, 2, 3, 3, 4, 6, 7, 7, 8, 9, 9 の箱ひげ図')}
+    <p class="small muted">ひげをふくめた全体の長さが範囲、箱の横の長さが四分位範囲を表します。</p></section>` },
+  { id:'1-4', t:'箱ひげ図の読みとり', sub:'5つの値を読む', plan:Array(5).fill('w8Read'), body:()=>`
+    <section class="panel"><h3>箱ひげ図から読みとる</h3>${w8BoxF([{v:[50,53,55,58,61]}],45,65,5,{sub:5,unit:'(kg)'})}
+    ${w8E('最小値 50 kg、第1四分位数 53 kg、中央値 55 kg<br>第3四分位数 58 kg、最大値 61 kg<br>四分位範囲 58−53＝5（kg）')}</section>` },
+  { id:'1-5', t:'データの比較と活用', sub:'正しい・わからない', plan:['w8Judge','w8Judge','w8Concept','w8Judge','w8Concept'], body:()=>`
+    <section class="panel"><h3>箱ひげ図でデータを比べる</h3>${w8BoxF([{l:'A組',v:[6,11,13,15,19]},{l:'B組',v:[3,8,11,14,17]}],0,20,5,{sub:5,unit:'(点)'})}
+    ${rule('35 人のデータでは<br>中央値 → 18 番目　第1四分位数 → 9 番目　第3四分位数 → 27 番目')}
+    <p class="small muted">箱ひげ図からは、平均値やひとりひとりの値はわかりません。「〜点以上の人が半分以上いる」のように、四分位数の位置から言えることを考えよう。</p></section>` },
+  { id:'2-1', sec:'章末テスト', t:'章末テスト', sub:'7章の総まとめ', test:true, plan:['w8Basic','w8Graph','w8Quart','w8Quart','w8IQR','w8IQR','w8Make','w8Read','w8Read','w8Judge','w8Judge','w8Concept'], body:()=>`
+    <section class="panel"><h3>7章　箱ひげ図とデータの活用　章末テスト</h3><p>1節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
 ];
 
 /* ===== 中3数学 2章 平方根 ===== */
@@ -14784,6 +14867,7 @@ const UNITS = {
   m2c4:{ no:'4', title:'図形の調べ方', subject:'数学', course:'j2', subj:0, lessons:M2C4_LESSONS, drill:'m2c4' },
   m2c5:{ no:'5', title:'図形の性質と証明', subject:'数学', course:'j2', subj:0, lessons:M2C5_LESSONS, drill:'m2c5' },
   m2c6:{ no:'6', title:'場合の数と確率', subject:'数学', course:'j2', subj:0, lessons:M2C6_LESSONS, drill:'m2c6' },
+  m2c7:{ no:'7', title:'箱ひげ図とデータの活用', subject:'数学', course:'j2', subj:0, lessons:M2C7_LESSONS, drill:'m2c7' },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
