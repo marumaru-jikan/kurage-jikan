@@ -7407,7 +7407,10 @@ const M2C3_LESSONS = [
     ${w4Plot({ xm:14, ym:14, xs:2, ys:2, xl:'x（秒）', yl:'y（cm²）', lines:[{p:[[0,0],[4,12],[10,12],[14,0]]}], dash:[[4,12],[10,12]] })}</section>` },
   { id:'3-3', t:'料金・水温などの問題', sub:'一次関数とみなす', plan:Array(5).fill('w4Plan'), body:()=>`
     <section class="panel"><h3>料金プランの比較</h3>${rule('それぞれの料金を一次関数の式で表し、<br>グラフの交点（連立方程式の解）を境に、どちらが安いかを考える')}
-    ${w4E('A：y＝30x+1000、B：y＝15x+2500<br>30x+1000＝15x+2500　x＝100<br>100 分をこえると B のほうが安い')}</section>
+    <table class="dtab"><tr><th></th><th>基本料金</th><th>通話料（1分）</th></tr><tr><th>A プラン</th><td>1000 円</td><td>30 円</td></tr><tr><th>B プラン</th><td>2500 円</td><td>15 円</td></tr></table>
+    ${w4E('x 分通話したときの料金を y 円<br>A：y＝30x+1000<br>B：y＝15x+2500<br>30x+1000＝15x+2500　x＝100<br>100 分をこえると B のほうが安い')}
+    ${w4Plot({ xm:160, ym:6000, xs:20, ys:1000, xl:'x（分）', yl:'y（円）', lines:[{p:[[0,1000],[160,5800]],label:'A',lp:[140,5200],anc:'end'},{p:[[0,2500],[160,4900]],c:'2',label:'B',lp:[150,4750]}], dash:[[100,4000]] })}
+    <p class="small muted">交点（100, 4000）より左では A のグラフが下（A が安い）、右では B のグラフが下（B が安い）。</p></section>
     <section class="panel"><h3>一次関数とみなす</h3><p>水温の変化や、ろうそくの長さなどは、測定値が直線上にほぼ並ぶとき、一次関数とみなして式をつくり、予想することができます。</p>
     ${w4E('2分後 26℃、6分後 50℃<br>傾き＝'+frH('50−26','6−2')+'＝6、y＝6x+14')}</section>` },
   { id:'4-1', sec:'章末テスト', t:'章末テスト', sub:'3章の総まとめ', test:true, plan:['w4Is','w4Rate','w4SI','w4Dir','w4Pick','w4Dom','w4Find1','w4Find2','w4Lin2','w4KH','w4Cross','w4Spd'], body:()=>`
