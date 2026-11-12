@@ -7396,8 +7396,14 @@ const M2C3_LESSONS = [
     <p class="small muted">グラフが横に平らな部分は、止まっている（休んでいる）時間です。</p></section>` },
   { id:'3-2', t:'動く点と面積', sub:'変域ごとに式をつくる', plan:Array(5).fill('w4Area'), body:()=>`
     <section class="panel"><h3>図形の上を動く点</h3>${rule('点がどの辺上にあるかで、x の変域を分けて考える')}
-    ${w4Rect(6,4,2)}
-    ${w4E('長方形 ABCD（AB＝4 cm、AD＝6 cm）で、P が A→B→C→D と毎秒 1 cm で動くときの △APD の面積 y cm²<br>辺 AB 上（0≦x≦4）　y＝3x<br>辺 BC 上（4≦x≦10）　y＝12<br>辺 CD 上（10≦x≦14）　y＝−3x+42')}
+    ${w4E('長方形 ABCD（AB＝4 cm、AD＝6 cm）で、P が A→B→C→D と毎秒 1 cm で動くときの △APD の面積 y cm²（x 秒後）')}
+    <h4>辺 AB 上（0≦x≦4）</h4>${w4Rect(6,4,2).replace('max-width:260px','max-width:210px')}
+    ${w4E('底辺 AD＝6、高さ AP＝x<br>y＝'+frH(1,2)+'×6×x　　y＝3x')}
+    <h4>辺 BC 上（4≦x≦10）</h4>${w4Rect(6,4,7).replace('max-width:260px','max-width:210px')}
+    ${w4E('底辺 AD＝6、高さ AB＝4（一定）<br>y＝'+frH(1,2)+'×6×4　　y＝12')}
+    <h4>辺 CD 上（10≦x≦14）</h4>${w4Rect(6,4,12).replace('max-width:260px','max-width:210px')}
+    ${w4E('底辺 AD＝6、高さ PD＝14−x<br>（A→B→C→D の長さ 14 から x をひく）<br>y＝'+frH(1,2)+'×6×(14−x)　　y＝−3x+42')}
+    <h4>グラフ</h4>
     ${w4Plot({ xm:14, ym:14, xs:2, ys:2, xl:'x（秒）', yl:'y（cm²）', lines:[{p:[[0,0],[4,12],[10,12],[14,0]]}], dash:[[4,12],[10,12]] })}</section>` },
   { id:'3-3', t:'料金・水温などの問題', sub:'一次関数とみなす', plan:Array(5).fill('w4Plan'), body:()=>`
     <section class="panel"><h3>料金プランの比較</h3>${rule('それぞれの料金を一次関数の式で表し、<br>グラフの交点（連立方程式の解）を境に、どちらが安いかを考える')}
