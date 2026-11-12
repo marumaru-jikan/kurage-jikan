@@ -6875,7 +6875,17 @@ const M2C1_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'文字式と数量', sub:'中1の復習', plan:Array(5).fill('w2Qty'), body:()=>`
     <section class="panel"><h3>文字式の表し方</h3>${rule('×は省いて、数を文字の前に書く<br>÷は分数の形で書く')}${w2E('a×5 ＝ 5a　　x÷3 ＝ '+frH('x','3'))}</section>
     <section class="panel"><h3>数量を式で表す</h3>${w2E('1本100円のジュースを x 本買って1000円出したときのおつり<br>→ 1000−100x（円）')}${w2E('x m を分速 120 m で進んだときの時間<br>→ '+frH('x','120')+'（分）')}
-    <p class="small muted">道のり＝速さ×時間　→　時間＝道のり÷速さ</p></section>` },
+    <p class="small muted">道のり＝速さ×時間　→　時間＝道のり÷速さ</p>
+    <svg viewBox="0 0 220 220" style="width:100%;max-width:240px;display:block;margin:6px auto" role="img" aria-label="みはじの図">
+    <circle cx="110" cy="110" r="100" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="3"/>
+    <line x1="10" y1="110" x2="210" y2="110" stroke="var(--accent)" stroke-width="2.5"/><line x1="110" y1="110" x2="110" y2="210" stroke="var(--accent)" stroke-width="2.5"/>
+    <text x="110" y="62" text-anchor="middle" font-size="34" font-weight="800" fill="var(--accent)">み</text><text x="110" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">道のり</text>
+    <text x="62" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">速さ</text><text x="62" y="178" text-anchor="middle" font-size="34" font-weight="800" fill="var(--accent)">は</text>
+    <text x="158" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="var(--ink)">時間</text><text x="158" y="178" text-anchor="middle" font-size="34" font-weight="800" fill="var(--accent)">じ</text>
+    <circle cx="110" cy="99" r="4" fill="var(--ink)"/><circle cx="110" cy="121" r="4" fill="var(--ink)"/><rect x="96" y="108" width="28" height="4" rx="2" fill="var(--ink)"/>
+    <text x="110" y="168" text-anchor="middle" font-size="26" font-weight="800" fill="var(--ink)">×</text></svg>
+    <table class="dtab" style="font-size:.85rem"><tr><th>求めるもの</th><th>指でかくすと</th><th>式</th></tr>
+    <tr><td>道のり（み）</td><td>は × じ</td><td>速さ × 時間</td></tr><tr><td>速さ（は）</td><td>み ÷ じ</td><td>道のり ÷ 時間</td></tr><tr><td>時間（じ）</td><td>み ÷ は</td><td>道のり ÷ 速さ</td></tr></table></section>` },
   { id:'0-2', t:'一次式の加法と減法', sub:'中1の復習', plan:Array(5).fill('w2Lin'), body:()=>`
     <section class="panel"><h3>一次式のたし算・ひき算</h3>${rule('かっこをはずして、文字の項どうし・数の項どうしをまとめる<br>ひくときは、ひく式の各項の符号を変える')}
     ${w2E('(5x−2)−(−x−8)<br>＝5x−2+x+8<br>＝6x+6')}</section>` },
