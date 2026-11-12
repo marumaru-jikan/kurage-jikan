@@ -664,6 +664,11 @@ const PDF = {
   'm2c1-lv3': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[7,9], ar:[10,11] },
   'm2c1-lv4': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[12,13], ar:[14,15] },
   'm2c1-lv5': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[16,17], ar:[18,19] },
+  'm2c2-lv1': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[1,1], ar:[2,2] },
+  'm2c2-lv2': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[3,4], ar:[5,6] },
+  'm2c2-lv3': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[7,9], ar:[10,11] },
+  'm2c2-lv4': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[12,13], ar:[14,15] },
+  'm2c2-lv5': { q:'pdf/m2c2.pdf', a:'pdf/m2c2.pdf', qr:[16,17], ar:[18,19] },
   'm3c1-lv1': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[1,1], ar:[2,2] },
   'm3c1-lv2': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[3,4], ar:[5,6] },
   'm3c1-lv3': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[7,9], ar:[10,12] },
@@ -1111,7 +1116,7 @@ const CATALOG = [
       { name:'数学', k:'数', units:U({ t:'正負の数', ready:'pn' },'文字の式','方程式','比例と反比例','平面図形','空間図形','データの活用') },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
-      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },'連立方程式','一次関数','図形の調べ方','図形の性質と証明','場合の数と確率','箱ひげ図とデータの活用') },
+      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },'一次関数','図形の調べ方','図形の性質と証明','場合の数と確率','箱ひげ図とデータの活用') },
       { name:'理科', k:'理', units:U('化学変化と原子・分子','生物のからだのつくりとはたらき','天気とその変化','電流とその利用') } ] },
     { id:'j3', name:'中3', k:'3', grade:3, subjects:[
       { name:'数学', k:'数', units:U({ t:'式の展開と因数分解', ready:'m3c1' },{ t:'平方根', ready:'m3c2' },{ t:'二次方程式', ready:'m3c3' },{ t:'関数 y＝ax²', ready:'m3c4' },{ t:'図形と相似', ready:'m3c5' },{ t:'円の性質', ready:'m3c6' },{ t:'三平方の定理', ready:'m3c7' },{ t:'標本調査', ready:'m3c8' }) },
@@ -6961,6 +6966,147 @@ const M2C1_LESSONS = [
     ${w2E('S＝abc　〔a〕<br>bc×a＝S<br>a＝'+frH('S','bc'))}</section>` },
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'1章の総まとめ', test:true, plan:['w2Mono','w2Deg','w2Like','m3SubP','w2Paren','w2Frac','w2Val2','w2Mul','w2DivM','w2MD3','w2Expl','w2Solve'], body:()=>`
     <section class="panel"><h3>1章　式の計算　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
+];
+
+/* ===== 中2数学 2章 連立方程式 ===== */
+const w3f = n => n<0 ? '−'+(-n) : String(n);
+const w3eq = (a,b,c) => `${pfmt(mk([a,'x'],[b,'y']))}＝${w3f(c)}`;
+const w3sys = (e1,e2) => `<span style="display:inline-flex;flex-direction:column;border-left:2px solid currentColor;border-radius:12px 0 0 12px;padding:0 0 0 9px;line-height:1.55;vertical-align:middle;text-align:left"><span>${e1}</span><span>${e2}</span></span>`;
+const w3ans = (x,y) => `(x, y)＝(${w3f(x)}, ${w3f(y)})`;
+const w3wr = (x,y) => [w3ans(y,x), w3ans(-x,y), w3ans(x,-y), w3ans(x+1,y-1), w3ans(-x,-y)];
+const w3pick2 = () => { let x=nz(-6,6), y=nz(-6,6); return [x,y]; };
+const w3coef = () => { let a,b,c,d; do{ a=nz(-6,6); b=nz(-6,6); c=nz(-6,6); d=nz(-6,6); }while(a*d-b*c===0 || Math.abs(a)===Math.abs(c) || Math.abs(b)===Math.abs(d)); return [a,b,c,d]; };
+const w3W = [
+  ['何人かの生徒に色紙を配るのに、1人に4枚ずつ配ると15枚余り、6枚ずつ配ると3枚たりません。生徒の人数は？','9人',['6人','12人','18人'],'人数を x 人とすると、4x+15＝6x−3、x＝9'],
+  ['1本80円の鉛筆を何本かと、120円のノートを1冊買ったら、代金は600円でした。鉛筆は何本？','6本',['5本','7本','8本'],'鉛筆を x 本とすると、80x+120＝600、x＝6'],
+  ['ある数の3倍から5をひくと、ある数に7をたした数と等しくなります。ある数は？','6',['3','4','12'],'ある数を x とすると、3x−5＝x+7、x＝6'],
+  ['姉は1200円、妹は500円持っています。2人が同じ金額ずつ使ったら、姉の残りは妹の残りの3倍になりました。1人いくら使った？','150円',['200円','250円','100円'],'x 円使ったとすると、1200−x＝3(500−x)、x＝150'],
+  ['家から駅まで、分速60 m で歩くと、分速100 m で走るより8分多くかかります。家から駅までの道のりは？','1200 m',['800 m','1000 m','1500 m'],'道のりを x m とすると、'+frH('x','60')+'−'+frH('x','100')+'＝8、x＝1200'],
+];
+const w3IS = ['x−y＝5','2a＝3b','2x+3y＝12','y＝4x−1','x＝3y'], w3NOT = ['x+4＝0','5(x−2)＝7','x²+y＝3','xy＝6','3x＝9'];
+Object.assign(G, {
+  w3Lin1(){ const x0=nz(-6,6), t=ri(0,2);
+    if(t===0){ let a,c; do{ a=nz(-7,7); c=nz(-7,7); }while(a===c); const b=nz(-9,9), d=a*x0+b-c*x0;
+      return mq('次の方程式を解きなさい。', `${pfmt(mk([a,'x'],[b,'']))}＝${pfmt(mk([c,'x'],[d,'']))}`, `x＝${w3f(x0)}`, [`x＝${w3f(-x0)}`,`x＝${w3f(x0+1)}`,`x＝${w3f(x0-2)}`], '文字の項を左辺に、数の項を右辺に移項しよう。', `${pfmt(mk([a-c,'x']))}＝${w3f(d-b)}　→　x＝${w3f(x0)}`); }
+    if(t===1){ const k=pick([2,3,4,5]), p=pick([1,2,3]), q=nz(-5,5), m=pick([2,3,4,6,8]), r=(k*(p*x0+q)-m*x0); if(r%m||k*p===m) return G.w3Lin1();
+      return mq('次の方程式を解きなさい。', `${k}${par(mk([p,'x'],[q,'']))}＝${m}${par(mk([1,'x'],[r/m,'']))}`, `x＝${w3f(x0)}`, [`x＝${w3f(-x0)}`,`x＝${w3f(x0+1)}`,`x＝${w3f(x0-1)}`], 'まずかっこをはずしてから、移項しよう。', `${pfmt(mk([k*p,'x'],[k*q,'']))}＝${pfmt(mk([m,'x'],[r,'']))}　→　x＝${w3f(x0)}`); }
+    let a,c; do{ a=nz(-9,9); c=nz(-9,9); }while(a===c); const b=nz(-30,30), d=a*x0+b-c*x0, D=n=>(n<0?'−':'')+(Math.abs(n)/10).toString();
+    const L=`${a<0?'−':''}${(Math.abs(a)/10)}x${b<0?'−':'+'}${Math.abs(b)/10}`, R=`${c<0?'−':''}${Math.abs(c)/10}x${d<0?'−':'+'}${Math.abs(d)/10}`;
+    return mq('次の方程式を解きなさい。', `${L}＝${R}`, `x＝${w3f(x0)}`, [`x＝${w3f(-x0)}`,`x＝${w3f(x0+1)}`,`x＝${w3f(x0-1)}`], '両辺に10をかけて、係数を整数にしよう。', `両辺を10倍：${pfmt(mk([a,'x'],[b,'']))}＝${pfmt(mk([c,'x'],[d,'']))}　→　x＝${w3f(x0)}`); },
+  w3App1(){ const x=pick(w3W); return { prompt:x[0], expr:'', math:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'求めたいものを x として、等しい関係を見つけて方程式をつくろう。', explain:x[3], viz:null }; },
+  w3Is2(){ const ok=pick(w3IS), ng=shuffle(w3NOT).slice(0,3);
+    return { prompt:'二元一次方程式はどれ？', expr:'', math:true, choices:shuffle([ok,...ng]), answer:ok, hint:'2つの文字をふくむ一次方程式が、二元一次方程式。', explain:`${ok} は、2種類の文字をふくむ一次方程式。`, viz:null }; },
+  w3Tab(){ const a=nz(-4,4), b=pick([1,2,3,-1,-2,-3]), k=ri(-2,4), y0=nz(-5,5), c=a*k+b*y0;
+    return mq(`二元一次方程式 ${w3eq(a,b,c)} で、x＝${w3f(k)} のときの y の値は？`, '', `y＝${w3f(y0)}`, [`y＝${w3f(-y0)}`,`y＝${w3f(y0+1)}`,`y＝${w3f(c-a*k)}`,`y＝${w3f(c+a*k)}`], 'x に値を代入して、y についての一次方程式を解こう。', `${pfmt(mk([a,'']))}×(${w3f(k)})${b<0?'−':'+'}${Math.abs(b)===1?'':Math.abs(b)}y＝${w3f(c)}　→　y＝${w3f(y0)}`); },
+  w3Chk(){ const [x0,y0]=[nz(-5,5),nz(-5,5)], [a,b,c,d]=w3coef(), e1=w3eq(a,b,a*x0+b*y0), e2=w3eq(c,d,c*x0+d*y0);
+    const w=[[x0+b,y0-a],[x0-d,y0+c],[y0,x0],[x0,-y0],[-x0,y0]].filter(([p,q])=>!(p===x0&&q===y0)).map(([p,q])=>`(${w3f(p)}, ${w3f(q)})`);
+    return mq('次の連立方程式の解はどれ？', w3sys(e1,e2), `(${w3f(x0)}, ${w3f(y0)})`, w, '値の組を両方の式に代入して、どちらも成り立つか調べよう。', `x＝${w3f(x0)}、y＝${w3f(y0)} は、両方の式を成り立たせる。<br>（一方の式だけを成り立たせる組は、解ではない）`); },
+  w3Add1(){ const [x0,y0]=w3pick2(); let a=nz(-5,5), c=nz(-5,5); while(a===c||a===-c) c=nz(-5,5); const b=pick([1,2,3,4]), s=pick([1,-1]), d=s*b, sw=Math.random()<.5;
+    let e1=[a,b,a*x0+b*y0], e2=[c,d,c*x0+d*y0]; if(sw){ e1=[b,a,b*x0+a*y0]; e2=[d,c,d*x0+c*y0]; }
+    const X=sw?y0:x0, Y=sw?x0:y0, ans=w3ans(x0,y0);
+    return mq('次の連立方程式を解きなさい。', w3sys(w3eq(...e1),w3eq(...e2)), ans, w3wr(x0,y0), `${sw?'x':'y'} の係数の絶対値が同じ。${s<0?'2つの式をたして':'2つの式をひいて'} ${sw?'x':'y'} を消去しよう。`, `①${s<0?'+':'−'}② で ${sw?'x':'y'} を消去すると、${sw?'y':'x'}＝${w3f(sw?y0:x0)}<br>これを代入して ${sw?'x':'y'}＝${w3f(sw?x0:y0)}<br>${ans}`); },
+  w3Add2(){ const [x0,y0]=w3pick2(), [a,b,c,d]=w3coef(), ans=w3ans(x0,y0), L=w2lcm(Math.abs(b),Math.abs(d));
+    return mq('次の連立方程式を加減法で解きなさい。', w3sys(w3eq(a,b,a*x0+b*y0),w3eq(c,d,c*x0+d*y0)), ans, w3wr(x0,y0), '係数がそろっていないときは、式を何倍かして、消去したい文字の係数の絶対値をそろえよう。', `y の係数の絶対値を ${L} にそろえる：①×${L/Math.abs(b)}、②×${L/Math.abs(d)}<br>たすかひくかして y を消去すると x＝${w3f(x0)}<br>代入して y＝${w3f(y0)}<br>${ans}`); },
+  w3Sub(){ const [x0,y0]=w3pick2(), p=nz(-4,4), q=y0-p*x0, a=nz(-5,5), b=nz(-5,5), xf=Math.random()<.4, ans=w3ans(x0,y0);
+    const e1=xf?`x＝${pfmt(mk([p,'y'],[x0-p*y0,'']))}`:`y＝${pfmt(mk([p,'x'],[q,'']))}`, e2=w3eq(a,b,a*x0+b*y0);
+    return mq('次の連立方程式を代入法で解きなさい。', w3sys(e1,e2), ans, w3wr(x0,y0), `①の右辺を②の ${xf?'x':'y'} に代入して、${xf?'x':'y'} を消去しよう。代入するときはかっこをつけて。`, `①を②に代入して ${xf?'y':'x'}＝${w3f(xf?y0:x0)}<br>①に代入して ${xf?'x':'y'}＝${w3f(xf?x0:y0)}<br>${ans}`); },
+  w3Par(){ const [x0,y0]=w3pick2(), k=pick([2,3,4]), p=nz(-3,3), q=nz(-3,3), r=nz(-4,4), s=k*(p*x0+q*y0)-r*x0, a=nz(-5,5), b=nz(-5,5), ans=w3ans(x0,y0);
+    if(k*p-r===0) return G.w3Par();
+    return mq('次の連立方程式を解きなさい。', w3sys(`${k}${par(mk([p,'x'],[q,'y']))}＝${pfmt(mk([r,'x'],[s,'']))}`, w3eq(a,b,a*x0+b*y0)), ans, w3wr(x0,y0), 'かっこをはずして移項し、ax+by＝c の形に整理してから解こう。', `①を整理すると ${w3eq(k*p-r,k*q,s)}<br>②と組にして解くと ${ans}`); },
+  w3Frac(){ const u=nz(-4,4), v=nz(-4,4), a=nz(-5,5), b=nz(-5,5);
+    if(Math.random()<.55){ const m=pick([2,3,4,5]), n=pick([2,3,4,6].filter(n=>n!==m)), x0=m*u, y0=n*v, ans=w3ans(x0,y0);
+      return mq('次の連立方程式を解きなさい。', w3sys(`${frH('x',m)}${'+'}${frH('y',n)}＝${w3f(u+v)}`, w3eq(a,b,a*x0+b*y0)), ans, w3wr(x0,y0), `①の両辺に分母の最小公倍数 ${w2lcm(m,n)} をかけて、係数を整数にしよう。`, `①×${w2lcm(m,n)}：${w3eq(w2lcm(m,n)/m,w2lcm(m,n)/n,w2lcm(m,n)*(u+v))}<br>②と組にして解くと ${ans}`); }
+    const x0=u, y0=v, p=nz(-9,9), q=nz(-9,9), c=p*x0+q*y0, D=n=>(n<0?'−':'')+(Math.abs(n)/10), ans=w3ans(x0,y0);
+    const e1=`${p<0?'−':''}${Math.abs(p)/10}x${q<0?'−':'+'}${Math.abs(q)/10}y＝${D(c)}`;
+    return mq('次の連立方程式を解きなさい。', w3sys(e1, w3eq(a,b,a*x0+b*y0)), ans, w3wr(x0,y0), '①の両辺に10をかけて、係数を整数にしよう。', `①×10：${w3eq(p,q,c)}<br>②と組にして解くと ${ans}`); },
+  w3ABC(){ const [x0,y0]=w3pick2(), [a,b,c,d]=w3coef(), f=a*x0+b*y0, e=f-(c*x0+d*y0), ans=w3ans(x0,y0);
+    return mq('次の方程式を解きなさい。', `${pfmt(mk([a,'x'],[b,'y']))}＝${pfmt(mk([c,'x'],[d,'y'],[e,'']))}＝${w3f(f)}`, ans, w3wr(x0,y0), 'A＝B＝C の形は、A＝C、B＝C のように2つの式に分けて連立方程式にしよう。', `${w3sys(w3eq(a,b,f), `${pfmt(mk([c,'x'],[d,'y'],[e,'']))}＝${w3f(f)}`)} を解いて ${ans}`); },
+  w3Coef(){ const [x0,y0]=w3pick2(), A=nz(-5,5), p=nz(-4,4), q=nz(-5,5), B=nz(-5,5), c1=A*x0+p*y0, c2=q*x0+B*y0;
+    const e1=`ax${p<0?'−':'+'}${Math.abs(p)===1?'':Math.abs(p)}y＝${w3f(c1)}`, e2=`${pfmt(mk([q,'x']))}+by＝${w3f(c2)}`.replace('+b','+b'), ok=`a＝${w3f(A)}、b＝${w3f(B)}`;
+    return mq(`連立方程式の解が (x, y)＝(${w3f(x0)}, ${w3f(y0)}) のとき、a、b の値は？`, w3sys(e1,e2), ok, [`a＝${w3f(-A)}、b＝${w3f(B)}`,`a＝${w3f(A)}、b＝${w3f(-B)}`,`a＝${w3f(B)}、b＝${w3f(A)}`,`a＝${w3f(-A)}、b＝${w3f(-B)}`], '解を代入すると、a、b についての方程式ができます。', `①に代入：${w3f(x0)}a${p*y0<0?'−':'+'}${Math.abs(p*y0)}＝${w3f(c1)} → a＝${w3f(A)}<br>②に代入：${w3f(q*x0)}${y0<0?'−':'+'}${Math.abs(y0)===1?'':Math.abs(y0)}b＝${w3f(c2)} → b＝${w3f(B)}`); },
+  w3Price(){ if(Math.random()<.5){ const [nA,nB]=pick([['ガム','あめ'],['りんご','みかん'],['ノート','鉛筆'],['プリン','シュークリーム']]), p=pick([30,50,80,100,120,150]), q=pick([30,50,60,80,100,130,230].filter(v=>v!==p)), x=ri(2,9), y=ri(2,9), n=x+y, T=p*x+q*y;
+      const ok=`${nA} ${x}個、${nB} ${y}個`;
+      return { prompt:`1個${p}円の${nA}と1個${q}円の${nB}を、あわせて${n}個買って${T}円払いました。それぞれ何個買った？`, expr:'', math:true, words:true, choices:shuffle(uniq([ok,`${nA} ${y}個、${nB} ${x}個`,`${nA} ${x+1}個、${nB} ${y-1}個`,`${nA} ${x-1}個、${nB} ${y+1}個`])), answer:ok, hint:'個数の関係と代金の関係で、2つの式をつくろう。', explain:`${nA}を x 個、${nB}を y 個とすると<br>${w3sys(`x+y＝${n}`,`${p}x+${q}y＝${T}`)}<br>解くと x＝${x}、y＝${y}`, viz:null }; }
+    const A=pick([600,800,900,1000,1200]), C=pick([300,400,500].filter(v=>v<A)), [a1,c1,a2,c2]=pick([[3,2,1,3],[2,1,1,5],[1,2,2,3],[2,3,1,1],[1,1,3,2]]), T1=a1*A+c1*C, T2=a2*A+c2*C, ok=`おとな ${A}円、中学生 ${C}円`;
+    return { prompt:`ある美術館の入館料は、おとな${a1}人と中学生${c1}人で${T1}円、おとな${a2}人と中学生${c2}人で${T2}円です。それぞれ1人の入館料は？`, expr:'', math:true, words:true, choices:shuffle(uniq([ok,`おとな ${C}円、中学生 ${A}円`,`おとな ${A+100}円、中学生 ${C-100}円`,`おとな ${A-100}円、中学生 ${C+100}円`])), answer:ok, hint:'おとな1人を x 円、中学生1人を y 円として、2つの式をつくろう。', explain:`${w3sys(`${a1===1?'':a1}x+${c1===1?'':c1}y＝${T1}`,`${a2===1?'':a2}x+${c2===1?'':c2}y＝${T2}`)}<br>解くと x＝${A}、y＝${C}`, viz:null }; },
+  w3Pct(){ if(Math.random()<.5){ const [p,q]=pick([[10,20],[20,10],[25,20],[10,5],[5,10],[20,25]]), x=ri(5,12)*20, y=ri(5,12)*20, N=x+y, M=N-x*p/100+y*q/100, ok=`男子 ${x}人、女子 ${y}人`;
+      return { prompt:`ある中学校の昨年の生徒数は、男女あわせて${N}人でした。今年は、昨年とくらべて男子は${p}％減り、女子は${q}％増えたので、全体で${M}人になりました。昨年の男子と女子の生徒数は？`, expr:'', math:true, words:true, choices:shuffle(uniq([ok,`男子 ${y}人、女子 ${x}人`,`男子 ${x-20}人、女子 ${y+20}人`,`男子 ${x+20}人、女子 ${y-20}人`])), answer:ok, hint:`昨年の男子を x 人、女子を y 人として、増減した人数で式をつくろう。`, explain:`${w3sys(`x+y＝${N}`,`−${frH(p,100)}x+${frH(q,100)}y＝${M-N<0?'−'+(N-M):M-N}`)}<br>解くと x＝${x}、y＝${y}`, viz:null }; }
+    const [p,q]=pick([[40,30],[20,10],[30,20],[10,20],[25,10]]), x=ri(3,12)*100*(p%20?4:1), y=ri(3,12)*100, T=x+y, S=x*(100-p)/100+y*(100-q)/100; if(!Number.isInteger(S)) return G.w3Pct();
+    const ok=`花びん ${x}円、ぬいぐるみ ${y}円`;
+    return { prompt:`花びんとぬいぐるみの定価の合計は${T}円です。花びんは定価の${p}％引き、ぬいぐるみは定価の${q}％引きで買ったので、代金は${S}円でした。それぞれの定価は？`, expr:'', math:true, words:true, choices:shuffle(uniq([ok,`花びん ${y}円、ぬいぐるみ ${x}円`,`花びん ${x+100}円、ぬいぐるみ ${y-100}円`,`花びん ${x-100}円、ぬいぐるみ ${y+100}円`])), answer:ok, hint:`定価の ${p}％引きの値段は、定価の ${frH(100-p,100)} 倍。`, explain:`${w3sys(`x+y＝${T}`,`${frH(100-p,100)}x+${frH(100-q,100)}y＝${S}`)}<br>解くと x＝${x}、y＝${y}`, viz:null }; },
+  w3Spd(){ if(Math.random()<.5){ const [a,b]=pick([[4,5],[8,10],[4,6],[5,4],[10,15],[12,6]]), x=a*pick([1,2,3])/ (60%a?1:1), y=b*pick([1,2,3]);
+      const tx=60*x/a, ty=60*y/b; if(!Number.isInteger(tx)||!Number.isInteger(ty)) return G.w3Spd(); const D=x+y, H=tx+ty, ok=`家から学校 ${x} km、学校から駅 ${y} km`;
+      return { prompt:`家から学校へ寄って駅まで、自転車で行きました。道のりは全部で${D} km、時間は${H}分かかりました。家から学校までは時速${a} km、学校から駅までは時速${b} km で進みました。それぞれの道のりは？`, expr:'', math:true, words:true, choices:shuffle(uniq([ok,`家から学校 ${y} km、学校から駅 ${x} km`,`家から学校 ${x+1} km、学校から駅 ${y-1} km`,`家から学校 ${x-1} km、学校から駅 ${y+1} km`])), answer:ok, hint:'道のりの式と、時間の式をつくろう。時間＝道のり÷速さ。分は時間になおして。', explain:`${w3sys(`x+y＝${D}`,`${frH('x',a)}+${frH('y',b)}＝${frH(H,60)}`)}<br>解くと x＝${x}、y＝${y}`, viz:null }; }
+    const a=pick([60,70,80]), b=pick([120,150,160,200]), ta=ri(4,12), tb=ri(2,8), x=a*ta, y=b*tb, D=x+y, T=ta+tb, ok=`${ta}分間`;
+    return { prompt:`家から学校までの ${D} m の道のりを、はじめは分速${a} m で歩き、途中から分速${b} m で走ると、${T}分かかりました。歩いていたのは何分間？`, expr:'', math:true, words:true, choices:shuffle(uniq([ok,`${tb}分間`,`${ta+1}分間`,`${ta-1}分間`])), answer:ok, hint:'歩いた時間を x 分、走った時間を y 分として、時間の式と道のりの式をつくろう。', explain:`${w3sys(`x+y＝${T}`,`${a}x+${b}y＝${D}`)}<br>解くと x＝${ta}、y＝${tb}`, viz:null }; },
+  w3Num(){ if(Math.random()<.5){ let a=ri(1,8), b=ri(1,9); while(b<=a) { a=ri(1,8); b=ri(1,9); } const s=a+b, d=9*(b-a), N=10*a+b, ok=String(N);
+      return { prompt:`2けたの正の整数があります。各位の数の和は${s}で、十の位の数と一の位の数を入れかえた数は、もとの数より${d}大きくなります。もとの整数は？`, expr:'', math:true, choices:shuffle(uniq([ok,String(10*b+a),String(N+1),String(10*(a+1)+(b-1))])), answer:ok, hint:'十の位を x、一の位を y とすると、もとの数は 10x+y、入れかえた数は 10y+x。', explain:`${w3sys(`x+y＝${s}`,`10y+x＝10x+y+${d}`)}<br>解くと x＝${a}、y＝${b}　→　${N}`, viz:null }; }
+    const Y=ri(2,12), X=Y+ri(2,10), [p,q,r,s]=pick([[2,3,3,1],[2,1,1,3],[3,2,1,2],[1,2,3,1]]), A=p*X-q*Y, B=r*Y-s*X; if(A<=0) return G.w3Num();
+    const ok=`大 ${X}、小 ${Y}`;
+    return { prompt:`大小2つの数があります。大きい方の数の${p===1?'':p+'倍'}から小さい方の数の${q===1?'':q+'倍'}をひくと${A}になります。また、小さい方の数の${r===1?'':r+'倍'}から大きい方の数の${s===1?'':s+'倍'}をひくと${w3f(B)}になります。2つの数は？`, expr:'', math:true, words:true, choices:shuffle(uniq([ok,`大 ${Y}、小 ${X}`,`大 ${X+1}、小 ${Y+1}`,`大 ${X-1}、小 ${Y}`])), answer:ok, hint:'大きい方を x、小さい方を y として、2つの式をつくろう。', explain:`${w3sys(`${p===1?'':p}x−${q===1?'':q}y＝${A}`,`${r===1?'':r}y−${s===1?'':s}x＝${w3f(B)}`)}<br>解くと x＝${X}、y＝${Y}`, viz:null }; },
+});
+const w3E = s => `<p class="ex mth">${s}</p>`;
+const M2C2_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'一次方程式の解き方', sub:'中1の復習', plan:Array(5).fill('w3Lin1'), body:()=>`
+    <section class="panel"><h3>一次方程式を解く手順</h3>${rule('① 必要なら、かっこをはずしたり分母をはらったりする<br>② 文字の項を一方の辺に、数の項を他方の辺に移項する<br>③ ax＝b の形にする<br>④ 両辺を x の係数 a でわる')}
+    ${w3E('4(x−4)＝x−1<br>4x−16＝x−1<br>4x−x＝−1+16<br>3x＝15<br>x＝5')}<p class="small muted">係数に小数があるときは10倍、分数があるときは分母の公倍数をかけて、整数にしよう。</p></section>` },
+  { id:'0-2', t:'方程式の利用', sub:'中1の復習', plan:Array(5).fill('w3App1'), body:()=>`
+    <section class="panel"><h3>方程式を使って問題を解く</h3>${rule('① 求めたいものを x とする<br>② 等しい関係を見つけて方程式をつくる<br>③ 方程式を解き、答えが問題にあっているか確かめる')}
+    <p>何人かの生徒に色紙を配るのに、1人に4枚ずつ配ると15枚余り、6枚ずつ配ると3枚たりない。</p>
+    ${w3E('生徒を x 人とすると、色紙の枚数は<br>4x+15＝6x−3<br>x＝9　　答え 9人')}<p class="small muted">色紙の枚数を、2通りの配り方でそれぞれ表すのがポイント。</p></section>` },
+  { id:'1-1', sec:'1　連立方程式', t:'二元一次方程式とその解', sub:'2つの文字をふくむ方程式', plan:['w3Is2','w3Is2','w3Tab','w3Tab','w3Tab'], body:()=>`
+    <section class="panel"><h3>二元一次方程式</h3>${rule('2つの文字をふくむ一次方程式 → <b>二元一次方程式</b><br>成り立たせる文字の値の組 → その方程式の<b>解</b>')}
+    ${w3E('x+2y＝8')}<table class="dtab mth"><tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><th>y</th><td>4</td><td>${frH(7,2)}</td><td>3</td><td>${frH(5,2)}</td><td>2</td></tr></table>
+    <p class="small muted">二元一次方程式の解は、たくさんあります。</p></section>` },
+  { id:'1-2', t:'連立方程式とその解', sub:'2つの式に共通する解', plan:Array(5).fill('w3Chk'), body:()=>`
+    <section class="panel"><h3>連立方程式</h3>${rule('2つの方程式を組にしたもの → <b>連立方程式</b><br>どちらも成り立たせる値の組 → 連立方程式の<b>解</b>')}
+    ${w3E(w3sys('x+2y＝8','3x+y＝9'))}
+    <table class="dtab mth" style="font-size:.85rem"><tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><th>x+2y＝8 の y</th><td>4</td><td>${frH(7,2)}</td><td><b>3</b></td><td>${frH(5,2)}</td></tr><tr><th>3x+y＝9 の y</th><td>9</td><td>6</td><td><b>3</b></td><td>0</td></tr></table>
+    <p>2つの表に共通する (x, y)＝(2, 3) が、この連立方程式の解です。</p><p class="small muted">解を求めることを「連立方程式を解く」といいます。</p></section>` },
+  { id:'1-3', t:'加減法①', sub:'そのままたす・ひく', plan:Array(5).fill('w3Add1'), body:()=>`
+    <section class="panel"><h3>加減法</h3>${rule('左辺どうし、右辺どうしをたすかひくかして、<br>1つの文字を消去する方法 → <b>加減法</b>')}
+    ${w3E(w3sys('x+3y＝9　……①','x+y＝5　……②'))}${w3E('①−②　　x+3y＝9<br>　　−)　x+y＝5<br>　　　　　2y＝4<br>　　　　　 y＝2<br>y＝2 を②に代入すると　x+2＝5　x＝3<br>(x, y)＝(3, 2)')}
+    <p class="small muted">係数の符号が同じ → ひく、ちがう → たす。答えは (x, y)＝(x の値, y の値) の形で書きます。</p></section>` },
+  { id:'1-4', t:'加減法②', sub:'何倍かして係数をそろえる', plan:Array(5).fill('w3Add2'), body:()=>`
+    <section class="panel"><h3>係数をそろえる</h3>${rule('そのままたしてもひいても消去できないときは、<br>一方または両方の式を何倍かして、<br>消去したい文字の係数の絶対値をそろえる')}
+    ${w3E(w3sys('2x+3y＝1　……①','3x+4y＝2　……②'))}${w3E('①×3−②×2<br>　　6x+9y＝3<br>−)　6x+8y＝4<br>　　　　　y＝−1<br>y＝−1 を①に代入して整理すると　x＝2<br>(x, y)＝(2, −1)')}</section>` },
+  { id:'1-5', t:'代入法', sub:'一方の式を他方に代入', plan:Array(5).fill('w3Sub'), body:()=>`
+    <section class="panel"><h3>代入法</h3>${rule('一方の式を他方の式に代入して、<br>1つの文字を消去する方法 → <b>代入法</b>')}
+    ${w3E(w3sys('y＝3x　……①','5x−2y＝1　……②'))}${w3E('①を②に代入すると<br>5x−2×3x＝1<br>x＝−1<br>x＝−1 を①に代入すると　y＝−3<br>(x, y)＝(−1, −3)')}
+    <p class="small muted">x＝〜 や y＝〜 の形の式があるときに便利。多項式を代入するときは、かっこをつけます。</p></section>` },
+  { id:'1-6', t:'かっこがある連立方程式', sub:'整理してから解く', plan:Array(5).fill('w3Par'), body:()=>`
+    <section class="panel"><h3>かっこがある連立方程式</h3>${rule('かっこをはずしたり移項したりして、<br>ax+by＝c の形に整理してから解く')}
+    ${w3E(w3sys('x−y＝5　……①','3x−2(y+6)＝0　……②'))}${w3E('②から　3x−2y−12＝0<br>3x−2y＝12　……②′<br>①×2−②′ で　−x＝−2　x＝2<br>x＝2 を①に代入して　y＝−3<br>(x, y)＝(2, −3)')}</section>` },
+  { id:'1-7', t:'係数に分数・小数がある連立方程式', sub:'係数を整数にする', plan:Array(5).fill('w3Frac'), body:()=>`
+    <section class="panel"><h3>係数を整数にする</h3>${rule('分数 → 両辺に分母の最小公倍数をかける<br>小数 → 両辺に 10 や 100 をかける')}
+    ${w3E(w3sys('x＝2y−2　……①',frH('x',3)+'+'+frH('y',4)+'＝3　……②'))}${w3E('②×12　4x+3y＝36　……②′<br>①を②′に代入して　4(2y−2)+3y＝36<br>11y＝44　y＝4<br>y＝4 を①に代入して　x＝6<br>(x, y)＝(6, 4)')}
+    <p class="small muted">分母をはらうときは、数の項にもかけるのを忘れずに。</p></section>` },
+  { id:'1-8', t:'A＝B＝C の形の方程式', sub:'2つの式に分ける', plan:Array(5).fill('w3ABC'), body:()=>`
+    <section class="panel"><h3>A＝B＝C の形</h3>${rule('次のいずれかの連立方程式をつくって解く')}
+    ${w3E(w3sys('A＝C','B＝C')+'　　'+w3sys('A＝B','A＝C')+'　　'+w3sys('A＝B','B＝C'))}
+    ${w3E('8x−5y＝3x−y−4＝2<br>→ '+w3sys('8x−5y＝2','3x−y−4＝2')+'<br>(x, y)＝(4, 6)')}<p class="small muted">C が数のときは、A＝C、B＝C の組み合わせが解きやすい。</p></section>` },
+  { id:'1-9', t:'解から係数を求める', sub:'解を代入する', plan:Array(5).fill('w3Coef'), body:()=>`
+    <section class="panel"><h3>解から係数を求める</h3>${rule('解を代入すると、a、b についての方程式ができる')}
+    ${w3E('連立方程式 '+w3sys('ax−2y＝2','4x+by＝−8')+' の解が (3, −4)<br>x＝3、y＝−4 を代入すると<br>3a+8＝2　→　a＝−2<br>12−4b＝−8　→　b＝5')}</section>` },
+  { id:'2-1', sec:'2　連立方程式の利用', t:'代金と個数の問題', sub:'2つの関係から式をつくる', plan:Array(5).fill('w3Price'), body:()=>`
+    <section class="panel"><h3>連立方程式を使って問題を解く手順</h3>${rule('① 問題の中の数量に着目して、数量の関係を見つける<br>② わからない数量を文字で表して、連立方程式をつくって解く<br>③ 解が問題にあっているか調べて、答えを書く')}</section>
+    <section class="panel"><h3>例</h3><p>1個30円のガムと1個50円のあめを、あわせて7個買い、250円払った。</p>
+    ${w3E('ガムを x 個、あめを y 個とすると<br>'+w3sys('x+y＝7　　　……個数の関係','30x+50y＝250　……代金の関係')+'<br>解くと x＝5、y＝2<br>ガム 5個、あめ 2個')}<p class="small muted">求めたいものを x、y とすることが多い。</p></section>` },
+  { id:'2-2', t:'割合の問題', sub:'％を分数で表す', plan:Array(5).fill('w3Pct'), body:()=>`
+    <section class="panel"><h3>割合の表し方</h3><table class="dtab mth"><tr><td>1％</td><td>${frH(1,100)}</td><td>1割</td><td>${frH(1,10)}</td></tr><tr><td>10％</td><td>${frH(10,100)}</td><td>1分</td><td>${frH(1,100)}</td></tr></table>
+    <p class="small muted">定価の ○％引きの値段は、定価の (1−${frH('○',100)}) 倍。</p></section>
+    <section class="panel"><h3>例</h3><p>シャツとタオルがあわせて820枚。シャツの20％とタオルの30％が青色で、その枚数はあわせて200枚。</p>
+    ${w3E(w3sys('x+y＝820',frH(20,100)+'x+'+frH(30,100)+'y＝200')+'<br>解くと x＝460、y＝360<br>シャツ 460枚、タオル 360枚')}<p class="small muted">割合の式は、約分せずに両辺を100倍すると計算しやすい。</p></section>` },
+  { id:'2-3', t:'速さ・時間・道のりの問題', sub:'道のりの式と時間の式', plan:Array(5).fill('w3Spd'), body:()=>`
+    <section class="panel"><h3>速さの関係</h3>${rule('道のり＝速さ×時間　　時間＝'+frH('道のり','速さ'))}<p class="small muted">0-1 の「みはじ」を思い出そう。単位（分・時間、m・km）をそろえるのを忘れずに。</p></section>
+    <section class="panel"><h3>例</h3><p>駅から池の前を通って史料館まで13 km。駅から池の前までは時速4 km、池の前から史料館までは時速5 km で歩いたら、3時間かかった。</p>
+    ${w3E(w3sys('x+y＝13',frH('x',4)+'+'+frH('y',5)+'＝3')+'<br>解くと x＝8、y＝5<br>駅から池の前 8 km、池の前から史料館 5 km')}</section>` },
+  { id:'2-4', t:'数の問題', sub:'2けたの整数・2つの数', plan:Array(5).fill('w3Num'), body:()=>`
+    <section class="panel"><h3>2けたの整数</h3>${rule('十の位の数を x、一の位の数を y とすると<br>もとの数 → 10x+y　　入れかえた数 → 10y+x')}
+    ${w3E('各位の数の和が 9、入れかえた数はもとの数より 27 大きい<br>'+w3sys('x+y＝9','10y+x＝10x+y+27')+'<br>x＝3、y＝6　→　36')}</section>
+    <section class="panel"><h3>大小2つの数</h3><p>大きい方を x、小さい方を y として、問題文の関係を式にします。答えが問題にあっているか（x＞y か）も確かめよう。</p></section>` },
+  { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'2章の総まとめ', test:true, plan:['w3Is2','w3Chk','w3Add1','w3Add2','w3Sub','w3Par','w3Frac','w3ABC','w3Coef','w3Price','w3Pct','w3Spd'], body:()=>`
+    <section class="panel"><h3>2章　連立方程式　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
 ];
 
 /* ===== 中3数学 2章 平方根 ===== */
@@ -13860,6 +14006,7 @@ const UNITS = {
   bi:{ no:'文26', title:'原形不定詞', subject:'英語', course:'jen', subj:1, lessons:BI_LESSONS },
   sj:{ no:'文27', title:'仮定法', subject:'英語', course:'jen', subj:1, lessons:SJ_LESSONS },
   m2c1:{ no:'1', title:'式の計算', subject:'数学', course:'j2', subj:0, lessons:M2C1_LESSONS, drill:'m2c1' },
+  m2c2:{ no:'2', title:'連立方程式', subject:'数学', course:'j2', subj:0, lessons:M2C2_LESSONS, drill:'m2c2' },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
