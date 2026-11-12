@@ -7369,10 +7369,14 @@ const M2C3_LESSONS = [
     ${w4E('2点 (1, 3)、(3, 7) を通る直線<br>傾き＝'+frH('7−3','3−1')+'＝2<br>y＝2x+b に (1, 3) を代入　3＝2+b　b＝1<br>答え　y＝2x+1')}
     <p class="small muted">連立方程式 3＝a+b、7＝3a+b を解いて求めることもできます。</p></section>` },
   { id:'2-1', sec:'2　一次関数と方程式', t:'方程式 ax+by＝c のグラフ', sub:'二元一次方程式のグラフ', plan:Array(5).fill('w4Lin2'), body:()=>`
-    <section class="panel"><h3>二元一次方程式のグラフ</h3>${rule('二元一次方程式 ax+by＝c のグラフは直線')}
-    ${w4E('2x+3y＝6　→　y について解くと　y＝−'+frH(2,3)+'x+2')}
-    ${w4G([{a:[-2,3],b:2,label:'2x+3y＝6',lx:-4.6}],{pts:[[0,2,'(0, 2)'],[3,0,'(3, 0)']]})}
-    <p class="small muted">x＝0 を代入すると y 軸との交点、y＝0 を代入すると x 軸との交点がわかり、その2点を結んでもかけます。</p></section>` },
+    <section class="panel"><h3>二元一次方程式のグラフ</h3>${rule('二元一次方程式 ax+by＝c のグラフは直線')}</section>
+    <section class="panel"><h3>かき方①　y＝ の形に直す</h3>
+    ${w4E('〇 2x+3y＝6<br>3y＝−2x+6<br>y＝−'+frH(2,3)+'x+2<br>切片 2 → 点 (0, 2)<br>傾き −'+frH(2,3)+' → 右へ 3、下へ 2<br>　→ 点 (3, 0)')}
+    ${w4G([{a:[-2,3],b:2,label:'2x+3y＝6',lx:-4.6}],{pts:[[0,2],[3,0]],extra:'<line x1="121" y1="77.6" x2="178" y2="77.6" style="stroke:#e07b39;stroke-width:2"/><polygon points="183.6,77.6 175,73.4 175,81.8" style="fill:#e07b39"/><line x1="183.6" y1="77.6" x2="183.6" y2="113.8" style="stroke:#e07b39;stroke-width:2"/><polygon points="183.6,120 179.4,111.4 187.8,111.4" style="fill:#e07b39"/><text x="152" y="71" text-anchor="middle" style="font-size:11px;font-weight:700;fill:#e07b39">右へ 3</text><text x="189" y="102" style="font-size:11px;font-weight:700;fill:#e07b39">下へ 2</text>'})}</section>
+    <section class="panel"><h3>かき方②　x＝0、y＝0 を代入</h3>
+    ${w4E('〇 3x−4y＝12<br>x＝0 のとき　−4y＝12　y＝−3<br>　→ 点 (0, −3)<br>y＝0 のとき　3x＝12　x＝4<br>　→ 点 (4, 0)<br>この2点を通る直線をひく')}
+    ${w4G([{a:[3,4],b:-3,label:'3x−4y＝12',lx:-1.2}],{pts:[[0,-3,'(0, −3)'],[4,0,'(4, 0)','L']]})}
+    <p class="small muted">x＝0 で y 軸との交点、y＝0 で x 軸との交点がわかります。傾きが分数になるときは②が便利です。</p></section>` },
   { id:'2-2', t:'y＝k、x＝h のグラフ', sub:'軸に平行な直線', plan:Array(5).fill('w4KH'), body:()=>`
     <section class="panel"><h3>軸に平行な直線</h3>${rule('y＝k のグラフ　→　点 (0, k) を通り、x 軸に平行な直線<br>x＝h のグラフ　→　点 (h, 0) を通り、y 軸に平行な直線')}
     ${w4G([{a:0,b:3,label:'y＝3',lx:4.6},{x:-2,c:'2',label:'x＝−2'}])}
