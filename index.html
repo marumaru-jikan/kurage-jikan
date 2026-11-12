@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },'比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },'比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4022,6 +4022,154 @@ const GER_LESSONS = [
     <section class="panel"><h3>主語</h3>${GER_ROLE.filter(x=>x[2]==='主語').map(x=>beEx(x[0],x[1])).join('')}</section>
     <section class="panel"><h3>前置詞の目的語</h3>${GER_ROLE.filter(x=>x[2]==='前置詞の目的語').map(x=>beEx(x[0],x[1])).join('')}</section>
     <section class="panel"><h3>補語</h3>${GER_ROLE.filter(x=>x[2]==='補語').map(x=>beEx(x[0],x[1])).join('')}</section>` },
+];
+
+
+/* ===== 英語 文法 18章 形容詞・副詞 ===== */
+const EAJ_F = [
+  ['This is a famous song.','famous','これは有名な歌です。'],
+  ['I want something hot.','hot','私は何か熱いものがほしい。'],
+  ['This song is famous.','famous','この歌は有名です。'],
+  ['She has a big dog.','big','彼女は大きな犬を飼っています。'],
+  ['Ken is very kind.','kind','ケンはとても親切です。'],
+  ['I bought a new bike.','new','私は新しい自転車を買いました。'],
+  ['He looks happy.','happy','彼はうれしそうに見えます。'],
+  ['My mother made a delicious cake.','delicious','母はおいしいケーキを作りました。'],
+  ['It was a cold morning.','cold','寒い朝でした。'],
+];
+const EAV_F = [
+  ['John sings well.','well','ジョンは上手に歌います。','動詞'],
+  ['This song is very famous.','very','この歌はとても有名です。','形容詞'],
+  ['John sings very well.','very','ジョンはとても上手に歌います。','副詞'],
+  ['He runs fast.','fast','彼は速く走ります。','動詞'],
+  ['She studies hard.','hard','彼女は一生けんめい勉強します。','動詞'],
+  ['It is really cold today.','really','今日は本当に寒いです。','形容詞'],
+  ['Please speak slowly.','slowly','ゆっくり話してください。','動詞'],
+  ['He got up very early.','very','彼はとても早く起きました。','副詞'],
+  ['The baby smiled happily.','happily','赤ちゃんはうれしそうにほほえみました。','動詞'],
+  ['This book is too difficult.','too','この本は難しすぎます。','形容詞'],
+];
+const ADJ_Q = [
+  ['There is □ water in the dam.','ダムの中にはたくさんの水があります。','much',['many','much']],
+  ['There are □ books in the room.','部屋の中にはたくさんの本があります。','many',['many','much']],
+  ['I don’t have □ money.','私はあまりお金を持っていません。','much',['many','much']],
+  ['How □ apples do you want?','リンゴがいくつほしいですか。','many',['many','much']],
+  ['How □ is this bag?','このかばんはいくらですか。','much',['many','much']],
+  ['I have □ friends in Fukuoka.','私は福岡に何人か友だちがいます。','a few',['a few','a little','few','little']],
+  ['There is □ milk in the glass.','コップに少し牛乳があります。','a little',['a few','a little','few','little']],
+  ['He has □ friends.','彼にはほとんど友だちがいません。','few',['a few','a little','few','little']],
+  ['We had □ rain last month.','先月はほとんど雨が降りませんでした。','little',['a few','a little','few','little']],
+  ['I can speak □ English.','私は少し英語を話せます。','a little',['a few','a little','few','little']],
+  ['There were □ people in the park.','公園にはほとんど人がいませんでした。','few',['a few','a little','few','little']],
+  ['They had □ money last week.','彼らは先週お金を全く持っていませんでした。','no',['no','many','a few','some']],
+  ['Do you have □ questions?','何か質問はありますか。','any',['some','any']],
+  ['I have □ questions.','私はいくつか質問があります。','some',['some','any']],
+];
+const ADJ_A = [
+  ['He looks □.','彼はうれしそうに見えます。','happy',['happy','happily'],'補語（主語の説明）なので形容詞。'],
+  ['She smiled □.','彼女はうれしそうにほほえみました。','happily',['happy','happily'],'動詞 smiled を修飾するので副詞。'],
+  ['This test is □.','このテストは簡単です。','easy',['easy','easily'],'補語なので形容詞。'],
+  ['I passed the test □.','私はそのテストに簡単に合格しました。','easily',['easy','easily'],'動詞 passed を修飾するので副詞。'],
+  ['Ken is a □ driver.','ケンは注意深い運転手です。','careful',['careful','carefully'],'名詞 driver を修飾するので形容詞。'],
+  ['Ken drives □.','ケンは注意深く運転します。','carefully',['careful','carefully'],'動詞 drives を修飾するので副詞。'],
+  ['Please be □.','静かにしてください。','quiet',['quiet','quietly'],'be の後ろの補語なので形容詞。'],
+  ['Please walk □.','静かに歩いてください。','quietly',['quiet','quietly'],'動詞 walk を修飾するので副詞。'],
+];
+const ADJ_P = [
+  ['私は何か熱いものがほしい。','I want something hot.',['I want hot something.','I want something to hot.','I want hotly something.']],
+  ['何か冷たいものはありますか。','Do you have anything cold?',['Do you have cold anything?','Do you have anything coldly?','Do you have anything to cold?']],
+  ['これは有名な歌です。','This is a famous song.',['This is a song famous.','This is famous a song.','This is a famously song.']],
+  ['この歌は有名です。','This song is famous.',['This famous is song.','This song is famously.','This is song famous.']],
+];
+const ADV_FQ = [
+  ['彼はいつもこの歌を歌います。','He □ sings this song.','always'],
+  ['私はふつう7時に起きます。','I □ get up at seven.','usually'],
+  ['彼女はよく図書館へ行きます。','She □ goes to the library.','often'],
+  ['私たちはときどき公園でサッカーをします。','We □ play soccer in the park.','sometimes'],
+  ['彼は決してうそをつきません。','He □ tells a lie.','never'],
+  ['彼はいつも幸せです。','He is □ happy.','always'],
+  ['ケンはときどき学校に遅れます。','Ken is □ late for school.','sometimes'],
+  ['母はたいてい忙しい。','My mother is □ busy.','usually'],
+];
+const ADV_PS = [
+  ['彼はいつもこの歌を歌います。','He always sings this song.',['He sings always this song.','He sings this always song.','He always sing this song.']],
+  ['彼はいつも幸せです。','He is always happy.',['He always is happy.','He always happy is.','He is happy always is.']],
+  ['私はときどき夕食を作ります。','I sometimes cook dinner.',['I cook sometimes dinner.','I dinner sometimes cook.','I sometimes cooks dinner.']],
+  ['彼女はよく遅れます。','She is often late.',['She often is late.','She late is often.','She is late often is.']],
+  ['ケンは決して朝食を食べません。','Ken never eats breakfast.',['Ken eats never breakfast.','Ken never eat breakfast.','Ken eats breakfast never eats.']],
+];
+const aaJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+function aaFind(pool, kind){ const x=pick(pool), words=[...new Set(x[0].replace(/[.?!’]/g,' ').split(/\s+/).filter(w=>w&&w!==x[1]&&w.length>1&&!['very','too','really','well','fast','hard'].includes(w)))];
+  return { prompt:`${kind}はどれ？`, expr:x[0]+aaJ(x[2]), enExpr:true, en:true, choices:shuffle([x[1],...shuffle(words).slice(0,3)]), answer:x[1],
+    hint:kind==='形容詞'?'人やもののようす・性質を表す語を探そう。':'動詞・形容詞・ほかの副詞をくわしくする語を探そう。', explain:`${x[1]} が${kind}です。${x[3]?`（${x[3]}を修飾）`:''}`, viz:null }; }
+Object.assign(G, {
+  adjFind(){ return aaFind(EAJ_F,'形容詞'); },
+  advFind(){ return aaFind(EAV_F,'副詞'); },
+  advWhat(){ const x=pick(EAV_F);
+    return { prompt:`${x[1]} が修飾しているのは？`, expr:x[0]+aaJ(x[2]), enExpr:true, words:true, choices:['動詞','形容詞','副詞'], answer:x[3],
+      hint:'副詞は、動詞・形容詞・ほかの副詞を修飾します。', explain:`${x[1]} は${x[3]}を修飾しています。`, viz:null }; },
+  adjQ(){ const x=pick(ADJ_Q);
+    return { prompt:'□ に入るのは？', expr:x[0]+aaJ(x[1]), enExpr:true, en:true, words:x[3].length>2, choices:[...x[3]], answer:x[2],
+      hint:'数えられる名詞 → many・a few・few、数えられない名詞 → much・a little・little。a がつくと「少しある」、つかないと「ほとんどない」。', explain:{many:'数えられる名詞（複数形）なので many。',much:'数えられない名詞なので much。','a few':'数えられる名詞で「少しある」→ a few。','a little':'数えられない名詞で「少しある」→ a little。',few:'数えられる名詞で「ほとんどない」→ few。',little:'数えられない名詞で「ほとんどない」→ little。',no:'「全く〜ない」→ no。',some:'肯定文なので some。',any:'疑問文・否定文なので any。'}[x[2]], viz:null }; },
+  adjAdv(){ const x=pick(ADJ_A);
+    return { prompt:'□ に入るのは？', expr:x[0]+aaJ(x[1]), enExpr:true, en:true, choices:[...x[3]], answer:x[2], hint:'名詞を修飾したり補語になったりするのは形容詞、動詞を修飾するのは副詞。', explain:x[4], viz:null }; },
+  adjPos(){ const x=pick(ADJ_P);
+    return { prompt:'英語にすると？', expr:x[0], en:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'形容詞はふつう名詞の前。something などを修飾するときは後ろ。', explain:x[1], viz:null }; },
+  advFreq(){ const x=pick(ADV_FQ);
+    return { prompt:'□ に入るのは？', expr:x[1]+aaJ(x[0]), enExpr:true, en:true, words:true, choices:['always','usually','often','sometimes','never'], answer:x[2], hint:'always いつも ＞ usually たいてい ＞ often よく ＞ sometimes ときどき ＞ never 決して〜ない', explain:`「${x[0]}」なので ${x[2]}。`, viz:null }; },
+  advPos(){ const x=pick(ADV_PS);
+    return { prompt:'英語にすると？', expr:x[0], en:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'頻度を表す副詞は、一般動詞の前・be動詞のあと。', explain:x[1], viz:null }; },
+  adjEJ(){ const all=[...EAJ_F.map(x=>[x[0],x[2]])], x=pick(all), ws=shuffle(all.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'形容詞の意味に注目しよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+  advEJ(){ const all=[...EAV_F.map(x=>[x[0],x[2]]),...ADV_PS.map(x=>[x[1],x[0]])], x=pick(all), ws=shuffle(all.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'副詞の意味に注目しよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+function advFqSVG(){ const R=[['always','いつも',100],['usually','たいてい・ふつう',80],['often','よく・しばしば',60],['sometimes','ときどき',35],['never','決して〜ない',0]];
+  let g='<defs><linearGradient id="fqg" x1="0" x2="1"><stop offset="0" stop-color="var(--teal-soft)"/><stop offset="1" stop-color="var(--teal)"/></linearGradient></defs>';
+  R.forEach((r,i)=>{ const y=10+i*44; g+=`<text x="6" y="${y+15}" font-size="14" font-weight="700" fill="var(--ink)">${r[0]}</text><rect x="92" y="${y+2}" width="200" height="18" rx="9" fill="var(--sunk)"/>${r[2]?`<rect x="92" y="${y+2}" width="${Math.max(18,r[2]*2)}" height="18" rx="9" fill="url(#fqg)"/>`:''}<text x="${r[2]?92+r[2]*2+(r[2]>85?-30:6):98}" y="${y+16}" font-size="11" fill="${r[2]>85?'#fff':'var(--muted)'}">${r[2]}%</text><text x="92" y="${y+36}" font-size="11.5" fill="var(--muted)">${r[1]}</text>`; });
+  return `<svg viewBox="0 0 310 232" style="width:100%;max-width:380px;display:block;margin:4px auto" role="img" aria-label="頻度を表す副詞のグラフ">${g}</svg><p class="small muted" style="text-align:center">％はおおよその目安です。</p>`; }
+const AA_LESSONS = [
+  { id:'18-1', t:'形容詞とは', sub:'人やもののようすを表す語', plan:['adjFind','adjFind','adjFind','adjAdv','adjAdv'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John has <b>a lot of</b> friends.','ジョンにはたくさんの友だちがいます。')}${beEx('They had <b>no</b> money last week.','彼らは先週お金を全く持っていませんでした。')}${beEx('He <b>always</b> sings this song.','彼はいつもこの歌を歌います。')}</section>
+    <section class="panel"><h3>形容詞</h3>${rule('人やものの「ようす」「性質」「数・量」を表す語')}
+    <div class="kwl"><div><b>big・small</b><span>大きい・小さい</span></div><div><b>new・old</b><span>新しい・古い</span></div><div><b>hot・cold</b><span>熱い・寒い（冷たい）</span></div><div><b>kind・happy</b><span>親切な・幸せな</span></div><div><b>famous・beautiful</b><span>有名な・美しい</span></div><div><b>many・much</b><span>たくさんの</span></div></div></section>
+    <section class="panel"><h3>形容詞と副詞</h3>${beEx('Ken is a <b>careful</b> driver.','ケンは注意深い運転手です。（形容詞：名詞をくわしく）')}${beEx('Ken drives <b>carefully</b>.','ケンは注意深く運転します。（副詞：動詞をくわしく）')}
+    <p class="small muted">形容詞に ly を付けると副詞になるものが多くあります（careful → carefully）。</p></section>` },
+  { id:'18-2', t:'形容詞の働き', sub:'数・量を表す形容詞', plan:['adjPos','adjPos','adjQ','adjQ','adjQ'], body:()=>`
+    <section class="panel"><h3>〇 名詞・代名詞を修飾</h3>
+    ${beEx('This is a <b>famous</b> song.','これは有名な歌です。（名詞の前）')}${beEx('I want something <b>hot</b>.','私は何か熱いものがほしい。（代名詞の後ろ）')}
+    <p class="small muted">something などの代名詞を修飾するときは、形容詞を後ろに置きます。</p></section>
+    <section class="panel"><h3>〇 補語になる（主語を説明）</h3>${beEx('This song is <b>famous</b>.','この歌は有名です。（This song ＝ famous）')}<p class="small muted">〈主語 ＋ be動詞 ＋ 形容詞〉。look・become などのあとにも置きます。</p></section>
+    <section class="panel"><h3>〇 形容詞表（数・量を表す形容詞）</h3>
+    <table class="dtab" style="font-size:.8rem"><tr><th></th><th>数えられる名詞</th><th>数えられない名詞</th></tr>
+    <tr><td>たくさんの</td><td><b>many</b><br>a lot of・lots of</td><td><b>much</b><br>a lot of・lots of</td></tr>
+    <tr><td>いくらかの</td><td colspan="2"><b>some</b>（肯定文）・<b>any</b>（否定文・疑問文）</td></tr>
+    <tr><td>少しの</td><td><b>a few</b></td><td><b>a little</b></td></tr>
+    <tr><td>ほとんど〜ない</td><td><b>few</b></td><td><b>little</b></td></tr>
+    <tr><td>全く〜ない</td><td colspan="2"><b>no</b></td></tr></table>
+    ${beEx('There is <b>much</b> water in the dam.','ダムの中にはたくさんの水があります。')}${beEx('There are <b>many</b> books in the room.','部屋の中にはたくさんの本があります。')}
+    <p class="small muted">a few・a little は「少しある」、few・little は「ほとんどない」。a があるかないかで意味が反対になります。</p></section>` },
+  { id:'18-3', t:'形容詞例文', sub:'形容詞の文を読もう', plan:['adjEJ','adjEJ','adjEJ','adjQ','adjPos'], body:()=>`
+    <section class="panel"><h3>例文</h3>${EAJ_F.map(x=>beEx(x[0].replace(new RegExp('\\b'+x[1]+'\\b'),'<b>'+x[1]+'</b>'),x[2])).join('')}</section>
+    <section class="panel"><h3>数・量</h3>${beEx('I have <b>a few</b> friends in Fukuoka.','私は福岡に何人か友だちがいます。')}${beEx('There is <b>a little</b> milk in the glass.','コップに少し牛乳があります。')}${beEx('He has <b>few</b> friends.','彼にはほとんど友だちがいません。')}${beEx('We had <b>little</b> rain last month.','先月はほとんど雨が降りませんでした。')}</section>` },
+  { id:'18-4', t:'副詞とは', sub:'動詞・形容詞・副詞をくわしくする語', plan:['advFind','advFind','advFind','adjAdv','adjAdv'], body:()=>`
+    <section class="panel"><h3>副詞</h3>${rule('動詞・形容詞・ほかの副詞をくわしくする語<br>「どのように」「どのくらい」「どのくらいよく」などを表す')}
+    <div class="kwl"><div><b>well</b><span>上手に</span></div><div><b>fast</b><span>速く</span></div><div><b>hard</b><span>一生けんめいに</span></div><div><b>slowly</b><span>ゆっくりと</span></div><div><b>very</b><span>とても</span></div><div><b>really</b><span>本当に</span></div><div><b>always・often</b><span>いつも・よく</span></div></div>
+    <p class="small muted">形容詞 ＋ ly の形が多くあります（slow → slowly、happy → happily）。</p></section>` },
+  { id:'18-5', t:'副詞の働き', sub:'頻度を表す副詞', plan:['advWhat','advWhat','advFreq','advFreq','advPos'], body:()=>`
+    <section class="panel"><h3>〇 動詞を修飾</h3>${beEx('John sings <b>well</b>.','ジョンは上手に歌います。')}</section>
+    <section class="panel"><h3>〇 形容詞を修飾</h3>${beEx('This song is <b>very</b> famous.','この歌はとても有名です。')}</section>
+    <section class="panel"><h3>〇 副詞を修飾</h3>${beEx('John sings <b>very</b> well.','ジョンはとても上手に歌います。')}<p class="small muted">very well のかたまりで動詞 sings を修飾しています。</p></section>
+    <section class="panel"><h3>〇 頻度（高い順）</h3>${advFqSVG()}</section>
+    <section class="panel"><h3>〇 副詞の位置</h3>
+    <table class="dtab"><tr><th>位置</th><th>例</th></tr>
+    <tr><td>一般動詞の<b>前</b></td><td style="text-align:left">He <b>always</b> sings this song.<br><span class="small muted">彼はいつもこの歌を歌います。</span></td></tr>
+    <tr><td>be動詞の<b>あと</b></td><td style="text-align:left">He is <b>always</b> happy.<br><span class="small muted">彼はいつも幸せです。</span></td></tr>
+    <tr><td>助動詞の<b>あと</b></td><td style="text-align:left">You can <b>always</b> ask me.<br><span class="small muted">いつでも私に聞いていいですよ。</span></td></tr></table>
+    <p class="small muted">well・fast などの「どのように」を表す副詞は、ふつう動詞（＋目的語）の後ろに置きます。</p></section>` },
+  { id:'18-6', t:'副詞例文', sub:'副詞の文を読もう', plan:['advEJ','advEJ','advEJ','advFreq','advPos'], body:()=>`
+    <section class="panel"><h3>様子・程度</h3>${EAV_F.map(x=>beEx(x[0].replace(new RegExp('\\b'+x[1]+'\\b'),'<b>'+x[1]+'</b>'),x[2])).join('')}</section>
+    <section class="panel"><h3>頻度</h3>${ADV_PS.map(x=>beEx(x[1].replace(/\b(always|sometimes|often|never|usually)\b/,'<b>$1</b>'),x[0])).join('')}</section>` },
 ];
 
 
@@ -12419,6 +12567,7 @@ const UNITS = {
   inf1:{ no:'文15', title:'不定詞', subject:'英語', course:'jen', subj:1, lessons:[...INF1_LESSONS, ...INF2_LESSONS] },
   rv4:{ no:'文16', title:'5文型', subject:'英語', course:'jen', subj:1, lessons:RV4_LESSONS },
   ger:{ no:'文17', title:'動名詞', subject:'英語', course:'jen', subj:1, lessons:GER_LESSONS },
+  adjv:{ no:'文18', title:'形容詞・副詞', subject:'英語', course:'jen', subj:1, lessons:AA_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
