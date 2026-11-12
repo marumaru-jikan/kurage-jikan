@@ -13947,7 +13947,7 @@ Object.assign(PDF, {
   'egsj-lv4': { q:'pdf/egram8.pdf', a:'pdf/egram8.pdf', qr:[52,53], ar:[54,54], d:'並び替え　10問' },
   'egsj-lv5': { q:'pdf/egram8.pdf', a:'pdf/egram8.pdf', qr:[55,56], ar:[57,58], d:'総合　大問1 文法6問・大問2 読解4問' },
 });
-EG_KEYS.forEach(k=>{ const u=UNITS[k]; if(!u) return; u.drill='eg'+k; u.drillLabel='章末問題';
+EG_KEYS.forEach(k=>{ const u=UNITS[k]; if(!u) return; u.drill='eg'+k;
   u.lessons=u.lessons.map((l,i)=>i===0?{...l, sec:'1　文法事項'}:l.sec?{...l, sec:undefined}:l);
   if(u.lessons.some(l=>l.test)){ u.lessons=u.lessons.map(l=>l.test?{...l, sec:'章末テスト'}:l); return; }
   const ls=u.lessons, pre=ls[ls.length-1].id.split('-')[0], plans=ls.map(l=>l.plan.filter(g=>G[g])), plan=[]; let i=0;
