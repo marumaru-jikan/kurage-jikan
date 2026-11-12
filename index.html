@@ -7073,15 +7073,16 @@ Object.assign(G, {
 });
 const w3E = s => `<p class="ex mth">${s}</p>`;
 /* 加減法の筆算（rows：[ラベル, 演算, x の項, y の項, 右辺]、line：線を引く行の後ろ） */
-function w3calc(rows, line){ const rh=30, W=200, H=rows.length*rh+10; let g='', y=0;
+function w3calc(rows, line){ const lab=rows.some(r=>r[0]), o=lab?70:0, rh=30, W=200+o, H=rows.length*rh+10; let g='', y=0;
   rows.forEach((r,i)=>{ y=24+i*rh; const [lb,op,a,b,c]=r;
-    if(op) g+=`<text x="26" y="${y}" text-anchor="end" style="font-size:16px">${op}</text>`;
-    if(a) g+=`<text x="76" y="${y}" text-anchor="end" style="font-size:17px">${a}</text>`;
-    if(b) g+=`<text x="126" y="${y}" text-anchor="end" style="font-size:17px">${b}</text>`;
-    if(a||b) g+=`<text x="142" y="${y}" text-anchor="middle" style="font-size:17px">＝</text>`;
-    if(c!=null&&c!=='') g+=`<text x="192" y="${y}" text-anchor="end" style="font-size:17px">${c}</text>`;
-    if(i===line) g+=`<line x1="10" y1="${y+9}" x2="196" y2="${y+9}" style="stroke:currentColor;stroke-width:1.4"/>`; });
-  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:240px;display:block;margin:8px auto;font-family:'Times New Roman',serif;fill:currentColor" role="img" aria-label="加減法の計算">${g}</svg>`; }
+    if(lb) g+=`<text x="4" y="${y}" style="font-size:13px;fill:var(--muted)">${lb}</text>`;
+    if(op) g+=`<text x="${26+o}" y="${y}" text-anchor="end" style="font-size:16px">${op}</text>`;
+    if(a) g+=`<text x="${76+o}" y="${y}" text-anchor="end" style="font-size:17px">${a}</text>`;
+    if(b) g+=`<text x="${126+o}" y="${y}" text-anchor="end" style="font-size:17px">${b}</text>`;
+    if(a||b) g+=`<text x="${142+o}" y="${y}" text-anchor="middle" style="font-size:17px">＝</text>`;
+    if(c!=null&&c!=='') g+=`<text x="${192+o}" y="${y}" text-anchor="end" style="font-size:17px">${c}</text>`;
+    if(i===line) g+=`<line x1="${10+o}" y1="${y+9}" x2="${196+o}" y2="${y+9}" style="stroke:currentColor;stroke-width:1.4"/>`; });
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${lab?300:240}px;display:block;margin:8px auto;font-family:'Times New Roman',serif;fill:currentColor" role="img" aria-label="加減法の計算">${g}</svg>`; }
 
 const M2C2_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'一次方程式の解き方', sub:'中1の復習', plan:Array(5).fill('w3Lin1'), body:()=>`
@@ -7102,7 +7103,7 @@ const M2C2_LESSONS = [
     <p>2つの表に共通する (x, y)＝(2, 3) が、この連立方程式の解です。</p><p class="small muted">解を求めることを「連立方程式を解く」といいます。</p></section>` },
   { id:'1-3', t:'加減法①', sub:'そのままたす・ひく', plan:Array(5).fill('w3Add1'), body:()=>`
     <section class="panel"><h3>加減法</h3>${rule('左辺どうし、右辺どうしをたすかひくかして、<br>1つの文字を消去する方法 → <b>加減法</b>')}
-    ${w3E(w3sys('x+3y＝9　……①','x+y＝5　……②'))}<p class="small"><b>①−②</b>　x を消去する</p>${w3calc([['①','','x','+3y','9'],['②','−)','x','+y','5'],['','','','2y','4'],['','','','y','2']],1)}${w3E('y＝2 を②に代入すると<br>x+2＝5<br>x＝3<br>(x, y)＝(3, 2)')}
+    ${w3E(w3sys('x+3y＝9　……①','x+y＝5　……②'))}<p class="small"><b>①−②</b>　x を消去する</p>${w3calc([['','','x','+3y','9'],['','−)','x','+y','5'],['','','','2y','4'],['','','','y','2']],1)}${w3E('y＝2 を②に代入すると<br>x+2＝5<br>x＝3<br>(x, y)＝(3, 2)')}
     <p class="small muted">係数の符号が同じ → ひく、ちがう → たす。答えは (x, y)＝(x の値, y の値) の形で書きます。</p></section>` },
   { id:'1-4', t:'加減法②', sub:'何倍かして係数をそろえる', plan:Array(5).fill('w3Add2'), body:()=>`
     <section class="panel"><h3>係数をそろえる</h3>${rule('そのままたしてもひいても消去できないときは、<br>一方または両方の式を何倍かして、<br>消去したい文字の係数の絶対値をそろえる')}
