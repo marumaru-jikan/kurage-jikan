@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },'受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },'現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4307,6 +4307,102 @@ const CPR_LESSONS = [
     ${beEx('He plays the guitar <b>better than any other musician</b>.','彼はほかのどの音楽家よりも上手にギターを弾きます。')}</section>
     <section class="panel"><h3>one of the ＋ 最上級 ＋ 複数名詞</h3>${rule('「最も〜な…の1つ（1人）」')}
     ${beEx('He is <b>one of the most popular musicians</b> in the world.','彼は世界で最も人気のある音楽家の1人です。')}</section>` },
+];
+
+
+/* ===== 英語 文法 20章 受動態 ===== */
+// [主語, be, 過去分詞, 残り, 日本語, 能動態, 原形, 過去形, 代名詞]
+const PSV_S = [
+  ['The song','was','written','by John.','その曲はジョンによって書かれました。','John wrote the song.','write','wrote','it'],
+  ['English','is','spoken','in many countries.','英語は多くの国で話されています。','','speak','spoke','it'],
+  ['This room','is','cleaned','by Ken every day.','この部屋は毎日ケンによってそうじされます。','Ken cleans this room every day.','clean','cleaned','it'],
+  ['These pictures','were','taken','by my father.','これらの写真は父によって撮られました。','My father took these pictures.','take','took','they'],
+  ['The window','was','broken','by Tom.','その窓はトムによって割られました。','Tom broke the window.','break','broke','it'],
+  ['Soccer','is','played','all over the world.','サッカーは世界中でプレーされています。','','play','played','it'],
+  ['This car','was','made','in Japan.','この車は日本で作られました。','','make','made','it'],
+  ['The letter','was','sent','by Yui.','その手紙はユイによって送られました。','Yui sent the letter.','send','sent','it'],
+  ['Tom','is','loved','by everyone.','トムはみんなに愛されています。','Everyone loves Tom.','love','loved','he'],
+  ['The doors','are','opened','at nine.','ドアは9時に開けられます。','','open','opened','they'],
+  ['This book','is','read','by many students.','この本は多くの生徒に読まれています。','Many students read this book.','read','read','it'],
+  ['The cake','was','made','by my mother.','そのケーキは母によって作られました。','My mother made the cake.','make','made','it'],
+  ['These rooms','are','used','by the students.','これらの部屋は生徒たちに使われています。','The students use these rooms.','use','used','they'],
+  ['The bridge','was','built','ten years ago.','その橋は10年前に建てられました。','','build','built','it'],
+  ['The dishes','were','washed','by Mike.','そのお皿はマイクによって洗われました。','Mike washed the dishes.','wash','washed','they'],
+  ['The festival','is','held','every summer.','そのお祭りは毎年夏に開かれます。','','hold','held','it'],
+];
+const PSV_REG = [['play','played'],['use','used'],['study','studied'],['clean','cleaned'],['love','loved'],['carry','carried'],['visit','visited'],['like','liked'],['wash','washed'],['open','opened'],['invite','invited'],['try','tried']];
+const psvN = b => ({is:"isn't",are:"aren't",was:"wasn't",were:"weren't"})[b];
+const psvSub = s => /^(The|These|This) /.test(s) ? lowFirst(s) : s;
+const psvFull = x => `${x[0]} ${x[1]} ${x[2]} ${x[3]}`;
+const psvIng = b => /[^e]e$/.test(b) ? b.slice(0,-1)+'ing' : b+'ing';
+const psvJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const psvBeW = b => ({is:'are',are:'is',was:'were',were:'was'})[b];
+Object.assign(G, {
+  psvBe(){ const x=pick(PSV_S);
+    return { prompt:'□ に入る be動詞は？', expr:`${x[0]} □ ${x[2]} ${x[3]}`+psvJ(x[4]), enExpr:true, en:true, words:true, choices:['is','are','was','were'], answer:x[1],
+      hint:'主語が単数か複数か、現在か過去かで be動詞を決めよう。', explain:`主語 ${x[0]} は${/^(These|The dishes|The doors)/.test(x[0])?'複数':'単数'}、「${/された|られた|れました|られました|されました/.test(x[4])?'過去':'現在'}」なので ${x[1]}。`, viz:null }; },
+  psvPP(){ const x=pick(PSV_S), c=uniq([x[2],x[7],x[6],psvIng(x[6])]);
+    return { prompt:'□ に入る形は？', expr:`${x[0]} ${x[1]} □ ${x[3]}`+psvJ(`（${x[6]}）${x[4]}`), enExpr:true, en:true, words:true, choices:shuffle(c), answer:x[2],
+      hint:'受動態は〈be ＋ 過去分詞〉。', explain:`${x[6]} の過去分詞は ${x[2]}。<br>${x[6]} － ${x[7]} － ${x[2]}`, viz:null }; },
+  psvConv(){ const x=pick(PSV_S.filter(v=>v[5])), by=x[3].match(/by ([^.]*?)( every day)?\./), ag=by[1], ok=psvFull(x);
+    const c=uniq([ok, `${x[0]} ${psvBeW(x[1])} ${x[2]} ${x[3]}`, `${x[0]} ${x[1]} ${x[6]} ${x[3]}`, `${capFirst(ag)} ${x[1]} ${x[2]} by ${psvSub(x[0])}${by[2]||''}.`]);
+    return { prompt:'受動態にすると？', expr:x[5], enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'目的語を主語にして〈be ＋ 過去分詞 ＋ by ＋ 動作主〉。', explain:`${x[5]}<br>→ ${ok}<br>${x[4]}`, viz:null }; },
+  psvNeg(){ const x=pick(PSV_S), ok=`${x[0]} ${psvN(x[1])} ${x[2]} ${x[3]}`, d=/^(is|are)$/.test(x[1])?(/^(These|The )/.test(x[0])&&x[8]==='they'?"don't":"doesn't"):"didn't";
+    const c=uniq([ok, `${x[0]} ${d} ${x[2]} ${x[3]}`, `${x[0]} ${psvN(x[1])} ${x[6]} ${x[3]}`, `${x[0]} not ${x[1]} ${x[2]} ${x[3]}`]);
+    return { prompt:'否定文にすると？', expr:psvFull(x), enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'be動詞のあとに not。', explain:`${ok}<br>（${x[1]} not → ${psvN(x[1])}）`, viz:null }; },
+  psvQ(){ const x=pick(PSV_S), s=psvSub(x[0]), ok=`${capFirst(x[1])} ${s} ${x[2]} ${x[3].replace(/\.$/,'?')}`, d=/^(is|are)$/.test(x[1])?(x[8]==='they'?'Do':'Does'):'Did';
+    const c=uniq([ok, `${d} ${s} ${x[2]} ${x[3].replace(/\.$/,'?')}`, `${capFirst(x[1])} ${s} ${x[6]} ${x[3].replace(/\.$/,'?')}`, `${capFirst(psvBeW(x[1]))} ${s} ${x[2]} ${x[3].replace(/\.$/,'?')}`]);
+    return { prompt:'疑問文にすると？', expr:psvFull(x), enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'be動詞を主語の前に出す。過去分詞はそのまま。', explain:`${ok}<br>— Yes, ${x[8]} ${x[1]}. ／ No, ${x[8]} ${psvN(x[1])}.`, viz:null }; },
+  psvAns(){ const x=pick(PSV_S), s=psvSub(x[0]), q=`${capFirst(x[1])} ${s} ${x[2]} ${x[3].replace(/\.$/,'?')}`, yes=Math.random()<.5, ok=yes?`Yes, ${x[8]} ${x[1]}.`:`No, ${x[8]} ${psvN(x[1])}.`;
+    const d=/^(is|are)$/.test(x[1])?(x[8]==='they'?'do':'does'):'did';
+    const c=uniq([ok, yes?`Yes, ${x[8]} ${d}.`:`No, ${x[8]} ${d}n't.`, yes?`Yes, ${x[8]} ${psvBeW(x[1])}.`:`No, ${x[8]} ${psvN(psvBeW(x[1]))}.`, yes?`Yes, ${x[8]} ${x[2]}.`:`No, ${x[8]} not ${x[2]}.`]);
+    return { prompt:`「${yes?'はい':'いいえ'}」と答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'be動詞の疑問文には be動詞で答える。', explain:`${q}<br>— ${ok}`, viz:null }; },
+  psvReg(){ const v=pick(PSV_REG), b=v[0], ch=uniq([v[1], /(s|sh|ch|x)$/.test(b)||/[^aeiou]y$/.test(b)?(/y$/.test(b)?b.slice(0,-1)+'ies':b+'es'):b+'s', psvIng(b), /[^aeiou]y$/.test(b)?b+'ed':b]);
+    return { prompt:`「${b}」の過去分詞は？`, expr:'', words:true, choices:shuffle(ch), answer:v[1], hint:'規則動詞の過去分詞は、過去形と同じ形。', explain:`${b} － ${v[1]} － ${v[1]}<br>${/[^aeiou]y$/.test(b)?'語尾が〈子音字＋y〉→ y を i にかえて ed。':/e$/.test(b)?'語尾が e → d だけ付ける。':'原形 ＋ ed。'}`, viz:null }; },
+  psvEJ(){ const all=PSV_S.map(x=>[psvFull(x),x[4]]), x=pick(all), ws=shuffle(all.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'〈be ＋ 過去分詞〉は「〜される（された）」。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+const psvIrr = b => IRR.find(v=>irBase(v)===b);
+const PSV_LESSONS = [
+  { id:'20-1', t:'受動態とは', sub:'受け身「〜される」', plan:['psvBe','psvBe','psvBe','psvEJ','psvEJ'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('The song <b>was written by</b> John.','その曲はジョンによって書かれました。')}${beEx('The song <b>wasn’t written by</b> Paul.','その曲はポールによって書かれたのではありません。')}</section>
+    <section class="panel"><h3>受動態（受け身）</h3>${rule('主語 ＋ be ＋ 過去分詞 ＋ by ＋ 動作主<br>→「主語は 動作主 によって〜される（された）」')}
+    <p>動作を<b>する</b>人（物）が主語の文を<b>能動態</b>、動作を<b>受ける</b>物（人）が主語の文を<b>受動態</b>といいます。</p>
+    ${beEx('John <b>wrote</b> the song.','ジョンはその曲を書きました。（能動態）')}<p style="text-align:center">↓</p>${beEx('The song <b>was written</b> by John.','その曲はジョンによって書かれました。（受動態）')}</section>
+    <section class="panel"><h3>be動詞の使い分け</h3>
+    <p>受動態では、〈be ＋ 過去分詞〉の <b>be</b> が、主語の人称・数や時に合わせて変わります。</p>
+    <table class="dtab"><tr><th>主語</th><th>現在</th><th>過去</th></tr><tr><td>I</td><td>am</td><td>was</td></tr><tr><td>he・she・it・単数</td><td>is</td><td>was</td></tr><tr><td>you・we・they・複数</td><td>are</td><td>were</td></tr></table>
+    ${beEx('This room <b>is</b> cleaned by Ken every day.','この部屋は毎日ケンによってそうじされます。（現在）')}${beEx('These pictures <b>were</b> taken by my father.','これらの写真は父によって撮られました。（過去・複数）')}</section>` },
+  { id:'20-2', t:'能動態と受動態', sub:'肯定文・否定文・疑問文', plan:['psvConv','psvConv','psvNeg','psvQ','psvAns'], body:()=>`
+    <section class="panel"><h3>〇 肯定文</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th>能動態</th><th>受動態</th></tr>
+    <tr><td>主語 ＋ 一般動詞 ＋ 目的語</td><td>主語 ＋ be ＋ 過去分詞 ＋ by ＋ 動作主</td></tr>
+    <tr><td>John wrote <b>the song</b>.</td><td><b>The song</b> was written by John.</td></tr></table>
+    <p class="small muted">能動態の<b>目的語</b>が、受動態の<b>主語</b>になります。</p></section>
+    <section class="panel"><h3>〇 否定文</h3>${rule('主語 ＋ be ＋ <b>not</b> ＋ 過去分詞 ＋ by ＋ 動作主')}
+    ${beEx('Paul <b>didn’t</b> write the song.','ポールはその曲を書きませんでした。（能動態）')}<p style="text-align:center">↓</p>${beEx('The song <b>wasn’t</b> written by Paul.','その曲はポールによって書かれたのではありません。（受動態）')}
+    <p class="small muted">受動態では did・does を使わず、be動詞のあとに not を置きます。</p></section>
+    <section class="panel"><h3>〇 疑問文</h3>${rule('<b>be</b> ＋ 主語 ＋ 過去分詞 ＋ by ＋ 動作主 ?<br>— Yes, 主語 ＋ be. ／ No, 主語 ＋ be ＋ not.')}
+    ${beEx('<b>Did</b> John write the song? — Yes, he <b>did</b>. ／ No, he <b>didn’t</b>.','ジョンはその曲を書きましたか。（能動態）')}<p style="text-align:center">↓</p>
+    ${beEx('<b>Was</b> the song written by John? — Yes, it <b>was</b>. ／ No, it <b>wasn’t</b>.','その曲はジョンによって書かれましたか。— はい、書かれました。／いいえ、書かれませんでした。（受動態）')}</section>` },
+  { id:'20-3', t:'過去分詞の作り方', sub:'規則動詞・不規則動詞', plan:['psvReg','psvReg','irPP','irPP','psvPP'], body:()=>`
+    <section class="panel"><h3>〇 規則動詞</h3>${rule('過去形の (e)d の付け方と同じ（過去形 ＝ 過去分詞）')}
+    <table class="dtab" style="font-size:.85rem"><tr><th>ポイント</th><th>原形</th><th>過去形</th><th style="white-space:nowrap">過去分詞</th></tr>
+    <tr><td style="text-align:left">原形 ＋ ed</td><td>play</td><td>played</td><td><b>played</b></td></tr>
+    <tr><td style="text-align:left">原形 ＋ d<br><span class="small">語尾が e</span></td><td>use</td><td>used</td><td><b>used</b></td></tr>
+    <tr><td style="text-align:left">y → ied<br><span class="small">語尾が〈子音字＋y〉</span></td><td>study</td><td>studied</td><td><b>studied</b></td></tr></table></section>
+    <section class="panel"><h3>〇 不規則動詞</h3>${rule('不規則に変化する')}
+    <table class="dtab" style="font-size:.85rem"><tr><th>型</th><th>原形</th><th>過去形</th><th>過去分詞</th></tr>
+    ${[['A-A-A型',['cut','put']],['A-B-A型',['come','run']],['A-B-B型',['make','buy']],['A-B-C型',['write','speak']]].map(([t,bs])=>bs.map((b,i)=>{ const v=psvIrr(b); return `<tr>${i===0?`<td rowspan="2">${t}</td>`:''}<td>${b}</td><td>${irFirst(v[2])}</td><td><b>${irFirst(v[3])}</b></td></tr>`; }).join('')).join('')}</table>
+    <p class="small muted">A-A-A型：3つとも同じ<br>A-B-A型：原形と過去分詞が同じ<br>A-B-B型：過去形と過去分詞が同じ<br>A-B-C型：3つとも違う</p>
+    <button class="btn ghost wide" data-act="unit" data-arg="irr">英単語 ▶ 動詞の不規則変化</button></section>` },
+  { id:'20-4', t:'例文', sub:'受動態の文を読もう', plan:['psvEJ','psvEJ','psvPP','psvBe','psvQ'], body:()=>`
+    <section class="panel"><h3>例文</h3>${PSV_S.map(x=>beEx(`${x[0]} <b>${x[1]} ${x[2]}</b> ${x[3].replace(/^by /,'<b>by</b> ')}`,x[4])).join('')}
+    <p class="small muted">「だれによって」が分からないときや言う必要がないときは、by 〜 を省略します。<br>（例）English is spoken in many countries.</p></section>` },
 ];
 
 
@@ -12706,6 +12802,7 @@ const UNITS = {
   ger:{ no:'文17', title:'動名詞', subject:'英語', course:'jen', subj:1, lessons:GER_LESSONS },
   adjv:{ no:'文18', title:'形容詞・副詞', subject:'英語', course:'jen', subj:1, lessons:AA_LESSONS },
   cpr:{ no:'文19', title:'比較', subject:'英語', course:'jen', subj:1, lessons:CPR_LESSONS },
+  psv:{ no:'文20', title:'受動態', subject:'英語', course:'jen', subj:1, lessons:PSV_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
