@@ -659,46 +659,51 @@ const cardLabel = i => `${CTYPE[KCARDS[i].t]}　No.${cardNo(i)}`;
 // 演習問題PDF。pdf フォルダに入れたファイル名を書きます。空なら「準備中」と表示されます。
 const PDF = {
   'ch1-lv1': { q:'', a:'' }, 'ch1-lv2': { q:'', a:'' }, 'ch1-lv3': { q:'', a:'' }, 'ch1-lv4': { q:'', a:'' }, 'ch1-lv5': { q:'', a:'' },
-  'm3c1-lv1': { q:'pdf/m3c1-lv1-q.pdf', a:'pdf/m3c1-lv1-a.pdf' },
-  'm3c1-lv2': { q:'pdf/m3c1-lv2-q.pdf', a:'pdf/m3c1-lv2-a.pdf' },
-  'm3c1-lv3': { q:'pdf/m3c1-lv3-q.pdf', a:'pdf/m3c1-lv3-a.pdf' },
-  'm3c1-lv4': { q:'pdf/m3c1-lv4-q.pdf', a:'pdf/m3c1-lv4-a.pdf' },
-  'm3c1-lv5': { q:'pdf/m3c1-lv5-q.pdf', a:'pdf/m3c1-lv5-a.pdf' },
-  'm3c2-lv1': { q:'pdf/m3c2-lv1-q.pdf', a:'pdf/m3c2-lv1-a.pdf' },
-  'm3c2-lv2': { q:'pdf/m3c2-lv2-q.pdf', a:'pdf/m3c2-lv2-a.pdf' },
-  'm3c2-lv3': { q:'pdf/m3c2-lv3-q.pdf', a:'pdf/m3c2-lv3-a.pdf' },
-  'm3c2-lv4': { q:'pdf/m3c2-lv4-q.pdf', a:'pdf/m3c2-lv4-a.pdf' },
-  'm3c2-lv5': { q:'pdf/m3c2-lv5-q.pdf', a:'pdf/m3c2-lv5-a.pdf' },
-  'm3c3-lv1': { q:'pdf/m3c3-lv1-q.pdf', a:'pdf/m3c3-lv1-a.pdf' },
-  'm3c3-lv2': { q:'pdf/m3c3-lv2-q.pdf', a:'pdf/m3c3-lv2-a.pdf' },
-  'm3c3-lv3': { q:'pdf/m3c3-lv3-q.pdf', a:'pdf/m3c3-lv3-a.pdf' },
-  'm3c3-lv4': { q:'pdf/m3c3-lv4-q.pdf', a:'pdf/m3c3-lv4-a.pdf' },
-  'm3c3-lv5': { q:'pdf/m3c3-lv5-q.pdf', a:'pdf/m3c3-lv5-a.pdf' },
-  'm3c4-lv1': { q:'pdf/m3c4-lv1-q.pdf', a:'pdf/m3c4-lv1-a.pdf' },
-  'm3c4-lv2': { q:'pdf/m3c4-lv2-q.pdf', a:'pdf/m3c4-lv2-a.pdf' },
-  'm3c4-lv3': { q:'pdf/m3c4-lv3-q.pdf', a:'pdf/m3c4-lv3-a.pdf' },
-  'm3c4-lv4': { q:'pdf/m3c4-lv4-q.pdf', a:'pdf/m3c4-lv4-a.pdf' },
-  'm3c4-lv5': { q:'pdf/m3c4-lv5-q.pdf', a:'pdf/m3c4-lv5-a.pdf' },
-  'm3c5-lv1': { q:'pdf/m3c5-lv1-q.pdf', a:'pdf/m3c5-lv1-a.pdf' },
-  'm3c5-lv2': { q:'pdf/m3c5-lv2-q.pdf', a:'pdf/m3c5-lv2-a.pdf' },
-  'm3c5-lv3': { q:'pdf/m3c5-lv3-q.pdf', a:'pdf/m3c5-lv3-a.pdf' },
-  'm3c5-lv4': { q:'pdf/m3c5-lv4-q.pdf', a:'pdf/m3c5-lv4-a.pdf' },
-  'm3c5-lv5': { q:'pdf/m3c5-lv5-q.pdf', a:'pdf/m3c5-lv5-a.pdf' },
-  'm3c6-lv1': { q:'pdf/m3c6-lv1-q.pdf', a:'pdf/m3c6-lv1-a.pdf' },
-  'm3c6-lv2': { q:'pdf/m3c6-lv2-q.pdf', a:'pdf/m3c6-lv2-a.pdf' },
-  'm3c6-lv3': { q:'pdf/m3c6-lv3-q.pdf', a:'pdf/m3c6-lv3-a.pdf' },
-  'm3c6-lv4': { q:'pdf/m3c6-lv4-q.pdf', a:'pdf/m3c6-lv4-a.pdf' },
-  'm3c6-lv5': { q:'pdf/m3c6-lv5-q.pdf', a:'pdf/m3c6-lv5-a.pdf' },
-  'm3c7-lv1': { q:'pdf/m3c7-lv1-q.pdf', a:'pdf/m3c7-lv1-a.pdf' },
-  'm3c7-lv2': { q:'pdf/m3c7-lv2-q.pdf', a:'pdf/m3c7-lv2-a.pdf' },
-  'm3c7-lv3': { q:'pdf/m3c7-lv3-q.pdf', a:'pdf/m3c7-lv3-a.pdf' },
-  'm3c7-lv4': { q:'pdf/m3c7-lv4-q.pdf', a:'pdf/m3c7-lv4-a.pdf' },
-  'm3c7-lv5': { q:'pdf/m3c7-lv5-q.pdf', a:'pdf/m3c7-lv5-a.pdf' },
-  'm3c8-lv1': { q:'pdf/m3c8-lv1-q.pdf', a:'pdf/m3c8-lv1-a.pdf' },
-  'm3c8-lv2': { q:'pdf/m3c8-lv2-q.pdf', a:'pdf/m3c8-lv2-a.pdf' },
-  'm3c8-lv3': { q:'pdf/m3c8-lv3-q.pdf', a:'pdf/m3c8-lv3-a.pdf' },
-  'm3c8-lv4': { q:'pdf/m3c8-lv4-q.pdf', a:'pdf/m3c8-lv4-a.pdf' },
-  'm3c8-lv5': { q:'pdf/m3c8-lv5-q.pdf', a:'pdf/m3c8-lv5-a.pdf' },
+  'm2c1-lv1': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[1,1], ar:[2,2] },
+  'm2c1-lv2': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[3,4], ar:[5,6] },
+  'm2c1-lv3': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[7,9], ar:[10,11] },
+  'm2c1-lv4': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[12,13], ar:[14,15] },
+  'm2c1-lv5': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[16,17], ar:[18,19] },
+  'm3c1-lv1': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[1,1], ar:[2,2] },
+  'm3c1-lv2': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[3,4], ar:[5,6] },
+  'm3c1-lv3': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[7,9], ar:[10,12] },
+  'm3c1-lv4': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[13,14], ar:[15,16] },
+  'm3c1-lv5': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[17,18], ar:[19,20] },
+  'm3c2-lv1': { q:'pdf/m3c2.pdf', a:'pdf/m3c2.pdf', qr:[1,1], ar:[2,2] },
+  'm3c2-lv2': { q:'pdf/m3c2.pdf', a:'pdf/m3c2.pdf', qr:[3,4], ar:[5,6] },
+  'm3c2-lv3': { q:'pdf/m3c2.pdf', a:'pdf/m3c2.pdf', qr:[7,8], ar:[9,10] },
+  'm3c2-lv4': { q:'pdf/m3c2.pdf', a:'pdf/m3c2.pdf', qr:[11,12], ar:[13,14] },
+  'm3c2-lv5': { q:'pdf/m3c2.pdf', a:'pdf/m3c2.pdf', qr:[15,16], ar:[17,18] },
+  'm3c3-lv1': { q:'pdf/m3c3.pdf', a:'pdf/m3c3.pdf', qr:[1,1], ar:[2,2] },
+  'm3c3-lv2': { q:'pdf/m3c3.pdf', a:'pdf/m3c3.pdf', qr:[3,4], ar:[5,6] },
+  'm3c3-lv3': { q:'pdf/m3c3.pdf', a:'pdf/m3c3.pdf', qr:[7,8], ar:[9,10] },
+  'm3c3-lv4': { q:'pdf/m3c3.pdf', a:'pdf/m3c3.pdf', qr:[11,13], ar:[14,15] },
+  'm3c3-lv5': { q:'pdf/m3c3.pdf', a:'pdf/m3c3.pdf', qr:[16,18], ar:[19,20] },
+  'm3c4-lv1': { q:'pdf/m3c4.pdf', a:'pdf/m3c4.pdf', qr:[1,1], ar:[2,2] },
+  'm3c4-lv2': { q:'pdf/m3c4.pdf', a:'pdf/m3c4.pdf', qr:[3,4], ar:[5,6] },
+  'm3c4-lv3': { q:'pdf/m3c4.pdf', a:'pdf/m3c4.pdf', qr:[7,9], ar:[10,12] },
+  'm3c4-lv4': { q:'pdf/m3c4.pdf', a:'pdf/m3c4.pdf', qr:[13,15], ar:[16,17] },
+  'm3c4-lv5': { q:'pdf/m3c4.pdf', a:'pdf/m3c4.pdf', qr:[18,20], ar:[21,22] },
+  'm3c5-lv1': { q:'pdf/m3c5.pdf', a:'pdf/m3c5.pdf', qr:[1,2], ar:[3,3] },
+  'm3c5-lv2': { q:'pdf/m3c5.pdf', a:'pdf/m3c5.pdf', qr:[4,6], ar:[7,8] },
+  'm3c5-lv3': { q:'pdf/m3c5.pdf', a:'pdf/m3c5.pdf', qr:[9,12], ar:[13,14] },
+  'm3c5-lv4': { q:'pdf/m3c5.pdf', a:'pdf/m3c5.pdf', qr:[15,18], ar:[19,20] },
+  'm3c5-lv5': { q:'pdf/m3c5.pdf', a:'pdf/m3c5.pdf', qr:[21,23], ar:[24,26] },
+  'm3c6-lv1': { q:'pdf/m3c6.pdf', a:'pdf/m3c6.pdf', qr:[1,2], ar:[3,3] },
+  'm3c6-lv2': { q:'pdf/m3c6.pdf', a:'pdf/m3c6.pdf', qr:[4,6], ar:[7,8] },
+  'm3c6-lv3': { q:'pdf/m3c6.pdf', a:'pdf/m3c6.pdf', qr:[9,12], ar:[13,14] },
+  'm3c6-lv4': { q:'pdf/m3c6.pdf', a:'pdf/m3c6.pdf', qr:[15,18], ar:[19,20] },
+  'm3c6-lv5': { q:'pdf/m3c6.pdf', a:'pdf/m3c6.pdf', qr:[21,24], ar:[25,26] },
+  'm3c7-lv1': { q:'pdf/m3c7.pdf', a:'pdf/m3c7.pdf', qr:[1,2], ar:[3,3] },
+  'm3c7-lv2': { q:'pdf/m3c7.pdf', a:'pdf/m3c7.pdf', qr:[4,5], ar:[6,7] },
+  'm3c7-lv3': { q:'pdf/m3c7.pdf', a:'pdf/m3c7.pdf', qr:[8,10], ar:[11,12] },
+  'm3c7-lv4': { q:'pdf/m3c7.pdf', a:'pdf/m3c7.pdf', qr:[13,15], ar:[16,18] },
+  'm3c7-lv5': { q:'pdf/m3c7.pdf', a:'pdf/m3c7.pdf', qr:[19,21], ar:[22,23] },
+  'm3c8-lv1': { q:'pdf/m3c8.pdf', a:'pdf/m3c8.pdf', qr:[1,1], ar:[2,3] },
+  'm3c8-lv2': { q:'pdf/m3c8.pdf', a:'pdf/m3c8.pdf', qr:[4,6], ar:[7,8] },
+  'm3c8-lv3': { q:'pdf/m3c8.pdf', a:'pdf/m3c8.pdf', qr:[9,12], ar:[13,15] },
+  'm3c8-lv4': { q:'pdf/m3c8.pdf', a:'pdf/m3c8.pdf', qr:[16,17], ar:[18,19] },
+  'm3c8-lv5': { q:'pdf/m3c8.pdf', a:'pdf/m3c8.pdf', qr:[20,22], ar:[23,24] },
   'kana-lv1': { q:'pdf/kana-lv1-q.pdf', a:'pdf/kana-lv1-a.pdf' },
   'kana-lv2': { q:'pdf/kana-lv2-q.pdf', a:'pdf/kana-lv2-a.pdf' },
   'kana-lv3': { q:'pdf/kana-lv3-q.pdf', a:'pdf/kana-lv3-a.pdf' },
@@ -1106,7 +1111,7 @@ const CATALOG = [
       { name:'数学', k:'数', units:U({ t:'正負の数', ready:'pn' },'文字の式','方程式','比例と反比例','平面図形','空間図形','データの活用') },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
-      { name:'数学', k:'数', units:U('式の計算','連立方程式','一次関数','図形の調べ方','図形の性質と証明','場合の数と確率','箱ひげ図とデータの活用') },
+      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },'連立方程式','一次関数','図形の調べ方','図形の性質と証明','場合の数と確率','箱ひげ図とデータの活用') },
       { name:'理科', k:'理', units:U('化学変化と原子・分子','生物のからだのつくりとはたらき','天気とその変化','電流とその利用') } ] },
     { id:'j3', name:'中3', k:'3', grade:3, subjects:[
       { name:'数学', k:'数', units:U({ t:'式の展開と因数分解', ready:'m3c1' },{ t:'平方根', ready:'m3c2' },{ t:'二次方程式', ready:'m3c3' },{ t:'関数 y＝ax²', ready:'m3c4' },{ t:'図形と相似', ready:'m3c5' },{ t:'円の性質', ready:'m3c6' },{ t:'三平方の定理', ready:'m3c7' },{ t:'標本調査', ready:'m3c8' }) },
@@ -5230,6 +5235,7 @@ const SJ_LESSONS = [
 
 
 
+
 /* ===== 中1漢字 ===== */
 // 1行1字：漢字|音読み|訓読み|言葉:読み:意味;言葉:読み:意味;…
 const KJ_RAW = `
@@ -6736,6 +6742,215 @@ const M3_LESSONS = [
     <p class="small muted">練習では、証明の中の □ に入るものを選びます。</p></section>` },
   { id:'5-1', sec:'章末テスト', t:'章末テスト', sub:'1章の総まとめ', test:true, plan:['m3MulMono','m3ExpLike','m3F2','m3F4','m3Mix','m3CF','m3TriNeg','m3Comb','m3Calc','m3Val'], body:()=>`
     <section class="panel"><h3>1章のまとめ</h3><p>1章全体から10問出題します。間違えた問題は、そのしずくに戻って復習しよう。</p></section>` },
+];
+
+/* ===== 中2数学 1章 式の計算 ===== */
+const w2one = p => [...p.entries()][0];
+const w2P = m => w2one(m)[1] < 0 ? par(m) : pfmt(m);
+const w2div = (P, C) => { const [kp,cp]=w2one(P), [kc,cc]=w2one(C), o=pv(kp), oc=pv(kc); for(const v in oc) o[v]=(o[v]||0)-oc[v]; return mk([cp/cc, vk(o)]); };
+const w2lcm = (a,b) => a*b/gcd(a,b);
+const w2T = (c,k,first) => { const a=Math.abs(c), vs=k.replace(/\d/g,d=>SUPN[d]||d); return (c<0?'−':(first?'':'+'))+((a===1&&k)?'':String(a))+vs; };
+const w2raw = terms => terms.map(([c,k],i)=>w2T(c,k,i===0)).join('');
+const w2Fr = (num, den) => den===1 ? num : frH(num, den);
+const w2Q = [
+  ['1本100円のジュースを x 本買って、1000円出したときのおつり（円）','1000−100x',['100x−1000','1000−x','1000+100x']],
+  ['1個 a 円のりんご5個と、1個 b 円のみかん3個の代金（円）','5a+3b',['8ab','3a+5b','15ab']],
+  ['x m の道のりを、分速 120 m で進んだときにかかった時間（分）',frH('x','120'),[frH('120','x'),'120x','x−120']],
+  ['1辺が a cm の正方形の周の長さ（cm）','4a',['a²','2a','a+4']],
+  ['a 人に x 本ずつ配ったら3本余ったときの、全部の本数','ax+3',['ax−3','3ax','a+x+3']],
+  ['定価 x 円の品物を、2割引きで買ったときの代金（円）',frH('4','5')+'x',[frH('1','5')+'x','x−2',frH('2','10')+'x']],
+  ['時速 4 km で y 時間歩いた道のり（km）','4y',[frH('y','4'),frH('4','y'),'4+y']],
+  ['十の位が a、一の位が b の2けたの整数','10a+b',['ab','a+b','10b+a']],
+];
+const w2MON = ['a²b','−3x','4xy','−y','5','7ab²',frH('x','3')], w2POL = ['4x−y','2x+3y−4','a²+b−1','x+1','3a−5b','x²−2x'];
+const w2DEG = [['−18y',1],['9xy',2],['5x²',2],['−4a²b',3],['7',0],['2xy²',3],['x',1],['−a³',3]];
+const w2PDEG = [['6x−y−5',1],['ab−b−1',2],['2x²−5y−3',2],['a²b+3ab−1',3],['x²+4x−9',2],['3x+2y',1],['x³−x',3]];
+const w2EO = [
+  ['奇数から偶数をひいた差は奇数になる。','(2n+1)−2m＝2(□)+1','n−m',['m−n','n+m','2n−2m']],
+  ['偶数と偶数の和は偶数になる。','2m+2n＝2(□)','m+n',['mn','2m+2n','m−n']],
+  ['奇数と奇数の和は偶数になる。','(2m+1)+(2n+1)＝2(□)','m+n+1',['m+n','m+n+2','2m+2n']],
+  ['偶数と奇数の和は奇数になる。','2m+(2n+1)＝2(□)+1','m+n',['m+n+1','2m+2n','mn']],
+  ['連続する3つの整数の和は3の倍数になる。','(n−1)+n+(n+1)＝3×□','n',['n+1','3n','n−1']],
+  ['連続する3つの整数の和は3の倍数になる。','n+(n+1)+(n+2)＝3(□)','n+1',['n','n+2','n+3']],
+  ['連続する2つの奇数の和は4の倍数になる。','(2n−1)+(2n+1)＝4×□','n',['2n','n+1','4n']],
+  ['2けたの整数と、十の位と一の位を入れかえた数の和は11の倍数になる。','(10a+b)+(10b+a)＝11(□)','a+b',['a−b','10a+b','ab']],
+  ['2けたの整数から、十の位と一の位を入れかえた数をひいた差は9の倍数になる。','(10a+b)−(10b+a)＝9(□)','a−b',['b−a','a+b','11a−b']],
+];
+const w2REP = [
+  ['m を整数とするとき、偶数を表す式は？','2m',['m+2','m²','2m+1']],
+  ['m を整数とするとき、奇数を表す式は？','2m+1',['2m','m+1','2+m']],
+  ['n を整数とするとき、3の倍数を表す式は？','3n',['n+3','n³','3n+1']],
+  ['十の位が a、一の位が b の2けたの整数は？','10a+b',['ab','a+b','10b+a']],
+  ['10a+b の十の位と一の位を入れかえた数は？','10b+a',['ba','10a+b','b+a']],
+  ['中央の整数を n とするとき、連続する3つの整数は？','n−1、n、n+1',['n、2n、3n','n、n+1、n+3','n−2、n、n+2']],
+  ['n を整数とするとき、連続する2つの偶数は？','2n、2n+2',['2n、2n+1','n、n+2','2n、4n']],
+  ['n を整数とするとき、5でわると2余る数は？','5n+2',['2n+5','5n−2','5(n+2)']],
+];
+const w2SOL = [
+  ['x+y＝8','x','x＝8−y',['x＝y−8','x＝8+y','x＝−8−y']],
+  ['2ax＝−8b','x',`x＝−${frH('4b','a')}`,[`x＝${frH('4b','a')}`,`x＝−${frH('4a','b')}`,'x＝−8b−2a']],
+  ['S＝abc','a',`a＝${frH('S','bc')}`,['a＝Sbc',`a＝${frH('bc','S')}`,'a＝S−bc']],
+  ['3x+2y＝0','y',`y＝−${frH('3','2')}x`,[`y＝${frH('3','2')}x`,`y＝−${frH('2','3')}x`,'y＝−3x−2']],
+  ['4x−8y＝12','x','x＝3+2y',['x＝3−2y','x＝12+8y','x＝3+8y']],
+  ['3x−2y＝10','y',`y＝${frH('3','2')}x−5`,[`y＝${frH('3','2')}x+5`,`y＝−${frH('3','2')}x+5`,'y＝3x−10']],
+  ['ℓ＝2(a−b)','a',`a＝${frH('ℓ','2')}+b`,[`a＝${frH('ℓ','2')}−b`,'a＝2ℓ+b','a＝ℓ−2b']],
+  [`S＝${frH('1','3')}a²h`,'h',`h＝${frH('3S','a²')}`,[`h＝${frH('S','3a²')}`,`h＝${frH('a²','3S')}`,'h＝3S−a²']],
+  [`m＝${frH('a+b+c','3')}`,'a','a＝3m−b−c',['a＝3m+b+c',`a＝${frH('m','3')}−b−c`,'a＝m−b−c']],
+  ['V＝πr²h','h',`h＝${frH('V','πr²')}`,['h＝Vπr²',`h＝${frH('πr²','V')}`,'h＝V−πr²']],
+  ['y＝3x−6','x',`x＝${frH('y+6','3')}`,[`x＝${frH('y−6','3')}`,'x＝3y+6',`x＝${frH('y','3')}−6`]],
+  ['a＝2b+c','b',`b＝${frH('a−c','2')}`,[`b＝${frH('a+c','2')}`,'b＝2a−c',`b＝${frH('a','2')}−c`]],
+];
+Object.assign(G, {
+  w2Qty(){ const x=pick(w2Q);
+    return { prompt:'次の数量を表す式は？', expr:x[0], math:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'ことばの式をつくってから、文字や数をあてはめよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+  w2Lin(){ const v=pick(['x','a','y']), A=mk([nz(-7,7),v],[nz(-9,9),'']), B=mk([nz(-7,7),v],[nz(-9,9),'']), s=pick([1,-1]), ans=padd(A,B,s); if(ans.size<2) return G.w2Lin();
+    const wr=s<0?(()=>{ const ks=[...B.keys()].sort(pcmp), h=new Map(A); pAddK(h,ks[0],-B.get(ks[0])); pAddK(h,ks[1],B.get(ks[1])); return pfmt(h); })():pfmt(padd(A,B,-1));
+    return mq('次の計算をしなさい。', `${par(A)}${s<0?'−':'+'}${par(B)}`, pfmt(ans), [wr, ...perturbs(ans)], s<0?'ひく式の各項の符号を変えて、かっこをはずそう。':'かっこをはずして、文字の項どうし・数の項どうしをまとめよう。', `${par(A)}${s<0?'−':'+'}${par(B)}<br>＝${markLine([A,psc(B,s)])}<br>＝${pfmt(ans)}`); },
+  w2Val1(){ const t=ri(0,3), x=t===1?pick([-2,2]):pick([-3,-2,2,3]), y=pick([-2,3,4]), f=n=>n<0?'−'+(-n):String(n);
+    const T=[[`12−x`, 12-x, [12+x, -12-x, x-12], `12−(${f(x)})`],
+      [`−${frH('4','x')}`, -4/x, [4/x, 4*x, -4*x], `−4÷(${f(x)})`],
+      ['−5x²', -5*x*x, [25*x*x, -10*x, 5*x*x], `−5×(${f(x)})²`],
+      ['5x−3y', 5*x-3*y, [5*x+3*y, -5*x-3*y, 5*x-y], `5×(${f(x)})−3×(${f(y)})`]][t];
+    return mq(`x＝${f(x)}${t===3?`、y＝${f(y)}`:''} のとき、次の式の値は？`, T[0], f(T[1]), T[2].map(f), '負の数を代入するときは、かっこをつけよう。', `${T[3]}＝${f(T[1])}`); },
+  w2Mono(){ const k=Math.random()<.5, m=pick(w2MON), ps=shuffle(w2POL), ms=shuffle(w2MON);
+    return k ? { prompt:'単項式はどれ？', expr:'', math:true, choices:shuffle([m,...ps.slice(0,3)]), answer:m, hint:'数や文字の乗法だけでできている式が単項式。1つの文字や数も単項式。', explain:`${m} は単項式。ほかは単項式の和の形なので多項式。`, viz:null }
+      : { prompt:'多項式はどれ？', expr:'', math:true, choices:shuffle([ps[0],...ms.slice(0,3)]), answer:ps[0], hint:'単項式の和の形で表された式が多項式。', explain:`${ps[0]} は単項式の和の形なので多項式。`, viz:null }; },
+  w2Term(){ const v=pick(['x','a']), w=v==='x'?'y':'b', T=[[nz(2,6),v+'2'],[nz(-8,8),v],[nz(-9,9),'']]; if(Math.random()<.5) T[0]=[nz(-6,6),v],T[1]=[nz(-6,6),w];
+    const e=w2raw(T), ok=T.map(([c,k],i)=>w2T(c,k,true)).join('，'), ab=T.map(([c,k])=>w2T(Math.abs(c),k,true)).join('，'), dr=T.slice(0,2).map(([c,k])=>w2T(c,k,true)).join('，');
+    return mq('次の多項式の項は？', e, ok, [ab, dr, T.slice(1).map(([c,k])=>w2T(c,k,true)).join('，')], `${e}＝${T.map(([c,k])=>w2T(c,k,true)).map(t=>t.startsWith('−')?'('+t+')':t).join('+')} と和の形で考えよう。`, `項は ${ok}`, { words:true }); },
+  w2Coef(){ const v=pick(['x','a']), w=v==='x'?'y':'b', c1=nz(-7,7), c2=pick([-5,-4,-3,-2,-1,2,3,4,5]), T=[[c1,v],[c2,w],[nz(-9,9),'']], e=w2raw(T), ask=pick([v,w]), c=ask===v?c1:c2;
+    const f=n=>n<0?'−'+(-n):String(n);
+    return { prompt:`次の多項式で、${ask} の係数は？`, expr:e, math:true, choices:shuffle(uniq([f(c), f(-c), f(c1===c?c2:c1), f(c+(c>0?1:-1))])), answer:f(c), hint:'文字にかけられている数が係数。符号もふくめて答えよう。', explain:`${w2T(c,ask,true)} の係数は ${f(c)}`, viz:null }; },
+  w2Deg(){ const p=Math.random()<.5, x=p?pick(w2PDEG):pick(w2DEG), ch=['1','2','3',x[1]===0?'0':'4'].filter((v,i,a)=>a.indexOf(v)===i);
+    if(!ch.includes(String(x[1]))) ch[3]=String(x[1]);
+    return { prompt:p?'次の多項式は何次式？':'次の単項式の次数は？', expr:x[0], math:true, choices:ch.map(c=>p?c+'次式':c), answer:p?x[1]+'次式':String(x[1]), hint:p?'各項の次数のうち、もっとも大きいものが多項式の次数。':'かけあわされている文字の個数が次数。', explain:p?`もっとも次数が大きい項の次数は ${x[1]}。`:`かけあわされている文字は ${x[1]} 個。`, viz:null }; },
+  w2Like(){ const [v,w]=VP(), sq=Math.random()<.35, ks=sq?[v+'2',v,'']:[v,w,''], T=[]; ks.forEach(k=>{ T.push([nz(-7,7),k]); if(Math.random()<.8||k===ks[0]) T.push([nz(-7,7),k]); });
+    const sh=shuffle(T); if(sh[0][0]<0 && Math.random()<.5) sh.reverse(); const ans=mk(...T); if(ans.size<2) return G.w2Like();
+    return mq('同類項をまとめなさい。', w2raw(sh), pfmt(ans), perturbs(ans), sq?`${v}² と ${v} は次数がちがうので同類項ではありません。`:'文字の部分が同じ項（同類項）どうしをまとめよう。', `同類項をまとめると ${pfmt(ans)}`); },
+  w2Paren(){ const [v,w]=VP(), a=nz(-6,6)||2, b=pick([-5,-4,-3,-2,2,3,4,5]), A=mk([nz(-5,5),v],[nz(-6,6),w]), B=mk([nz(-5,5),v],[nz(-6,6),w]), ans=padd(psc(A,a),psc(B,b)); if(ans.size<2) return G.w2Paren();
+    const fa=a===1?'':a===-1?'−':a<0?'−'+(-a):String(a), fb=b<0?'−'+(-b):'+'+b, e=`${fa}${par(A)}${fb}${par(B)}`;
+    const wr=padd(psc(A,a),mk([b*w2one(B)[1],w2one(B)[0]],...[...B.entries()].slice(1).map(([k,c])=>[c,k])));
+    return mq('次の計算をしなさい。', e, pfmt(ans), [pfmt(wr), pfmt(padd(psc(A,a),psc(B,-b))), ...perturbs(ans)], '分配法則でかっこをはずしてから、同類項をまとめよう。', `${e}<br>＝${markLine([psc(A,a),psc(B,b)])}<br>＝${pfmt(ans)}`); },
+  w2Frac(){ const [v,w]=VP(); const ds=pick([[2,3],[3,4],[2,5],[3,2],[4,6],[3,6],[4,3],[2,4]]), [m,n]=ds, s=pick([1,-1]);
+    const A=mk([nz(-4,4),v],[nz(-5,5),w]), B=mk([nz(-4,4),v],[nz(-5,5),w]), L=w2lcm(m,n), num=padd(psc(A,L/m),psc(B,s*L/n)); if(num.size<1) return G.w2Frac();
+    const cs=[...num.values(),L], g=cs.reduce((x,y)=>gcd(x,y)); const N=psc(num,1/g), D=L/g;
+    const show=(P,d)=>{ if(!P.size) return '0'; if(d===1) return pfmt(P); return frH(pfmt(P),d); };
+    const ok=show(N,D), wB=psc(B,s*L/n); if(s<0){ const ks=[...B.keys()].sort(pcmp); if(ks[1]) pAddK(wB,ks[1],2*B.get(ks[1])*L/n); }
+    const wrong1=show(padd(psc(A,L/m),wB),L), wrong2=show(padd(A,B,s),L), wrong3=show(padd(A,B,s),m+n);
+    return mq('次の計算をしなさい。', `${frH(pfmt(A),m)}${s<0?'−':'+'}${frH(pfmt(B),n)}`, ok, [wrong1,wrong2,wrong3, show(psc(N,-1),D)], `分母を ${L} にそろえて（通分して）、1つの分数にまとめよう。${s<0?'ひく式の分子にはかっこをつけて。':''}`, `${frH(`${L/m===1?'':L/m}${par(A)}${s<0?'−':'+'}${L/n===1?'':L/n}${par(B)}`,L)}<br>＝${frH(pfmt(num),L)}${g>1?`<br>＝${ok}`:''}`); },
+  w2Val2(){ const v='x', w='y', A=mk([nz(-6,6),v],[nz(-7,7),w]), B=mk([nz(-6,6),v],[nz(-7,7),w]), s=pick([1,-1]), S=padd(A,B,s); if(S.size<2) return G.w2Val2();
+    const a=S.get('x'), b=S.get('y'), xv=pick([-3,-2,-1,2,3]); let yv, ys; const k=[2,3,4,5,6].filter(k=>b%k===0);
+    if(k.length && Math.random()<.5){ const kk=pick(k), sg=pick([1,-1]); yv=sg/kk; ys=(sg<0?'−':'')+frH(1,kk); } else { yv=pick([-2,-1,2,3]); ys=yv<0?'−'+(-yv):String(yv); }
+    const val=a*xv+b*yv, f=n=>n<0?'−'+(-n):String(n), wr=[f(a*xv-b*yv), f(-val), f(a*xv), f(val+ (val%2?1:2))];
+    return mq(`x＝${f(xv)}、y＝${ys} のとき、次の式の値は？`, `${par(A)}${s<0?'−':'+'}${par(B)}`, f(val), wr, '式を簡単にしてから代入しよう。', `式を簡単にすると ${pfmt(S)}<br>＝${a===1?'':a===-1?'−':f(a)}×(${f(xv)})${b<0?'−':'+'}${Math.abs(b)===1?'':Math.abs(b)}×(${ys})<br>＝${f(val)}`); },
+  w2Mul(){ const [v,w]=VP(), t=pick(['ab','ab','sq','sq','fr']);
+    if(t==='ab'){ const A=mk([nz(-8,8),pick([v,v+w,v+'2'])]), B=mk([nz(-8,8),pick([w,v,v+w])]), ans=pmul(A,B);
+      const [k,c]=w2one(ans), wr=[pfmt(mk([-c,k])), pfmt(mk([w2one(A)[1]+w2one(B)[1],k])), pfmt(mk([c,k.replace(/\d/g,'')]))];
+      return mq('次の計算をしなさい。', `${w2P(A)}×${w2P(B)}`, pfmt(ans), wr, '係数の積に、文字の積をかけます。', `(${w2one(A)[1]}×${w2one(B)[1]})×(文字の積)＝${pfmt(ans)}`); }
+    if(t==='sq'){ const c=nz(-8,8), A=mk([c,pick([v,v+w])]), neg=Math.random()<.4, ans=psc(pmul(A,A),neg?-1:1), [k,cc]=w2one(ans);
+      const wr=[pfmt(mk([-cc,k])), pfmt(mk([(neg?-1:1)*2*c,k])), pfmt(mk([(neg?-1:1)*c*c, w2one(A)[0]]))];
+      return mq('次の計算をしなさい。', `${neg?'−':''}(${pfmt(A)})²`, pfmt(ans), wr, `(${pfmt(A)})²＝(${pfmt(A)})×(${pfmt(A)})`, `(${pfmt(A)})×(${pfmt(A)})＝${pfmt(pmul(A,A))}${neg?`<br>前に − があるので ${pfmt(ans)}`:''}`); }
+    const P=pick([[4,5,-5,2,-2],[2,3,9,2,3],[-3,4,8,3,-2],[5,6,-12,5,-2],[3,8,16,3,2],[-2,5,-15,2,3]]), [n1,d1,n2,d2,r]=P, ans=mk([r,v+w]);
+    const f=(n,d,k)=>`${n<0?'(−':''}${frH(Math.abs(n),d)}${k}${n<0?')':''}`;
+    return mq('次の計算をしなさい。', `${f(n1,d1,v)}×${f(n2,d2,w)}`, pfmt(ans), [pfmt(psc(ans,-1)), pfmt(mk([r*2,v+w])), pfmt(mk([r,v]))], '係数どうし（分数）をかけて、約分しよう。', `${f(n1,d1,'')}×${f(n2,d2,'')}＝${r}、文字は ${v}${w}。答えは ${pfmt(ans)}`); },
+  w2DivM(){ const [v,w]=VP();
+    if(Math.random()<.7){ const Q=mk([nz(-9,9),pick([v,w,v+w,v+'2',''])]), C=mk([nz(-6,6)||2,pick([v,w,v+w])]), N=pmul(Q,C); if(w2one(C)[1]===1) return G.w2DivM();
+      const [k,c]=w2one(Q), wr=[pfmt(mk([-c,k])), pfmt(pmul(N,C)), pfmt(mk([c,k+w2one(C)[0]])) ];
+      return mq('次の計算をしなさい。', `${w2P(N)}÷${w2P(C)}`, pfmt(Q), wr, `分数の形にして約分しよう。${frH(pfmt(N),pfmt(C))}`, `${frH(pfmt(N),pfmt(C))}＝${pfmt(Q)}`); }
+    const n=pick([2,3,4,5]), d=pick([2,3,5,7].filter(d=>gcd(d,n)===1&&d!==n)), s=pick([1,-1]), q=pick([1,2,3,-1,-2])*d, Q=mk([q,pick([v,v+w,w])]), kc=pick([v,w]), coefN=q*s*n/d;
+    const NN=pmul(mk([coefN,w2one(Q)[0]]), mk([1,kc])), div=`${s<0?'(−':''}${frH(n,d)}${kc}${s<0?')':''}`;
+    return mq('次の計算をしなさい。', `${w2P(NN)}÷${div}`, pfmt(Q), [pfmt(psc(Q,-1)), pfmt(mk([q*s*n,w2one(Q)[0]])), pfmt(mk([q, w2one(Q)[0]+kc]))], '分数でわるときは、逆数をかけ算にします。', `${w2P(NN)}×${s<0?'(−':''}${frH(d,n+kc)}${s<0?')':''}＝${pfmt(Q)}`); },
+  w2MD3(){ const [v,w]=VP(), A=mk([nz(-6,6),pick([v+'2',v+w,v+'2'+w])]), B=mk([nz(-5,5),pick([v,w,v+w])]), P=pmul(A,B), [kp,cp]=w2one(P);
+    const cands=[v,w,v+w,v+'2'].filter(k=>{ const o=pv(kp), oc=pv(k); return Object.keys(oc).every(x=>(o[x]||0)>=oc[x]); }); if(!cands.length) return G.w2MD3();
+    const ds=[2,3,4,6,-2,-3,-4].filter(d=>cp%d===0); if(!ds.length) return G.w2MD3();
+    const C=mk([pick(ds),pick(cands)]), ans=w2div(P,C), order=Math.random()<.5;
+    const e=order?`${w2P(A)}×${w2P(B)}÷${w2P(C)}`:`${w2P(A)}÷${w2P(C)}×${w2P(B)}`, [ka,ca]=w2one(ans);
+    return mq('次の計算をしなさい。', e, pfmt(ans), [pfmt(mk([-ca,ka])), pfmt(pmul(P,C)), pfmt(mk([ca*2,ka]))], 'わる式を分母にした1つの分数の形にして、符号を先に決めてから約分しよう。', `${frH(`${w2P(A)}×${w2P(B)}`,w2P(C))}＝${pfmt(ans)}`); },
+  w2Rep(){ const x=pick(w2REP); return { prompt:x[0], expr:'', math:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'偶数は 2×(整数)、奇数は 2×(整数)+1、2けたの整数は 10×(十の位)+(一の位)。', explain:`→ ${x[1]}`, viz:null }; },
+  w2Expl(){ const x=pick(w2EO); return { prompt:`「${x[0]}」の説明で、□ に入る式は？`, expr:x[1], math:true, choices:shuffle([x[2],...x[3]]), answer:x[2], hint:'かっこの中が整数になるように、式を変形しよう。', explain:`${x[1].replace('□',x[2])}<br>${x[2]} は整数だから、${x[0]}`, viz:null }; },
+  w2Solve(){ const x=pick(w2SOL); return { prompt:`次の等式を〔${x[1]}〕について解くと？`, expr:x[0], math:true, words:true, choices:shuffle([x[2],...x[3]]), answer:x[2], hint:`方程式と同じように変形して、${x[1]}＝〜 の形にしよう。`, explain:`${x[0]}<br>→ ${x[2]}`, viz:null }; },
+});
+const w2E = s => `<p class="ex mth">${s}</p>`;
+const M2C1_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'文字式と数量', sub:'中1の復習', plan:Array(5).fill('w2Qty'), body:()=>`
+    <section class="panel"><h3>文字式の表し方</h3>${rule('×は省いて、数を文字の前に書く<br>÷は分数の形で書く')}${w2E('a×5 ＝ 5a　　x÷3 ＝ '+frH('x','3'))}</section>
+    <section class="panel"><h3>数量を式で表す</h3>${w2E('1本100円のジュースを x 本買って1000円出したときのおつり<br>→ 1000−100x（円）')}${w2E('x m を分速 120 m で進んだときの時間<br>→ '+frH('x','120')+'（分）')}
+    <p class="small muted">道のり＝速さ×時間　→　時間＝道のり÷速さ</p></section>` },
+  { id:'0-2', t:'一次式の加法と減法', sub:'中1の復習', plan:Array(5).fill('w2Lin'), body:()=>`
+    <section class="panel"><h3>一次式のたし算・ひき算</h3>${rule('かっこをはずして、文字の項どうし・数の項どうしをまとめる<br>ひくときは、ひく式の各項の符号を変える')}
+    ${w2E('(5x−2)−(−x−8)<br>＝5x−2+x+8<br>＝6x+6')}</section>` },
+  { id:'0-3', t:'一次式と数の乗法・除法', sub:'中1の復習', plan:['m3NumMul','m3NumMul','m3NumDiv','m3NumDiv','m3NumMul'], body:()=>`
+    <section class="panel"><h3>分配法則</h3>${rule('m(a+b)＝ma+mb<br>(a+b)÷m＝'+frH('a','m')+'+'+frH('b','m'))}
+    ${w2E('2(4x+7)＝8x+14')}${w2E('(9a−6)÷3＝3a−2')}<p class="small muted">分数でわるときは、逆数をかけます。</p></section>` },
+  { id:'0-4', t:'式の値', sub:'中1の復習', plan:Array(5).fill('w2Val1'), body:()=>`
+    <section class="panel"><h3>式の値</h3>${rule('文字に数を代入して計算した結果を、式の値という<br>負の数はかっこをつけて代入する')}
+    ${w2E('x＝−2 のとき<br>−5x²＝−5×(−2)²＝−5×4＝−20')}<p class="small muted">指数のある式に代入するときは、符号に注意しよう。</p></section>` },
+  { id:'1-1', sec:'1　式の計算', t:'単項式と多項式', sub:'項・係数', plan:['w2Mono','w2Mono','w2Term','w2Coef','w2Coef'], body:()=>`
+    <section class="panel"><h3>単項式と多項式</h3>${rule('数や文字の乗法だけでできている式 → <b>単項式</b><br>単項式の和の形で表された式 → <b>多項式</b>')}
+    ${w2E('単項式：3a、x²、−5xy、a、−3')}${w2E('多項式：2x+9y、3a²−6a+8')}<p class="small muted">a や −3 のような、1つの文字や1つの数も単項式と考えます。</p></section>
+    <section class="panel"><h3>項と係数</h3><p>多項式にふくまれる1つ1つの単項式を<b>項</b>といいます。</p>
+    ${w2E('2x−3y+2＝2x+(−3y)+2<br>項は 2x、−3y、2')}<p>文字をふくむ項で、数の部分を<b>係数</b>といいます。（−3y の係数は −3）</p></section>` },
+  { id:'1-2', t:'次数', sub:'単項式・多項式の次数', plan:Array(5).fill('w2Deg'), body:()=>`
+    <section class="panel"><h3>単項式の次数</h3>${rule('かけあわされている文字の個数')}
+    ${w2E('2x²＝2×x×x　→ 次数は 2')}${w2E('3x＝3×x　→ 次数は 1')}${w2E('4　→ 文字がないので次数は 0')}</section>
+    <section class="panel"><h3>多項式の次数</h3>${rule('各項の次数のうち、もっとも大きいもの')}
+    ${w2E('2x²+3x+4　→ 2次式')}<p>次数が1の式を<b>一次式</b>、次数が2の式を<b>二次式</b>といいます。</p></section>` },
+  { id:'1-3', t:'同類項', sub:'同類項をまとめる', plan:Array(5).fill('w2Like'), body:()=>`
+    <section class="panel"><h3>同類項</h3>${rule('文字の部分が同じ項 → <b>同類項</b><br>ma+na＝(m+n)a を使って1つにまとめる')}
+    ${w2E('3a²+7a−ab+2a+4ab<br>＝3a²+(7+2)a+(−1+4)ab<br>＝3a²+9a+3ab')}
+    <p class="small muted">a² と a は、文字が同じでも次数が異なるので同類項ではありません。</p></section>` },
+  { id:'1-4', t:'多項式の加法・減法', sub:'かっこをつけて計算', plan:['m3Add','m3Add','m3SubP','m3SubP','m3SubP'], body:()=>`
+    <section class="panel"><h3>多項式の加法</h3>${rule('すべての項をたして、同類項をまとめる')}${w2E('(5x+2y)+(3x−4y)<br>＝5x+2y+3x−4y<br>＝8x−2y')}</section>
+    <section class="panel"><h3>多項式の減法</h3>${rule('ひく式の各項の符号を変えて、すべての項をたす')}${w2E('(2x+y)−(4x−3y)<br>＝2x+y−4x+3y<br>＝−2x+4y')}
+    <p class="small muted">2つの式をたしたりひいたりするときは、それぞれの式にかっこをつけ、記号＋、−でつないでから計算します。</p></section>
+    <section class="panel"><h3>縦に並べた計算</h3><table class="dtab mth" style="width:auto;margin:0 auto;font-size:1.05rem"><tr><td style="text-align:right">2x+4y</td></tr><tr><td style="text-align:right;border-bottom:2px solid currentColor">−)　3x−5y</td></tr><tr><td style="text-align:right">−x+9y</td></tr></table>
+    <p class="small muted">負の項をひくときは、符号の変化に注意しよう。4y−(−5y)＝9y</p></section>` },
+  { id:'1-5', t:'多項式と数の乗法・除法', sub:'分配法則', plan:['m3NumMul','m3NumMul','m3NumDiv','m3NumDiv','m3NumDiv'], body:()=>`
+    <section class="panel"><h3>数×多項式</h3>${rule('分配法則 m(a+b)＝ma+mb')}${w2E('6(3a+4b)＝18a+24b')}<p class="small muted">負の数をかけるときは、符号に気をつけます。</p></section>
+    <section class="panel"><h3>多項式÷数</h3>${rule('(a+b)÷m＝'+frH('a','m')+'+'+frH('b','m'))}${w2E('(12x−6y)÷3＝4x−2y')}<p class="small muted">わる数が分数のときは、逆数をかける式になおします。</p></section>` },
+  { id:'1-6', t:'かっこがある式の計算', sub:'かっこをはずしてまとめる', plan:Array(5).fill('w2Paren'), body:()=>`
+    <section class="panel"><h3>かっこがある式の計算</h3>${rule('① 分配法則でかっこをはずす<br>② 同類項をまとめる')}
+    ${w2E('2(3a+b)+3(a−2b)<br>＝6a+2b+3a−6b<br>＝9a−4b')}${w2E('5(x−3y)−4(2x+y)<br>＝5x−15y−8x−4y<br>＝−3x−19y')}<p class="small muted">かっこをはずすときは、符号に注意します。</p></section>` },
+  { id:'1-7', t:'分数をふくむ式の計算', sub:'通分してまとめる', plan:Array(5).fill('w2Frac'), body:()=>`
+    <section class="panel"><h3>方法1　分数の形のまま通分する</h3>${rule('① 通分する → ② 1つの分数にまとめる<br>③ 分子のかっこをはずす → ④ 同類項をまとめる')}
+    ${w2E(frH('2x+y','3')+'−'+frH('x−2y','2')+'<br>＝'+frH('2(2x+y)−3(x−2y)','6')+'<br>＝'+frH('4x+2y−3x+6y','6')+'<br>＝'+frH('x+8y','6'))}</section>
+    <section class="panel"><h3>方法2　分数×多項式の形にする</h3>${w2E(frH('1','3')+'(2x+y)−'+frH('1','2')+'(x−2y)<br>＝'+frH('2','3')+'x+'+frH('1','3')+'y−'+frH('1','2')+'x+y<br>＝'+frH('1','6')+'x+'+frH('4','3')+'y')}
+    <p class="small muted">${frH('2a+3','4')} を ${frH('a+3','2')} のように、分子の一部だけを約分してはいけません。</p></section>` },
+  { id:'1-8', t:'式の値', sub:'簡単にしてから代入', plan:Array(5).fill('w2Val2'), body:()=>`
+    <section class="panel"><h3>式の値の計算</h3>${rule('式を計算して簡単にしてから代入する')}
+    ${w2E('x＝2、y＝−'+frH('1','6')+' のとき　(4x−5y)−(8x+7y)<br>＝4x−5y−8x−7y＝−4x−12y<br>＝−4×2−12×(−'+frH('1','6')+')＝−8+2＝−6')}
+    <p class="small muted">そのまま代入するとたいへん。先に式を簡単にしよう。</p></section>` },
+  { id:'1-9', t:'単項式の乗法', sub:'係数の積×文字の積', plan:Array(5).fill('w2Mul'), body:()=>`
+    <section class="panel"><h3>単項式の乗法</h3>${rule('係数の積に、文字の積をかける<br>同じ文字の積は、指数を使って表す')}
+    ${w2E('4a×(−5b)＝4×(−5)×a×b＝−20ab')}${w2E('2x×4y＝(2×4)×(x×y)＝8xy')}${w2E('−x×2x＝−2x²')}</section>
+    <section class="panel"><h3>累乗をふくむ式</h3>${rule('指数をふくむ式は、かけ算になおして計算する')}${w2E('(−6x)²＝(−6x)×(−6x)＝36x²')}<p class="small muted">−(−8a)² は、(−8a)² の前に − がつくので −64a²。</p></section>` },
+  { id:'1-10', t:'単項式の除法', sub:'分数の形にして約分', plan:Array(5).fill('w2DivM'), body:()=>`
+    <section class="panel"><h3>単項式の除法</h3>${rule('分数の形にしてから約分する　A÷B＝'+frH('A','B'))}
+    ${w2E('15ab÷3b＝'+frH('15ab','3b')+'＝5a')}${w2E('6xy÷3x＝'+frH('6xy','3x')+'＝2y')}</section>
+    <section class="panel"><h3>わる数が分数のとき</h3>${rule('逆数をかける計算になおす　A÷'+frH('C','B')+'＝A×'+frH('B','C'))}
+    ${w2E(frH('9','2')+'xy²÷'+frH('3','2')+'xy＝'+frH('9xy²','2')+'×'+frH('2','3xy')+'＝3y')}<p class="small muted">${frH('3','2')}xy の逆数は ${frH('2','3xy')}。${frH('2','3')}xy ではありません。</p></section>` },
+  { id:'1-11', t:'3つの式の乗除', sub:'1つの分数にまとめる', plan:Array(5).fill('w2MD3'), body:()=>`
+    <section class="panel"><h3>乗法と除法の混じった計算</h3>${rule('A÷B×C＝'+frH('A×C','B')+'　　A÷B÷C＝'+frH('A','B×C'))}
+    ${w2E('18x²y×(−3x)÷2xy<br>＝−'+frH('18x²y×3x','2xy')+'<br>＝−27x²')}<p class="small muted">符号のミスを防ぐため、まず答えの符号を決めます。</p></section>` },
+  { id:'2-1', sec:'2　文字式の利用', t:'偶数と奇数・倍数の説明', sub:'文字式を使って説明', plan:['w2Rep','w2Rep','w2Expl','w2Expl','w2Expl'], body:()=>`
+    <section class="panel"><h3>整数の表し方</h3>
+    <table class="dtab"><tr><th>数</th><th>表し方（m・n は整数）</th></tr><tr><td>偶数</td><td class="mth">2m</td></tr><tr><td>奇数</td><td class="mth">2m+1</td></tr><tr><td>3の倍数</td><td class="mth">3n</td></tr><tr><td>連続する3つの整数</td><td class="mth">n−1、n、n+1</td></tr></table>
+    <p class="small muted">2つの数を表すときは、m と n のように別の文字を使います。（同じ文字だと、2と4のような特別な場合だけになってしまう）</p></section>
+    <section class="panel"><h3>説明のしかた</h3>${rule('奇数から偶数をひいた差は奇数になる')}
+    <p>m、n を整数とすると、偶数は 2m、奇数は 2n+1 と表される。このとき、奇数から偶数をひいた差は</p>
+    ${w2E('(2n+1)−2m＝2n−2m+1＝2(n−m)+1')}<p>n−m は整数だから、2(n−m)+1 は奇数である。<br>したがって、奇数から偶数をひいた差は奇数である。</p>
+    <p class="small muted">「2×(整数)」の形 → 偶数、「2×(整数)+1」の形 → 奇数、「3×(整数)」の形 → 3の倍数。</p></section>` },
+  { id:'2-2', t:'2けたの整数の説明', sub:'10a+b を使う', plan:['w2Rep','w2Expl','w2Expl','w2Expl','w2Expl'], body:()=>`
+    <section class="panel"><h3>2けたの整数</h3>${rule('十の位が a、一の位が b の2けたの整数 → 10a+b<br>十の位と一の位を入れかえた数 → 10b+a')}
+    <p class="small muted">ab と書くと a×b の意味になってしまうので注意。</p></section>
+    <section class="panel"><h3>説明のしかた</h3>${rule('2けたの整数と、入れかえた数の和は11の倍数になる')}
+    ${w2E('(10a+b)+(10b+a)＝11a+11b＝11(a+b)')}<p>a+b は整数だから、11(a+b) は11の倍数である。</p></section>` },
+  { id:'2-3', t:'等式の変形', sub:'〔　〕の文字について解く', plan:Array(5).fill('w2Solve'), body:()=>`
+    <section class="panel"><h3>等式の変形</h3>${rule('等式を方程式と同じように変形して、x＝〜 の形にすることを<br>「x について解く」という')}
+    ${w2E('4x−8y＝12　〔x〕<br>4x＝12+8y　（−8y を移項）<br>x＝3+2y　（両辺を4でわる）')}
+    ${w2E('S＝abc　〔a〕<br>bc×a＝S<br>a＝'+frH('S','bc'))}</section>` },
+  { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'1章の総まとめ', test:true, plan:['w2Mono','w2Deg','w2Like','m3SubP','w2Paren','w2Frac','w2Val2','w2Mul','w2DivM','w2MD3','w2Expl','w2Solve'], body:()=>`
+    <section class="panel"><h3>1章　式の計算　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
 ];
 
 /* ===== 中3数学 2章 平方根 ===== */
@@ -13634,6 +13849,7 @@ const UNITS = {
   iq:{ no:'文25', title:'間接疑問文・付加疑問文', subject:'英語', course:'jen', subj:1, lessons:IQ_LESSONS },
   bi:{ no:'文26', title:'原形不定詞', subject:'英語', course:'jen', subj:1, lessons:BI_LESSONS },
   sj:{ no:'文27', title:'仮定法', subject:'英語', course:'jen', subj:1, lessons:SJ_LESSONS },
+  m2c1:{ no:'1', title:'式の計算', subject:'数学', course:'j2', subj:0, lessons:M2C1_LESSONS, drill:'m2c1' },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
