@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞(1)', ready:'inf1' },{ t:'五文型', ready:'rv4', lab:'💧4' },'動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞(1)', ready:'inf1' },{ t:'5文型', ready:'rv4', lab:'💧4' },'動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3653,7 +3653,7 @@ const INF1_LESSONS = [
 ];
 
 
-/* ===== 英語 文法 💧4 五文型 ===== */
+/* ===== 英語 文法 💧4 5文型 ===== */
 const FV_S = [
   { p:[['Birds','S'],['sing','V']], jp:'鳥は歌う。' },
   { p:[['He','S'],['runs','V'],['in the park','M']], jp:'彼は公園で走ります。' },
@@ -3787,8 +3787,8 @@ const RV4_LESSONS = [
     <section class="panel"><h3>第4文型とくらべよう</h3>
     ${beEx('My mother made <b>me</b> <b>a cake</b>.','母は私にケーキを作ってくれました。（me ≠ a cake → 第4文型）')}${beEx('The news made <b>me</b> <b>happy</b>.','そのニュースは私をうれしくさせました。（me ＝ happy → 第5文型）')}
     <p class="small muted">同じ made でも、後ろの2つがイコールかどうかで文型が変わります。</p></section>` },
-  { id:'1-8', t:'章末テスト', sub:'五文型の総まとめ', test:true, plan:Array(15).fill('fvMix'), body:()=>`
-    <section class="panel"><h3>五文型のまとめ</h3>
+  { id:'1-8', t:'章末テスト', sub:'5文型の総まとめ', test:true, plan:Array(15).fill('fvMix'), body:()=>`
+    <section class="panel"><h3>5文型のまとめ</h3>
     <table class="dtab"><tr><th>文型</th><th>形</th><th>ポイント</th></tr>
     <tr><td>第1</td><td>SV</td><td>M がつくことが多い</td></tr><tr><td>第2</td><td>SVC</td><td>S ＝ C</td></tr><tr><td>第3</td><td>SVO</td><td>S ≠ O</td></tr><tr><td>第4</td><td>SVOO</td><td>人に物を</td></tr><tr><td>第5</td><td>SVOC</td><td>O ＝ C</td></tr></table>
     <p class="small muted">1-1〜1-7 の問題から、毎回ちがう15問がランダムに出ます。</p></section>` },
@@ -12187,7 +12187,7 @@ const UNITS = {
   there:{ no:'文14', title:'There is ～. ／ There are ～.', subject:'英語', course:'jen', subj:1, lessons:TH_LESSONS },
   rv3:{ no:'💧3', title:'接続詞・前置詞', subject:'英語', course:'jen', subj:1, lessons:RV3_LESSONS },
   inf1:{ no:'文15', title:'不定詞(1)', subject:'英語', course:'jen', subj:1, lessons:INF1_LESSONS },
-  rv4:{ no:'💧4', title:'五文型', subject:'英語', course:'jen', subj:1, lessons:RV4_LESSONS },
+  rv4:{ no:'💧4', title:'5文型', subject:'英語', course:'jen', subj:1, lessons:RV4_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
