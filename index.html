@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },'現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },'現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4403,6 +4403,175 @@ const PSV_LESSONS = [
   { id:'20-4', t:'例文', sub:'受動態の文を読もう', plan:['psvEJ','psvEJ','psvPP','psvBe','psvQ'], body:()=>`
     <section class="panel"><h3>例文</h3>${PSV_S.map(x=>beEx(`${x[0]} <b>${x[1]} ${x[2]}</b> ${x[3].replace(/^by /,'<b>by</b> ')}`,x[4])).join('')}
     <p class="small muted">「だれによって」が分からないときや言う必要がないときは、by 〜 を省略します。<br>（例）English is spoken in many countries.</p></section>` },
+];
+
+
+/* ===== 英語 文法 21章 現在完了 ===== */
+function pfTL(kind){ const now=230, y=66;
+  let g=`<line x1="14" y1="${y}" x2="306" y2="${y}" stroke="var(--muted)" stroke-width="2"/><path d="M306 ${y}l-8 -5v10z" fill="var(--muted)"/>
+  <text x="22" y="${y+20}" font-size="12" fill="var(--muted)">過去</text><text x="300" y="${y+20}" font-size="12" fill="var(--muted)" text-anchor="end">未来</text>
+  <line x1="${now}" y1="${y-26}" x2="${now}" y2="${y+6}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="${now}" y="${y+20}" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">今</text>`;
+  const top=(t,c)=>`<text x="160" y="22" font-size="13" text-anchor="middle" fill="var(--${c})" font-weight="700">${t}</text>`;
+  if(kind==='past') g+=`<circle cx="90" cy="${y-14}" r="7" fill="var(--teal)"/>`+top('過去形：過去の1点（今のことは言わない）','teal');
+  if(kind==='perf'||kind==='c') g+=`<rect x="70" y="${y-22}" width="${now-70}" height="16" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><circle cx="70" cy="${y-14}" r="6" fill="var(--accent)"/>`+top(kind==='c'?'継続：過去から今まで ずっと〜している':'現在完了：過去と今をつなぐ','accent');
+  if(kind==='e'){ g+=`<rect x="44" y="${y-24}" width="${now-44}" height="20" rx="10" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>`; for(const x of [80,130,180]) g+=`<circle cx="${x}" cy="${y-14}" r="6" fill="var(--accent)"/>`; g+=top('経験：今までに〜したことがある','accent'); }
+  if(kind==='comp') g+=`<circle cx="${now-40}" cy="${y-14}" r="7" fill="var(--accent)"/><line x1="${now-32}" y1="${y-14}" x2="${now-6}" y2="${y-14}" stroke="var(--accent)" stroke-width="2.5"/><path d="M${now-2} ${y-14}l-8 -5v10z" fill="var(--accent)"/>`+top('完了：〜したところ（今その結果がある）','accent');
+  return `<svg viewBox="0 0 320 96" style="width:100%;max-width:360px;display:block;margin:4px auto" role="img" aria-label="時間のグラフ">${g}</svg>`;
+}
+// [英文(太字つき), 日本語, 用法 c継続/e経験/k完了]
+const PF_S = [
+  ['They <b>have lived</b> in Japan <b>since</b> last year.','彼らは昨年からずっと日本に住んでいます。','c'],
+  ['Ann <b>has been</b> busy <b>since</b> yesterday.','アンは昨日からずっと忙しい。','c'],
+  ['They <b>have lived</b> in Japan <b>for</b> a year.','彼らは1年間ずっと日本に住んでいます。','c'],
+  ['Ann <b>has been</b> busy <b>for</b> two days.','アンは2日間ずっと忙しい。','c'],
+  ['I <b>have known</b> Ken <b>for</b> five years.','私はケンと5年間ずっと知り合いです。','c'],
+  ['We <b>have been</b> friends <b>since</b> 2020.','私たちは2020年からずっと友達です。','c'],
+  ['I <b>have wanted</b> the game <b>for</b> a long time.','私は長い間ずっとそのゲームがほしいと思っています。','c'],
+  ['My mother <b>has been</b> to India <b>before</b>.','私の母は以前にインドに行ったことがあります。','e'],
+  ['John <b>has been</b> to India <b>many times</b>.','ジョンは何度もインドに行ったことがあります。','e'],
+  ['My father <b>has never been</b> to India.','私の父は一度もインドに行ったことがありません。','e'],
+  ['<b>Have</b> you <b>ever written</b> a song?','あなたは今までに曲を書いたことがありますか。','e'],
+  ['I <b>have seen</b> this movie <b>twice</b>.','私はこの映画を2回見たことがあります。','e'],
+  ['She <b>has climbed</b> Mt. Fuji <b>once</b>.','彼女は富士山に1度登ったことがあります。','e'],
+  ['John <b>has already written</b> a song.','ジョンはもう曲を書いてしまいました。','k'],
+  ['I <b>have just heard</b> the news.','私はちょうどその知らせを聞いたところです。','k'],
+  ['Paul <b>hasn’t written</b> a song <b>yet</b>.','ポールはまだ曲を書いていません。','k'],
+  ['<b>Has</b> Paul <b>written</b> a song <b>yet</b>?','ポールはもう曲を書いてしまいましたか。','k'],
+  ['She <b>has already finished</b> her homework.','彼女はもう宿題を終えてしまいました。','k'],
+  ['The train <b>has just left</b>.','電車はちょうど出発したところです。','k'],
+];
+const PF_U = { c:'継続', e:'経験', k:'完了' };
+// [主語, has?, 過去分詞, 残り, 原形, 過去形, 代名詞, 日本語]
+const PF_C = [
+  ['They',0,'lived','in Japan since last year.','live','lived','they','彼らは昨年からずっと日本に住んでいます。'],
+  ['Ann',1,'been','busy since yesterday.','be','was','she','アンは昨日からずっと忙しい。'],
+  ['He',1,'studied','English for three years.','study','studied','he','彼は3年間ずっと英語を勉強しています。'],
+  ['Ken',1,'lived','in Tokyo for ten years.','live','lived','he','ケンは10年間ずっと東京に住んでいます。'],
+  ['The students',0,'used','this room for a month.','use','used','they','生徒たちは1か月間ずっとこの部屋を使っています。'],
+  ['Yui',1,'wanted','a dog for a long time.','want','wanted','she','ユイは長い間ずっと犬をほしがっています。'],
+  ['They',0,'known','each other since 2020.','know','knew','they','彼らは2020年からずっと知り合いです。'],
+  ['Mr. Sato',1,'taught','music for twenty years.','teach','taught','he','佐藤先生は20年間ずっと音楽を教えています。'],
+  ['Ann',1,'been','in Kyoto for two days.','be','was','she','アンは2日間ずっと京都にいます。'],
+  ['They',0,'played','tennis since this morning.','play','played','they','彼らはけさからずっとテニスをしています。'],
+];
+// [□つき英文, 答え, 日本語, 選択肢グループ]
+const PF_WE = [
+  ['My father has □ been to India.','never','私の父は一度もインドに行ったことがありません。'],
+  ['Have you □ written a song?','ever','あなたは今までに曲を書いたことがありますか。'],
+  ['My mother has been to India □.','before','私の母は以前にインドに行ったことがあります。'],
+  ['I have □ seen a koala.','never','私は一度もコアラを見たことがありません。'],
+  ['Have you □ been to Kyoto?','ever','あなたは今までに京都に行ったことがありますか。'],
+  ['I have seen this movie □.','twice','私はこの映画を2回見たことがあります。'],
+  ['She has climbed Mt. Fuji □.','once','彼女は富士山に1度登ったことがあります。'],
+  ['John has been to India many □.','times','ジョンは何度もインドに行ったことがあります。'],
+  ['I have □ eaten sushi.','never','私は一度もすしを食べたことがありません。'],
+  ['We have met him □.','before','私たちは以前に彼に会ったことがあります。'],
+];
+const PF_WK = [
+  ['John has □ written a song.','already','ジョンはもう曲を書いてしまいました。'],
+  ['I have □ heard the news.','just','私はちょうどその知らせを聞いたところです。'],
+  ['Paul hasn’t written a song □.','yet','ポールはまだ曲を書いていません。'],
+  ['Has Paul written a song □?','yet','ポールはもう曲を書いてしまいましたか。'],
+  ['She has □ finished her homework.','already','彼女はもう宿題を終えてしまいました。'],
+  ['The train has □ left.','just','電車はちょうど出発したところです。'],
+  ['Have you cleaned your room □?','yet','あなたはもう部屋をそうじしましたか。'],
+  ['I haven’t read the book □.','yet','私はまだその本を読んでいません。'],
+  ['We have □ arrived at the station.','just','私たちはちょうど駅に着いたところです。'],
+  ['He has □ eaten lunch.','already','彼はもう昼食を食べてしまいました。'],
+];
+const pfH = x => x[1]?'has':'have', pfHn = x => x[1]?'hasn’t':'haven’t';
+const pfSub = s => /^(The .*|They|He)$/.test(s) ? lowFirst(s) : s;
+const pfIng = b => b==='be'?'being':/[^e]e$/.test(b)?b.slice(0,-1)+'ing':b+'ing';
+const pfJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const pfPlain = s => s.replace(/<\/?b>/g,'');
+const pfTime = x => x[3].match(/^(.*) (since|for) (.+)\.$/);
+const pfWord = (L, pool, hint) => { const x=pick(L), ch=[x[1],...shuffle(pool.filter(w=>w!==x[1])).slice(0,3)];
+  return { prompt:'□ に入る語は？', expr:x[0]+pfJ(x[2]), enExpr:true, en:true, words:true, choices:shuffle(ch), answer:x[1], hint, explain:`${x[0].replace('□','<b>'+x[1]+'</b>')}<br>${x[2]}`, viz:null }; };
+Object.assign(G, {
+  pfHave(){ const x=pick(PF_C);
+    return { prompt:'□ に入る語は？', expr:`${x[0]} □ ${x[2]} ${x[3]}`+pfJ(x[7]), enExpr:true, en:true, words:true, choices:['have','has','is','are'], answer:pfH(x),
+      hint:'現在完了は〈have（has）＋ 過去分詞〉。主語が3人称単数なら has。', explain:`主語 ${x[0]} は${x[1]?'3人称単数なので has':'3人称単数ではないので have'}。`, viz:null }; },
+  pfPP(){ const x=pick(PF_C), c=uniq([x[2],x[5],x[4],pfIng(x[4])]);
+    return { prompt:'□ に入る形は？', expr:`${x[0]} ${pfH(x)} □ ${x[3]}`+pfJ(`（${x[4]}）${x[7]}`), enExpr:true, en:true, words:true, choices:shuffle(c), answer:x[2],
+      hint:'have（has）のあとは過去分詞。', explain:`${x[4]} － ${x[5]} － <b>${x[2]}</b>`, viz:null }; },
+  pfNeg(){ const x=pick(PF_C), ok=`${x[0]} ${pfHn(x)} ${x[2]} ${x[3]}`;
+    const c=uniq([ok, `${x[0]} didn’t ${x[2]} ${x[3]}`, `${x[0]} ${pfHn(x)} ${x[5]===x[2]?x[4]:x[5]} ${x[3]}`, `${x[0]} not ${pfH(x)} ${x[2]} ${x[3]}`]);
+    return { prompt:'否定文にすると？', expr:`${x[0]} ${pfH(x)} ${x[2]} ${x[3]}`, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'have（has）のあとに not。', explain:`${ok}<br>（${pfH(x)} not → ${pfHn(x)}）`, viz:null }; },
+  pfQ(){ const x=pick(PF_C), s=pfSub(x[0]), r=x[3].replace(/\.$/,'?'), ok=`${capFirst(pfH(x))} ${s} ${x[2]} ${r}`;
+    const c=uniq([ok, `${x[1]?'Does':'Do'} ${s} ${x[2]} ${r}`, `${capFirst(pfH(x))} ${s} ${x[5]===x[2]?x[4]:x[5]} ${r}`, `${x[1]?'Have':'Has'} ${s} ${x[2]} ${r}`]);
+    return { prompt:'疑問文にすると？', expr:`${x[0]} ${pfH(x)} ${x[2]} ${x[3]}`, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'have（has）を主語の前に出す。', explain:`${ok}<br>— Yes, ${x[6]} ${pfH(x)}. ／ No, ${x[6]} ${pfHn(x)}.`, viz:null }; },
+  pfAns(){ const x=pick(PF_C), s=pfSub(x[0]), q=`${capFirst(pfH(x))} ${s} ${x[2]} ${x[3].replace(/\.$/,'?')}`, yes=Math.random()<.5, p=x[6], h=pfH(x);
+    const ok=yes?`Yes, ${p} ${h}.`:`No, ${p} ${pfHn(x)}.`, d=x[1]?'does':'do', w=x[1]?'have':'has';
+    const c=uniq([ok, yes?`Yes, ${p} ${d}.`:`No, ${p} ${d}n’t.`, yes?`Yes, ${p} did.`:`No, ${p} didn’t.`, yes?`Yes, ${p} ${w}.`:`No, ${p} ${w}n’t.`]);
+    return { prompt:`「${yes?'はい':'いいえ'}」と答えると？`, expr:q, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'have（has）の疑問文には have（has）で答える。', explain:`${q}<br>— ${ok}`, viz:null }; },
+  pfSF(){ const x=pick(PF_C), m=pfTime(x);
+    return { prompt:'□ に入る語は？', expr:`${x[0]} ${pfH(x)} ${x[2]} ${m[1]} □ ${m[3]}.`+pfJ(x[7]), enExpr:true, en:true, words:true, choices:['since','for'], answer:m[2],
+      hint:'since ＋ 過去の時点「〜から」、for ＋ 期間「〜の間」', explain:m[2]==='since'?`${m[3]} は過去の時点なので since（〜から）。`:`${m[3]} は期間なので for（〜の間）。`, viz:null }; },
+  pfHL(){ const x=pick(PF_C), m=pfTime(x), s=pfSub(x[0]), q=`How long ${pfH(x)} ${s} ${x[2]} ${m[1]}?`, ok=`${capFirst(m[2])} ${m[3]}.`;
+    const c=uniq([ok, `${m[2]==='for'?'Since':'For'} ${m[3]}.`, `Yes, ${x[6]} ${pfH(x)}.`, m[2]==='for'?`${capFirst(m[3])} ago.`:`${capFirst(m[3])}.`]);
+    return { prompt:'答えとして正しいのは？', expr:q+pfJ(x[7].replace(/^(.+?)は.*$/,'$1はどのくらいの間…？')), enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'How long 〜? には for 〜 や since 〜 で答える。', explain:`${q}<br>— ${ok}<br>${x[7]}`, viz:null }; },
+  pfWE(){ return pfWord(PF_WE, ['never','ever','before','once','twice','times'], 'never（一度も〜ない）・ever（今までに）・before（以前に）・once（1度）・twice（2度）・〜 times（〜回）'); },
+  pfWK(){ return pfWord(PF_WK, ['already','just','yet','ever'], 'already（もう）・just（ちょうど）は have と過去分詞の間。yet は文末（否定文「まだ」、疑問文「もう」）。'); },
+  pfUse(){ const x=pick(PF_S);
+    return { prompt:'どの用法？', expr:pfPlain(x[0])+pfJ(x[1]), enExpr:true, en:true, words:true, choices:['継続','経験','完了'], answer:PF_U[x[2]],
+      hint:'継続「ずっと〜している」、経験「〜したことがある」、完了「〜したところ・してしまった」', explain:`${x[0]}<br>${x[1]}<br>→ ${PF_U[x[2]]}`, viz:null }; },
+  pfEJ(){ const x=pick(PF_S), ws=shuffle(PF_S.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:pfPlain(x[0]), enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'〈have（has）＋ 過去分詞〉と、いっしょに使われる語に注目。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+const PF_LESSONS = [
+  { id:'21-1', t:'現在完了とは', sub:'過去と今をつなぐ', plan:['pfHave','pfHave','pfPP','pfPP','pfEJ'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('They <b>have lived</b> in Japan <b>since</b> last year.','彼らは昨年からずっと日本に住んでいます。')}${beEx('My father <b>has never been</b> to India.','私の父は一度もインドに行ったことがありません。')}${beEx('John <b>has already written</b> a song.','ジョンはもう曲を書いてしまいました。')}</section>
+    <section class="panel"><h3>現在完了</h3>${rule('have（has）＋ 過去分詞<br>→ 現在の視点から、過去と現在のかかわりを表す')}
+    <p><b>過去形</b>：過去のことだけを言う</p>${pfTL('past')}${beEx('They <b>lived</b> in Japan last year.','彼らは昨年、日本に住んでいました。（今は分からない）')}
+    <p><b>現在完了</b>：過去から今までつながっている</p>${pfTL('perf')}${beEx('They <b>have lived</b> in Japan since last year.','彼らは昨年からずっと日本に住んでいます。（今も住んでいる）')}</section>
+    <section class="panel"><h3>3つの用法</h3>
+    <table class="dtab"><tr><th>用法</th><th>意味</th></tr><tr><td><b>継続</b></td><td>（ずっと）〜している</td></tr><tr><td><b>経験</b></td><td>〜したことがある</td></tr><tr><td><b>完了</b></td><td>〜したところだ<br>〜してしまった</td></tr></table>
+    <p class="small muted">主語が3人称単数のときは has を使います。</p></section>` },
+  { id:'21-2', t:'現在完了形', sub:'肯定文・否定文・疑問文', plan:['pfHave','pfNeg','pfNeg','pfQ','pfAns'], body:()=>`
+    <section class="panel"><h3>〇 肯定文</h3>${rule('主語 ＋ have（has）＋ 過去分詞 …')}
+    ${beEx('They <b>have lived</b> in Japan since last year.','彼らは昨年からずっと日本に住んでいます。')}
+    <p class="small muted">主語が3人称単数のときは has。</p></section>
+    <section class="panel"><h3>〇 否定文</h3>${rule('主語 ＋ have（has）＋ <b>not</b> ＋ 過去分詞 …')}
+    ${beEx('They <b>haven’t</b> stayed at home since this morning.','彼らはけさからずっと家にいません。')}
+    <table class="dtab"><tr><th>もとの形</th><th>短縮形</th></tr><tr><td>have not</td><td><b>haven’t</b></td></tr><tr><td>has not</td><td><b>hasn’t</b></td></tr></table></section>
+    <section class="panel"><h3>〇 疑問文</h3>${rule('<b>Have（Has）</b> ＋ 主語 ＋ 過去分詞 …?<br>— Yes, 主語 ＋ have（has）. ／ No, 主語 ＋ have（has）not.')}
+    ${beEx('<b>Have</b> they <b>lived</b> in Japan since last year? — Yes, they <b>have</b>. ／ No, they <b>haven’t</b>.','彼らは昨年からずっと日本に住んでいますか。— はい。／いいえ。')}</section>
+    <section class="panel"><h3>よく使う短縮形</h3>
+    <table class="dtab"><tr><td>I have</td><td><b>I’ve</b></td></tr><tr><td>you have</td><td><b>you’ve</b></td></tr><tr><td>we have</td><td><b>we’ve</b></td></tr><tr><td>he has</td><td><b>he’s</b></td></tr></table></section>` },
+  { id:'21-3', t:'継続用法', sub:'（ずっと）〜している', plan:['pfSF','pfSF','pfSF','pfHL','pfHL'], body:()=>`
+    <section class="panel"><h3>継続用法</h3>${rule('have（has）＋ 過去分詞 →「（ずっと）〜している［〜である］」')}${pfTL('c')}</section>
+    <section class="panel"><h3>よく使われる語句</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th>語句</th><th>位置</th><th>例文</th></tr>
+    <tr><td><b>since</b> ＋ 過去の時点<br>（〜から）</td><td>文末</td><td style="text-align:left">They have lived in Japan <b>since</b> last year.<br>Ann has been busy <b>since</b> yesterday.</td></tr>
+    <tr><td><b>for</b> ＋ 期間<br>（〜の間）</td><td>文末</td><td style="text-align:left">They have lived in Japan <b>for</b> a year.<br>Ann has been busy <b>for</b> two days.</td></tr></table>
+    <p class="small muted">been は be の過去分詞です。</p></section>
+    <section class="panel"><h3>期間をたずねる　How long 〜?</h3>${rule('How long ＋ have（has）＋ 主語 ＋ 過去分詞 …?<br>「どのくらいの間〜していますか」')}
+    ${beEx('<b>How long</b> have they lived in Japan? — <b>For</b> a year.（<b>Since</b> last year.）','彼らはどのくらいの間、日本に住んでいますか。— 1年間です。（昨年からです。）')}
+    <p class="small muted">for 〜 や since 〜 など、答えの中心になる部分だけで答えてもよい。</p></section>` },
+  { id:'21-4', t:'経験用法', sub:'〜したことがある', plan:['pfWE','pfWE','pfWE','pfWE','pfWE'], body:()=>`
+    <section class="panel"><h3>経験用法</h3>${rule('have（has）＋ 過去分詞 →「〜したことがある」')}${pfTL('e')}</section>
+    <section class="panel"><h3>よく使われる語</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th></th><th>語</th><th>位置</th></tr>
+    <tr><td>肯定文</td><td><b>before</b>（以前に）<br><b>once</b>（1度）<b>twice</b>（2度）<br>〜 <b>times</b>（〜回）<br><b>many times</b>（何度も）</td><td>文末</td></tr>
+    <tr><td>否定文</td><td><b>never</b>（一度も〜ない）</td><td>have（has）と過去分詞の間</td></tr>
+    <tr><td>疑問文</td><td><b>ever</b>（今までに）</td><td>過去分詞の前</td></tr></table></section>
+    <section class="panel"><h3>例文</h3>${beEx('My mother has been to India <b>before</b>.','私の母は以前にインドに行ったことがあります。')}${beEx('John has been to India <b>many times</b>.','ジョンは何度もインドに行ったことがあります。')}${beEx('My father has <b>never</b> been to India.','私の父は一度もインドに行ったことがありません。')}${beEx('Have you <b>ever</b> written a song? — No, I haven’t.','あなたは今までに曲を書いたことがありますか。— いいえ、ありません。')}
+    <p class="small muted"><b>have been to 〜</b> で「〜に行ったことがある」という意味です。</p></section>` },
+  { id:'21-5', t:'完了用法', sub:'〜したところだ・〜してしまった', plan:['pfWK','pfWK','pfWK','pfWK','pfWK'], body:()=>`
+    <section class="panel"><h3>完了用法</h3>${rule('have（has）＋ 過去分詞 →「〜したところだ」「〜してしまった」')}${pfTL('comp')}</section>
+    <section class="panel"><h3>よく使われる語</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th></th><th>語</th><th>位置</th></tr>
+    <tr><td>肯定文</td><td><b>already</b>（もう、すでに）<br><b>just</b>（ちょうど）</td><td>have（has）と過去分詞の間</td></tr>
+    <tr><td>否定文</td><td><b>yet</b>（まだ）</td><td>文末</td></tr>
+    <tr><td>疑問文</td><td><b>yet</b>（もう）</td><td>文末</td></tr></table></section>
+    <section class="panel"><h3>例文</h3>${beEx('John has <b>already</b> written a song.','ジョンはもう曲を書いてしまいました。')}${beEx('I have <b>just</b> heard the news.','私はちょうどその知らせを聞いたところです。')}${beEx('Paul hasn’t written a song <b>yet</b>.','ポールはまだ曲を書いていません。')}${beEx('Has Paul written a song <b>yet</b>? — No, not <b>yet</b>.','ポールはもう曲を書いてしまいましたか。— いいえ、まだです。')}
+    <p class="small muted">yet は否定文では「まだ」、疑問文では「もう」の意味になるので注意。</p></section>` },
+  { id:'21-6', t:'例文', sub:'継続・経験・完了', plan:['pfUse','pfUse','pfUse','pfEJ','pfEJ'], body:()=>['c','e','k'].map(u=>`
+    <section class="panel"><h3>${PF_U[u]}</h3>${PF_S.filter(x=>x[2]===u).map(x=>beEx(x[0],x[1])).join('')}</section>`).join('') },
 ];
 
 
@@ -12803,6 +12972,7 @@ const UNITS = {
   adjv:{ no:'文18', title:'形容詞・副詞', subject:'英語', course:'jen', subj:1, lessons:AA_LESSONS },
   cpr:{ no:'文19', title:'比較', subject:'英語', course:'jen', subj:1, lessons:CPR_LESSONS },
   psv:{ no:'文20', title:'受動態', subject:'英語', course:'jen', subj:1, lessons:PSV_LESSONS },
+  pf:{ no:'文21', title:'現在完了', subject:'英語', course:'jen', subj:1, lessons:PF_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
