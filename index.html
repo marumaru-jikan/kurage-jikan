@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'There is ～. ／ There are ～.', ready:'there' },'不定詞','動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },'不定詞','動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3448,6 +3448,64 @@ const TH_LESSONS = [
     <p class="small muted">疑問文でも、some のかわりに any を使います。答えの文でも there を使います。</p></section>
     <section class="panel"><h3>数をたずねる</h3>${rule('How many ＋ 名詞の複数形 ＋ are there 〜?')}
     ${beEx('<b>How many</b> students <b>are there</b> in your class? — There are thirty.','あなたのクラスには何人の生徒がいますか。— 30人います。')}</section>` },
+];
+
+
+/* ===== 英語 文法 💧3 接続詞・前置詞（ランダム問題） ===== */
+// [英文, 選択肢, 正解, 日本語, ポイント]
+const RV3 = [
+  ['Is there a cat □ the box?',['on','in','at'],'in','箱の中にネコはいますか。','「〜の中に」→ in。'],
+  ['Do you play tennis □ Sundays?',['on','in','at'],'on','あなたは日曜日にテニスをしますか。','曜日 → on。'],
+  ['My aunt lived in Kyoto □ five years.',['from','for','in'],'for','おばは5年間京都に住んでいました。','数字のついた期間 → for。'],
+  ['I enjoyed talking □ my classmates.',['of','for','with'],'with','私はクラスメイトと話して楽しみました。','「〜といっしょに・〜と」→ with。'],
+  ['The shop is open □ morning to night.',['by','during','from'],'from','その店は朝から夜まで開いています。','from 〜 to …「〜から…まで」。'],
+  ['There is a clock □ the wall.',['on','in','at'],'on','壁に時計が掛かっています。','接触して → on。'],
+  ['Yui □ Ken are in the same class.',['or','and','but'],'and','ユイとケンは同じクラスです。','「〜と…」→ and。'],
+  ['We walked □ the beach.',['along','of','during'],'along','私たちは浜辺に沿って歩きました。','「〜に沿って」→ along。'],
+  ['School starts □ eight thirty.',['at','for','in'],'at','学校は8時30分に始まります。','時刻 → at。'],
+  ['Mika is a member □ the tennis team.',['of','for','on'],'of','ミカはテニス部の一員です。','a member of 〜「〜の一員」。'],
+  ['I visited my uncle □ the winter vacation.',['around','among','during'],'during','私は冬休みの間におじを訪ねました。','どういう時かを表す語 → during。'],
+  ['I know □ Ken likes music.',['when','that','because'],'that','私はケンが音楽を好きだということを知っています。','「〜ということ」→ that。'],
+  ['Did you buy this shirt □ that store?',['on','for','at'],'at','あなたはこのシャツをあの店で買いましたか。','比較的せまい場所（店）→ at。'],
+  ['There are many birds □ the lake.',['as','around','with'],'around','湖の周りにはたくさんの鳥がいます。','「〜の周りに」→ around。'],
+  ['My father goes to work □ car.',['on','by','for'],'by','父は車で仕事に行きます。','by ＋ 乗り物「〜で」。'],
+  ['Please answer the question □ English.',['in','by','on'],'in','英語で質問に答えてください。','in ＋ 言語名「〜語で」。'],
+  ['I was reading a book □ my sister came home.',['when','if','that'],'when','姉が帰ってきたとき、私は本を読んでいました。','「〜のとき」→ when。'],
+  ['Is the cup □ the table yours?',['of','on','by'],'on','テーブルの上のカップはあなたのものですか。','接触して上に → on。'],
+  ['Look □ that tall tower.',['at','to','over'],'at','あの高い塔を見て。','look at 〜「〜を見る」。'],
+  ['It is cold □ February.',['on','in','at'],'in','2月は寒いです。','月 → in。'],
+  ['I got a present □ my grandmother.',['at','from','along'],'from','祖母からプレゼントをもらいました。','「〜から」→ from。'],
+  ['Do you want tea □ coffee?',['or','and','for'],'or','紅茶とコーヒーのどちらがほしいですか。','「それとも」→ or。'],
+  ['The cat is sitting □ the two chairs.',['between','from','under'],'between','ネコは2つのいすの間にすわっています。','between A and B ／ 2つのものの間 → between。'],
+  ['I was tired, □ I went to bed early.',['because','so','that'],'so','私は疲れていたので、早く寝ました。','結果「だから」→ so。'],
+  ['The train will arrive □ Osaka at noon.',['at','on','to'],'at','電車は正午に大阪に着くでしょう。','arrive at 〜「〜に着く」。'],
+  ['She is small, □ she can run fast.',['and','or','but'],'but','彼女は小柄ですが、速く走れます。','「しかし」→ but。'],
+  ['I’m looking forward □ the trip.',['to','for','in'],'to','私はその旅行を楽しみにしています。','look forward to 〜「〜を楽しみにする」。'],
+  ['My mother made a cake □ me.',['of','to','for'],'for','母は私のためにケーキを作ってくれました。','「〜のために」→ for。'],
+  ['Brush your teeth □ you go to bed.',['to','before','for'],'before','寝る前に歯をみがきなさい。','「〜する前に」→ before。'],
+  ['English is different □ Japanese.',['and','of','from'],'from','英語は日本語とは異なります。','be different from 〜「〜と異なる」。'],
+  ['□ the way, what time is it?',['By','For','Of'],'By','ところで、今何時ですか。','by the way「ところで」。'],
+  ['They sailed all □ the world.',['on','over','by'],'over','彼らは世界中を航海しました。','all over the world「世界中を（で）」。'],
+  ['I stayed home □ it was raining.',['because','so','but'],'because','雨が降っていたので、私は家にいました。','理由「〜なので」→ because。'],
+  ['□ you are free, let’s play soccer.',['If','That','So'],'If','もしひまなら、サッカーをしましょう。','条件「もし〜ならば」→ if。'],
+];
+Object.assign(G, {
+  rv3Cloze(){ const x=pick(RV3);
+    return { prompt:'□ に入るものを選ぼう', expr:x[0]+`<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${x[3]}</span>`, enExpr:true, en:true, choices:[...x[1]], answer:x[2],
+      hint:'日本語の意味と、いっしょに使う語に注目しよう。', explain:x[4], viz:null }; },
+  rv3Mix(){ return Math.random()<.55 ? G.rv3Cloze() : G[pick(['cjAB','cjWI','cjTense','cjThat','prpAOI','prpOth','prpPair','prpObj'])](); },
+});
+const RV3_LESSONS = [
+  { id:'3-1', t:'ランダム問題', sub:'接続詞・前置詞の総まとめ', test:true, plan:Array(20).fill('rv3Mix'), body:()=>`
+    <section class="panel"><h3>接続詞のポイント</h3>
+    <div class="kwl"><div><b>and・but・or・so</b><span>と・しかし・それとも・だから</span></div><div><b>when・if・because</b><span>〜のとき・もし〜なら・〜なので</span></div><div><b>that</b><span>〜ということ（省略できる）</span></div></div>
+    <p class="small muted">when・if の中では、未来のことでも現在形。</p></section>
+    <section class="panel"><h3>前置詞のポイント</h3>
+    <p>時：<b>at</b> 時刻 ／ <b>on</b> 曜日・日 ／ <b>in</b> 月・季節・年</p><p>場所：<b>at</b> 地点 ／ <b>on</b> 接触 ／ <b>in</b> 中・広い場所</p>
+    <p><b>for</b>（数字のつく期間）と <b>during</b>（どういう時）、<b>by</b>（〜までに）と <b>until</b>（〜までずっと）</p></section>
+    <section class="panel"><h3>セットで覚える表現</h3>
+    <div class="kwl"><div><b>look at 〜</b><span>〜を見る</span></div><div><b>a member of 〜</b><span>〜の一員</span></div><div><b>be different from 〜</b><span>〜と異なる</span></div><div><b>look forward to 〜</b><span>〜を楽しみにする</span></div><div><b>arrive at 〜</b><span>〜に着く</span></div><div><b>by the way</b><span>ところで</span></div><div><b>all over the world</b><span>世界中で</span></div><div><b>from 〜 to …</b><span>〜から…まで</span></div></div>
+    <p class="small muted">12章・13章の問題と、3つから選ぶ問題から、毎回ちがう20問がランダムに出ます。</p></section>` },
 ];
 
 
@@ -11841,6 +11899,7 @@ const UNITS = {
   conj:{ no:'文12', title:'接続詞', subject:'英語', course:'jen', subj:1, lessons:CJ_LESSONS },
   prep:{ no:'文13', title:'前置詞', subject:'英語', course:'jen', subj:1, lessons:PREP_LESSONS },
   there:{ no:'文14', title:'There is ～. ／ There are ～.', subject:'英語', course:'jen', subj:1, lessons:TH_LESSONS },
+  rv3:{ no:'💧3', title:'接続詞・前置詞', subject:'英語', course:'jen', subj:1, lessons:RV3_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
