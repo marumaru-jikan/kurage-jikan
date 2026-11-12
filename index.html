@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },'間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },{ t:'分詞・関係代名詞', ready:'rv5', lab:'💧4' },'間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4894,6 +4894,58 @@ const REL_LESSONS = [
     <section class="panel"><h3>主格（人以外）</h3>${REL_S.filter(x=>x[0]==='n'&&x[1]==='s').map(x=>relEx(x)).join('')}</section>
     <section class="panel"><h3>目的格</h3>${REL_S.filter(x=>x[1]==='o').map(x=>relEx(x)).join('')}
     <p class="small muted">目的格の which・that は省略することもできます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 💧4 分詞・関係代名詞 ===== */
+const RV5 = [
+  ['I have a dog □ runs very fast.',['who','which'],'which','私はとても速く走る犬を飼っています。','先行詞 a dog は動物（人以外）→ which。'],
+  ['Do you know the boy □ is swimming in the river?',['who','which'],'who','川で泳いでいる男の子を知っていますか。','先行詞 the boy は人 → who。'],
+  ['The cake □ my sister made was delicious.',['who','that'],'that','姉が作ったケーキはおいしかった。','目的格。人以外 → that（which）。'],
+  ['Look at the □ baby.',['sleeping','slept'],'sleeping','眠っている赤ちゃんを見て。','「〜している」→ 現在分詞。1語なので名詞の前。'],
+  ['This is a letter □ in English.',['writing','written'],'written','これは英語で書かれた手紙です。','「〜された」→ 過去分詞。'],
+  ['The girl □ on the bench is Mika.',['sitting','sat'],'sitting','ベンチにすわっている女の子はミカです。','「〜している」→ 現在分詞。'],
+  ['I want a car □ in Japan.',['making','made'],'made','私は日本で作られた車がほしい。','「〜された」→ 過去分詞。'],
+  ['The boy □ to Ken is my brother.',['talking','talked'],'talking','ケンと話している男の子は私の弟です。','「〜している」→ 現在分詞。'],
+  ['Those □ girls are my classmates.',['singing','sung'],'singing','あの歌っている女の子たちは私のクラスメートです。','「〜している」→ 現在分詞。'],
+  ['There is a □ window in my room.',['breaking','broken'],'broken','私の部屋には割れた窓があります。','「割られた」→ 過去分詞 broken。'],
+  ['The pictures he took □ beautiful.',['is','are'],'are','彼が撮った写真は美しい。','主語は The pictures（複数）→ are。'],
+  ['The book I read yesterday □ interesting.',['was','were'],'was','昨日私が読んだ本はおもしろかった。','主語は The book（単数・過去）→ was。'],
+  ['The students playing soccer □ my friends.',['is','are'],'are','サッカーをしている生徒たちは私の友達です。','主語は The students（複数）→ are。'],
+  ['The girl who lives next door □ a cat.',['have','has'],'has','となりに住んでいる女の子はねこを飼っています。','主語は The girl（3人称単数）→ has。'],
+  ['This is the □.',['bag I bought','I bought bag','bought bag I'],'bag I bought','これは私が買ったかばんです。','名詞 ＋〈主語＋動詞〉の語順（目的格の関係代名詞の省略）。'],
+  ['He is the □.',['singer we like','we like singer','singer like we'],'singer we like','彼は私たちが好きな歌手です。','名詞 ＋〈主語＋動詞〉の語順。'],
+  ['I have a friend □ can speak French.',['who','which'],'who','私にはフランス語を話せる友達がいます。','先行詞 a friend は人 → who。'],
+  ['This is the train □ goes to Kyoto.',['who','which'],'which','これは京都へ行く電車です。','先行詞 the train は人以外 → which。'],
+  ['Is this the pen □ you were looking for?',['who','that'],'that','これはあなたが探していたペンですか。','目的格。人以外 → that（which）。'],
+  ['She is a doctor □ everyone trusts.',['which','that'],'that','彼女はみんなが信頼している医者です。','目的格。先行詞が人 → that。'],
+  ['The language □ in Brazil is Portuguese.',['speaking','spoken'],'spoken','ブラジルで話されている言語はポルトガル語です。','「話されている」→ 過去分詞 spoken。'],
+  ['Who is the boy □ the guitar?',['playing','played'],'playing','ギターをひいている男の子はだれですか。','「〜している」→ 現在分詞。'],
+  ['I know a girl □ Yui.',['calling','called'],'called','私はユイと呼ばれている女の子を知っています。','「呼ばれている」→ 過去分詞 called。'],
+  ['I saw a cat □ a long tail.',['who has','which has'],'which has','私は長いしっぽのねこを見ました。','先行詞 a cat は動物 → which。'],
+  ['The movie □ we saw yesterday was funny.',['who','which'],'which','昨日私たちが見た映画はおもしろかった。','目的格。人以外 → which。'],
+  ['The man □ is standing over there is my uncle.',['who','which'],'who','向こうに立っている男性は私のおじです。','先行詞 the man は人 → who。'],
+  ['This is a bus that □ to the airport.',['go','goes'],'goes','これは空港へ行くバスです。','先行詞 a bus は単数 → goes。'],
+  ['I have two brothers who □ in Osaka.',['live','lives'],'live','私には大阪に住んでいる兄弟が2人います。','先行詞 two brothers は複数 → live。'],
+  ['A boy □ Taro came to see you.',['naming','named'],'named','タロウという名前の男の子があなたに会いに来ました。','「名づけられた」→ 過去分詞 named。'],
+  ['The dishes □ by my father were nice.',['cooking','cooked'],'cooked','父が作った料理はすてきでした。','「料理された」→ 過去分詞。'],
+];
+Object.assign(G, {
+  rv5Cloze(){ const x=pick(RV5);
+    return { prompt:'□ に入るものを選ぼう', expr:x[0]+`<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${x[3]}</span>`, enExpr:true, en:true, words:true, choices:[...x[1]], answer:x[2],
+      hint:'「〜している」か「〜された」か。先行詞は人か人以外か。', explain:x[4], viz:null }; },
+  rv5Mix(){ return Math.random()<.5 ? G.rv5Cloze() : G[pick(['ptpP','ptpPP','ptpMix','ptpPoP','ptpPoPP','relWho','relThat','relObjW','relObjT','relCombS','relCombO','relCase','relOmit'])](); },
+});
+const RV5_LESSONS = [
+  { id:'4-1', t:'ランダム問題', sub:'分詞・関係代名詞の総まとめ', test:true, plan:Array(20).fill('rv5Mix'), body:()=>`
+    <section class="panel"><h3>分詞のポイント</h3>
+    <div class="kwl"><div><b>現在分詞（〜ing）</b><span>〜している</span></div><div><b>過去分詞</b><span>〜される・〜された</span></div></div>
+    <p>分詞1語 → 名詞の<b>前</b>（a <b>sleeping</b> baby）<br>分詞 ＋ 語句 → 名詞の<b>後ろ</b>（a guitar <b>used by John</b>）</p></section>
+    <section class="panel"><h3>関係代名詞のポイント</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th>先行詞</th><th>主格<br><span class="small">＋動詞</span></th><th>目的格<br><span class="small">＋主語＋動詞</span></th></tr>
+    <tr><td>人</td><td>who・that</td><td>that</td></tr><tr><td>人以外</td><td>which・that</td><td>which・that</td></tr></table>
+    <p>目的格は省略できる（the bag <b>I bought</b>）。主格のあとの動詞は先行詞に合わせる（a bus that <b>goes</b>）。</p>
+    <p class="small muted">23章・24章の問題と、2〜3つから選ぶ問題から、毎回ちがう20問がランダムに出ます。</p></section>` },
 ];
 
 
@@ -13298,6 +13350,7 @@ const UNITS = {
   pfp:{ no:'文22', title:'現在完了進行形', subject:'英語', course:'jen', subj:1, lessons:PFP_LESSONS },
   ptp:{ no:'文23', title:'分詞', subject:'英語', course:'jen', subj:1, lessons:PTP_LESSONS },
   rel:{ no:'文24', title:'関係代名詞', subject:'英語', course:'jen', subj:1, lessons:REL_LESSONS },
+  rv5:{ no:'💧4', title:'分詞・関係代名詞', subject:'英語', course:'jen', subj:1, lessons:RV5_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
