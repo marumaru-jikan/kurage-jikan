@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4', lab:'💧4' },{ t:'動名詞', ready:'ger' },'比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },'比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3859,14 +3859,14 @@ Object.assign(G, {
 G.fvMix = () => G[pick(['fvRole','fvType','fvToFor','fvC','fvOC','fv45','fv23'])]();
 const fvEx = t => FV_S.filter(x=>fvType(x)===t).slice(0,4).map(x=>`<div style="margin:4px 0 10px">${fvShow(x)}<p class="small muted">${x.jp}</p></div>`).join('');
 const RV4_LESSONS = [
-  { id:'1-1', t:'英文の要素', sub:'S・V・O・C・M', plan:['fvRole','fvRole','fvRole','fvRole','fvRole'], body:()=>`
+  { id:'16-1', t:'英文の要素', sub:'S・V・O・C・M', plan:['fvRole','fvRole','fvRole','fvRole','fvRole'], body:()=>`
     <section class="panel"><h3>英文をつくる5つの要素</h3>${fvShow(FV_S[18])}<p class="small muted">彼は彼女にプレゼントをあげました。</p></section>
     <section class="panel"><h3>〇 主語（S）とは</h3>${rule('「〜は」「〜が」にあたる語')}<p>文の中心になる人やもの。名詞や代名詞がなります。</p>${beEx('<b>Ken</b> plays tennis.','ケンはテニスをします。')}</section>
     <section class="panel"><h3>〇 動詞（V）とは</h3>${rule('「〜する」「〜です」にあたる語')}<p>主語の動作や状態を表します。be動詞と一般動詞があります。</p>${beEx('Ken <b>plays</b> tennis.','')}</section>
     <section class="panel"><h3>〇 目的語（O）とは</h3>${rule('「〜を」「〜に」にあたる語')}<p>動詞の動作を受ける人やもの。名詞や代名詞がなります。主語とはちがう人・もの（S ≠ O）です。</p>${beEx('Ken plays <b>tennis</b>.','')}</section>
     <section class="panel"><h3>〇 補語（C）とは</h3>${rule('主語や目的語が「何か」「どんなようすか」を説明する語')}<p>名詞や形容詞がなります。S ＝ C、または O ＝ C の関係になります。</p>${beEx('Ken is <b>happy</b>.','ケンはうれしい。（Ken ＝ happy）')}</section>
     <section class="panel"><h3>〇 修飾語（M）とは</h3>${rule('時・場所・ようすなどをくわしくする語')}<p>〈前置詞＋名詞〉や副詞など。なくても文が成り立つので、文型には数えません。</p>${beEx('Ken plays tennis <b>in the park</b>.','ケンは公園でテニスをします。')}</section>` },
-  { id:'1-2', t:'5文型', sub:'英文の5つの形', plan:['fvType','fvType','fvType','fvType','fvType'], body:()=>`
+  { id:'16-2', t:'5文型', sub:'英文の5つの形', plan:['fvType','fvType','fvType','fvType','fvType'], body:()=>`
     <section class="panel"><h3>5文型</h3>${rule('英文は、M（修飾語）を除くと、5つの形のどれかになる')}
     <table class="dtab" style="font-size:.85rem"><tr><th>文型</th><th>形</th><th>例</th></tr>
     <tr><td>第1文型</td><td>S ＋ V</td><td style="text-align:left">Birds sing.<br><span class="small muted">鳥は歌う。</span></td></tr>
@@ -3877,38 +3877,38 @@ const RV4_LESSONS = [
     <section class="panel"><h3>見分け方</h3>
     <p>① M（修飾語）を（　）でくくって外す</p><p>② V の後ろに何があるかを見る</p>
     <p>　・何もない → 第1文型</p><p>　・S ＝ ○ → 第2文型（C）</p><p>　・S ≠ ○ → 第3文型（O）</p><p>　・○ が2つ（人に物を） → 第4文型</p><p>　・2つの関係が ○ ＝ ○ → 第5文型</p></section>` },
-  { id:'1-3', t:'第1文型', sub:'S ＋ V', plan:['fv1Role','fv1Role','fv12','fv12','fv12'], body:()=>`
+  { id:'16-3', t:'第1文型', sub:'S ＋ V', plan:['fv1Role','fv1Role','fv12','fv12','fv12'], body:()=>`
     <section class="panel"><h3>S ＋ V</h3>${rule('主語と動詞だけで文が成り立つ')}${fvEx(0)}
     <p class="small muted">後ろに M（修飾語）がつくことが多いですが、M は文型に数えません。</p></section>
     <section class="panel"><h3>第1文型でよく使う動詞</h3><div class="kwl"><div><b>go・come</b><span>行く・来る</span></div><div><b>run・walk・swim</b><span>走る・歩く・泳ぐ</span></div><div><b>live・work</b><span>住む・働く</span></div><div><b>arrive・rise</b><span>着く・のぼる</span></div><div><b>smile・sing</b><span>ほほえむ・歌う</span></div></div></section>` },
-  { id:'1-4', t:'第2文型', sub:'S ＋ V ＋ C', plan:['fv2Role','fv2Role','fvC','fvC','fv23'], body:()=>`
+  { id:'16-4', t:'第2文型', sub:'S ＋ V ＋ C', plan:['fv2Role','fv2Role','fvC','fvC','fv23'], body:()=>`
     <section class="panel"><h3>S ＋ V ＋ C</h3>${rule('S ＝ C の関係になる')}${fvEx(1)}
     <p class="small muted">C には名詞（a teacher）か形容詞（happy）が入ります。</p></section>
     <section class="panel"><h3>第2文型でよく使う動詞</h3><div class="kwl"><div><b>be動詞</b><span>〜である</span></div><div><b>become</b><span>〜になる</span></div><div><b>get</b><span>〜になる（ようすの変化）</span></div><div><b>look</b><span>〜に見える</span></div><div><b>sound</b><span>〜に聞こえる</span></div><div><b>feel</b><span>〜と感じる</span></div><div><b>taste</b><span>〜な味がする</span></div></div></section>
     <section class="panel"><h3>注意</h3><p><b style="color:var(--bad)">×</b> He looks happily.　<b style="color:var(--good)">〇</b> He looks happy.</p><p class="small muted">C には副詞（happily）は入りません。</p></section>` },
-  { id:'1-5', t:'第3文型', sub:'S ＋ V ＋ O', plan:['fv3Role','fv3Role','fv23','fv23','fv23'], body:()=>`
+  { id:'16-5', t:'第3文型', sub:'S ＋ V ＋ O', plan:['fv3Role','fv3Role','fv23','fv23','fv23'], body:()=>`
     <section class="panel"><h3>S ＋ V ＋ O</h3>${rule('S ≠ O。O は「〜を」「〜に」にあたる')}${fvEx(2)}
     <p class="small muted">英語の文の多くがこの形です。O には名詞・代名詞（me・him など「〜を」の形）が入ります。</p></section>
     <section class="panel"><h3>第2文型とくらべよう</h3>
     ${beEx('Ken became <b>a doctor</b>.','ケンは医者になりました。（Ken ＝ a doctor → C → 第2文型）')}${beEx('Ken met <b>a doctor</b>.','ケンは医者に会いました。（Ken ≠ a doctor → O → 第3文型）')}
     <p class="small muted">同じ a doctor でも、主語とイコールかどうかで C か O かが決まります。</p></section>` },
-  { id:'1-6', t:'第4文型', sub:'S ＋ V ＋ O ＋ O', plan:['fv4Role','fv4Role','fvToFor','fvToFor','fv34'], body:()=>`
+  { id:'16-6', t:'第4文型', sub:'S ＋ V ＋ O ＋ O', plan:['fv4Role','fv4Role','fvToFor','fvToFor','fv34'], body:()=>`
     <section class="panel"><h3>S ＋ V ＋ O（人）＋ O（物）</h3>${rule('「（人）に（物）を〜する」')}${fvEx(3)}</section>
     <section class="panel"><h3>第3文型への書きかえ</h3>${rule('〈人 ＋ 物〉→〈物 ＋ to（for）＋ 人〉')}
     ${beEx('He gave <b>her</b> <b>a present</b>.','')}${beEx('＝ He gave <b>a present</b> <b>to</b> her.','')}
     <table class="dtab"><tr><th>to を使う動詞</th><th>for を使う動詞</th></tr><tr><td>give・show・teach<br>tell・send</td><td>make・buy<br>cook</td></tr></table>
     <p class="small muted">to は「相手に届く」動作、for は「相手のために」する動作です。</p></section>` },
-  { id:'1-7', t:'第5文型', sub:'S ＋ V ＋ O ＋ C', plan:['fv5Role','fv5Role','fvOC','fvOC','fv45'], body:()=>`
+  { id:'16-7', t:'第5文型', sub:'S ＋ V ＋ O ＋ C', plan:['fv5Role','fv5Role','fvOC','fvOC','fv45'], body:()=>`
     <section class="panel"><h3>S ＋ V ＋ O ＋ C</h3>${rule('O ＝ C の関係になる')}${fvEx(4)}</section>
     <section class="panel"><h3>第5文型でよく使う動詞</h3><div class="kwl"><div><b>call O C</b><span>O を C と呼ぶ</span></div><div><b>name O C</b><span>O を C と名づける</span></div><div><b>make O C</b><span>O を C（の状態）にする</span></div><div><b>keep O C</b><span>O を C にしておく</span></div></div></section>
     <section class="panel"><h3>第4文型とくらべよう</h3>
     ${beEx('My mother made <b>me</b> <b>a cake</b>.','母は私にケーキを作ってくれました。（me ≠ a cake → 第4文型）')}${beEx('The news made <b>me</b> <b>happy</b>.','そのニュースは私をうれしくさせました。（me ＝ happy → 第5文型）')}
     <p class="small muted">同じ made でも、後ろの2つがイコールかどうかで文型が変わります。</p></section>` },
-  { id:'1-8', t:'章末テスト', sub:'5文型の総まとめ', test:true, plan:Array(15).fill('fvMix'), body:()=>`
+  { id:'16-8', t:'章末テスト', sub:'5文型の総まとめ', test:true, plan:Array(15).fill('fvMix'), body:()=>`
     <section class="panel"><h3>5文型のまとめ</h3>
     <table class="dtab"><tr><th>文型</th><th>形</th><th>ポイント</th></tr>
     <tr><td>第1</td><td>SV</td><td>M がつくことが多い</td></tr><tr><td>第2</td><td>SVC</td><td>S ＝ C</td></tr><tr><td>第3</td><td>SVO</td><td>S ≠ O</td></tr><tr><td>第4</td><td>SVOO</td><td>人に物を</td></tr><tr><td>第5</td><td>SVOC</td><td>O ＝ C</td></tr></table>
-    <p class="small muted">1-1〜1-7 の問題から、毎回ちがう15問がランダムに出ます。</p></section>` },
+    <p class="small muted">16-1〜16-7 の問題から、毎回ちがう15問がランダムに出ます。</p></section>` },
 ];
 
 
@@ -3994,21 +3994,21 @@ Object.assign(G, {
     return { prompt:'英語にすると？', expr:x[0], en:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'enjoy は動名詞だけ、want は不定詞だけ、like はどちらも。', explain:x[1], viz:null }; },
 });
 const GER_LESSONS = [
-  { id:'16-1', t:'動名詞とは', sub:'〜ing「〜すること」', plan:['gerIng','gerIng','gerProg','gerProg','gerProg'], body:()=>`
+  { id:'17-1', t:'動名詞とは', sub:'〜ing「〜すること」', plan:['gerIng','gerIng','gerProg','gerProg','gerProg'], body:()=>`
     <section class="panel"><h3>基本文</h3>${beEx('John enjoys <b>playing</b> the guitar.','ジョンはギターを弾いて楽しみます。')}${beEx('<b>Playing</b> the guitar is fun.','ギターを弾くことは楽しいです。')}${beEx('He likes <b>playing</b> the guitar. ＝ He likes <b>to play</b> the guitar.','彼はギターを弾くことが好きです。')}</section>
     <section class="panel"><h3>動名詞</h3>${rule('動詞の ing 形で「〜すること」<br>名詞と同じ働きをする')}
     <p>・形は進行形で使う ing 形とまったく同じです（6-2「ing の付け方」）。</p><p>・時や主語によって変化せず、いつも同じ形です。</p></section>
     <section class="panel"><h3>進行形とのちがい</h3>
     ${beEx('He is <b>playing</b> the guitar now.','彼は今ギターを弾いています。（進行形：〜している）')}${beEx('His hobby is <b>playing</b> the guitar.','彼の趣味はギターを弾くことです。（動名詞：〜すること）')}
     <p class="small muted">どちらも〈be動詞 ＋ ing〉に見えますが、意味で見分けます。「趣味 ＝ 弾くこと」なら動名詞です。</p></section>` },
-  { id:'16-2', t:'名詞的用法', sub:'目的語・主語・前置詞の目的語・補語', plan:['gerRole','gerRole','gerPrep','gerPrep','gerSub'], body:()=>`
+  { id:'17-2', t:'名詞的用法', sub:'目的語・主語・前置詞の目的語・補語', plan:['gerRole','gerRole','gerPrep','gerPrep','gerSub'], body:()=>`
     <section class="panel"><h3>〇 目的語として（一般動詞のあと）</h3>${beEx('John enjoys <b>playing the guitar</b>.','ジョンは〜を楽しむ ＋ ギターを弾くこと → ジョンはギターを弾いて楽しみます。')}</section>
     <section class="panel"><h3>〇 主語として（文のはじめ）</h3>${beEx('<b>Playing the guitar</b> is fun.','ギターを弾くことは楽しい。')}<p class="small muted">主語の動名詞は三人称単数あつかい（is）です。</p></section>
     <section class="panel"><h3>〇 前置詞の目的語として（前置詞のあと）</h3>${beEx('John is good at <b>playing the guitar</b>.','ジョンはギターを弾くことが得意です。')}
     ${rule('前置詞の後ろには to 〜 は置けない → 動名詞を使う')}
     <div class="kwl"><div><b>be good at 〜ing</b><span>〜するのが得意だ</span></div><div><b>Thank you for 〜ing</b><span>〜してくれてありがとう</span></div><div><b>How about 〜ing?</b><span>〜するのはどうですか</span></div><div><b>before（after）〜ing</b><span>〜する前に（したあとで）</span></div><div><b>without 〜ing</b><span>〜しないで</span></div></div></section>
     <section class="panel"><h3>〇 補語として（be動詞のあと）</h3>${beEx('His job is <b>writing songs</b>.','彼の仕事は曲を書くことです。')}</section>` },
-  { id:'16-3', t:'不定詞の名詞的用法との比較', sub:'目的語にする動詞の3つの型', plan:['gerVerb','gerVerb','gerVerb','gerVerb','gerCmp'], body:()=>`
+  { id:'17-3', t:'不定詞の名詞的用法との比較', sub:'目的語にする動詞の3つの型', plan:['gerVerb','gerVerb','gerVerb','gerVerb','gerCmp'], body:()=>`
     <section class="panel"><h3>〇 不定詞型動詞</h3><p>不定詞（to 〜）だけを目的語にする動詞</p>
     <div class="kwl"><div><b>want to 〜</b><span>〜したい</span></div><div><b>hope to 〜</b><span>〜することを望む</span></div><div><b>need to 〜</b><span>〜する必要がある</span></div><div><b>try to 〜</b><span>〜しようと努力する</span></div><div><b>decide to 〜</b><span>〜することを決める</span></div></div></section>
     <section class="panel"><h3>〇 動名詞型動詞</h3><p>動名詞（〜ing）だけを目的語にする動詞</p>
@@ -4017,7 +4017,7 @@ const GER_LESSONS = [
     <section class="panel"><h3>〇 両型動詞</h3><p>不定詞も動名詞も目的語にする動詞（意味はほぼ同じ）</p>
     <div class="kwl"><div><b>like to 〜 ／ like 〜ing</b><span>〜することが好きだ</span></div><div><b>love to 〜 ／ love 〜ing</b><span>〜することが大好きだ</span></div><div><b>begin to 〜 ／ begin 〜ing</b><span>〜し始める</span></div><div><b>start to 〜 ／ start 〜ing</b><span>〜し始める</span></div></div></section>
     <section class="panel"><h3>くらべよう</h3>${beEx('She likes <b>running</b> before breakfast. ＝ She likes <b>to run</b> before breakfast.','彼女は朝食の前に走るのが好きです。')}${beEx('I enjoy <b>going</b> shopping.','私は買い物に行って楽しみます。（×enjoy to go）')}${beEx('I want <b>to go</b> shopping.','私は買い物に行きたい。（×want going）')}</section>` },
-  { id:'16-4', t:'例文', sub:'動名詞の文を読もう', plan:['gerEJ','gerEJ','gerEJ','gerVerb','gerPrep'], body:()=>`
+  { id:'17-4', t:'例文', sub:'動名詞の文を読もう', plan:['gerEJ','gerEJ','gerEJ','gerVerb','gerPrep'], body:()=>`
     <section class="panel"><h3>目的語</h3>${GER_ROLE.filter(x=>x[2]==='目的語').map(x=>beEx(x[0],x[1])).join('')}</section>
     <section class="panel"><h3>主語</h3>${GER_ROLE.filter(x=>x[2]==='主語').map(x=>beEx(x[0],x[1])).join('')}</section>
     <section class="panel"><h3>前置詞の目的語</h3>${GER_ROLE.filter(x=>x[2]==='前置詞の目的語').map(x=>beEx(x[0],x[1])).join('')}</section>
@@ -12417,8 +12417,8 @@ const UNITS = {
   there:{ no:'文14', title:'There is ～. ／ There are ～.', subject:'英語', course:'jen', subj:1, lessons:TH_LESSONS },
   rv3:{ no:'💧3', title:'接続詞・前置詞', subject:'英語', course:'jen', subj:1, lessons:RV3_LESSONS },
   inf1:{ no:'文15', title:'不定詞', subject:'英語', course:'jen', subj:1, lessons:[...INF1_LESSONS, ...INF2_LESSONS] },
-  rv4:{ no:'💧4', title:'5文型', subject:'英語', course:'jen', subj:1, lessons:RV4_LESSONS },
-  ger:{ no:'文16', title:'動名詞', subject:'英語', course:'jen', subj:1, lessons:GER_LESSONS },
+  rv4:{ no:'文16', title:'5文型', subject:'英語', course:'jen', subj:1, lessons:RV4_LESSONS },
+  ger:{ no:'文17', title:'動名詞', subject:'英語', course:'jen', subj:1, lessons:GER_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
