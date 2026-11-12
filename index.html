@@ -684,6 +684,11 @@ const PDF = {
   'm2c5-lv3': { q:'pdf/m2c5.pdf', a:'pdf/m2c5.pdf', qr:[7,9], ar:[10,12] },
   'm2c5-lv4': { q:'pdf/m2c5.pdf', a:'pdf/m2c5.pdf', qr:[13,14], ar:[15,16] },
   'm2c5-lv5': { q:'pdf/m2c5.pdf', a:'pdf/m2c5.pdf', qr:[17,17], ar:[18,19] },
+  'm2c6-lv1': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[1,1], ar:[2,2] },
+  'm2c6-lv2': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[3,4], ar:[5,6] },
+  'm2c6-lv3': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[7,8], ar:[9,10] },
+  'm2c6-lv4': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[11,12], ar:[13,14] },
+  'm2c6-lv5': { q:'pdf/m2c6.pdf', a:'pdf/m2c6.pdf', qr:[15,15], ar:[16,16] },
   'm3c1-lv1': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[1,1], ar:[2,2] },
   'm3c1-lv2': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[3,4], ar:[5,6] },
   'm3c1-lv3': { q:'pdf/m3c1.pdf', a:'pdf/m3c1.pdf', qr:[7,9], ar:[10,12] },
@@ -1131,7 +1136,7 @@ const CATALOG = [
       { name:'数学', k:'数', units:U({ t:'正負の数', ready:'pn' },'文字の式','方程式','比例と反比例','平面図形','空間図形','データの活用') },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
-      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },{ t:'一次関数', ready:'m2c3' },{ t:'図形の調べ方', ready:'m2c4' },{ t:'図形の性質と証明', ready:'m2c5' },'場合の数と確率','箱ひげ図とデータの活用') },
+      { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },{ t:'一次関数', ready:'m2c3' },{ t:'図形の調べ方', ready:'m2c4' },{ t:'図形の性質と証明', ready:'m2c5' },{ t:'場合の数と確率', ready:'m2c6' },'箱ひげ図とデータの活用') },
       { name:'理科', k:'理', units:U('化学変化と原子・分子','生物のからだのつくりとはたらき','天気とその変化','電流とその利用') } ] },
     { id:'j3', name:'中3', k:'3', grade:3, subjects:[
       { name:'数学', k:'数', units:U({ t:'式の展開と因数分解', ready:'m3c1' },{ t:'平方根', ready:'m3c2' },{ t:'二次方程式', ready:'m3c3' },{ t:'関数 y＝ax²', ready:'m3c4' },{ t:'図形と相似', ready:'m3c5' },{ t:'円の性質', ready:'m3c6' },{ t:'三平方の定理', ready:'m3c7' },{ t:'標本調査', ready:'m3c8' }) },
@@ -7771,6 +7776,110 @@ const M2C5_LESSONS = [
     ${w6TrapF()}${w6E('△ABC＝△DBC から、共通な △OBC をひいて　△ABO＝△DCO')}<p class="small muted">ここでの「＝」は、面積が等しいことを表します。</p></section>` },
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'5章の総まとめ', test:true, plan:['w6Iso','w6Def','w6IsoCond','w6Conv','w6Eq','w6Right','w6RightPf','w6Para','w6ParaPf','w6ParaCond','w6Quad','w6Area'], body:()=>`
     <section class="panel"><h3>5章　図形の性質と証明　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
+];
+
+/* ===== 中2数学 6章 場合の数と確率 ===== */
+const w7E = s => `<p class="ex mth">${s}</p>`;
+const w7P = (a,n) => w4n(w4R(a,n));
+const w7W = (a,n) => [w7P(n-a,n), w7P(Math.min(n,a+1),n), w7P(Math.max(0,a-1),n), n>1&&a<n?w7P(a,n-1):w7P(a,2*n), w7P(1,n), w7P(Math.min(n,a+2),n), w7P(Math.max(0,a-2),n)].filter(z=>z!==w7P(a,n));
+const w7cd = xs => xs.map(v=>`<span style="display:inline-block;min-width:1.5em;padding:2px 6px;margin:0 3px;border:1.5px solid currentColor;border-radius:5px;text-align:center;font-family:'Times New Roman',serif">${v}</span>`).join('');
+const w7comb = (arr,k) => { if(k===0) return [[]]; if(arr.length<k) return []; const [h,...t]=arr; return [...w7comb(t,k-1).map(c=>[h,...c]), ...w7comb(t,k)]; };
+const w7perm = (arr,k) => k===0?[[]]:arr.flatMap((v,i)=>w7perm(arr.filter((_,j)=>j!==i),k-1).map(p=>[v,...p]));
+const w7prod = (n,k) => k===0?[[]]:w7prod(n,k-1).flatMap(p=>Array.from({length:n},(_,i)=>[...p,i]));
+const W7NM = ['A','B','C','D','E','F','G'];
+/* 2枚の硬貨の樹形図 */
+function w7TreeF(){ const T=(x,y,s)=>w5T(x,y,s,'gs'); let g=T(40,16,'10円')+T(170,16,'100円');
+  [[60,'表'],[150,'裏']].forEach(([y,a])=>{ g+=T(40,y+4,a); [[y-22,'表'],[y+22,'裏']].forEach(([y2,b])=>{ g+=`<line x1="54" y1="${y}" x2="150" y2="${y2}" class="gl" style="stroke-width:1"/>`+T(170,y2+4,b)+T(230,y2+4,a+b); }); });
+  return w5svg(260,190,g,'樹形図'); }
+/* 2つのさいころの表（mark：(a,b)=>bool） */
+function w7Tab(mark){ let h='<table class="dtab mth" style="font-size:.8rem;margin:6px auto"><tr><th>A＼B</th>'+[1,2,3,4,5,6].map(b=>`<th>${b}</th>`).join('')+'</tr>';
+  for(let a=1;a<=6;a++) h+=`<tr><th>${a}</th>`+[1,2,3,4,5,6].map(b=>`<td>${mark&&mark(a,b)?'○':''}</td>`).join('')+'</tr>';
+  return h+'</table>'; }
+const W7DE = [ ['出る目の数の和が s になる', s=>(a,b)=>a+b===s, ()=>ri(3,11)], ['出る目の数の和が s 以下になる', s=>(a,b)=>a+b<=s, ()=>ri(3,6)], ['出る目の数の和が s 以上になる', s=>(a,b)=>a+b>=s, ()=>ri(9,11)],
+  ['出る目の数の差が s になる', s=>(a,b)=>Math.abs(a-b)===s, ()=>ri(1,4)], ['出る目の数の積が s 以上になる', s=>(a,b)=>a*b>=s, ()=>pick([12,15,18,20])], ['同じ目が出る', ()=>(a,b)=>a===b, ()=>0],
+  ['2つとも奇数の目が出る', ()=>(a,b)=>a%2&&b%2, ()=>0], ['出る目の数の和が偶数になる', ()=>(a,b)=>(a+b)%2===0, ()=>0], ['出る目の数の積が奇数になる', ()=>(a,b)=>(a*b)%2===1, ()=>0], ['奇数と偶数の目が1つずつ出る', ()=>(a,b)=>(a+b)%2===1, ()=>0], ['出る目の数の和が 3 の倍数になる', ()=>(a,b)=>(a+b)%3===0, ()=>0], ['A の目が B の目より大きくなる', ()=>(a,b)=>a>b, ()=>0] ];
+Object.assign(G, {
+  /* --- 0 復習 --- */
+  w7Comb0(){ const S=[['ぶどう','もも','りんご','みかん','なし','かき'],['A さん','B さん','C さん','D さん','E さん','F さん']], k=pick([4,5,6]), it=pick(S).slice(0,k), r=Math.random()<.75?2:3, n=w7comb(it,r).length;
+    return w4m(`${it.join('、')} の ${k} つから ${r} つを選びます。選び方は何通り？`, '', n+' 通り', [k*(k-1)+' 通り', (n+2)+' 通り', k*r+' 通り', (n-1)+' 通り'], '図や表に書き出して、重なりのないように数えよう。{A, B} と {B, A} は同じ選び方です。', `組み合わせをすべて書き出すと ${n} 通り`, { words:true }); },
+  w7Perm0(){ const z=Math.random()<.35, k=pick([3,4,5]), ds=z?[0,...shuffle([1,2,3,4,5,6,7,8,9]).slice(0,k-1).sort()]:shuffle([1,2,3,4,5,6,7,8,9]).slice(0,k).sort(), r=Math.random()<.7?2:3, n=w7perm(ds,r).filter(p=>p[0]!==0).length;
+    return w4m(`${w7cd(ds)} の ${k} 枚のカードから ${r} 枚を選んで並べ、${r} けたの整数をつくります。全部で何通りできますか。`, '', n+' 通り', [w7perm(ds,r).length+' 通り', w7comb(ds,r).length+' 通り', (n+k)+' 通り'], '一番上の位から順に、何通りあるか考えよう。' + (z?'0 は一番上の位にはおけません。':''), `${r===2?'十':'百'}の位から順に考えて ${n} 通り`); },
+  /* --- 1 確率の求め方 --- */
+  w7Ball(){ const r=ri(2,6), w=ri(1,5), b=ri(1,4), n=r+w+b, t=ri(0,2);
+    const s=`赤玉 ${r} 個、白玉 ${w} 個、青玉 ${b} 個がはいっている箱から、玉を1個取り出します。`;
+    if(t===0){ const [c,a]=pick([['赤玉',r],['白玉',w],['青玉',b]]); return w4m(s+`${c}が出る確率は？`, '', w7P(a,n), w7W(a,n), '全部で何通りの取り出し方があり、そのうち何通りがあてはまるかを数えよう。', `${frH(a,n)}${w4R(a,n)[1]!==n?'＝'+w7P(a,n):''}`); }
+    if(t===1){ const a=r+w; return w4m(s+'赤玉または白玉が出る確率は？', '', w7P(a,n), w7W(a,n), '赤玉または白玉の個数をたそう。', `${r}＋${w}＝${a}（通り）、${frH(a,n)}${w4R(a,n)[1]!==n?'＝'+w7P(a,n):''}`); }
+    return w4m(s+'青玉が出ない確率は？', '', w7P(n-b,n), w7W(n-b,n), '（青玉が出ない確率）＝1−（青玉が出る確率）', `1−${frH(b,n)}＝${w7P(n-b,n)}`); },
+  w7Die1(){ const E=[['偶数の目が出る',v=>v%2===0],['3 の倍数の目が出る',v=>v%3===0],['4 以上の目が出る',v=>v>=4],['5 以下の目が出る',v=>v<=5],['7 の目が出る',v=>v===7],['6 以下の目が出る',v=>v<=6],['6 の約数の目が出る',v=>6%v===0],['素数の目が出る',v=>[2,3,5].includes(v)],['1 または 6 の目が出る',v=>v===1||v===6],['0 以下の目が出る',v=>v<=0]];
+    const [s,f]=pick(E), a=[1,2,3,4,5,6].filter(f).length;
+    return w4m(`1つのさいころを投げるとき、${s}確率は？`, '', w7P(a,6), [...w7W(a,6),'1','0'].filter(z=>z!==w7P(a,6)), 'さいころの目の出かたは、全部で 6 通りです。確率は 0 以上 1 以下。', `あてはまる目は ${a} 通り → ${frH(a,6)}${a%6?'＝'+w7P(a,6):'＝'+w7P(a,6)}${a===0?'（けっして起こらない）':a===6?'（かならず起こる）':''}`); },
+  /* --- 2 いろいろな確率 --- */
+  w7Count(){ const t=ri(0,3);
+    if(t===0){ const k=pick([4,5,6]), n=w7comb(W7NM.slice(0,k),2).length; return w4m(`${W7NM.slice(0,k).join('、')} の ${k} 人から、2人の委員を選びます。選び方は全部で何通り？`, '', n+' 通り', [k*(k-1)+' 通り', 2*k+' 通り', (n+1)+' 通り'], '樹形図をかき、同じ組を2回数えないように注意しよう。', `${n} 通り`); }
+    if(t===1){ const k=pick([4,5,6]), n=k*(k-1); return w4m(`${k} 人から、リーダーと副リーダーを1人ずつ選びます。選び方は全部で何通り？`, '', n+' 通り', [n/2+' 通り', 2*k+' 通り', k*k+' 通り'], 'リーダーと副リーダーは役割がちがうので、順番を区別します。', `${k}×${k-1}＝${n}（通り）`); }
+    if(t===2){ const k=pick([3,4]), n=k===3?6:24; return w4m(`${W7NM.slice(0,k).join('、')} の ${k} 人が、横1列に並びます。並び方は全部で何通り？`, '', n+' 通り', [k*k+' 通り', (k===3?3:12)+' 通り', (k===3?9:16)+' 通り'], '左から順に、何通りの選び方があるか考えよう。', `${k===3?'3×2×1':'4×3×2×1'}＝${n}（通り）`); }
+    const n=w7perm([0,1,2,3],3).filter(p=>p[0]!==0).length; return w4m(`${w7cd([0,1,2,3])} の 4 枚のカードを並べて、3 けたの整数をつくります。全部で何個できますか。`, '', n+' 個', ['24 個','12 個','27 個'], '百の位に 0 はおけません。', `百の位は 3 通り、十の位は 3 通り、一の位は 2 通り　3×3×2＝${n}`); },
+  w7Coin(){ const t=ri(0,1);
+    if(t===0){ const k=pick([2,3]), all=w7prod(2,k), E=k===2?[['2枚とも表が出る',p=>p.every(v=>v===0)],['表と裏が1枚ずつ出る',p=>p[0]!==p[1]],['少なくとも1枚は表が出る',p=>p.some(v=>v===0)]]:[['3枚とも表が出る',p=>p.every(v=>v===0)],['2枚が表で1枚が裏になる',p=>p.filter(v=>v===0).length===2],['少なくとも1枚は表が出る',p=>p.some(v=>v===0)],['表が1枚だけ出る',p=>p.filter(v=>v===0).length===1]];
+      const [s,f]=pick(E), a=all.filter(f).length, n=all.length;
+      return w4m(`${k} 枚の硬貨を同時に投げるとき、${s}確率は？`, '', w7P(a,n), w7W(a,n), `表を○、裏を×として樹形図をかこう。出かたは全部で ${n} 通り。`, `${a} 通り → ${frH(a,n)}${w4R(a,n)[1]!==n?'＝'+w7P(a,n):''}`); }
+    const v=[100,50,10], all=w7prod(2,3), T=pick([60,100,110,150]), a=all.filter(p=>p.reduce((s,x,i)=>s+(x===0?v[i]:0),0)>=T).length;
+    return w4m(`100 円、50 円、10 円の3枚の硬貨を同時に投げるとき、表が出た硬貨の金額の合計が ${T} 円以上になる確率は？`, '', w7P(a,8), w7W(a,8), '樹形図をかき、それぞれの場合の合計金額を書きこもう。', `8 通りのうち ${a} 通り → ${w7P(a,8)}`); },
+  w7Dice2(){ const [s0,mk,par]=pick(W7DE), p=par(), f=mk(p), a=[1,2,3,4,5,6].flatMap(x=>[1,2,3,4,5,6].map(y=>f(x,y)?1:0)).reduce((s,v)=>s+v,0), s=s0.replace(' s ',` ${p} `);
+    if(a===0) return G.w7Dice2();
+    return w4m(`大小2つのさいころを同時に投げるとき、${s}確率は？`, '', w7P(a,36), w7W(a,36), '6×6＝36 通りの表をかいて、あてはまるところに○をつけよう。', `${w7Tab(f)}○は ${a} 通り → ${frH(a,36)}${w4R(a,36)[1]!==36?'＝'+w7P(a,36):''}`); },
+  w7Card(){ const k=pick([4,5,6]), cs=Array.from({length:k},(_,i)=>i+1), t=ri(0,1);
+    if(t===0){ const all=w7comb(cs,2), E=[['1 のカードがふくまれる',c=>c.includes(1)],['2 枚の数の和が偶数になる',c=>(c[0]+c[1])%2===0],[`2 枚の数の和が ${k+1} 以上になる`,c=>c[0]+c[1]>=k+1],['2 枚とも奇数になる',c=>c.every(v=>v%2)],[`${k} のカードが出ない`,c=>!c.includes(k)]], [s,f]=pick(E), a=all.filter(f).length, n=all.length;
+      return w4m(`${w7cd(cs)} の ${k} 枚のカードから、同時に2枚を取り出すとき、${s}確率は？`, '', w7P(a,n), w7W(a,n), `同時に取り出すときは、{1, 2} と {2, 1} を同じ取り出し方と考えます。全部で ${n} 通り。`, `${n} 通りのうち ${a} 通り → ${w7P(a,n)}`); }
+    const all=w7perm(cs,2), E=[['偶数になる',p=>p[1]%2===0],['3 の倍数になる',p=>(10*p[0]+p[1])%3===0],[`${(k-1)*10} 以上になる`,p=>10*p[0]+p[1]>=(k-1)*10],['奇数になる',p=>p[1]%2===1]], [s,f]=pick(E), a=all.filter(f).length, n=all.length;
+    return w4m(`${w7cd(cs)} の ${k} 枚のカードをよくきって1枚ずつ2回取り出し、取り出した順に左から並べて2けたの整数をつくります。その整数が${s}確率は？`, '', w7P(a,n), w7W(a,n), `十の位が ${k} 通り、一の位が ${k-1} 通りで、全部で ${n} 通り。`, `${n} 通りのうち ${a} 通り → ${w7P(a,n)}`, { words:true }); },
+  w7Lot(){ const n=pick([4,5,6,7]), k=ri(1,Math.min(3,n-2)), t=ri(0,3), H=Array.from({length:n},(_,i)=>i<k);
+    const s=`${n} 本のうち、あたりが ${k} 本はいっているくじがあります。`;
+    if(t<=1){ const all=w7perm([...Array(n).keys()],2), f=t===0?(p=>H[p[1]]):(p=>H[p[0]]&&H[p[1]]), a=all.filter(f).length, N=all.length;
+      return w4m(s+`A、B の2人がこの順に1本ずつひくとき、${t===0?'B があたりをひく':'2人ともあたりをひく'}確率は？（ひいたくじはもどさない）`, '', w7P(a,N), [...w7W(a,N), w7P(k,n), w7P(k*k,n*n)], 'あたりを①、②…、はずれを③…のように区別して樹形図をかこう。', `${N} 通りのうち ${a} 通り → ${w7P(a,N)}${t===0?'（A と同じで、あたりやすさは変わらない）':''}`, { words:true }); }
+    const all=w7comb([...Array(n).keys()],2), f=t===2?(c=>H[c[0]]&&H[c[1]]):(c=>H[c[0]]||H[c[1]]), a=all.filter(f).length, N=all.length;
+    return w4m(s+`このくじを同時に2本ひくとき、${t===2?'2本ともあたりである':'少なくとも1本はあたりである'}確率は？`, '', w7P(a,N), w7W(a,N), t===3?'（少なくとも1本あたり）＝1−（2本ともはずれ）':'2本の組をすべて書き出そう。', t===3?`2本ともはずれは ${N-a} 通り → 1−${frH(N-a,N)}＝${w7P(a,N)}`:`${N} 通りのうち ${a} 通り → ${w7P(a,N)}`, { words:true }); },
+  w7Not(){ const t=ri(0,3);
+    if(t===0) return w4m('大小2つのさいころを同時に投げるとき、同じ目が出ない確率は？', '', w7P(30,36), w7W(30,36), '（同じ目が出ない確率）＝1−（同じ目が出る確率）', `同じ目は 6 通りで ${frH(1,6)}。1−${frH(1,6)}＝${frH(5,6)}`);
+    if(t===1) return w4m('大小2つのさいころを同時に投げるとき、少なくとも1つは奇数の目が出る確率は？', '', w7P(27,36), w7W(27,36), '「少なくとも1つは奇数」の反対は「2つとも偶数」です。', `2つとも偶数は 3×3＝9 通り。1−${frH(9,36)}＝${frH(3,4)}`);
+    if(t===2) return w4m('3 枚の硬貨を同時に投げるとき、少なくとも1枚は裏が出る確率は？', '', w7P(7,8), w7W(7,8), '反対は「3枚とも表」です。', `3枚とも表は 1 通り。1−${frH(1,8)}＝${frH(7,8)}`);
+    const p=pick([[1,5],[2,7],[3,10],[1,8],[3,8],[2,9]]); return w4m(`ある事柄 A の起こる確率が ${frH(p[0],p[1])} のとき、A の起こらない確率は？`, '', w7P(p[1]-p[0],p[1]), [w7P(p[0],p[1]), w7P(1,p[1]), w7P(p[1]-p[0]-1,p[1])], 'A の起こらない確率＝1−p', `1−${frH(p[0],p[1])}＝${w7P(p[1]-p[0],p[1])}`); },
+});
+
+const M2C6_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'組み合わせ', sub:'小学6年の復習', plan:Array(5).fill('w7Comb0'), body:()=>`
+    <section class="panel"><h3>場合の数</h3>${rule('図や表を使って、場合を順序よく整理し、<br>もれや重なりのないように調べる')}
+    ${w7E('ぶどう、もも、りんご、みかんから2つ選ぶ<br>{ぶ, も} {ぶ, り} {ぶ, み} {も, り} {も, み} {り, み}　→　6 通り')}<p class="small muted">選ぶだけのときは、{ぶ, も} と {も, ぶ} は同じものです。</p></section>` },
+  { id:'0-2', t:'並べ方', sub:'小学6年の復習', plan:Array(5).fill('w7Perm0'), body:()=>`
+    <section class="panel"><h3>並べ方</h3>${w7E(w7cd([1,3,5,7])+'<br>から2枚で2けたの整数をつくる')}${w7E('十の位が 4 通り、そのそれぞれに一の位が 3 通り<br>4×3＝12（通り）')}<p class="small muted">並べるときは、13 と 31 は別のものです。</p></section>` },
+  { id:'1-1', sec:'1　確率の求め方', t:'確率の求め方', sub:'同様に確からしい', plan:Array(5).fill('w7Ball'), body:()=>`
+    <section class="panel"><h3>同様に確からしい</h3>${rule('どの場合が起こることも同じ程度であると考えられるとき、<br><b>同様に確からしい</b>という')}<p class="small muted">例：玉の取り出し方、さいころの目の出かた、硬貨の表裏の出かた、カードの取り出し方、くじのひき方</p></section>
+    <section class="panel"><h3>確率の求め方</h3>${rule('起こる場合が全部で n 通りあり、どれも同様に確からしいとき、<br>ことがら A の起こる場合が a 通りなら<br>A の起こる確率　p＝'+frH('a','n'))}
+    ${w7E('白玉 2 個、赤玉 3 個から1個取り出すとき<br>白玉である確率は '+frH(2,5))}</section>` },
+  { id:'1-2', t:'さいころと確率の範囲', sub:'0≦p≦1', plan:Array(5).fill('w7Die1'), body:()=>`
+    <section class="panel"><h3>確率のとる値の範囲</h3>${rule('かならず起こることがらの確率は 1<br>けっして起こらないことがらの確率は 0<br>確率 p の範囲は　0≦p≦1')}
+    ${w7E('1つのさいころを投げるとき<br>1 以上の目が出る確率は '+frH(6,6)+'＝1<br>7 以上の目が出る確率は '+frH(0,6)+'＝0')}</section>` },
+  { id:'2-1', sec:'2　いろいろな確率', t:'樹形図と場合の数', sub:'選び方・並び方', plan:Array(5).fill('w7Count'), body:()=>`
+    <section class="panel"><h3>樹形図</h3>${rule('枝分かれした図を<b>樹形図</b>といい、<br>場合をもれなく、重なりなく数えるのに使う')}${w7TreeF()}
+    ${w7E('10 円と 100 円の硬貨を投げるときの表裏の出かた → 4 通り')}<p class="small muted">役割がちがう（リーダーと副リーダー）ときは順番を区別し、ただ選ぶ（委員2人）ときは区別しません。</p></section>` },
+  { id:'2-2', t:'硬貨の確率', sub:'樹形図を使う', plan:Array(5).fill('w7Coin'), body:()=>`
+    <section class="panel"><h3>2枚の硬貨</h3>${w7TreeF()}${w7E('2枚とも表が出る確率は '+frH(1,4)+'<br>表と裏が1枚ずつ出る確率は '+frH(2,4)+'＝'+frH(1,2))}</section>
+    <section class="panel"><h3>3枚の硬貨</h3><p>3枚の硬貨 A、B、C の出かたは 2×2×2＝8 通り。表を○、裏を×として樹形図をかこう。</p>${w7E('3枚とも表が出る確率は '+frH(1,8))}</section>` },
+  { id:'2-3', t:'2つのさいころ', sub:'36 通りの表', plan:Array(5).fill('w7Dice2'), body:()=>`
+    <section class="panel"><h3>2つのさいころの目の出かた</h3>${rule('2つのさいころ A、B を同時に投げるとき、<br>目の出かたは 6×6＝36（通り）')}
+    ${w7Tab((a,b)=>a%2===0&&b%2===0)}${w7E('2つとも偶数の目が出る（○）のは 9 通り<br>確率は '+frH(9,36)+'＝'+frH(1,4))}<p class="small muted">大小2つのさいころのように、2つを区別して考えます。</p></section>` },
+  { id:'2-4', t:'カードの確率', sub:'同時に取り出す・並べる', plan:Array(5).fill('w7Card'), body:()=>`
+    <section class="panel"><h3>同時に2枚取り出す</h3>${w7E(w7cd([1,2,3,4,5])+'から同時に2枚')}${w7E('{1, 2} {1, 3} {1, 4} {1, 5} {2, 3} {2, 4} {2, 5} {3, 4} {3, 5} {4, 5}<br>全部で 10 通り。1 が出る確率は '+frH(4,10)+'＝'+frH(2,5))}
+    <p class="small muted">{1, 2} と {2, 1} は同じ取り出し方です。</p></section>
+    <section class="panel"><h3>1枚ずつ取り出して並べる</h3><p>取り出した順に並べるときは、12 と 21 を別のものとして数えます（5×4＝20 通り）。</p></section>` },
+  { id:'2-5', t:'くじの確率', sub:'ひく順番と確率', plan:Array(5).fill('w7Lot'), body:()=>`
+    <section class="panel"><h3>くじびき</h3>${w7E('5 本のうちあたり 3 本。A、B の順に1本ずつひく<br>あたりを ①②③、はずれを ④⑤ として樹形図をかくと 5×4＝20 通り<br>A があたる確率 '+frH(12,20)+'＝'+frH(3,5)+'、B があたる確率 '+frH(12,20)+'＝'+frH(3,5))}
+    <p class="small muted">くじをひく順番によって、あたりやすさは変わりません。</p></section>` },
+  { id:'2-6', t:'起こらない確率', sub:'1−p', plan:Array(5).fill('w7Not'), body:()=>`
+    <section class="panel"><h3>〜でない確率</h3>${rule('ことがら A の起こる確率を p とすると、<br>A の起こらない確率は　1−p')}
+    ${w7E('2つのさいころで同じ目が出る確率は '+frH(6,36)+'＝'+frH(1,6)+'<br>同じ目が出ない確率は 1−'+frH(1,6)+'＝'+frH(5,6))}<p class="small muted">「少なくとも1つは〜」は、反対の「1つも〜ない」を考えると簡単に求められます。</p></section>` },
+  { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'6章の総まとめ', test:true, plan:['w7Comb0','w7Perm0','w7Ball','w7Die1','w7Count','w7Coin','w7Dice2','w7Dice2','w7Card','w7Lot','w7Not','w7Coin'], body:()=>`
+    <section class="panel"><h3>6章　場合の数と確率　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
 ];
 
 /* ===== 中3数学 2章 平方根 ===== */
@@ -14674,6 +14783,7 @@ const UNITS = {
   m2c3:{ no:'3', title:'一次関数', subject:'数学', course:'j2', subj:0, lessons:M2C3_LESSONS, drill:'m2c3' },
   m2c4:{ no:'4', title:'図形の調べ方', subject:'数学', course:'j2', subj:0, lessons:M2C4_LESSONS, drill:'m2c4' },
   m2c5:{ no:'5', title:'図形の性質と証明', subject:'数学', course:'j2', subj:0, lessons:M2C5_LESSONS, drill:'m2c5' },
+  m2c6:{ no:'6', title:'場合の数と確率', subject:'数学', course:'j2', subj:0, lessons:M2C6_LESSONS, drill:'m2c6' },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
