@@ -7319,14 +7319,15 @@ Object.assign(G, {
 });
 
 const M2C3_LESSONS = [
-  { id:'0-1', sec:'0　この章のための復習', t:'比例・反比例の式', sub:'中1の復習', plan:['w4Prop','w4Prop','w4Prop','w4Prop','w4Prop'], body:()=>`
+  { id:'0-1', sec:'0　この章のための復習', t:'比例のグラフ', sub:'中1の復習', plan:Array(5).fill('w4PGr'), body:()=>`
+    <section class="panel"><h3>比例のグラフ</h3>${rule('比例の関係 y＝ax のグラフは、原点を通る直線<br>比例定数 a の値によって、右上がりか右下がりになる')}
+    <svg viewBox="0 0 360 170" style="width:100%;max-width:380px;display:block;margin:8px auto;fill:currentColor" role="img" aria-label="比例のグラフ"><text x="20" y="20" style="font-size:13px;font-family:Times New Roman,serif"><tspan font-style="italic">a</tspan>＞0</text><line x1="10" y1="80" x2="170" y2="80" style="stroke:currentColor;stroke-width:1.2"/><line x1="90" y1="150" x2="90" y2="12" style="stroke:currentColor;stroke-width:1.2"/><text x="174" y="84" style="font-size:13px;font-style:italic;font-family:Times New Roman,serif">x</text><text x="95" y="16" style="font-size:13px;font-style:italic;font-family:Times New Roman,serif">y</text><text x="94" y="96" style="font-size:12px;font-family:Times New Roman,serif">O</text><line x1="20" y1="110.25" x2="160" y2="49.75" style="stroke:var(--accent);stroke-width:2.2"/><text x="100" y="36" style="font-size:12px">右上がり</text><text x="200" y="20" style="font-size:13px;font-family:Times New Roman,serif"><tspan font-style="italic">a</tspan>＜0</text><line x1="190" y1="80" x2="350" y2="80" style="stroke:currentColor;stroke-width:1.2"/><line x1="270" y1="150" x2="270" y2="12" style="stroke:currentColor;stroke-width:1.2"/><text x="354" y="84" style="font-size:13px;font-style:italic;font-family:Times New Roman,serif">x</text><text x="275" y="16" style="font-size:13px;font-style:italic;font-family:Times New Roman,serif">y</text><text x="274" y="96" style="font-size:12px;font-family:Times New Roman,serif">O</text><line x1="200" y1="49.75" x2="340" y2="110.25" style="stroke:var(--accent);stroke-width:2.2"/><text x="285" y="140" style="font-size:12px">右下がり</text></svg>
+    ${w4G([{a:2,label:'y＝2x',lx:1.7},{a:[-1,2],c:'2',label:'y＝−½x',lx:4.6}])}
+    <p class="small muted">グラフをかくときは、原点ともう1つの点（x 座標・y 座標がともに整数の点）をとって直線で結びます。</p></section>` },
+  { id:'0-2', t:'比例・反比例の式', sub:'中1の復習', plan:['w4Prop','w4Prop','w4Prop','w4Prop','w4Prop'], body:()=>`
     <section class="panel"><h3>比例と反比例</h3>${rule('比例　→　y＝ax（a は比例定数）<br>反比例　→　y＝'+frH('a','x')+'（a は比例定数）')}
     ${w4E('y は x に比例し、x＝3 のとき y＝−12<br>y＝ax に代入して　−12＝3a　a＝−4<br>答え　y＝−4x')}
     ${w4E('y は x に反比例し、x＝2 のとき y＝6<br>a＝xy＝2×6＝12　　答え　y＝'+frH(12,'x'))}</section>` },
-  { id:'0-2', t:'比例のグラフ', sub:'中1の復習', plan:Array(5).fill('w4PGr'), body:()=>`
-    <section class="panel"><h3>比例のグラフ</h3>${rule('y＝ax のグラフは、原点を通る直線<br>a＞0 → 右上がり　　a＜0 → 右下がり')}
-    ${w4G([{a:2,label:'y＝2x',lx:1.7},{a:[-1,2],c:'2',label:'y＝−½x',lx:4.6}])}
-    <p class="small muted">グラフをかくときは、原点ともう1つの点（x 座標・y 座標がともに整数の点）をとって直線で結びます。</p></section>` },
   { id:'1-1', sec:'1　一次関数とグラフ', t:'一次関数', sub:'y＝ax+b', plan:['w4Is','w4Is','w4Expr','w4Expr','w4Is'], body:()=>`
     <section class="panel"><h3>一次関数</h3>${rule('y が x の関数で、y が x の一次式で表されるとき、<br>y は x の<b>一次関数</b>である<br>　　　y＝ax+b（a、b は定数、a≠0）')}
     ${w4E('長さ 20 cm のろうそくが1分間に 2 cm ずつ燃える。<br>x 分後の長さを y cm とすると　y＝−2x+20')}
