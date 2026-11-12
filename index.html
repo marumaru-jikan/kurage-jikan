@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },'比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },'受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4170,6 +4170,143 @@ const AA_LESSONS = [
   { id:'18-6', t:'副詞例文', sub:'副詞の文を読もう', plan:['advEJ','advEJ','advEJ','advFreq','advPos'], body:()=>`
     <section class="panel"><h3>様子・程度</h3>${EAV_F.map(x=>beEx(x[0].replace(new RegExp('\\b'+x[1]+'\\b'),'<b>'+x[1]+'</b>'),x[2])).join('')}</section>
     <section class="panel"><h3>頻度</h3>${ADV_PS.map(x=>beEx(x[1].replace(/\b(always|sometimes|often|never|usually)\b/,'<b>$1</b>'),x[0])).join('')}</section>` },
+];
+
+
+/* ===== 英語 文法 19章 比較 ===== */
+// [原級, 比較級, 最上級, 意味, 型]
+const CPR_W = [
+  ['old','older','oldest','年をとった・古い','er'],['tall','taller','tallest','背が高い','er'],['young','younger','youngest','若い','er'],['long','longer','longest','長い','er'],['fast','faster','fastest','速く','er'],['high','higher','highest','高い','er'],['small','smaller','smallest','小さい','er'],
+  ['large','larger','largest','大きい','e'],['nice','nicer','nicest','すてきな','e'],['late','later','latest','遅い','e'],
+  ['early','earlier','earliest','早く','y'],['busy','busier','busiest','忙しい','y'],['easy','easier','easiest','簡単な','y'],['happy','happier','happiest','幸せな','y'],
+  ['big','bigger','biggest','大きい','w'],['hot','hotter','hottest','暑い','w'],
+  ['beautiful','more beautiful','most beautiful','美しい','m'],['popular','more popular','most popular','人気のある','m'],['interesting','more interesting','most interesting','おもしろい','m'],['famous','more famous','most famous','有名な','m'],['difficult','more difficult','most difficult','難しい','m'],['important','more important','most important','大切な','m'],['slowly','more slowly','most slowly','ゆっくりと','m'],
+  ['good','better','best','よい','i'],['well','better','best','上手に','i'],['many','more','most','多くの','i'],
+];
+const CPR_RULE = { er:'ほとんどの語は er（est）を付ける。', e:'語尾が e の語は r（st）だけ付ける。', y:'語尾が〈子音字＋y〉の語は y を i にかえて er（est）。', w:'語尾が〈短母音＋子音字〉の語は最後の子音字を重ねて er（est）。', m:'つづりの長い語などは more（most）＋ 原級。', i:'不規則に変化する。' };
+const cprW = b => CPR_W.find(v=>v[0]===b);
+const CPR_C = [
+  ['John is □ than Paul.','old','ジョンはポールよりも年上です。'],
+  ['This song is □ than that one.','popular','この歌はあの歌よりも人気があります。'],
+  ['I get up □ than Meg.','early','私はメグよりも早く起きます。'],
+  ['I walk □ than Meg.','slowly','私はメグよりもゆっくり歩きます。'],
+  ['My bag is □ than yours.','big','私のかばんはあなたのものより大きい。'],
+  ['Today is □ than yesterday.','hot','今日は昨日より暑い。'],
+  ['This question is □ than that one.','easy','この問題はあの問題より簡単です。'],
+  ['This book is □ than that one.','interesting','この本はあの本よりおもしろい。'],
+  ['Ken runs □ than Taro.','fast','ケンはタロウより速く走ります。'],
+  ['Your idea is □ than mine.','good','あなたの考えは私のよりよい。'],
+  ['She sings □ than her sister.','well','彼女はお姉さんより上手に歌います。'],
+  ['Math is □ than English for me.','difficult','私にとって数学は英語より難しい。'],
+];
+const CPR_S = [
+  ['He is the □ in the group.','young','彼はグループの中でいちばん若い。'],
+  ['This song is the □ of the five.','famous','この歌は5曲の中でいちばん有名です。'],
+  ['This is the □ movie of all.','old','これはすべての中でいちばん古い映画です。'],
+  ['That is the □ movie of all.','interesting','あれはすべての中でいちばんおもしろい映画です。'],
+  ['Ken runs the □ in his class.','fast','ケンはクラスでいちばん速く走ります。'],
+  ['August is the □ month of the year.','hot','8月は1年でいちばん暑い月です。'],
+  ['Mt. Fuji is the □ mountain in Japan.','high','富士山は日本でいちばん高い山です。'],
+  ['She is the □ singer in Japan.','popular','彼女は日本でいちばん人気のある歌手です。'],
+  ['This is the □ book of the three.','good','これは3冊の中でいちばんよい本です。'],
+  ['Yui is the □ of the four.','busy','ユイは4人の中でいちばん忙しい。'],
+];
+const CPR_A = [
+  ['John is as □ as Bob.','old','ジョンはボブと同じくらいの年齢です。'],
+  ['Bob gets up as □ as Nancy.','early','ボブはナンシーと同じくらい早く起きます。'],
+  ['That song isn’t as □ as this one.','popular','あの歌はこの歌ほど人気がありません。'],
+  ['John doesn’t get up as □ as Bob.','early','ジョンはボブほど早く起きません。'],
+  ['My bag is as □ as yours.','big','私のかばんはあなたのものと同じくらい大きい。'],
+  ['I can’t run as □ as Ken.','fast','私はケンほど速く走れません。'],
+  ['This question is not as □ as that one.','difficult','この問題はあの問題ほど難しくありません。'],
+  ['Yui is as □ as her mother.','tall','ユイはお母さんと同じくらいの背の高さです。'],
+];
+const CPR_V = [
+  ['彼はコーヒーよりも紅茶が好きです。','He likes tea better than coffee.',['He likes tea more good than coffee.','He likes coffee better than tea.','He likes tea best than coffee.']],
+  ['彼はすべての都市の中でロンドンがいちばん好きです。','He likes London the best of all cities.',['He likes London better of all cities.','He likes London the good of all cities.','He likes London the best than all cities.']],
+  ['この歌とあの歌では、どちらがより人気がありますか。','Which is more popular, this song or that one?',['Which is most popular, this song or that one?','Which is popular more, this song or that one?','Which is popularer, this song or that one?']],
+  ['ジョンとポールでは、どちらが年上ですか。','Who is older, John or Paul?',['Who is oldest, John or Paul?','Who is more old, John or Paul?','Who older is, John or Paul?']],
+  ['彼はほかのどの音楽家よりも上手にギターを弾きます。','He plays the guitar better than any other musician.',['He plays the guitar better than any other musicians.','He plays the guitar best than any other musician.','He plays the guitar better than other any musician.']],
+  ['彼は世界で最も人気のある音楽家の1人です。','He is one of the most popular musicians in the world.',['He is one of the most popular musician in the world.','He is one of the more popular musicians in the world.','He is the one of most popular musicians in the world.']],
+  ['彼女はトムよりも上手にサッカーをします。','She plays soccer better than Tom.',['She plays soccer more well than Tom.','She plays soccer weller than Tom.','She plays soccer best than Tom.']],
+  ['彼女は野球よりもサッカーが好きです。','She likes soccer better than baseball.',['She likes soccer more good than baseball.','She likes baseball better than soccer.','She likes soccer the best than baseball.']],
+];
+const cprJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const cprBad = (v, k) => v[4]==='m' ? (k==='c' ? v[0]+'er' : v[0]+'est') : v[4]==='i' ? (k==='c' ? 'more '+v[0] : 'most '+v[0]) : (k==='c' ? 'more '+v[1] : 'most '+v[2]);
+Object.assign(G, {
+  cprThan(){ const x=pick(CPR_C), v=cprW(x[1]);
+    return { prompt:'□ に入る形は？', expr:x[0]+cprJ(`（${x[1]}）${x[2]}`), enExpr:true, en:true, words:true, choices:shuffle([...new Set([v[1],v[0],v[2],cprBad(v,'c')])]), answer:v[1],
+      hint:'〈比較級 ＋ than …〉「…よりも〜」', explain:`than があるので比較級。${CPR_RULE[v[4]]}<br>${x[1]} → ${v[1]}`, viz:null }; },
+  cprEr(){ const v=pick(CPR_W), b=v[0], cand=[v[1], b+'er', b+'r', b.replace(/y$/,'ier'), b+b.slice(-1)+'er', 'more '+b].filter(c=>c!==b);
+    const ch=[v[1],...shuffle([...new Set(cand)].filter(c=>c!==v[1])).slice(0,3)];
+    return { prompt:'比較級は？', expr:b+cprJ(v[3]), enExpr:true, en:true, words:true, choices:shuffle(ch), answer:v[1], hint:'er 型・more 型・不規則型のどれかを考えよう。', explain:`${CPR_RULE[v[4]]}<br>${b} → ${v[1]}`, viz:null }; },
+  cprEst(){ const v=pick(CPR_W), b=v[0], cand=[v[2], b+'est', b+'st', b.replace(/y$/,'iest'), b+b.slice(-1)+'est', 'most '+b].filter(c=>c!==b);
+    const ch=[v[2],...shuffle([...new Set(cand)].filter(c=>c!==v[2])).slice(0,3)];
+    return { prompt:'最上級は？', expr:b+cprJ(v[3]), enExpr:true, en:true, words:true, choices:shuffle(ch), answer:v[2], hint:'est 型・most 型・不規則型のどれかを考えよう。', explain:`${CPR_RULE[v[4]]}<br>${b} → ${v[2]}`, viz:null }; },
+  cprTheEst(){ const x=pick(CPR_S), v=cprW(x[1]);
+    return { prompt:'□ に入る形は？', expr:x[0]+cprJ(`（${x[1]}）${x[2]}`), enExpr:true, en:true, words:true, choices:shuffle([...new Set([v[2],v[0],v[1],cprBad(v,'s')])]), answer:v[2],
+      hint:'〈the ＋ 最上級 ＋ in（of）…〉「…の中でいちばん〜」', explain:`「いちばん」なので最上級。${CPR_RULE[v[4]]}<br>${x[1]} → ${v[2]}`, viz:null }; },
+  cprInOf(){ const x=pick(CPR_S), v=cprW(x[1]), full=x[0].replace('□',v[2]), m=full.match(/ (in|of) /g), w=m[m.length-1].trim(), i=full.lastIndexOf(' '+w+' '), q=full.slice(0,i)+' □ '+full.slice(i+w.length+2);
+    return { prompt:'□ に入るのは？', expr:q+cprJ(x[2]), enExpr:true, en:true, choices:['in','of'], answer:w,
+      hint:'in ＋ 場所・範囲（the group・Japan）、of ＋ 複数を表す語・数（all・the five）', explain:w==='in'?'場所や範囲を表す語なので in。':'複数を表す語や数なので of。', viz:null }; },
+  cprAs(){ const x=pick(CPR_A), v=cprW(x[1]);
+    return { prompt:'□ に入る形は？', expr:x[0]+cprJ(`（${x[1]}）${x[2]}`), enExpr:true, en:true, words:true, choices:shuffle([...new Set([v[0],v[1],v[2],cprBad(v,'c')])]), answer:v[0],
+      hint:'〈as ＋ 原級 ＋ as …〉「…と同じくらい〜」。否定文は「…ほど〜ない」。', explain:`as と as の間は原級（もとの形）の ${v[0]}。${/n’t|not/.test(x[0])?'not as 〜 as … は「…ほど〜ない」。':''}`, viz:null }; },
+  cprVar(){ const x=pick(CPR_V);
+    return { prompt:'英語にすると？', expr:x[0], en:true, words:true, choices:shuffle([x[1],...x[2]]), answer:x[1], hint:'like A better than B ／ like 〜 the best ／ Which（Who）is 比較級, A or B? ／ than any other ＋ 単数名詞 ／ one of the 最上級 ＋ 複数名詞', explain:x[1], viz:null }; },
+  cprEJc(){ const all=CPR_C.map(x=>[x[0].replace('□',cprW(x[1])[1]),x[2]]), x=pick(all), ws=shuffle(all.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'比較級 ＋ than は「…よりも〜」。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+  cprEJs(){ const all=CPR_S.map(x=>[x[0].replace('□',cprW(x[1])[2]),x[2]]), x=pick(all), ws=shuffle(all.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'the ＋ 最上級 は「いちばん〜」。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+const cprTbl = (k, ts) => `<table class="dtab" style="font-size:.85rem"><tr><th>ポイント</th><th>原級</th><th>${k==='c'?'比較級':'最上級'}</th></tr>${ts.map(t=>{ const vs=CPR_W.filter(v=>v[4]===t).slice(0,t==='m'||t==='i'?3:2); return vs.map((v,i)=>`<tr>${i===0?`<td rowspan="${vs.length}" style="text-align:left">${CPR_RULE[t]}</td>`:''}<td>${v[0]}</td><td><b>${k==='c'?v[1]:v[2]}</b></td></tr>`).join(''); }).join('')}</table>`;
+const CPR_LESSONS = [
+  { id:'19-1', t:'比較級とは', sub:'2つを比べる表現', plan:['cprThan','cprThan','cprThan','cprEJc','cprEJc'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John is <b>older than</b> Paul.','ジョンはポールよりも年上です。')}${beEx('This song is <b>more popular than</b> that one.','この歌はあの歌よりも人気があります。')}</section>
+    <section class="panel"><h3>比較級</h3>${rule('比較級 ＋ than … →「…よりも〜」<br>2つ（2人）を比べるときに使う')}
+    ${beEx('John is old.','ジョンは年をとっています。（原級）')}<p style="text-align:center">↓</p>${beEx('John is <b>older than</b> Paul.','ジョンはポールよりも年上です。（比較級）')}
+    <p class="small muted">形容詞・副詞のもとの形を「原級」といいます。</p></section>` },
+  { id:'19-2', t:'形容詞・副詞の比較級', sub:'比較級の作り方', plan:['cprEr','cprEr','cprEr','cprEr','cprThan'], body:()=>`
+    <section class="panel"><h3>〇 比較級の作り方</h3>
+    <h3 style="font-size:.95rem;margin-top:4px">er 型</h3>${cprTbl('c',['er','e','y','w'])}
+    <p class="small muted">〈短母音＋子音字〉は、子音字が1字の場合にかぎります（big → bigger、hot → hotter）。</p>
+    <h3 style="font-size:.95rem;margin-top:8px">more 型</h3>${cprTbl('c',['m'])}
+    <h3 style="font-size:.95rem;margin-top:8px">不規則型</h3>${cprTbl('c',['i'])}
+    <p class="small muted">比較の文でよく使う形容詞・副詞は、er 型か more 型かを確認しておきましょう。</p></section>` },
+  { id:'19-3', t:'比較級例文', sub:'比較級の文を読もう', plan:['cprEJc','cprEJc','cprEJc','cprThan','cprThan'], body:()=>`
+    <section class="panel"><h3>例文</h3>${CPR_C.map(x=>beEx(x[0].replace('□','<b>'+cprW(x[1])[1]+'</b>').replace(' than ',' <b>than</b> '),x[2])).join('')}
+    <p class="small muted">I get up <b>earlier</b>（er 型）と I walk <b>more slowly</b>（more 型）のちがいに注意。</p></section>` },
+  { id:'19-4', t:'最上級とは', sub:'いちばんの表現', plan:['cprTheEst','cprTheEst','cprInOf','cprInOf','cprInOf'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('He is <b>the youngest in</b> the group.','彼はグループの中でいちばん若いです。')}${beEx('This song is <b>the most famous of</b> the five.','この歌は5曲の中でいちばん有名です。')}</section>
+    <section class="panel"><h3>最上級</h3>${rule('the ＋ 最上級 ＋ in（of）… →「…の中でいちばん〜」<br>3つ（3人）以上の中で比べるときに使う')}</section>
+    <section class="panel"><h3>in と of の使い分け</h3>
+    <table class="dtab"><tr><th></th><th>後ろにくる語</th><th>例</th></tr>
+    <tr><td><b>in</b></td><td>場所・範囲</td><td>in the group<br>in my class<br>in Japan</td></tr>
+    <tr><td><b>of</b></td><td>複数を表す語・数</td><td>of the five<br>of all<br>of the three</td></tr></table></section>` },
+  { id:'19-5', t:'形容詞・副詞の最上級', sub:'最上級の作り方', plan:['cprEst','cprEst','cprEst','cprEst','cprTheEst'], body:()=>`
+    <section class="panel"><h3>est 型</h3>${cprTbl('s',['er','e','y','w'])}</section>
+    <section class="panel"><h3>most 型</h3>${cprTbl('s',['m'])}</section>
+    <section class="panel"><h3>不規則型</h3>${cprTbl('s',['i'])}
+    <p class="small muted">最上級の前には、ふつう the を付けます。</p></section>` },
+  { id:'19-6', t:'最上級例文', sub:'最上級の文を読もう', plan:['cprEJs','cprEJs','cprEJs','cprTheEst','cprInOf'], body:()=>`
+    <section class="panel"><h3>例文</h3>${CPR_S.map(x=>beEx(x[0].replace('□','<b>'+cprW(x[1])[2]+'</b>'),x[2])).join('')}</section>` },
+  { id:'19-7', t:'as 原級 as', sub:'同じくらい', plan:['cprAs','cprAs','cprAs','cprAs','cprAs'], body:()=>`
+    <section class="panel"><h3>〇 肯定文</h3>${rule('as ＋ 原級 ＋ as … →「…と同じくらい〜」')}
+    ${beEx('John is <b>as old as</b> Bob.','ジョンはボブと同じくらいの年齢です。（形容詞の原級）')}${beEx('Bob gets up <b>as early as</b> Nancy.','ボブはナンシーと同じくらい早く起きます。（副詞の原級）')}</section>
+    <section class="panel"><h3>〇 否定文</h3>${rule('not as ＋ 原級 ＋ as … →「…ほど〜ない」')}
+    ${beEx('That song is <b>not as popular as</b> this one.','あの歌はこの歌ほど人気がありません。（be動詞のあとに not）')}${beEx('John <b>doesn’t</b> get up <b>as early as</b> Bob.','ジョンはボブほど早く起きません。（一般動詞の前に not）')}
+    <p class="small muted">「…と同じくらいではない」ではなく、「…ほど〜ない」と訳します。</p></section>` },
+  { id:'19-8', t:'色々な比較の文', sub:'like … better ・ Which … ・ one of the …', plan:['cprVar','cprVar','cprVar','cprVar','cprVar'], body:()=>`
+    <section class="panel"><h3>like A better than B ／ like 〜 the best</h3>
+    ${beEx('He likes tea <b>better than</b> coffee.','彼はコーヒーよりも紅茶が好きです。（B よりも A が好きだ）')}${beEx('He likes London <b>the best</b> of all cities.','彼はすべての都市の中でロンドンがいちばん好きです。')}</section>
+    <section class="panel"><h3>Which（Who）… 比較級, A or B?</h3>${rule('「A と B では、どちらがより〜か」')}
+    ${beEx('<b>Which</b> is <b>more popular</b>, this song <b>or</b> that one? — This song is.','この歌とあの歌では、どちらがより人気がありますか。— この歌です。')}
+    ${beEx('<b>Who</b> is <b>older</b>, John <b>or</b> Paul? — John is.','ジョンとポールでは、どちらが年上ですか。— ジョンです。')}
+    <p class="small muted">人を比べるときは who を使います。</p></section>
+    <section class="panel"><h3>比較級 ＋ than any other ＋ 単数名詞</h3>${rule('「ほかのどの…よりも〜」')}
+    ${beEx('He plays the guitar <b>better than any other musician</b>.','彼はほかのどの音楽家よりも上手にギターを弾きます。')}</section>
+    <section class="panel"><h3>one of the ＋ 最上級 ＋ 複数名詞</h3>${rule('「最も〜な…の1つ（1人）」')}
+    ${beEx('He is <b>one of the most popular musicians</b> in the world.','彼は世界で最も人気のある音楽家の1人です。')}</section>` },
 ];
 
 
@@ -12568,6 +12705,7 @@ const UNITS = {
   rv4:{ no:'文16', title:'5文型', subject:'英語', course:'jen', subj:1, lessons:RV4_LESSONS },
   ger:{ no:'文17', title:'動名詞', subject:'英語', course:'jen', subj:1, lessons:GER_LESSONS },
   adjv:{ no:'文18', title:'形容詞・副詞', subject:'英語', course:'jen', subj:1, lessons:AA_LESSONS },
+  cpr:{ no:'文19', title:'比較', subject:'英語', course:'jen', subj:1, lessons:CPR_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
