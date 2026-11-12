@@ -1,6 +1,6 @@
 // オフラインでも開けるように、アプリのファイルを端末に保存しておく
 // 中身を更新したら VERSION の数字を1つ上げてください
-const VERSION = 'kurage-v62';
+const VERSION = 'kurage-v63';
 const FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];  // 海月の画像は、一度見たものから順に保存されます
 
 self.addEventListener('install', e => {

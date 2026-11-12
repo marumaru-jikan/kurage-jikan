@@ -1121,7 +1121,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },'現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },'分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -4572,6 +4572,125 @@ const PF_LESSONS = [
     <p class="small muted">yet は否定文では「まだ」、疑問文では「もう」の意味になるので注意。</p></section>` },
   { id:'21-6', t:'例文', sub:'継続・経験・完了', plan:['pfUse','pfUse','pfUse','pfEJ','pfEJ'], body:()=>['c','e','k'].map(u=>`
     <section class="panel"><h3>${PF_U[u]}</h3>${PF_S.filter(x=>x[2]===u).map(x=>beEx(x[0],x[1])).join('')}</section>`).join('') },
+];
+
+
+/* ===== 英語 文法 22章 現在完了進行形 ===== */
+function pfpTL(kind){ const now=230, y=66;
+  let g=`<line x1="14" y1="${y}" x2="306" y2="${y}" stroke="var(--muted)" stroke-width="2"/><path d="M306 ${y}l-8 -5v10z" fill="var(--muted)"/>
+  <text x="22" y="${y+20}" font-size="12" fill="var(--muted)">過去</text><text x="300" y="${y+20}" font-size="12" fill="var(--muted)" text-anchor="end">未来</text>
+  <line x1="${now}" y1="${y-26}" x2="${now}" y2="${y+6}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="3 3"/><text x="${now}" y="${y+20}" font-size="13" font-weight="700" fill="var(--ink)" text-anchor="middle">今</text>`;
+  const top=(t,c)=>`<text x="160" y="22" font-size="13" text-anchor="middle" fill="var(--${c})" font-weight="700">${t}</text>`;
+  if(kind==='pp'){ let w=''; for(let x=70;x<now;x+=16) w+=`q4 -8 8 0t8 0`; g+=`<path d="M70 ${y-14}${w}" fill="none" stroke="var(--accent)" stroke-width="3"/><circle cx="70" cy="${y-14}" r="6" fill="var(--accent)"/><path d="M${now+4} ${y-14}h22" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 3"/><path d="M${now+30} ${y-14}l-7 -4v8z" fill="var(--accent)"/>`+top('現在完了進行形：過去から今まで ずっと〜している','accent'); }
+  if(kind==='k') g+=`<circle cx="${now-40}" cy="${y-14}" r="7" fill="var(--teal)"/><text x="${now-40}" y="${y-30}" font-size="13" text-anchor="middle" fill="var(--teal)" font-weight="700">✓ 修理完了</text>`;
+  if(kind==='p'){ let w=''; for(let x=70;x<now;x+=16) w+=`q4 -8 8 0t8 0`; g+=`<path d="M70 ${y-14}${w}" fill="none" stroke="var(--accent)" stroke-width="3"/><text x="150" y="${y-30}" font-size="13" text-anchor="middle" fill="var(--accent)" font-weight="700">ずっと修理中（まだ終わっていない）</text>`; }
+  return `<svg viewBox="0 0 320 96" style="width:100%;max-width:360px;display:block;margin:4px auto" role="img" aria-label="時間のグラフ">${g}</svg>`;
+}
+// [主語, has?, ing形, 残り, 原形, 日本語, 代名詞]
+const PFP_S = [
+  ['I',0,'studying','English for three hours.','study','私は3時間ずっと英語を勉強しています。','I'],
+  ['I',0,'playing','the piano for four hours.','play','私は4時間ずっとピアノをひいています。','I'],
+  ['My mother',1,'cleaning','the kitchen since six.','clean','私の母は6時からずっと台所をそうじしています。','she'],
+  ['It',1,'raining','for three days.','rain','3日間ずっと雨が降り続けています。','it'],
+  ['It',1,'raining','since last night.','rain','昨夜からずっと雨が降っています。','it'],
+  ['They',0,'singing','songs for two hours.','sing','彼らは2時間ずっと歌を歌っています。','they'],
+  ['Ken',1,'running','since this morning.','run','ケンはけさからずっと走っています。','he'],
+  ['We',0,'waiting','for the bus for thirty minutes.','wait','私たちは30分間ずっとバスを待っています。','we'],
+  ['Yui',1,'reading','the book since lunch.','read','ユイは昼食のあとからずっとその本を読んでいます。','she'],
+  ['The children',0,'swimming','for an hour.','swim','子どもたちは1時間ずっと泳いでいます。','they'],
+  ['He',1,'using','the computer since ten.','use','彼は10時からずっとコンピュータを使っています。','he'],
+  ['She',1,'writing','a letter for two hours.','write','彼女は2時間ずっと手紙を書いています。','she'],
+  ['You',0,'watching','TV since dinner.','watch','あなたは夕食のあとからずっとテレビを見ています。','I'],
+];
+// [□つき英文, 正解, 日本語, 状態s/動作a]
+const PFP_VS = [
+  ['I □ Ken for five years.','have known','私はケンと5年間ずっと知り合いです。','s'],
+  ['I □ this bag for three years.','have had','私はこのかばんを3年間ずっと持っています。','s'],
+  ['She □ busy since yesterday.','has been','彼女は昨日からずっと忙しい。','s'],
+  ['We □ each other since 2020.','have known','私たちは2020年からずっと知り合いです。','s'],
+  ['I □ soccer since I was a child.','have liked','私は子どものころからずっとサッカーが好きです。','s'],
+  ['I □ for the bus for thirty minutes.','have been waiting','私は30分間ずっとバスを待っています。','a'],
+  ['It □ since last night.','has been raining','昨夜からずっと雨が降っています。','a'],
+  ['He □ the guitar for two hours.','has been playing','彼は2時間ずっとギターをひいています。','a'],
+  ['They □ for an hour.','have been running','彼らは1時間ずっと走っています。','a'],
+  ['I □ English for three hours.','have been studying','私は3時間ずっと英語を勉強しています。','a'],
+];
+const PFP_NU = [
+  ['I have repaired my car.','車の修理が終わっている','I have been repairing my car.','ずっと車を修理していて、まだ終わっていない'],
+  ['I have read the book.','その本を読み終えた','I have been reading the book.','ずっとその本を読んでいて、まだ読み終えていない'],
+  ['She has cleaned her room.','部屋のそうじを終えた','She has been cleaning her room.','ずっと部屋をそうじしていて、まだ終わっていない'],
+  ['He has written a letter.','手紙を書き終えた','He has been writing a letter.','ずっと手紙を書いていて、まだ書き終えていない'],
+];
+const pfpH = x => x[1]?'has':'have', pfpHn = x => x[1]?'hasn’t':'haven’t';
+const pfpSub = s => /^(The .*|They|He|She|It|You|My .*)$/.test(s) ? lowFirst(s) : s;
+const pfpT = x => x[3].match(/^(?:(.*) )?(since|for) (.+)\.$/);
+const pfpBadIng = (b, ing) => /e$/.test(b) ? b+'ing' : ing.length>b.length+3 ? b+'ing' : b==='study' ? 'studing' : null;
+const pfpQs = () => PFP_S.filter(x=>!/^(I|We|You)$/.test(x[0]));
+Object.assign(G, {
+  pfpForm(){ const x=pick(PFP_S), h=pfpH(x), w=x[1]?'have':'has', ok=`${h} been ${x[2]}`;
+    const c=uniq([ok, `${h} ${x[2]}`, `${x[1]?'is':'are'} been ${x[2]}`, `${w} been ${x[2]}`]);
+    return { prompt:'□ に入るのは？', expr:`${x[0]} □ ${x[3]}`+pfJ(x[5]), enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'現在完了進行形は〈have（has）＋ been ＋ 動詞の ing 形〉。', explain:`主語 ${x[0]} なので ${h}。<br>${x[0]} <b>${ok}</b> ${x[3]}`, viz:null }; },
+  pfpIng(){ const x=pick(PFP_S), c=uniq([x[2], x[4], x[4]+(/(ch|sh)$/.test(x[4])?'es':/[^aeiou]y$/.test(x[4])?'':'s'), pfpBadIng(x[4],x[2])].filter(Boolean)).filter(w=>w!==x[4].slice(0,-1)+'s'||w===x[2]);
+    return { prompt:'□ に入る形は？', expr:`${x[0]} ${pfpH(x)} been □ ${x[3]}`+pfJ(`（${x[4]}）${x[5]}`), enExpr:true, en:true, words:true, choices:shuffle(c), answer:x[2],
+      hint:'been のあとは動詞の ing 形。', explain:`${x[4]} → ${x[2]}${/e$/.test(x[4])?'（e をとって ing）':x[2].length>x[4].length+3?'（最後の1字を重ねて ing）':''}`, viz:null }; },
+  pfpSF(){ const x=pick(PFP_S), m=pfpT(x);
+    return { prompt:'□ に入る語は？', expr:`${x[0]} ${pfpH(x)} been ${x[2]} ${m[1]?m[1]+' ':''}□ ${m[3]}.`+pfJ(x[5]), enExpr:true, en:true, words:true, choices:['since','for'], answer:m[2],
+      hint:'since ＋ 過去の時点「〜から」、for ＋ 期間「〜の間」', explain:m[2]==='since'?`${m[3]} は過去の時点なので since。`:`${m[3]} は期間なので for。`, viz:null }; },
+  pfpNeg(){ const x=pick(PFP_S), h=pfpH(x), ok=`${x[0]} ${pfpHn(x)} been ${x[2]} ${x[3]}`;
+    const c=uniq([ok, `${x[0]} ${h} been not ${x[2]} ${x[3]}`, `${x[0]} didn’t been ${x[2]} ${x[3]}`, `${x[0]} not ${h} been ${x[2]} ${x[3]}`]);
+    return { prompt:'否定文にすると？', expr:`${x[0]} ${h} been ${x[2]} ${x[3]}`, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'have（has）のあとに not。', explain:`${ok}<br>（${h} not → ${pfpHn(x)}）`, viz:null }; },
+  pfpQ(){ const x=pick(pfpQs()), s=pfpSub(x[0]), H=capFirst(pfpH(x)), r=x[3].replace(/\.$/,'?'), ok=`${H} ${s} been ${x[2]} ${r}`;
+    const c=uniq([ok, `${x[1]?'Is':'Are'} ${s} been ${x[2]} ${r}`, `${x[1]?'Does':'Do'} ${s} been ${x[2]} ${r}`, `${H} been ${s} ${x[2]} ${r}`]);
+    return { prompt:'疑問文にすると？', expr:`${x[0]} ${pfpH(x)} been ${x[2]} ${x[3]}`, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'have（has）を主語の前に出す。', explain:`${ok}<br>— Yes, ${x[6]} ${pfpH(x)}. ／ No, ${x[6]} ${pfpHn(x)}.`, viz:null }; },
+  pfpHL(){ const x=pick(pfpQs()), m=pfpT(x), s=pfpSub(x[0]), q=`How long ${pfpH(x)} ${s} been ${x[2]}${m[1]?' '+m[1]:''}?`, ok=`${capFirst(m[2])} ${m[3]}.`;
+    const c=uniq([ok, `${m[2]==='for'?'Since':'For'} ${m[3]}.`, `Yes, ${x[6]} ${pfpH(x)}.`, m[2]==='for'?`${capFirst(m[3])} ago.`:`${capFirst(m[3])}.`]);
+    return { prompt:'答えとして正しいのは？', expr:q, enExpr:true, en:true, words:true, choices:shuffle(c), answer:ok,
+      hint:'How long 〜? には for 〜 や since 〜 で答える。', explain:`${q}<br>— ${ok}<br>${x[5]}`, viz:null }; },
+  pfpVs(){ const x=pick(PFP_VS), h=x[1].split(' ')[0], v=x[1].split(' ').pop();
+    const c=x[3]==='s' ? (()=>{ const b={known:'know',had:'have',been:'be',liked:'like'}[v]; return uniq([x[1], `${h} been ${b==='be'?'being':b==='have'?'having':b==='like'?'liking':b+'ing'}`, `${h} ${b==='be'?'being':b==='have'?'having':b==='like'?'liking':b+'ing'}`, `${h==='has'?'is':'am'} ${v}`]); })()
+      : uniq([x[1], `${h} ${v}`, `${h} been ${x[1].split(' ')[2].replace(/ing$/,'').replace(/nn$/,'n')}ed`, `${h==='has'?'is':'am'} been ${v}`]);
+    return { prompt:'□ に入るのは？', expr:x[0]+pfJ(x[2]), enExpr:true, en:true, words:true, choices:shuffle(c), answer:x[1],
+      hint:'状態を表す動詞（know・have・like・be など）は進行形にしない → 現在完了〈継続〉。動作を表す動詞は現在完了進行形。', explain:`${x[0].replace('□','<b>'+x[1]+'</b>')}<br>${x[3]==='s'?'状態を表す動詞なので、現在完了〈継続〉を使う。':'動作を表す動詞なので、現在完了進行形を使う。'}`, viz:null }; },
+  pfpNu(){ const x=pick(PFP_NU), k=Math.random()<.5, s=k?x[0]:x[2], a=k?x[1]:x[3];
+    return { prompt:'意味として正しいのは？', expr:s, enExpr:true, en:true, words:true, choices:shuffle([x[1],x[3]]), answer:a,
+      hint:'have ＋ 過去分詞 は「終わっている」、have been ＋ ing は「ずっとしている（まだ終わっていない）」。', explain:`${x[0]}<br>→ ${x[1]}<br>${x[2]}<br>→ ${x[3]}`, viz:null }; },
+  pfpEJ(){ const all=PFP_S.map(x=>[`${x[0]} ${pfpH(x)} been ${x[2]} ${x[3]}`,x[5]]), x=pick(all), ws=shuffle(all.filter(y=>y[1]!==x[1])).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'have（has）been ＋ ing は「ずっと〜している」。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+const PFP_LESSONS = [
+  { id:'22-1', t:'現在完了進行形とは', sub:'過去から今まで ずっと〜している', plan:['pfpForm','pfpForm','pfpForm','pfpIng','pfpIng'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('I <b>have been studying</b> English <b>for</b> three hours.','私は3時間ずっと英語を勉強しています。')}${beEx('It <b>has been raining since</b> last night.','昨夜からずっと雨が降っています。')}</section>
+    <section class="panel"><h3>現在完了進行形</h3>${rule('主語 ＋ have（has）＋ been ＋ 動詞の ing 形<br>→「（ずっと）〜している」')}
+    <p><b>現在進行形</b>：今している最中のこと</p>${tlSVG('prog')}${beEx('I <b>am studying</b> English now.','私は今、英語を勉強しています。')}
+    <p><b>現在完了進行形</b>：過去に始めた動作を、今までずっと続けている</p>${pfpTL('pp')}${beEx('I <b>have been studying</b> English for three hours.','私は3時間ずっと英語を勉強しています。')}
+    <p class="small muted">現在完了（have ＋ 過去分詞）と、進行形（be ＋ ing）を合わせた形です。be の過去分詞 been を使います。主語が3人称単数のときは has。</p></section>` },
+  { id:'22-2', t:'現在完了進行形', sub:'（ずっと）〜している', plan:['pfpSF','pfpSF','pfpNeg','pfpQ','pfpHL'], body:()=>`
+    <section class="panel"><h3>〇 肯定文</h3>${rule('主語 ＋ have（has）＋ been ＋ ing …')}
+    ${beEx('I <b>have been playing</b> the piano <b>for</b> four hours.','私は4時間ずっとピアノをひいています。')}${beEx('My mother <b>has been cleaning</b> the kitchen <b>since</b> six.','私の母は6時からずっと台所をそうじしています。')}
+    <p class="small muted">since ＋ 過去の時点（〜から）、for ＋ 期間（〜の間）をよく使います。</p></section>
+    <section class="panel"><h3>〇 否定文</h3>${rule('主語 ＋ have（has）＋ <b>not</b> ＋ been ＋ ing …')}
+    ${beEx('I <b>have not been using</b> a smartphone since this morning.','私はけさからずっとスマートフォンを使っていません。')}</section>
+    <section class="panel"><h3>〇 疑問文</h3>${rule('<b>Have（Has）</b> ＋ 主語 ＋ been ＋ ing …?<br>— Yes, 主語 ＋ have（has）. ／ No, 主語 ＋ have（has）not.')}
+    ${beEx('<b>Have</b> you <b>been helping</b> her since this morning? — Yes, I <b>have</b>.','あなたはけさからずっと彼女を手伝っているのですか。— はい。')}</section>
+    <section class="panel"><h3>How long 〜?</h3>${rule('How long ＋ have（has）＋ 主語 ＋ been ＋ ing?<br>「どのくらいの間ずっと〜していますか」')}
+    ${beEx('<b>How long</b> has it been raining? — <b>For</b> five hours.（<b>Since</b> last night.）','どのくらいの間、雨がずっと降っているのですか。— 5時間です。（昨夜からです。）')}</section>` },
+  { id:'22-3', t:'現在完了形【継続】との違い', sub:'状態と動作・完了のニュアンス', plan:['pfpVs','pfpVs','pfpVs','pfpNu','pfpNu'], body:()=>`
+    <section class="panel"><h3>① 状態か、動作か</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th></th><th>現在完了〈継続〉</th><th>現在完了進行形</th></tr>
+    <tr><td>形</td><td>have ＋ 過去分詞</td><td>have been ＋ ing</td></tr>
+    <tr><td>使う動詞</td><td><b>状態</b>を表す動詞<br>know・have・like・be・live など</td><td><b>動作</b>を表す動詞<br>study・play・rain・wait・run など</td></tr>
+    <tr><td>例</td><td style="text-align:left">I <b>have known</b> Ken for five years.</td><td style="text-align:left">I <b>have been studying</b> for three hours.</td></tr></table>
+    <p class="small muted">状態を表す動詞は、ふつう進行形にしません。×I have been knowing Ken.<br>live（住んでいる）は、どちらの形でも使えます。</p></section>
+    <section class="panel"><h3>② 終わっているか、続いているか</h3>
+    <p><b>現在完了形</b>（完了）</p>${pfpTL('k')}${beEx('I <b>have repaired</b> my car.','私は車を修理しました。→ 修理が完了している（いつ完了したかは分からない）')}
+    <p><b>現在完了進行形</b></p>${pfpTL('p')}${beEx('I <b>have been repairing</b> my car.','私はずっと車を修理しています。→ 直前まで修理していて、修理はまだ完了していない')}
+    ${rule('完了形：「もう終わった」という結果を伝える<br>完了進行形：「ずっとしている」という動作の続きを伝える')}</section>` },
+  { id:'22-4', t:'例文', sub:'現在完了進行形の文を読もう', plan:['pfpEJ','pfpEJ','pfpEJ','pfpForm','pfpSF'], body:()=>`
+    <section class="panel"><h3>例文</h3>${PFP_S.map(x=>beEx(`${x[0]} <b>${pfpH(x)} been ${x[2]}</b> ${x[3].replace(/\b(since|for) (?!the bus)/,'<b>$1</b> ')}`,x[5])).join('')}
+    ${beEx('How long has it been raining? — Since last night.','どのくらいの間、雨がずっと降っているのですか。— 昨夜からです。')}</section>` },
 ];
 
 
@@ -12973,6 +13092,7 @@ const UNITS = {
   cpr:{ no:'文19', title:'比較', subject:'英語', course:'jen', subj:1, lessons:CPR_LESSONS },
   psv:{ no:'文20', title:'受動態', subject:'英語', course:'jen', subj:1, lessons:PSV_LESSONS },
   pf:{ no:'文21', title:'現在完了', subject:'英語', course:'jen', subj:1, lessons:PF_LESSONS },
+  pfp:{ no:'文22', title:'現在完了進行形', subject:'英語', course:'jen', subj:1, lessons:PFP_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
