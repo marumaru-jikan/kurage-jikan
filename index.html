@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },'不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },'不定詞','動名詞','There is ～','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3206,6 +3206,168 @@ const CJ_LESSONS = [
     <tr><td><b>say</b> that 〜</td><td>〜だと言う</td></tr></table></section>
     <section class="panel"><h3>that は省略できる</h3>${beEx('I know <b>that</b> John stays up late.','')}${beEx('＝ I know John stays up late.','')}
     <p class="small muted">「〜ということ」を表す that は、省略することができます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 13章 前置詞 ===== */
+// at・on・in [英文, 日本語, 答え, ポイント]
+const PP_AOI = [
+  ['I get up □ six.','私は6時に起きます。','at','時刻 → at。'],
+  ['We have no school □ Sunday.','日曜日は学校がありません。','on','曜日 → on。'],
+  ['My birthday is □ April.','私の誕生日は4月です。','in','月 → in。'],
+  ['He was born □ 2012.','彼は2012年に生まれました。','in','年 → in。'],
+  ['It is hot □ summer.','夏は暑いです。','in','季節 → in。'],
+  ['The party is □ May 5.','パーティーは5月5日です。','on','日付 → on。'],
+  ['Let’s eat lunch □ noon.','正午に昼食を食べましょう。','at','時刻（noon 正午）→ at。'],
+  ['I study □ the morning.','私は午前中に勉強します。','in','in the morning（午前中に）。'],
+  ['I met John □ the station.','私は駅でジョンに会いました。','at','比較的せまい場所・地点 → at。'],
+  ['There are some pictures □ the wall.','壁には絵が何枚か掛かっています。','on','接触して「〜の上に（くっついて）」→ on。'],
+  ['The cat is □ the box.','ネコは箱の中にいます。','in','「〜の中に」→ in。'],
+  ['They live □ Japan.','彼らは日本に住んでいます。','in','比較的広い場所 → in。'],
+  ['Your book is □ the desk.','あなたの本は机の上にあります。','on','接触して「〜の上に」→ on。'],
+  ['My mother is □ the kitchen.','母は台所にいます。','in','「〜の中に」→ in。'],
+  ['Look □ this picture.','この絵を見て。','at','look at 〜（〜を見る）。'],
+  ['I watched the game □ TV.','私はテレビでその試合を見ました。','on','on TV（テレビで）。'],
+  ['Please write your name □ English.','英語で名前を書いてください。','in','in English（英語で）。'],
+];
+// その他の前置詞 [英文, 日本語, 答え, 選択肢]
+const PP_OTH = [
+  ['He stayed here □ three weeks.','彼はここに3週間滞在しました。','for',['for','during','by']],
+  ['I went to Hokkaido □ the summer vacation.','私は夏休みの間に北海道へ行きました。','during',['for','during','until']],
+  ['I walk □ my house to the station.','私は家から駅まで歩きます。','from',['from','by','for']],
+  ['Please finish it □ Friday.','金曜日までにそれを終えてください。','by',['by','until','for']],
+  ['I waited for him □ five.','私は5時までずっと彼を待ちました。','until',['by','until','during']],
+  ['I go to school □ bus.','私はバスで学校に行きます。','by',['by','with','for']],
+  ['The cat is sleeping □ the table.','ネコはテーブルの下で寝ています。','under',['under','near','around']],
+  ['There is a park □ my house.','私の家の近くに公園があります。','near',['near','under','into']],
+  ['We sat □ the fire.','私たちは火の周りにすわりました。','around',['around','into','through']],
+  ['Ken is standing □ the door.','ケンはドアの前に立っています。','in front of',['in front of','out of','along']],
+  ['He came □ the room.','彼は部屋の中へ入ってきました。','into',['into','in front of','through']],
+  ['She ran □ the house.','彼女は家から外へ走り出ました。','out of',['out of','into','along']],
+  ['We walked □ the river.','私たちは川に沿って歩きました。','along',['along','through','under']],
+  ['The train went □ the tunnel.','電車はトンネルを通りぬけました。','through',['through','along','around']],
+  ['This is a book □ animals.','これは動物についての本です。','about',['about','like','with']],
+  ['She works □ a nurse.','彼女は看護師として働いています。','as',['as','like','about']],
+  ['He can swim □ a fish.','彼は魚のように泳げます。','like',['like','as','with']],
+  ['I can’t live □ music.','私は音楽なしでは生きられません。','without',['without','with','about']],
+  ['I went to the park □ my dog.','私は犬といっしょに公園へ行きました。','with',['with','without','for']],
+  ['Wash your hands □ dinner.','夕食の前に手を洗いなさい。','before',['before','after','until']],
+  ['Let’s play tennis □ school.','放課後テニスをしましょう。','after',['after','before','during']],
+  ['I bought a present □ my mother.','私は母のためにプレゼントを買いました。','for',['for','with','about']],
+];
+// 使い分け [英文, 日本語, 答え, 2つの選択肢, ポイント]
+const PP_PAIR = [
+  ['I studied □ two hours.','私は2時間勉強しました。','for',['for','during'],'for ＋ 数字のついた期間（two hours）。'],
+  ['I studied a lot □ the winter vacation.','冬休みの間、たくさん勉強しました。','during',['for','during'],'during ＋ どういう時かを表す語（the winter vacation）。'],
+  ['She lived in London □ five years.','彼女は5年間ロンドンに住みました。','for',['for','during'],'for ＋ 数字のついた期間（five years）。'],
+  ['Don’t talk □ the class.','授業中は話してはいけません。','during',['for','during'],'during ＋ どういう時かを表す語（the class）。'],
+  ['Come home □ six.','6時までに帰ってきなさい。','by',['by','until'],'by は「〜までに」（その時までに1回すればよい）。'],
+  ['I stayed at home □ noon.','私は正午までずっと家にいました。','until',['by','until'],'until は「〜までずっと」（その時まで続く）。'],
+  ['Return this book □ Friday.','金曜日までにこの本を返してください。','by',['by','until'],'by は「〜までに」。'],
+  ['It rained □ evening.','夕方までずっと雨が降っていました。','until',['by','until'],'until は「〜までずっと」。'],
+  ['The cat is □ the box.','ネコは箱の中にいます。','in',['in','into'],'in は「〜の中に（いる）」という場所。'],
+  ['The cat jumped □ the box.','ネコは箱の中へ飛びこみました。','into',['in','into'],'into は「〜の中へ」という動き。'],
+  ['I met Ken □ the station.','私は駅でケンに会いました。','at',['at','in'],'比較的せまい場所・地点は at。'],
+  ['Ken lives □ Tokyo.','ケンは東京に住んでいます。','in',['at','in'],'比較的広い場所は in。'],
+  ['I was born □ July 7.','私は7月7日に生まれました。','on',['on','in'],'日付は on。'],
+  ['I was born □ July.','私は7月に生まれました。','in',['on','in'],'月は in。'],
+  ['See you □ Monday.','月曜日に会いましょう。','on',['at','on'],'曜日は on。'],
+  ['See you □ three.','3時に会いましょう。','at',['at','on'],'時刻は at。'],
+];
+// 前置詞の後ろの代名詞
+const PP_OBJ = [
+  ['Ken went to the park with □.','ケンは彼といっしょに公園へ行きました。','him',['he','his','him']],
+  ['This letter is for □.','この手紙は彼女へのものです。','her',['she','her','hers']],
+  ['Please listen to □.','私たちの話を聞いてください。','us',['we','our','us']],
+  ['I often talk about □.','私はよく彼らについて話します。','them',['they','their','them']],
+  ['Can you come with □?','私といっしょに来てくれますか。','me',['I','my','me']],
+];
+const PP_EX = [
+  ['I met John at the hotel in the morning.','私は午前中にホテルでジョンに会いました。'],
+  ['He stayed here for three weeks.','彼はここに3週間滞在しました。'],
+  ['There are some pictures on the wall.','壁には絵が何枚か掛かっています。'],
+  ['I go to school by bike.','私は自転車で学校に行きます。'],
+  ['We played soccer after school.','私たちは放課後サッカーをしました。'],
+  ['The cat is sleeping under the table.','ネコはテーブルの下で寝ています。'],
+  ['Please finish your homework by Friday.','金曜日までに宿題を終えてください。'],
+  ['I waited for her until five.','私は5時まで彼女を待ちました。'],
+  ['This is a book about Japanese history.','これは日本の歴史についての本です。'],
+  ['He went into the room.','彼は部屋の中へ入りました。'],
+  ['Let’s walk along the river.','川に沿って歩きましょう。'],
+  ['I can’t live without you.','私はあなたなしでは生きられません。'],
+];
+const PP_M = { at:'〜に・〜で（時刻・地点）', on:'〜に・〜の上に（曜日・日・接触）', in:'〜に・〜の中に（年・月・季節・広い場所）', for:'〜の間・〜のために', during:'〜の間（どういう時）', from:'〜から', to:'〜まで・〜へ', by:'〜までに・〜のそばに・〜で（交通手段）', after:'〜のあとに', before:'〜の前に', until:'〜までずっと', under:'〜の下に', near:'〜の近くに', around:'〜の周りに', 'in front of':'〜の前に（場所）', into:'〜の中へ', 'out of':'〜から外へ', along:'〜に沿って', through:'〜を通って', about:'〜について', as:'〜として', like:'〜のような', without:'〜なしで', with:'〜といっしょに' };
+const prpJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+Object.assign(G, {
+  prpAOI(){ const x=pick(PP_AOI);
+    return { prompt:'□ に入る前置詞は？', expr:x[0]+prpJ(x[1]), enExpr:true, en:true, choices:['at','on','in'], answer:x[2],
+      hint:'時：時刻 at／曜日・日付 on／年・月・季節 in。場所：地点 at／接触 on／中・広い場所 in。', explain:x[3], viz:null }; },
+  prpOth(){ const x=pick(PP_OTH);
+    return { prompt:'□ に入る前置詞は？', expr:x[0]+prpJ(x[1]), enExpr:true, en:true, words:true, choices:shuffle([...x[3]]), answer:x[2],
+      hint:'日本語の意味から考えよう。', explain:`${x[2]}：${PP_M[x[2]]}`, viz:null }; },
+  prpPair(){ const x=pick(PP_PAIR);
+    return { prompt:'□ に入る前置詞は？', expr:x[0]+prpJ(x[1]), enExpr:true, en:true, choices:[...x[3]], answer:x[2],
+      hint:'よく似た前置詞のちがいに注目しよう。', explain:x[4], viz:null }; },
+  prpMean(){ const k=pick(Object.keys(PP_M)), ws=shuffle(Object.keys(PP_M).filter(w=>w!==k&&PP_M[w]!==PP_M[k])).slice(0,3).map(w=>PP_M[w]);
+    return { prompt:'意味は？', expr:k, enExpr:true, words:true, choices:shuffle([PP_M[k],...ws]), answer:PP_M[k], hint:'前置詞の表を思い出そう。', explain:`${k}：${PP_M[k]}`, viz:null }; },
+  prpFind(){ const pool=[...PP_AOI.map(x=>[x[0],x[1],x[2]]),...PP_OTH.filter(x=>!/ /.test(x[2])).map(x=>[x[0],x[1],x[2]])], x=pick(pool), s=x[0].replace('□',x[2]);
+    const words=[...new Set(s.replace(/[.,?’]/g,' ').split(/\s+/).filter(w=>w&&w!==x[2]&&w.length>1&&!PP_M[w.toLowerCase()]))];
+    return { prompt:'前置詞はどれ？', expr:s+prpJ(x[1]), enExpr:true, en:true, choices:shuffle([x[2],...shuffle(words).slice(0,3)]), answer:x[2],
+      hint:'名詞の前に置かれて、時や場所などを表す語を探そう。', explain:`${x[2]}（${PP_M[x[2]]}）が前置詞です。`, viz:null }; },
+  prpObj(){ const x=pick(PP_OBJ);
+    return { prompt:'□ に入る語は？', expr:x[0]+prpJ(x[1]), enExpr:true, en:true, choices:[...x[3]], answer:x[2],
+      hint:'前置詞の後ろの代名詞は「〜を（に）」の形。', explain:`前置詞の後ろなので ${x[2]}。`, viz:null }; },
+  prpEJ(){ const x=pick(PP_EX), ws=shuffle(PP_EX.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:x[0], enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'前置詞の意味に注目しよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+G.prpMix = () => G[pick(['prpAOI','prpOth','prpPair','prpObj'])]();
+const prpRows = ks => ks.map(k=>`<tr><td><b>${k}</b></td><td>${PP_M[k]}</td></tr>`).join('');
+const PREP_LESSONS = [
+  { id:'13-1', t:'前置詞とは', sub:'名詞の前に置く語', plan:['prpFind','prpFind','prpFind','prpObj','prpObj'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('I met John <b>at</b> the hotel <b>in</b> the morning.','私は午前中にホテルでジョンに会いました。')}${beEx('He stayed here <b>for</b> three weeks.','彼はここに3週間滞在しました。')}${beEx('There are some pictures <b>on</b> the wall.','壁には絵が何枚か掛かっています。')}</section>
+    <section class="panel"><h3>前置詞</h3>${rule('名詞・代名詞の前に置いて、時・場所・方向などを表す語')}
+    ${beEx('<b>at</b> the hotel','ホテルで（場所）')}${beEx('<b>in</b> the morning','午前中に（時）')}${beEx('<b>for</b> three weeks','3週間（期間）')}
+    <p class="small muted">〈前置詞 ＋ 名詞〉で1つのまとまりになります。</p></section>
+    <section class="panel"><h3>前置詞の後ろの代名詞</h3>${rule('前置詞の後ろの代名詞は「〜を（に）」の形')}
+    ${beEx('Ken went to the park with <b>him</b>.','ケンは彼といっしょに公園へ行きました。')}<p class="small"><b style="color:var(--bad)">×</b> with he　<b style="color:var(--good)">〇</b> with him</p></section>` },
+  { id:'13-2', t:'at・on・in', sub:'時・場所', plan:['prpAOI','prpAOI','prpAOI','prpAOI','prpAOI'], body:()=>`
+    <section class="panel"><h3>時を表す at・on・in</h3>
+    <table class="dtab"><tr><th></th><th>使うとき</th><th>例</th></tr>
+    <tr><td><b>at</b></td><td>時刻など</td><td>at two thirty（2時30分に）</td></tr>
+    <tr><td><b>on</b></td><td>曜日・日</td><td>on Saturday（土曜日に）<br>on May 5（5月5日に）</td></tr>
+    <tr><td><b>in</b></td><td>年・月・季節など</td><td>in April（4月に）<br>in 2020（2020年に）<br>in summer（夏に）</td></tr></table></section>
+    <section class="panel"><h3>場所を表す at・on・in</h3>
+    <table class="dtab"><tr><th></th><th>使うとき</th><th>例</th></tr>
+    <tr><td><b>at</b></td><td>比較的せまい場所<br>「〜に・〜で」</td><td>at the station（駅で）</td></tr>
+    <tr><td><b>on</b></td><td>接触して<br>「〜の上に」</td><td>on the wall（壁に）</td></tr>
+    <tr><td><b>in</b></td><td>「〜の中に」<br>比較的広い場所</td><td>in the box（箱の中に）<br>in Japan（日本に）</td></tr></table>
+    <p class="small muted">on は「上」だけでなく、壁や天井など、くっついているときにも使います。</p></section>
+    <section class="panel"><h3>その他</h3><div class="kwl"><div><b>look at 〜</b><span>〜を見る</span></div><div><b>on TV</b><span>テレビで（on ＋ テレビ・ラジオなど）</span></div><div><b>in English</b><span>英語で（in ＋ 言語名）</span></div></div></section>` },
+  { id:'13-3', t:'その他の前置詞', sub:'時・場所・運動・方向・その他', plan:['prpOth','prpOth','prpOth','prpMean','prpMean'], body:()=>`
+    <section class="panel"><h3>いろいろな意味をもつ前置詞</h3>
+    <table class="dtab" style="font-size:.85rem"><tr><th></th><th>時</th><th>場所</th><th>運動・方向</th><th>その他</th></tr>
+    <tr><td><b>for</b></td><td>〜の間</td><td></td><td>〜へ向かって</td><td>〜のために</td></tr>
+    <tr><td><b>during</b></td><td>〜の間</td><td></td><td></td><td></td></tr>
+    <tr><td><b>from</b></td><td>〜から</td><td>〜から</td><td>〜から</td><td></td></tr>
+    <tr><td><b>to</b></td><td>〜まで</td><td>〜まで</td><td>〜へ</td><td>〜に</td></tr>
+    <tr><td><b>by</b></td><td>〜までに</td><td>〜のそばに</td><td></td><td>〜で（交通手段）</td></tr></table></section>
+    <section class="panel"><h3>時</h3><table class="dtab">${prpRows(['after','before','until'])}</table></section>
+    <section class="panel"><h3>場所</h3><table class="dtab">${prpRows(['under','near','around','in front of'])}</table></section>
+    <section class="panel"><h3>運動・方向</h3><table class="dtab">${prpRows(['into','out of','along','through'])}</table></section>
+    <section class="panel"><h3>その他</h3><table class="dtab">${prpRows(['about','as','like','without','with'])}</table></section>` },
+  { id:'13-4', t:'使い分け', sub:'まちがえやすい前置詞', plan:['prpPair','prpPair','prpPair','prpPair','prpPair'], body:()=>`
+    <section class="panel"><h3>for と during（〜の間）</h3>
+    ${beEx('He stayed here <b>for</b> three weeks.','彼はここに3週間滞在しました。')}${beEx('I went to Hokkaido <b>during</b> the summer vacation.','私は夏休みの間に北海道へ行きました。')}
+    <p class="small muted">for は three weeks のように数字（some・a few など）のついた語と、during は the summer vacation のように「どういう時か」を表す語とよく使います。</p></section>
+    <section class="panel"><h3>by と until（〜まで）</h3>
+    ${beEx('Come home <b>by</b> six.','6時までに帰ってきなさい。（その時までに1回）')}${beEx('I stayed at home <b>until</b> noon.','私は正午までずっと家にいました。（その時まで続く）')}</section>
+    <section class="panel"><h3>in と into</h3>
+    ${beEx('The cat is <b>in</b> the box.','ネコは箱の中にいます。（場所）')}${beEx('The cat jumped <b>into</b> the box.','ネコは箱の中へ飛びこみました。（動き）')}</section>
+    <section class="panel"><h3>at・on・in のまとめ</h3>
+    <p>時：<b>at</b> 時刻 ＜ <b>on</b> 曜日・日 ＜ <b>in</b> 月・季節・年</p><p>場所：<b>at</b> 地点 ／ <b>on</b> 接触 ／ <b>in</b> 中・広い場所</p>
+    <p class="small muted">左ほどせまく（短く）、右ほど広く（長く）なります。</p></section>` },
+  { id:'13-5', t:'例文', sub:'前置詞の文を読もう', plan:['prpEJ','prpEJ','prpEJ','prpMix','prpMix'], body:()=>`
+    <section class="panel"><h3>例文</h3>${PP_EX.map(x=>beEx(x[0].replace(/\b(at|on|in|for|by|after|under|until|about|into|along|without)\b/g,'<b>$1</b>'),x[1])).join('')}</section>` },
 ];
 
 
@@ -11597,6 +11759,7 @@ const UNITS = {
   imp:{ no:'文10', title:'命令文', subject:'英語', course:'jen', subj:1, lessons:IM_LESSONS },
   rv2:{ no:'💧2', title:'助動詞', subject:'英語', course:'jen', subj:1, lessons:RV2_LESSONS },
   conj:{ no:'文12', title:'接続詞', subject:'英語', course:'jen', subj:1, lessons:CJ_LESSONS },
+  prep:{ no:'文13', title:'前置詞', subject:'英語', course:'jen', subj:1, lessons:PREP_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
