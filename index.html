@@ -1115,7 +1115,7 @@ const CATALOG = [
       { name:'作文', k:'作', units:U({ t:'作文の種類', ready:'sak1' },{ t:'作文を書くコツ', ready:'sak2' },{ t:'作文を書くときの注意', ready:'sak3' },{ t:'穴埋めで書いてみよう', ready:'sak4' }) } ] },
     { id:'jen', name:'英語', k:'英', note:'学年に関係なく、どこからでも', subjects:[
       { name:'英単語・英熟語', k:'単', units:U({ t:'英単語 ステップ1', ready:'ew1' },{ t:'英単語 ステップ2', ready:'ew2' },{ t:'英単語 ステップ3', ready:'ew3' },{ t:'英熟語', ready:'eid' },{ t:'動詞の不規則変化', ready:'irr' }) },
-      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },'不定詞','動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
+      { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞(1)', ready:'inf1' },'動名詞','比較','受け身','現在完了','現在完了進行形','分詞','関係代名詞','間接疑問文','原形不定詞','仮定法') },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
       { name:'地理', k:'地', units:U('世界と日本の姿','世界各地の人々の生活と環境','世界の諸地域','地域調査の手法','日本の地域的特色','日本の諸地域') },
@@ -3506,6 +3506,144 @@ const RV3_LESSONS = [
     <section class="panel"><h3>セットで覚える表現</h3>
     <div class="kwl"><div><b>look at 〜</b><span>〜を見る</span></div><div><b>a member of 〜</b><span>〜の一員</span></div><div><b>be different from 〜</b><span>〜と異なる</span></div><div><b>look forward to 〜</b><span>〜を楽しみにする</span></div><div><b>arrive at 〜</b><span>〜に着く</span></div><div><b>by the way</b><span>ところで</span></div><div><b>all over the world</b><span>世界中で</span></div><div><b>from 〜 to …</b><span>〜から…まで</span></div></div>
     <p class="small muted">12章・13章の問題と、3つから選ぶ問題から、毎回ちがう20問がランダムに出ます。</p></section>` },
+];
+
+
+/* ===== 英語 文法 15章 不定詞(1) ===== */
+// [英文(不定詞は <b>), 日本語, 用法 n=名詞的 a=副詞的 j=形容詞的, 細かい働き]
+const INF_S = [
+  ['John wants <b>to write a nice song</b>.','ジョンはすてきな曲を書きたがっています。','n','目的語'],
+  ['I like <b>to play the piano</b>.','私はピアノを弾くことが好きです。','n','目的語'],
+  ['She started <b>to cry</b>.','彼女は泣き始めました。','n','目的語'],
+  ['We hope <b>to see you again</b>.','私たちはまたあなたに会うことを望んでいます。','n','目的語'],
+  ['<b>To play his song</b> is fun.','彼の曲を演奏することは楽しい。','n','主語'],
+  ['<b>To read books</b> is important.','本を読むことは大切です。','n','主語'],
+  ['His dream is <b>to be a musician</b>.','彼の夢は音楽家になることです。','n','補語'],
+  ['My plan is <b>to visit Kyoto</b>.','私の計画は京都を訪れることです。','n','補語'],
+  ['John stays up late <b>to write a song</b>.','ジョンは曲を書くために遅くまで起きています。','a','目的'],
+  ['I went to the library <b>to study</b>.','私は勉強するために図書館へ行きました。','a','目的'],
+  ['She got up early <b>to make breakfast</b>.','彼女は朝食を作るために早く起きました。','a','目的'],
+  ['We were excited <b>to play his song</b>.','私たちは彼の曲を演奏してわくわくしました。','a','感情の原因'],
+  ['I am glad <b>to hear that</b>.','私はそれを聞いてうれしいです。','a','感情の原因'],
+  ['He was surprised <b>to see the news</b>.','彼はそのニュースを見て驚きました。','a','感情の原因'],
+  ['He has no time <b>to write a song</b>.','彼には曲を書く時間がありません。','j','名詞を修飾'],
+  ['I have a lot of homework <b>to do</b>.','私にはするべき宿題がたくさんあります。','j','名詞を修飾'],
+  ['He wants something hot <b>to drink</b>.','彼は何か温かい飲み物をほしがっています。','j','代名詞を修飾'],
+  ['Kyoto has many places <b>to visit</b>.','京都には訪れるべき場所がたくさんあります。','j','名詞を修飾'],
+  ['Give me something <b>to eat</b>.','何か食べるものをください。','j','代名詞を修飾'],
+  ['I need a book <b>to read</b> on the train.','私は電車で読む本が必要です。','j','名詞を修飾'],
+];
+const INF_USE = { n:'名詞的用法（〜すること）', a:'副詞的用法（〜するために・〜して）', j:'形容詞的用法（〜する・〜するための）' };
+const infJ = jp => `<br><span class="small muted" style="font-family:var(--f-body);font-weight:400">${jp}</span>`;
+const infPlain = s => s.replace(/<\/?b>/g,'');
+// [英文(□), 日本語, 正解, 選択肢, ポイント]
+const INF_Q = {
+  form:[
+    ['She wants □ a bath.','彼女はふろに入りたがっています。','to take',['to take','to takes','to took','take'],'不定詞は〈to ＋ 動詞の原形〉。主語や時で形は変わりません。'],
+    ['He wanted □ a doctor.','彼は医者になりたかった。','to be',['to be','to was','to is','be'],'過去の文でも to の後ろは原形。'],
+    ['Ken likes □ soccer.','ケンはサッカーをすることが好きです。','to play',['to play','to plays','plays to','to played'],'主語が三人称単数でも to の後ろは原形。'],
+    ['She has no time □ a bath.','彼女にはふろに入る時間がありません。','to take',['to take','take','to took','takes'],'〈名詞 ＋ to ＋ 原形〉で「〜する（ための）名詞」。'],
+    ['I went to the park □ tennis.','私はテニスをするために公園へ行きました。','to play',['to play','to played','play','plays'],'過去の文でも to の後ろは原形。'],
+  ],
+  verb:[
+    ['I □ to go to Canada.','私はカナダへ行きたいです。','want',['want','like','hope','need'],'want to 〜「〜したい」。'],
+    ['I □ to play the piano.','私はピアノを弾くことが好きです。','like',['want','like','hope','need'],'like to 〜「〜することが好きだ」。'],
+    ['We □ to see you again.','私たちはまたあなたに会えることを望んでいます。','hope',['want','like','hope','need'],'hope to 〜「〜することを望む」。'],
+    ['You □ to study harder.','あなたはもっと一生けんめい勉強する必要があります。','need',['want','like','hope','need'],'need to 〜「〜する必要がある」。'],
+    ['They □ to run.','彼らは走り始めました。','started',['started','wanted','liked','needed'],'start to 〜「〜し始める」。'],
+    ['He □ to open the box.','彼はその箱を開けようとしました。','tried',['tried','hoped','liked','needed'],'try to 〜「〜しようとする」。'],
+  ],
+  sub:[
+    ['□ books is important.','本を読むことは大切です。','To read',['To read','Read','Reads','To reads'],'主語になる不定詞「〜することは」。'],
+    ['□ English is fun.','英語を勉強することは楽しい。','To study',['To study','Study','Studies','To studies'],'主語になる不定詞「〜することは」。不定詞の主語は三人称単数あつかい（is）。'],
+    ['His dream is □ a musician.','彼の夢は音楽家になることです。','to be',['to be','be','is','to is'],'補語になる不定詞「〜することです」。'],
+    ['My plan is □ Kyoto.','私の計画は京都を訪れることです。','to visit',['to visit','visit','visits','to visits'],'補語になる不定詞「〜することです」。'],
+    ['My job is □ care of animals.','私の仕事は動物の世話をすることです。','to take',['to take','take','takes','to takes'],'補語になる不定詞。'],
+  ],
+  adv:[
+    ['I went to the library □.','私は勉強するために図書館へ行きました。','to study',['to study','study','to studied','studied'],'「〜するために」は〈to ＋ 原形〉。'],
+    ['She got up early □ breakfast.','彼女は朝食を作るために早く起きました。','to make',['to make','make','for make','made'],'「〜するために」は〈to ＋ 原形〉。'],
+    ['Ken went to the park □ soccer.','ケンはサッカーをするために公園へ行きました。','to play',['to play','play','for play','played'],'「〜するために」は〈to ＋ 原形〉。'],
+    ['We came here □ you.','私たちはあなたに会うためにここに来ました。','to see',['to see','see','for see','saw'],'「〜するために」は〈to ＋ 原形〉。'],
+  ],
+  why:[
+    ['Why did you go to the park? — □','なぜ公園へ行ったのですか。— テニスをするためです。','To play tennis.',['To play tennis.','Play tennis.','For play tennis.','Played tennis.'],'Why 〜? に「〜するため」と答えるときは To 〜.'],
+    ['Why does he stay up late? — □','彼はなぜ遅くまで起きているのですか。— 曲を書くためです。','To write a song.',['To write a song.','Write a song.','For write a song.','Writes a song.'],'Why 〜? に「〜するため」と答えるときは To 〜.'],
+    ['Why are you studying hard? — □','なぜ一生けんめい勉強しているのですか。— 医者になるためです。','To be a doctor.',['To be a doctor.','Be a doctor.','For be a doctor.','To is a doctor.'],'Why 〜? に「〜するため」と答えるときは To 〜.'],
+    ['Why did she go to Osaka? — □','彼女はなぜ大阪へ行ったのですか。— おばに会うためです。','To see her aunt.',['To see her aunt.','See her aunt.','For see her aunt.','Saw her aunt.'],'Why 〜? に「〜するため」と答えるときは To 〜.'],
+  ],
+  feel:[
+    ['I am glad □ that.','私はそれを聞いてうれしいです。','to hear',['to hear','hear','for hear','heard'],'感情を表す語（glad）＋ to 〜「〜して」。'],
+    ['He was surprised □ the news.','彼はそのニュースを見て驚きました。','to see',['to see','see','for see','saw'],'感情を表す語（surprised）＋ to 〜「〜して」。'],
+    ['We were excited □ his song.','私たちは彼の曲を演奏してわくわくしました。','to play',['to play','play','for play','played'],'感情を表す語（excited）＋ to 〜「〜して」。'],
+    ['She was sad □ the story.','彼女はその話を聞いて悲しくなりました。','to hear',['to hear','hear','for hear','heard'],'感情を表す語（sad）＋ to 〜「〜して」。'],
+    ['I’m happy □ you.','あなたに会えてうれしいです。','to see',['to see','see','for see','saw'],'感情を表す語（happy）＋ to 〜「〜して」。'],
+  ],
+  adj:[
+    ['彼は何か温かい飲み物をほしがっています。','He wants something hot to drink.',['He wants something hot to drink.','He wants hot something to drink.','He wants to drink something hot to.','He wants something to drink hot.'],'〈-thing ＋ 形容詞 ＋ to 〜〉の順。'],
+    ['私には曲を書く時間がありません。','I have no time to write a song.',['I have no time to write a song.','I have no to write time a song.','I have to write no time a song.','I have no time write a song.'],'〈名詞 ＋ to 〜〉で「〜する（ための）名詞」。'],
+    ['何か食べるものをください。','Give me something to eat.',['Give me something to eat.','Give me to eat something.','Give me something eat.','Give me eat something to.'],'〈代名詞 ＋ to 〜〉で「〜するための〜」。'],
+    ['京都には訪れるべき場所がたくさんあります。','Kyoto has many places to visit.',['Kyoto has many places to visit.','Kyoto has to visit many places.','Kyoto has many to visit places.','Kyoto has many places visit.'],'〈名詞 ＋ to 〜〉で「〜するべき名詞」。'],
+    ['私にはするべき宿題がたくさんあります。','I have a lot of homework to do.',['I have a lot of homework to do.','I have to do a lot of homework.','I have a lot of to do homework.','I have a lot of homework do.'],'〈名詞 ＋ to 〜〉。I have to do 〜 は「〜しなければならない」で意味がちがいます。'],
+  ],
+};
+function infBlank(k){ const x=pick(INF_Q[k]);
+  return { prompt:'□ に入るものは？', expr:x[0]+infJ(x[1]), enExpr:true, en:true, words:true, choices:shuffle([...x[3]]), answer:x[2], hint:'不定詞は〈to ＋ 動詞の原形〉。', explain:x[4], viz:null }; }
+Object.assign(G, {
+  infForm(){ return infBlank('form'); }, infVerb(){ return infBlank('verb'); }, infSub(){ return infBlank('sub'); },
+  infAdv(){ return infBlank('adv'); }, infWhy(){ return infBlank('why'); }, infFeel(){ return infBlank('feel'); },
+  infAdj(){ const x=pick(INF_Q.adj);
+    return { prompt:'英語にすると？', expr:x[0], en:true, words:true, choices:shuffle([...x[2]]), answer:x[1], hint:'不定詞は、修飾する名詞・代名詞のすぐ後ろに置きます。', explain:x[3], viz:null }; },
+  infUse(){ const x=pick(INF_S);
+    return { prompt:'太字の不定詞は何用法？', expr:x[0]+infJ(x[1]), enExpr:true, words:true, choices:[INF_USE.n,INF_USE.a,INF_USE.j], answer:INF_USE[x[2]],
+      hint:'「〜すること」なら名詞的、「〜するために・〜して」なら副詞的、名詞を後ろから説明していれば形容詞的。', explain:`${INF_USE[x[2]]}。${x[3]}の働きをしています。`, viz:null }; },
+  infEJ(){ const x=pick(INF_S), ws=shuffle(INF_S.filter(y=>y!==x)).slice(0,3).map(y=>y[1]);
+    return { prompt:'日本語の意味は？', expr:infPlain(x[0]), enExpr:true, words:true, choices:shuffle([x[1],...ws]), answer:x[1], hint:'to 〜 の部分の意味に注目しよう。', explain:`${x[0]}<br>→ ${x[1]}`, viz:null }; },
+});
+const infEx = ks => INF_S.filter(x=>ks.includes(x[3])).map(x=>beEx(x[0],x[1])).join('');
+const INF1_LESSONS = [
+  { id:'15-1', t:'不定詞とは', sub:'〈to ＋ 動詞の原形〉', plan:['infForm','infForm','infForm','infUse','infUse'], body:()=>`
+    <section class="panel"><h3>基本文</h3>${beEx('John wants <b>to write</b> a nice song.','ジョンはすてきな曲を書きたがっています。')}${beEx('John stays up late <b>to write</b> a song.','ジョンは曲を書くために遅くまで起きています。')}${beEx('He has no time <b>to write</b> a song.','彼には曲を書く時間がありません。')}</section>
+    <section class="panel"><h3>不定詞</h3>${rule('to ＋ 動詞の原形<br>時や主語によって変化せず、いつも同じ形')}
+    <p class="small"><b style="color:var(--bad)">×</b> to writes ／ to wrote　<b style="color:var(--good)">〇</b> to write</p></section>
+    <section class="panel"><h3>3つの用法</h3>
+    <table class="dtab"><tr><th>用法</th><th>意味</th><th>働き</th></tr>
+    <tr><td>名詞的用法</td><td>〜すること</td><td>目的語・主語・補語になる</td></tr>
+    <tr><td>副詞的用法</td><td>〜するために<br>〜して</td><td>動詞や形容詞を修飾する</td></tr>
+    <tr><td>形容詞的用法</td><td>〜する（ための）<br>〜するべき</td><td>名詞・代名詞を修飾する</td></tr></table>
+    <p class="small muted">同じ to write でも、文の中での働きによって意味が変わります。</p></section>` },
+  { id:'15-2', t:'名詞的用法', sub:'〜すること', plan:['infVerb','infVerb','infVerb','infSub','infSub'], body:()=>`
+    <section class="panel"><h3>名詞的用法</h3>${rule('to ＋ 原形 →「〜すること」<br>名詞と同じように、目的語・主語・補語になる')}</section>
+    <section class="panel"><h3>〇 目的語になる（一般動詞のあと）</h3>
+    ${beEx('John wants <b>to write a nice song</b>.','ジョンは〜を欲する ＋ すてきな曲を書くこと<br>→ ジョンはすてきな曲を書きたがっています。')}
+    <div class="kwl"><div><b>want to 〜</b><span>〜したい</span></div><div><b>like to 〜</b><span>〜することが好きだ</span></div><div><b>hope to 〜</b><span>〜することを望む</span></div><div><b>need to 〜</b><span>〜する必要がある</span></div><div><b>start（begin）to 〜</b><span>〜し始める</span></div><div><b>try to 〜</b><span>〜しようとする</span></div></div></section>
+    <section class="panel"><h3>〇 主語になる（文のはじめ）</h3>
+    ${beEx('<b>To play his song</b> is fun.','彼の曲を演奏することは楽しい。')}
+    <p class="small muted">主語になる不定詞は三人称単数あつかい（is）です。</p></section>
+    <section class="panel"><h3>〇 補語になる（be動詞のあと）</h3>
+    ${beEx('His dream is <b>to be a musician</b>.','彼の夢は音楽家になることです。')}
+    <p class="small muted">補語：「（主語）は〜です」などの文の〈〜〉にくる語（句）。</p></section>` },
+  { id:'15-3', t:'副詞的用法', sub:'〜するために・〜して', plan:['infAdv','infAdv','infWhy','infFeel','infFeel'], body:()=>`
+    <section class="panel"><h3>〇 動詞を修飾〈目的〉</h3>${rule('動詞（＋語句）のあと → 「〜するために」「〜しに」')}
+    ${beEx('John stays up late <b>to write a song</b>.','ジョンは曲を書くために遅くまで起きています。')}${beEx('I went to the library <b>to study</b>.','私は勉強するために図書館へ行きました。')}</section>
+    <section class="panel"><h3>〇 Why 〜? に対する答え</h3>${rule('Why 〜? → To 〜.「〜するためです」')}
+    ${beEx('Why does he stay up late? — <b>To write a song</b>.','なぜ彼は遅くまで起きているのですか。— 曲を書くためです。')}
+    <p class="small muted">（He stays up late）to write a song. の（　）の部分が省略された形と考えます。</p></section>
+    <section class="panel"><h3>〇 感情を表す〈原因・理由〉</h3>${rule('感情を表す形容詞 ＋ to 〜 →「〜して（…だ）」')}
+    ${beEx('We were excited <b>to play his song</b>.','私たちは彼の曲を演奏してわくわくしました。')}
+    <div class="kwl"><div><b>glad（happy）to 〜</b><span>〜してうれしい</span></div><div><b>sad to 〜</b><span>〜して悲しい</span></div><div><b>surprised to 〜</b><span>〜して驚く</span></div><div><b>excited to 〜</b><span>〜してわくわくする</span></div></div></section>` },
+  { id:'15-4', t:'形容詞的用法', sub:'〜する（ための）・〜するべき', plan:['infAdj','infAdj','infAdj','infForm','infUse'], body:()=>`
+    <section class="panel"><h3>〇 名詞・代名詞を修飾</h3>${rule('名詞・代名詞 ＋ to 〜 →「〜する（ための）」「〜するべき」')}
+    ${beEx('He has no <b>time</b> <b>to write a song</b>.','彼には曲を書く時間がありません。')}${beEx('I have a lot of <b>homework</b> <b>to do</b>.','私にはするべき宿題がたくさんあります。')}
+    <p class="small muted">不定詞は、修飾する名詞のすぐ後ろに置きます。日本語とは順番が逆です。</p></section>
+    <section class="panel"><h3>-thing のあと</h3>${rule('-thing（代名詞）＋ 形容詞 ＋ to 〜')}
+    ${beEx('He wants <b>something hot to drink</b>.','彼は何か温かい飲み物をほしがっています。')}
+    <p class="small muted">「彼は〜がほしい」＋「何か温かい物」＋「飲むための」。something・anything などに形容詞がつくときは、後ろに置きます。</p></section>
+    <section class="panel"><h3>くらべよう</h3>${beEx('She wants <b>to take</b> a bath.','彼女はふろに入りたがっています。（名詞的用法）')}${beEx('She has no time <b>to take</b> a bath.','彼女にはふろに入る時間がありません。（形容詞的用法）')}</section>` },
+  { id:'15-5', t:'例文', sub:'3つの用法を見分けよう', plan:['infUse','infUse','infUse','infEJ','infEJ'], body:()=>`
+    <section class="panel"><h3>名詞的用法（〜すること）</h3>${infEx(['目的語','主語','補語'])}</section>
+    <section class="panel"><h3>副詞的用法（〜するために・〜して）</h3>${infEx(['目的','感情の原因'])}</section>
+    <section class="panel"><h3>形容詞的用法（〜する・〜するための）</h3>${infEx(['名詞を修飾','代名詞を修飾'])}</section>` },
 ];
 
 
@@ -11900,6 +12038,7 @@ const UNITS = {
   prep:{ no:'文13', title:'前置詞', subject:'英語', course:'jen', subj:1, lessons:PREP_LESSONS },
   there:{ no:'文14', title:'There is ～. ／ There are ～.', subject:'英語', course:'jen', subj:1, lessons:TH_LESSONS },
   rv3:{ no:'💧3', title:'接続詞・前置詞', subject:'英語', course:'jen', subj:1, lessons:RV3_LESSONS },
+  inf1:{ no:'文15', title:'不定詞(1)', subject:'英語', course:'jen', subj:1, lessons:INF1_LESSONS },
   eid:{ drill:'eid', no:'熟1', title:'英熟語', subject:'英語', course:'jen', subj:0, lessons:EID_LESSONS },
   ew3:{ drill:'ew3', no:'単3', title:'英単語 ステップ3', subject:'英語', course:'jen', subj:0, lessons:EW3_LESSONS },
   ew2:{ drill:'ew2', no:'単2', title:'英単語 ステップ2', subject:'英語', course:'jen', subj:0, lessons:EW2_LESSONS },
