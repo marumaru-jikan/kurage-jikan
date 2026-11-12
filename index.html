@@ -13713,7 +13713,7 @@ function vUnit(){
   const u=CU(), uid=S.uid;
   return `${top(u.no+'　'+u.title)}<div class="stack"><p class="muted small">${u.lessons.length}しずく　1しずく約5分。上から順に進めるのがおすすめです。</p><div class="list">
   ${u.lessons.map((l,i)=>`${l.sec?`<div class="secrow">${l.sec}</div>`:''}<button class="item" data-act="lesson" data-arg="${l.id}"><span class="lid ${R.lessons[lkey(uid,l.id)]?'done':''}">${l.id}</span><span class="body"><b>${l.t}</b><br><span class="small muted">${l.sub}</span></span>${lTag(uid,l.id)}<span class="chev">›</span></button>`).join('')}
-  ${u.drill?`<button class="item" data-act="go" data-arg="drill"><span class="lid">▶</span><span class="body"><b>演習問題</b><br><span class="small muted">PDF・Lv1〜Lv5</span></span><span class="chev">›</span></button>`:''}
+  ${u.drill?`<button class="item" data-act="go" data-arg="drill"><span class="lid">▶</span><span class="body"><b>${u.drillLabel||'演習問題'}</b><br><span class="small muted">PDF・Lv1〜Lv5</span></span><span class="chev">›</span></button>`:''}
   </div>${u.cards?`<div class="list"><button class="item" data-act="cards"><span class="body"><b>用語カード</b><br><span class="small muted">用語の確認 ${CARDS.length}枚</span></span><span class="tag ${R.known.length===CARDS.length?'done':R.known.length?'mid':''}">${R.known.length}/${CARDS.length}</span><span class="chev">›</span></button></div>`:''}</div>`;
 }
 function vLesson(){
@@ -13947,11 +13947,12 @@ Object.assign(PDF, {
   'egsj-lv4': { q:'pdf/egram8.pdf', a:'pdf/egram8.pdf', qr:[52,53], ar:[54,54], d:'並び替え　10問' },
   'egsj-lv5': { q:'pdf/egram8.pdf', a:'pdf/egram8.pdf', qr:[55,56], ar:[57,58], d:'総合　大問1 文法6問・大問2 読解4問' },
 });
-EG_KEYS.forEach(k=>{ const u=UNITS[k]; if(!u) return; u.drill='eg'+k;
-  if(u.lessons.some(l=>l.test)) return;
+EG_KEYS.forEach(k=>{ const u=UNITS[k]; if(!u) return; u.drill='eg'+k; u.drillLabel='章末問題';
+  u.lessons=u.lessons.map((l,i)=>i===0?{...l, sec:'1　文法事項'}:l.sec?{...l, sec:undefined}:l);
+  if(u.lessons.some(l=>l.test)){ u.lessons=u.lessons.map(l=>l.test?{...l, sec:'2　章末テスト'}:l); return; }
   const ls=u.lessons, pre=ls[ls.length-1].id.split('-')[0], plans=ls.map(l=>l.plan.filter(g=>G[g])), plan=[]; let i=0;
   while(plan.length<12 && plans.some(p=>p.length)){ const p=plans[i%plans.length]; if(p.length) plan.push(p[(Math.floor(i/plans.length)*2+1)%p.length]); i++; if(i>200) break; }
-  u.lessons=[...ls, { id:pre+'-'+(ls.length+1), t:'章末テスト', sub:u.title+'の総まとめ', test:true, plan, body:()=>`<section class="panel"><h3>${u.title}　章末テスト</h3>
+  u.lessons=[...ls, { id:pre+'-'+(ls.length+1), sec:'2　章末テスト', t:'章末テスト', sub:u.title+'の総まとめ', test:true, plan, body:()=>`<section class="panel"><h3>${u.title}　章末テスト</h3>
     <p>この章の小単元から12問出題します。</p><div class="kwl">${ls.map(l=>`<div><b>${l.id}</b><span>${l.t}</span></div>`).join('')}</div>
     <p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` }];
 });
