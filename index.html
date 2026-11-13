@@ -14931,20 +14931,43 @@ function wgClimate(name,Tm,Pm,o={}){ const W=320,H=240,L=46,R=274,top=28,bot=200
   const avg=(Tm.reduce((a,b)=>a+b,0)/12).toFixed(1), tot=Pm.reduce((a,b)=>a+b,0);
   g+=tx(W/2,16,name,'font-size:12.5px;font-weight:700;text-anchor:middle');
   return `<svg class="gfig" style="max-width:360px" viewBox="0 0 ${W} ${H}" role="img" aria-label="${name}の雨温図">${g}</svg><p class="small" style="text-align:center;margin-top:-4px">年平均気温 ${avg}℃　年降水量 ${tot}mm</p>`; }
-const WG_SLED=(()=>{ let g='<rect width="320" height="150" rx="10" style="fill:#e9f3fb"/><path d="M0 118 Q80 108 160 116 T320 112 V150 H0Z" style="fill:#fff"/>';
-  const dog=(x)=>`<g transform="translate(${x},92)"><ellipse cx="0" cy="0" rx="13" ry="7" style="fill:#d9d2c5;stroke:#5b4e3c;stroke-width:1.2"/><circle cx="14" cy="-6" r="6" style="fill:#d9d2c5;stroke:#5b4e3c;stroke-width:1.2"/><path d="M11 -12 l2 -5 l3 5 M16 -12 l3 -4 l1 5" style="fill:#d9d2c5;stroke:#5b4e3c;stroke-width:1"/><circle cx="16" cy="-7" r="1" style="fill:#333"/><path d="M-13 -2 q-7 -8 -2 -11" style="fill:none;stroke:#5b4e3c;stroke-width:2"/><path d="M-8 6 v9 M-2 6 v9 M5 6 v9 M10 6 v9" style="stroke:#5b4e3c;stroke-width:2"/></g>`;
-  g+=dog(218)+dog(262)+dog(240).replace('translate(240,92)','translate(240,104)')+dog(284).replace('translate(284,92)','translate(284,104)');
-  g+='<path d="M120 100 L206 92 M120 104 L228 104 M150 102 L262 96 M150 104 L272 108" style="stroke:#5b4e3c;stroke-width:1"/>';
-  g+='<path d="M40 108 H128 Q138 108 136 98" style="fill:none;stroke:#7a5230;stroke-width:3"/><rect x="44" y="92" width="80" height="12" rx="2" style="fill:#b07a45;stroke:#7a5230;stroke-width:1.5"/><path d="M50 104 v4 M70 104 v4 M90 104 v4 M110 104 v4" style="stroke:#7a5230;stroke-width:2"/>';
-  g+='<g><ellipse cx="72" cy="80" rx="13" ry="14" style="fill:#c8a26b;stroke:#7a5230;stroke-width:1.2"/><circle cx="74" cy="60" r="10" style="fill:#c8a26b;stroke:#7a5230;stroke-width:1.2"/><circle cx="75" cy="61" r="6" style="fill:#f3d7b6"/><circle cx="73" cy="60" r=".9" style="fill:#333"/><circle cx="77.5" cy="60" r=".9" style="fill:#333"/><path d="M84 76 L104 70" style="stroke:#7a5230;stroke-width:2.5"/></g>';
-  g+='<text x="160" y="140" text-anchor="middle" style="font-style:normal;font-size:12px;font-weight:700;fill:#24303c">犬ぞり</text>';
-  return `<svg class="gfig" style="max-width:340px" viewBox="0 0 320 150" role="img" aria-label="犬ぞりのイラスト">${g}</svg>`; })();
-const WG_IGLOO=(()=>{ let g='<rect width="320" height="170" rx="10" style="fill:#dfeefa"/><path d="M0 130 Q160 118 320 130 V170 H0Z" style="fill:#fff"/>';
-  g+='<path d="M80 130 A80 80 0 0 1 240 130 Z" style="fill:#f8fbff;stroke:#8fb0c8;stroke-width:2"/>';
-  [112,96,82,70].forEach((y,k)=>{ const r=Math.sqrt(80*80-(130-y)*(130-y)); g+=`<path d="M${160-r} ${y} H${160+r}" style="stroke:#a9c4d8;stroke-width:1.3"/>`; for(let x=160-r+18-(k%2)*9;x<160+r-6;x+=22) g+=`<path d="M${x.toFixed(1)} ${y} v${k===0?18:-(k===3?12:14)}" style="stroke:#a9c4d8;stroke-width:1.1"/>`; });
-  g+='<path d="M215 130 V112 A22 22 0 0 1 259 112 V130 Z" style="fill:#f8fbff;stroke:#8fb0c8;stroke-width:2"/><path d="M226 130 V118 A11 11 0 0 1 248 118 V130 Z" style="fill:#3d5a73"/>';
-  g+='<text x="160" y="158" text-anchor="middle" style="font-style:normal;font-size:12px;font-weight:700;fill:#24303c">イグルー（雪のブロックの家）</text>';
-  return `<svg class="gfig" style="max-width:340px" viewBox="0 0 320 170" role="img" aria-label="イグルーのイラスト">${g}</svg>`; })();
+const WG_SLED=(()=>{ let g='<defs><linearGradient id="skyS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bcd9ef"/><stop offset="1" stop-color="#eaf4fb"/></linearGradient></defs><rect width="360" height="190" rx="10" style="fill:url(#skyS)"/>';
+  g+='<path d="M0 92 L40 70 L70 84 L110 58 L150 86 L190 74 L230 90 L270 66 L320 88 L360 76 V120 H0Z" style="fill:#e4eef6;stroke:#c9dbe9"/>';
+  g+='<path d="M0 128 Q180 112 360 126 V190 H0Z" style="fill:#fff"/><path d="M20 170 Q120 158 220 166 T360 160" style="fill:none;stroke:#dbe7f0;stroke-width:2"/>';
+  const dog=(x,y,c,c2,flip)=>`<g transform="translate(${x},${y})">`+
+    `<path d="M-22 -4 q-10 -14 -2 -20 q3 6 4 12" style="fill:${c};stroke:#3c4650;stroke-width:1"/>`+
+    `<path d="M-20 -2 C-20 -14 -6 -16 4 -15 C14 -14 18 -12 22 -16 L26 -22 L28 -14 L33 -12 L36 -8 L30 -5 L24 -5 C20 -2 18 2 14 4 L-14 4 C-18 4 -20 2 -20 -2 Z" style="fill:${c};stroke:#3c4650;stroke-width:1.1"/>`+
+    `<path d="M-6 -12 C2 -8 10 -9 20 -12 L22 -6 C14 0 0 1 -10 -2 Z" style="fill:${c2}"/>`+
+    `<path d="M26 -22 l1 -7 l4 6 Z" style="fill:${c};stroke:#3c4650;stroke-width:1"/><circle cx="31" cy="-12" r="1.1" style="fill:#1b1b1b"/><circle cx="36" cy="-8.5" r="1.2" style="fill:#1b1b1b"/>`+
+    `<path d="M-14 3 L${flip?-20:-10} 16 M-8 3 L${flip?-4:-14} 16 M12 3 L${flip?18:8} 16 M17 3 L${flip?10:22} 16" style="stroke:#3c4650;stroke-width:2.4;stroke-linecap:round"/>`+
+    `<path d="M-6 -15 C2 -18 14 -16 20 -14" style="fill:none;stroke:#c0392b;stroke-width:2.2"/></g>`;
+  // gangline
+  
+  g+=dog(178,128,'#8e9aa6','#eef2f5',0)+dog(262,124,'#5d6873','#eef2f5',1);
+  g+='<path d="M128 140 L300 140" style="stroke:#6b4a2a;stroke-width:1.6"/><path d="M168 140 L186 150 M252 140 L270 148 M168 140 L178 132 M252 140 L262 128" style="stroke:#6b4a2a;stroke-width:1.1"/>';
+  g+=dog(200,156,'#6d7884','#eef2f5',1)+dog(284,152,'#a9b2bb','#f4f6f8',0);
+  // sled
+  g+='<path d="M24 150 H112 Q126 150 128 138" style="fill:none;stroke:#5a3d22;stroke-width:3.2;stroke-linecap:round"/>';
+  g+='<path d="M30 140 H118 L112 128 H36 Z" style="fill:#a0703f;stroke:#5a3d22;stroke-width:1.4"/><path d="M40 128 V146 M60 128 V146 M80 128 V146 M100 128 V146" style="stroke:#5a3d22;stroke-width:1.6"/>';
+  g+='<path d="M44 128 L47 100" style="stroke:#5a3d22;stroke-width:2.8;stroke-linecap:round"/><path d="M60 128 q14 -14 40 -4 l6 4 Z" style="fill:#8a6a50;stroke:#5a3d22"/>';
+  // musher
+  g+='<path d="M26 120 L30 148 M40 120 L38 148" style="stroke:#4a3a2c;stroke-width:5;stroke-linecap:round"/>';
+  g+='<path d="M22 122 C20 100 22 84 34 80 C46 84 48 100 46 122 Z" style="fill:#7a5536;stroke:#4a3324;stroke-width:1.2"/><path d="M22 120 H46" style="stroke:#e8dccb;stroke-width:4"/>';
+  g+='<path d="M40 92 L47 102" style="stroke:#7a5536;stroke-width:5;stroke-linecap:round"/><circle cx="47" cy="102" r="3" style="fill:#4a3324"/>';
+  g+='<circle cx="34" cy="70" r="12" style="fill:#e8dccb;stroke:#b9a68a;stroke-width:1.5"/><circle cx="35" cy="71" r="7" style="fill:#d9a77e"/><path d="M32 70 h1.5 M37 70 h1.5" style="stroke:#3a2a1e;stroke-width:1.3"/>';
+  g+='<text x="180" y="182" text-anchor="middle" style="font-style:normal;font-size:12px;font-weight:700;fill:#24303c">犬ぞり</text>';
+  return `<svg class="gfig" style="max-width:380px" viewBox="0 0 360 190" role="img" aria-label="犬ぞりのイラスト">${g}</svg>`; })();
+const WG_IGLOO=(()=>{ const cx=160, base=134, R=84; let g='<defs><clipPath id="igc"><path d="M'+(cx-R)+' '+base+' A'+R+' '+R+' 0 0 1 '+(cx+R)+' '+base+' Z"/></clipPath><linearGradient id="igs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#d9e8f3"/></linearGradient></defs>';
+  g+='<rect width="320" height="175" rx="10" style="fill:#cfe3f3"/><path d="M0 134 Q160 124 320 134 V175 H0Z" style="fill:#fff"/>';
+  g+=`<path d="M${cx-R} ${base} A${R} ${R} 0 0 1 ${cx+R} ${base} Z" style="fill:url(#igs)"/>`;
+  const rows=[134,114,96,80,66,56], hgt=y=>y; let lines='';
+  rows.forEach((y,k)=>{ if(k) lines+=`<path d="M${cx-R} ${y} H${cx+R}" />`; const y2=rows[k+1]??(base-R); const n=8-k; const half=Math.sqrt(Math.max(0,R*R-(base-y)*(base-y)));
+    for(let j=1;j<n;j++){ const t=(j+(k%2?0.5:0))/n; if(t>=1) continue; const x=cx-half+t*2*half; lines+=`<path d="M${x.toFixed(1)} ${y} V${y2}" />`; } });
+  g+=`<g clip-path="url(#igc)" style="stroke:#a3bfd4;stroke-width:1.4;fill:none">${lines}</g>`;
+  g+=`<path d="M${cx-R} ${base} A${R} ${R} 0 0 1 ${cx+R} ${base}" style="fill:none;stroke:#8fb0c8;stroke-width:2"/>`;
+  g+='<path d="M200 134 V114 A26 26 0 0 1 252 114 V134 Z" style="fill:#f4f9fd;stroke:#8fb0c8;stroke-width:2"/><path d="M200 116 H252 M226 102 V116 M213 116 V134 M239 116 V134" style="stroke:#a3bfd4;stroke-width:1.3"/><path d="M212 134 V120 A14 14 0 0 1 240 120 V134 Z" style="fill:#3d5a73"/>';
+  g+='<text x="160" y="162" text-anchor="middle" style="font-style:normal;font-size:12px;font-weight:700;fill:#24303c">イグルー（雪のブロックの家）</text>';
+  return `<svg class="gfig" style="max-width:340px" viewBox="0 0 320 175" role="img" aria-label="イグルーのイラスト">${g}</svg>`; })();
 const WG2A_Q=[
  ['寒帯の気候の特色は？','一年中寒く、最も暖かい月でも平均気温が10℃未満',['一年中暑く、雨が多い','夏は暑く乾燥し、冬に雨が多い','雨がほとんど降らない'],''],
  ['短い夏に 地表の氷がとけて、こけ類などが生える寒帯の気候は？','ツンドラ気候',['氷雪気候','ステップ気候','サバナ気候'],''],
