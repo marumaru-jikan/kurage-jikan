@@ -7893,6 +7893,14 @@ const w7perm = (arr,k) => k===0?[[]]:arr.flatMap((v,i)=>w7perm(arr.filter((_,j)=
 const w7prod = (n,k) => k===0?[[]]:w7prod(n,k-1).flatMap(p=>Array.from({length:n},(_,i)=>[...p,i]));
 const W7NM = ['A','B','C','D','E','F','G'];
 /* 2枚の硬貨の樹形図 */
+function w7CoinTree(k){ const T=(x,y,t,st='')=>`<text x="${x}" y="${y}" text-anchor="middle" style="font-style:normal;${st}">${t}</text>`, M=['〇','✕'], X=[24,94,164], RX=k===2?160:230, st=22, n=2**k, H=24+n*st+6;
+  let g=''; for(let j=0;j<k;j++) g+=T(X[j],14,'ABC'[j],'font-size:13px;font-weight:700'); g+=T(RX+(k===2?14:10),14,'結果','font-size:11px;font-weight:700');
+  const ly=i=>30+i*st; let leafs=[...Array(n).keys()].map(i=>[ly(i)]);
+  const node=(lev,lo,hi,path)=>{ const y=(ly(lo)+ly(hi-1))/2; g+=T(X[lev],y+5,M[path[lev]],`font-size:17px;font-weight:700;fill:${path[lev]?'#e8414b':'#1ea0dc'}`);
+    if(lev===k-1){ g+=T(RX+(k===2?14:10),y+5,path.map(v=>M[v]).join(''),'font-size:14px;letter-spacing:2px'); return y; }
+    const mid=(lo+hi)/2; [[lo,mid,0],[mid,hi,1]].forEach(([a,b,v])=>{ const y2=(ly(a)+ly(b-1))/2; g+=`<line x1="${X[lev]+10}" y1="${y}" x2="${X[lev+1]-10}" y2="${y2}" style="stroke:var(--ink);stroke-width:1"/>`; node(lev+1,a,b,[...path,v]); }); return y; };
+  node(0,0,n/2,[0]); node(0,n/2,n,[1]);
+  return `<svg class="gfig" viewBox="0 0 ${RX+50} ${H}" style="max-width:${k===2?230:300}px" role="img" aria-label="${k}枚の硬貨の樹形図">${g}</svg>`; }
 function w7TreeF(){ const T=(x,y,s)=>w5T(x,y,s,'gs'); let g=T(40,16,'10円')+T(170,16,'100円');
   [[60,'表'],[150,'裏']].forEach(([y,a])=>{ g+=T(40,y+4,a); [[y-22,'表'],[y+22,'裏']].forEach(([y2,b])=>{ g+=`<line x1="54" y1="${y}" x2="150" y2="${y2}" class="gl" style="stroke-width:1"/>`+T(170,y2+4,b)+T(230,y2+4,a+b); }); });
   return w5svg(260,190,g,'樹形図'); }
@@ -7927,7 +7935,7 @@ Object.assign(G, {
   w7Coin(){ const t=ri(0,1);
     if(t===0){ const k=pick([2,3]), all=w7prod(2,k), E=k===2?[['2枚とも表が出る',p=>p.every(v=>v===0)],['表と裏が1枚ずつ出る',p=>p[0]!==p[1]],['少なくとも1枚は表が出る',p=>p.some(v=>v===0)]]:[['3枚とも表が出る',p=>p.every(v=>v===0)],['2枚が表で1枚が裏になる',p=>p.filter(v=>v===0).length===2],['少なくとも1枚は表が出る',p=>p.some(v=>v===0)],['表が1枚だけ出る',p=>p.filter(v=>v===0).length===1]];
       const [s,f]=pick(E), a=all.filter(f).length, n=all.length;
-      return w4m(`${k} 枚の硬貨を同時に投げるとき、${s}確率は？`, '', w7P(a,n), w7W(a,n), `表を○、裏を×として樹形図をかこう。出かたは全部で ${n} 通り。`, `${a} 通り → ${frH(a,n)}${w4R(a,n)[1]!==n?'＝'+w7P(a,n):''}`); }
+      return w4m(`${k} 枚の硬貨を同時に投げるとき、${s}確率は？`, '', w7P(a,n), w7W(a,n), `表を〇、裏を✕として樹形図をかこう。出かたは全部で ${n} 通り。`, `${a} 通り → ${frH(a,n)}${w4R(a,n)[1]!==n?'＝'+w7P(a,n):''}`); }
     const v=[100,50,10], all=w7prod(2,3), T=pick([60,100,110,150]), a=all.filter(p=>p.reduce((s,x,i)=>s+(x===0?v[i]:0),0)>=T).length;
     return w4m(`100 円、50 円、10 円の3枚の硬貨を同時に投げるとき、表が出た硬貨の金額の合計が ${T} 円以上になる確率は？`, '', w7P(a,8), w7W(a,8), '樹形図をかき、それぞれの場合の合計金額を書きこもう。', `8 通りのうち ${a} 通り → ${w7P(a,8)}`); },
   w7Dice2(){ const [s0,mk,par]=pick(W7DE), p=par(), f=mk(p), a=[1,2,3,4,5,6].flatMap(x=>[1,2,3,4,5,6].map(y=>f(x,y)?1:0)).reduce((s,v)=>s+v,0), s=s0.replace(' s ',` ${p} `);
@@ -7968,8 +7976,8 @@ const M2C6_LESSONS = [
     <section class="panel"><h3>樹形図</h3>${rule('枝分かれした図を<b>樹形図</b>といい、<br>場合をもれなく、重なりなく数えるのに使う')}${w7TreeF()}
     ${w7E('10 円と 100 円の硬貨を投げるときの表裏の出かた → 4 通り')}<p class="small muted">役割がちがう（リーダーと副リーダー）ときは順番を区別し、ただ選ぶ（委員2人）ときは区別しません。</p></section>` },
   { id:'2-2', t:'硬貨の確率', sub:'樹形図を使う', plan:Array(5).fill('w7Coin'), body:()=>`
-    <section class="panel"><h3>2枚の硬貨</h3>${w7TreeF()}${w7E('2枚とも表が出る確率は '+frH(1,4)+'<br>表と裏が1枚ずつ出る確率は '+frH(2,4)+'＝'+frH(1,2))}</section>
-    <section class="panel"><h3>3枚の硬貨</h3><p>3枚の硬貨 A、B、C の出かたは 2×2×2＝8 通り。表を○、裏を×として樹形図をかこう。</p>${w7E('3枚とも表が出る確率は '+frH(1,8))}</section>` },
+    <section class="panel"><h3>2枚の硬貨 A、B</h3><p>表を〇、裏を✕として樹形図をかくと、出かたは 2×2＝4 通り。</p>${w7CoinTree(2)}${w7E('2枚とも表が出る（〇〇）確率は '+frH(1,4)+'<br>表と裏が1枚ずつ出る（〇✕、✕〇）<br>確率は '+frH(2,4)+'＝'+frH(1,2))}</section>
+    <section class="panel"><h3>3枚の硬貨 A、B、C</h3><p>出かたは 2×2×2＝8 通り。</p>${w7CoinTree(3)}${w7E('3枚とも表が出る（〇〇〇）確率は '+frH(1,8)+'<br>2枚が表で1枚が裏<br>（〇〇✕、〇✕〇、✕〇〇）の確率は '+frH(3,8))}</section>` },
   { id:'2-3', t:'2つのさいころ', sub:'36 通りの表', plan:Array(5).fill('w7Dice2'), body:()=>`
     <section class="panel"><h3>2つのさいころの目の出かた</h3>${rule('2つのさいころ A、B を同時に投げるとき、<br>目の出かたは 6×6＝36（通り）')}
     ${w7Tab((a,b)=>a%2===0&&b%2===0)}${w7E('2つとも偶数の目が出る（○）のは 9 通り<br>確率は '+frH(9,36)+'＝'+frH(1,4))}<p class="small muted">大小2つのさいころのように、2つを区別して考えます。</p></section>` },
