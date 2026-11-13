@@ -8059,9 +8059,9 @@ Object.assign(G, {
 
 const M2C7_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'代表値と範囲', sub:'中学1年の復習', plan:Array(5).fill('w8Basic'), body:()=>`
-    <section class="panel"><h3>最小値・最大値・範囲</h3>${rule('もっとも小さい値 → 最小値　もっとも大きい値 → 最大値<br>範囲＝最大値−最小値')}</section>
-    <section class="panel"><h3>中央値</h3>${rule('データを大きさの順に並べたときの中央の値<br>個数が偶数のときは、中央に並ぶ2つの値の平均')}
-    ${w8E('20, 30, 30, 30, 30, 40, 45, 60, 60, 90<br>中央値は '+frH('30+40',2)+'＝35（分）')}</section>` },
+    <section class="panel"><h3>最小値・最大値・範囲</h3>${rule('もっとも小さい値 → 最小値<br>もっとも大きい値 → 最大値<br>範囲＝最大値−最小値')}</section>
+    <section class="panel"><h3>中央値</h3>${rule('データを大きさの順に並べたときの<br>中央の値<br>個数が偶数のときは<br>中央に並ぶ2つの値の平均')}
+    ${w8E('20, 30, 30, 30, <span style="position:relative;display:inline-block">30, 40<span style="position:absolute;left:50%;top:100%;transform:translateX(-50%);white-space:nowrap;color:#e8578b;font-size:.8em;line-height:1">⬆中央値</span></span>, 45, 60, 60, 90<br><br>中央値は '+frH('30+40',2)+'＝35（分）')}</section>` },
   { id:'0-2', t:'グラフの使い分け', sub:'小学6年の復習', plan:Array(5).fill('w8Graph'), body:()=>`
     <section class="panel"><h3>目的に合ったグラフ</h3>${rule('全体に対する部分の割合 → 円グラフ・帯グラフ<br>変化の様子 → 折れ線グラフ<br>データの散らばりの様子 → ヒストグラム')}</section>` },
   { id:'1-1', sec:'1　箱ひげ図', t:'四分位数', sub:'データを4等分する', plan:Array(5).fill('w8Quart'), body:()=>`
