@@ -8086,8 +8086,11 @@ const M2C7_LESSONS = [
     <section class="panel"><h3>箱ひげ図から読みとる</h3><p style="text-align:center;font-weight:700;margin:6px 0 0">【2年A組男子の体重】</p>${w8BoxF([{v:[50,53,55,58,61]}],45,65,5,{sub:5,unit:'(kg)'})}
     ${w8E('最小値 50 kg、第1四分位数 53 kg、中央値 55 kg<br>第3四分位数 58 kg、最大値 61 kg<br>四分位範囲 58−53＝5（kg）')}</section>` },
   { id:'1-5', t:'データの比較と活用', sub:'正しい・わからない', plan:['w8Judge','w8Judge','w8Concept','w8Judge','w8Concept'], body:()=>`
-    <section class="panel"><h3>箱ひげ図でデータを比べる</h3>${w8BoxF([{l:'A組',v:[6,11,13,15,19]},{l:'B組',v:[3,8,11,14,17]}],0,20,5,{sub:5,unit:'(点)'})}
-    ${rule('35 人のデータでは<br>中央値 → 18 番目　第1四分位数 → 9 番目　第3四分位数 → 27 番目')}
+    <section class="panel"><h3>箱ひげ図でデータを比べる</h3><p style="text-align:center;font-weight:700;margin:6px 0 0">【数学の20点満点小テスト】</p>${w8BoxF([{l:'A組',v:[6,11,13,15,19]},{l:'B組',v:[3,8,11,14,17]}],0,20,5,{sub:5,unit:'(点)'})}
+    <p class="small muted" style="text-align:center;margin-top:-4px">A組・B組とも 35 人</p>
+    <div class="ex"><b>わかること</b><br>・中央値は A組 13 点、B組 11 点で、A組のほうが高い<br>・A組は 11 点以上の人が 27 人以上（約 75％）いる<br>・B組は 11 点以上の人が 18 人以上（半分以上）いる<br>・四分位範囲は A組 4 点、B組 6 点で、B組のほうが散らばりが大きい<br>・範囲は A組 13 点、B組 14 点<br>・最高点は A組の 19 点</div>
+    <div class="ex" style="margin-top:8px"><b>わからないこと</b><br>・平均点<br>・ひとりひとりの点数<br>・ある点数の人がちょうど何人いるか</div>
+    ${rule('35 人のデータでは<br>中央値 → 18 番目<br>第1四分位数 → 9 番目<br>第3四分位数 → 27 番目')}
     <p class="small muted">箱ひげ図からは、平均値やひとりひとりの値はわかりません。「〜点以上の人が半分以上いる」のように、四分位数の位置から言えることを考えよう。</p></section>` },
   { id:'2-1', sec:'章末テスト', t:'章末テスト', sub:'7章の総まとめ', test:true, plan:['w8Basic','w8Graph','w8Quart','w8Quart','w8IQR','w8IQR','w8Make','w8Read','w8Read','w8Judge','w8Judge','w8Concept'], body:()=>`
     <section class="panel"><h3>7章　箱ひげ図とデータの活用　章末テスト</h3><p>1節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
