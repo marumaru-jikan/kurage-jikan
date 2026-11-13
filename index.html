@@ -7901,6 +7901,13 @@ function w7CoinTree(k){ const T=(x,y,t,st='')=>`<text x="${x}" y="${y}" text-anc
     const mid=(lo+hi)/2; [[lo,mid,0],[mid,hi,1]].forEach(([a,b,v])=>{ const y2=(ly(a)+ly(b-1))/2; g+=`<line x1="${X[lev]+10}" y1="${y}" x2="${X[lev+1]-10}" y2="${y2}" style="stroke:var(--ink);stroke-width:1"/>`; node(lev+1,a,b,[...path,v]); }); return y; };
   node(0,0,n/2,[0]); node(0,n/2,n,[1]);
   return `<svg class="gfig" viewBox="0 0 ${RX+50} ${H}" style="max-width:${k===2?230:300}px" role="img" aria-label="${k}枚の硬貨の樹形図">${g}</svg>`; }
+function w7PairTree(N,ordered){ const T=(x,y,t,st='')=>`<text x="${x}" y="${y}" text-anchor="middle" style="font-style:normal;${st}">${t}</text>`, st=17, gap=6;
+  let g=ordered?T(26,13,'1枚目','font-size:11px;font-weight:700')+T(100,13,'2枚目','font-size:11px;font-weight:700')+T(160,13,'整数','font-size:11px;font-weight:700'):T(160,13,'組','font-size:11px;font-weight:700');
+  let y=28; N.forEach((a,i)=>{ const sub=ordered?N.filter(b=>b!==a):N.slice(i+1); if(!sub.length) return; const ys=sub.map((_,j)=>y+j*st), ym=(ys[0]+ys[ys.length-1])/2;
+    g+=T(26,ym+5,a,'font-size:15px;font-weight:700');
+    sub.forEach((b,j)=>{ g+=`<line x1="36" y1="${ym}" x2="88" y2="${ys[j]}" style="stroke:var(--ink);stroke-width:1"/>`+T(100,ys[j]+5,b,'font-size:14px')+T(160,ys[j]+5,ordered?`${a}${b}`:`{${a}, ${b}}`,'font-size:13px;fill:#1ea0dc'); });
+    y+=sub.length*st+gap; });
+  return `<svg class="gfig" viewBox="0 0 200 ${y}" style="max-width:220px" role="img" aria-label="樹形図">${g}</svg>`; }
 function w7TreeF(){ const T=(x,y,s)=>w5T(x,y,s,'gs'); let g=T(40,16,'10円')+T(170,16,'100円');
   [[60,'表'],[150,'裏']].forEach(([y,a])=>{ g+=T(40,y+4,a); [[y-22,'表'],[y+22,'裏']].forEach(([y2,b])=>{ g+=`<line x1="54" y1="${y}" x2="150" y2="${y2}" class="gl" style="stroke-width:1"/>`+T(170,y2+4,b)+T(230,y2+4,a+b); }); });
   return w5svg(260,190,g,'樹形図'); }
@@ -7982,9 +7989,14 @@ const M2C6_LESSONS = [
     <section class="panel"><h3>2つのさいころの目の出かた</h3>${rule('2つのさいころ A、B を同時に投げるとき、<br>目の出かたは 6×6＝36（通り）')}
     ${w7Tab((a,b)=>a%2===0&&b%2===0)}${w7E('2つとも偶数の目が出る（○）のは 9 通り<br>確率は '+frH(9,36)+'＝'+frH(1,4))}<p class="small muted">大小2つのさいころのように、2つを区別して考えます。</p></section>` },
   { id:'2-4', t:'カードの確率', sub:'同時に取り出す・並べる', plan:Array(5).fill('w7Card'), body:()=>`
-    <section class="panel"><h3>同時に2枚取り出す</h3>${w7E(w7cd([1,2,3,4,5])+'から同時に2枚')}${w7E('{1, 2} {1, 3} {1, 4} {1, 5} {2, 3} {2, 4} {2, 5} {3, 4} {3, 5} {4, 5}<br>全部で 10 通り。1 が出る確率は '+frH(4,10)+'＝'+frH(2,5))}
-    <p class="small muted">{1, 2} と {2, 1} は同じ取り出し方です。</p></section>
-    <section class="panel"><h3>1枚ずつ取り出して並べる</h3><p>取り出した順に並べるときは、12 と 21 を別のものとして数えます（5×4＝20 通り）。</p></section>` },
+    <section class="panel"><h3>同時に2枚取り出す</h3>${w7E(w7cd([1,2,3,4,5])+'から同時に2枚')}
+    ${w7PairTree([1,2,3,4,5],false)}
+    ${w7E('全部で 10 通り<br>1 が出るのは4通りだから<br>確率は '+frH(4,10)+'＝'+frH(2,5))}
+    <p class="small muted">{1, 2} と {2, 1} は同じ取り出し方なので、自分より大きい数だけに枝をのばします。</p></section>
+    <section class="panel"><h3>1枚ずつ取り出して並べる</h3>${w7E(w7cd([1,2,3,4,5])+'<br>1枚ずつ2枚取り出し、1枚目を十の位、<br>2枚目を一の位として2けたの整数をつくる')}
+    ${w7PairTree([1,2,3,4,5],true)}
+    ${w7E('全部で 5×4＝20 通り<br>偶数になるのは8通りだから<br>確率は '+frH(8,20)+'＝'+frH(2,5))}
+    <p class="small muted">取り出した順に並べるときは、12 と 21 を別のものとして数えます。</p></section>` },
   { id:'2-5', t:'くじの確率', sub:'ひく順番と確率', plan:Array(5).fill('w7Lot'), body:()=>`
     <section class="panel"><h3>くじびき</h3>${w7E('5 本のうちあたり 3 本。A、B の順に1本ずつひく<br>あたりを ①②③、はずれを ④⑤ として樹形図をかくと 5×4＝20 通り<br>A があたる確率 '+frH(12,20)+'＝'+frH(3,5)+'、B があたる確率 '+frH(12,20)+'＝'+frH(3,5))}
     <p class="small muted">くじをひく順番によって、あたりやすさは変わりません。</p></section>` },
