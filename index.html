@@ -1164,7 +1164,12 @@ const CATALOG = [
       { name:'世界地理', k:'世', units:U('世界の姿','世界各地の人々の生活と環境','世界の諸地域') },
       { name:'日本地理', k:'日', units:U('日本の姿','地域調査','日本の地域的特色と地域区分','日本の諸地域','地域のあり方') },
       { name:'コラム　歴史とは', k:'コ', grp:'歴史', go:'hist0', units:[] },
-      { name:'原始', k:'1', units:[] }, { name:'古代', k:'2', units:[] }, { name:'中世', k:'3', units:[] }, { name:'近世', k:'4', units:[] }, { name:'近代', k:'5', units:[] }, { name:'現代', k:'6', units:[] },
+      { name:'原始', k:'1', uw:'章', units:U('人類の出現','旧石器時代','縄文時代','弥生時代') },
+      { name:'古代', k:'2', uw:'章', units:U('世界の古代文明','古墳時代','飛鳥時代','奈良時代','平安時代') },
+      { name:'中世', k:'3', uw:'章', units:U('鎌倉時代','南北朝時代','室町時代','戦国時代') },
+      { name:'近世', k:'4', uw:'章', units:U('ヨーロッパ世界の発展','安土桃山時代','江戸時代（前期）','江戸時代（後期）') },
+      { name:'近代', k:'5', uw:'章', units:U('欧米の近代化','開国と江戸幕府の滅亡','明治時代','大正時代','昭和時代（戦前）') },
+      { name:'現代', k:'6', uw:'章', units:U('戦後の日本','高度経済成長','平成・令和の日本') },
       { name:'コラム　公民とは', k:'コ', grp:'公民', go:'civ0', units:[] },
       { name:'現代社会', k:'1', units:[] }, { name:'人権', k:'2', units:[] }, { name:'政治', k:'3', units:[] }, { name:'経済', k:'4', units:[] }, { name:'国際社会', k:'5', units:[] } ] },
     { id:'exam', name:'高校受験', k:'受', subjects:[
@@ -15123,11 +15128,11 @@ function vCourse(){
   ${c.subjects.map((sb,i)=>{ const r=sb.units.filter(u=>u.ready).length, gh=sb.grp?`<div class="secrow">${sb.grp}</div>`:'';
     if(sb.go&&UNITS[sb.go]){ const d=doneCount(sb.go), n=UNITS[sb.go].lessons.length; return gh+`<button class="item" data-act="unit" data-arg="${sb.go}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${n}しずく</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
     if(!sb.units.length) return gh+`<button class="item" disabled><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">準備中</span></span></button>`;
-    return gh+`<button class="item" data-act="subject" data-arg="${i}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${sb.units.filter(u=>!u.lab).length}${c.id==='jso'?'項目':'章'}</span></span><span class="tag ${r?'mid':''}">${r?'公開中 '+r:'準備中'}</span><span class="chev">›</span></button>`; }).join('')}</div></div>`;
+    return gh+`<button class="item" data-act="subject" data-arg="${i}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${sb.units.filter(u=>!u.lab).length}${sb.uw||(c.id==='jso'?'項目':'章')}</span></span><span class="tag ${r?'mid':''}">${r?'公開中 '+r:'準備中'}</span><span class="chev">›</span></button>`; }).join('')}</div></div>`;
 }
 function vSubject(){
   const c=courseById(S.course), sb=c.subjects[S.subj];
-  return `${top(c.name+'　'+sb.name)}<div class="stack"><p class="muted small">準備ができた${c.id==='jso'?'項目':'章'}から順に公開します。</p><div class="list">
+  return `${top(c.name+'　'+sb.name)}<div class="stack"><p class="muted small">準備ができた${sb.uw||(c.id==='jso'?'項目':'章')}から順に公開します。</p><div class="list">
   ${(()=>{ let k=0; return sb.units.map((un,i)=>{ const lab=un.lab||(++k); const u=un.ready&&UNITS[un.ready];
     if(u){ const d=doneCount(un.ready), n=u.lessons.length;
       return `<button class="item" data-act="unit" data-arg="${un.ready}"><span class="lid">${lab}</span><span class="body"><b>${un.t}</b><br><span class="small muted">${n}しずく　1しずく約5分</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
