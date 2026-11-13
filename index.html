@@ -1165,7 +1165,7 @@ const CATALOG = [
       { name:'日本地理', k:'日', units:U('日本の姿','地域調査','日本の地域的特色と地域区分','日本の諸地域','地域のあり方') },
       { name:'コラム　歴史とは', k:'コ', grp:'歴史', go:'hist0', units:[] },
       { name:'原始', k:'1', units:[] }, { name:'古代', k:'2', units:[] }, { name:'中世', k:'3', units:[] }, { name:'近世', k:'4', units:[] }, { name:'近代', k:'5', units:[] }, { name:'現代', k:'6', units:[] },
-      { name:'コラム　公民とは', k:'コ', grp:'公民', units:[] },
+      { name:'コラム　公民とは', k:'コ', grp:'公民', go:'civ0', units:[] },
       { name:'現代社会', k:'1', units:[] }, { name:'人権', k:'2', units:[] }, { name:'政治', k:'3', units:[] }, { name:'経済', k:'4', units:[] }, { name:'国際社会', k:'5', units:[] } ] },
     { id:'exam', name:'高校受験', k:'受', subjects:[
       { name:'国語', k:'国', units:U('論説①『原子力』',{ t:'論説②『世界の薬剤師』', ready:'yak' },{ t:'小説①『喜娘』', ready:'nov1' },{ t:'小説②『蜘蛛の糸』', ready:'kum' },{ t:'小説③『木の鍵盤の向こう側』', ready:'ken' },'随筆①『？？？』','詩①『？？？』','会話文①『？？？』','古文①『源氏物語』','古文②『伊勢物語』','漢文①『戦国策』','過去問（熊本県）','過去問（広島県）') },
@@ -14908,6 +14908,16 @@ const IRR_LESSONS = (()=>{ const by=k=>IRR.filter(v=>v[0]===k); const B=by('ABB'
   ]; })();
 
 /* ===== 単元 ===== */
+/* ===== 社会　公民　コラム 公民とは ===== */
+const CIV0_LESSONS=[
+  { id:'0-1', t:'公民とは', sub:'社会のしくみと私たち', plan:[], body:()=>`
+    <section class="panel"><h3>公民とは</h3>${rule('広い視野に立って、現代の社会について主体的に考察させ、理解を深めさせるとともに、人間としての在り方生き方についての自覚を育て、民主的、平和的な国家・社会の有為な形成者として必要な公民としての資質を養う')}
+    <div class="ex"><b>わかりやすく言うと</b><br>・今の社会のしくみを、広い目で見て、自分で考える<br>・人としてどう生きるかを考える<br>・平和で民主的な社会をつくる一人として、必要な力を身につける</div></section>
+    <section class="panel"><h3>どんなことを学ぶか</h3>
+    <svg class="gfig" style="max-width:380px" viewBox="0 0 340 290" role="img" aria-label="公民で学ぶこと"><line x1="170" y1="150" x2="170.0" y2="46.0" style="stroke:#b9c3cf;stroke-width:2"/><line x1="170" y1="150" x2="276.5" y2="117.9" style="stroke:#b9c3cf;stroke-width:2"/><line x1="170" y1="150" x2="235.8" y2="234.1" style="stroke:#b9c3cf;stroke-width:2"/><line x1="170" y1="150" x2="104.2" y2="234.1" style="stroke:#b9c3cf;stroke-width:2"/><line x1="170" y1="150" x2="63.5" y2="117.9" style="stroke:#b9c3cf;stroke-width:2"/><circle cx="170" cy="150" r="40" style="fill:#1f4e79"/><text x="170.0" y="147.0" text-anchor="middle" style="font-style:normal;font-size:12px;font-weight:700;fill:#fff">私たちと</text><text x="170.0" y="164.0" text-anchor="middle" style="font-style:normal;font-size:14px;font-weight:700;fill:#fff">社会</text><rect x="118.0" y="22.0" width="104" height="48" rx="10" style="fill:#f7e1b5;stroke:#e0a04a;stroke-width:1.8"/><text x="170.0" y="42.0" text-anchor="middle" style="font-style:normal;font-size:14px;font-weight:700;fill:#24303c">現代社会</text><text x="170.0" y="59.0" text-anchor="middle" style="font-style:normal;font-size:8.5px;fill:#24303c">少子高齢化・情報化・文化</text><rect x="224.5" y="93.9" width="104" height="48" rx="10" style="fill:#fbd3d3;stroke:#e46b78;stroke-width:1.8"/><text x="276.5" y="113.9" text-anchor="middle" style="font-style:normal;font-size:14px;font-weight:700;fill:#24303c">人権</text><text x="276.5" y="130.9" text-anchor="middle" style="font-style:normal;font-size:8.5px;fill:#24303c">日本国憲法・基本的人権</text><rect x="183.8" y="210.1" width="104" height="48" rx="10" style="fill:#cfe3f5;stroke:#3a7bd5;stroke-width:1.8"/><text x="235.8" y="230.1" text-anchor="middle" style="font-style:normal;font-size:14px;font-weight:700;fill:#24303c">政治</text><text x="235.8" y="247.1" text-anchor="middle" style="font-style:normal;font-size:8.5px;fill:#24303c">選挙・国会・内閣・裁判所</text><rect x="52.2" y="210.1" width="104" height="48" rx="10" style="fill:#d5ecc2;stroke:#5aa845;stroke-width:1.8"/><text x="104.2" y="230.1" text-anchor="middle" style="font-style:normal;font-size:14px;font-weight:700;fill:#24303c">経済</text><text x="104.2" y="247.1" text-anchor="middle" style="font-style:normal;font-size:8.5px;fill:#24303c">消費・企業・財政</text><rect x="11.5" y="93.9" width="104" height="48" rx="10" style="fill:#eadcf5;stroke:#8a5cc2;stroke-width:1.8"/><text x="63.5" y="113.9" text-anchor="middle" style="font-style:normal;font-size:14px;font-weight:700;fill:#24303c">国際社会</text><text x="63.5" y="130.9" text-anchor="middle" style="font-style:normal;font-size:8.5px;fill:#24303c">国際連合・地球環境</text></svg>
+    ${kmTbl([['現代社会','少子高齢化・情報化・グローバル化など、今の社会の特色と、文化や対立と合意の考え方'],['人権','日本国憲法の考え方と、基本的人権（自由権・平等権・社会権など）'],['政治','民主政治と選挙、国会・内閣・裁判所のしくみ、地方自治'],['経済','消費生活、企業と働くこと、市場と価格、財政と税金'],['国際社会','国家と国際連合、地球環境・貧困・平和など世界の課題']],['項目','学ぶこと'])}
+    <p class="small muted">公民は、ニュースで見る出来事や、自分の毎日の暮らしとつながっています。「なぜこうなっているのか」「どうすればよくなるのか」を考えながら学ぼう。</p></section>` },
+];
 /* ===== 社会　歴史　コラム 歴史とは ===== */
 const HIST0_LESSONS=[
   { id:'0-1', t:'歴史とは', sub:'過去の出来事と変化の流れ', plan:[], body:()=>`
@@ -14949,6 +14959,7 @@ const GEO0_LESSONS=[
 ];
 [NV7P,HOTP,MARP,DMP,YKP,KNP,FTP].forEach(a=>{ a.credit='（オリジナル問題）'; }); MLP.credit='（太宰治『走れメロス』）'; KMP.credit='（芥川龍之介『蜘蛛の糸』）'; HOTP.credit='（福田海凪『蛍のコミュニケーション』）'; MARP.credit='（福田海凪『マリンバの歴史』）';
 const UNITS = {
+  civ0:{ no:'', title:'コラム　公民とは', subject:'社会', course:'jso', subj:10, lessons:CIV0_LESSONS },
   hist0:{ no:'', title:'コラム　歴史とは', subject:'社会', course:'jso', subj:3, lessons:HIST0_LESSONS },
   geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
   pn:  { no:'1', title:'正負の数', subject:'数学', course:'j1', subj:0, lessons:LESSONS, cards:true, drill:'ch1' },
