@@ -7689,6 +7689,13 @@ function w6IsoF(b, o={}){ let half=95, h=half*Math.tan(w5d(b)); if(h>148){ h=148
 /* 平行四辺形 ABCD（o.diag：対角線、o.EF：BD 上の E、F、o.PQ：AD 上の P、BC 上の Q、o.ang：{A,B,C,D}、o.side：{AB,BC,CD,DA}） */
 function w6ParaF(o={}){ const A=[78,30],D=[252,30],B=[18,166],C=[192,166], O=g5mid(A,C);
   let g=g5pg(A,B,C,D)+w6V(A,'A',-4,-6,'end')+w6V(D,'D',4,-6,'start')+w6V(B,'B',-6,6,'end')+w6V(C,'C',6,6,'start');
+  const chv=(P,Q,n)=>{ const m=g5mid(P,Q), l=Math.hypot(Q[0]-P[0],Q[1]-P[1]), u=[(Q[0]-P[0])/l,(Q[1]-P[1])/l], v=[-u[1],u[0]]; let t=''; for(let i=0;i<n;i++){ const c=[m[0]+u[0]*(i-(n-1)/2)*6+u[0]*4,m[1]+u[1]*(i-(n-1)/2)*6+u[1]*4]; t+=`<polyline points="${c[0]-u[0]*6+v[0]*5},${c[1]-u[1]*6+v[1]*5} ${c[0]},${c[1]} ${c[0]-u[0]*6-v[0]*5},${c[1]-u[1]*6-v[1]*5}" style="fill:none;stroke:#e07b39;stroke-width:1.8"/>`; } return t; };
+  const fan=(V,P,Q,col,r=20)=>{ const p=w5u(V,P), q=w5u(V,Q), S=[V[0]+p[0]*r,V[1]+p[1]*r], E=[V[0]+q[0]*r,V[1]+q[1]*r], cr=p[0]*q[1]-p[1]*q[0]; return `<path d="M${V[0]} ${V[1]} L${S[0]} ${S[1]} A${r} ${r} 0 0 ${cr>0?1:0} ${E[0]} ${E[1]} Z" style="fill:${col}"/>`; };
+  const tk=(P,Q,n)=>{ const m=g5mid(P,Q), l=Math.hypot(Q[0]-P[0],Q[1]-P[1]), u=[(Q[0]-P[0])/l,(Q[1]-P[1])/l], v=[-u[1]*6,u[0]*6]; let t=''; for(let i=0;i<n;i++){ const c=[m[0]+u[0]*(i-(n-1)/2)*4.5,m[1]+u[1]*(i-(n-1)/2)*4.5]; t+=`<line x1="${c[0]-v[0]}" y1="${c[1]-v[1]}" x2="${c[0]+v[0]}" y2="${c[1]+v[1]}" style="stroke:#e8414b;stroke-width:2"/>`; } return t; };
+  if(o.eqa) g=fan(A,B,D,'#f4b6c4')+fan(C,D,B,'#f4b6c4')+fan(B,C,A,'#a8dcf5')+fan(D,A,C,'#a8dcf5')+g;
+  if(o.par) g+=chv(A,D,1)+chv(B,C,1)+chv(B,A,2)+chv(C,D,2);
+  if(o.eqs) g+=tk(A,B,1)+tk(D,C,1)+tk(A,D,2)+tk(B,C,2);
+  if(o.half) g+=w5L(A,C)+w5L(B,D)+w5T(O[0],O[1]+20,'O','gv')+tk(A,O,1)+tk(O,C,1)+tk(B,O,2)+tk(O,D,2);
   if(o.diag){ g+=w5L(A,C)+w5L(B,D)+w5T(O[0],O[1]+20,'O','gv'); }
   if(o.BD) g+=w5L(B,D);
   if(o.EF){ const E=g5at(B,D,.68), F=g5at(B,D,.32); g+=w5L(A,E)+w5L(C,F)+g5tick(D,E,1)+g5tick(B,F,1)+w6V(E,'E',2,16)+w6V(F,'F',-2,-8); }
@@ -7766,25 +7773,25 @@ Object.assign(G, {
     return f5pf('∠A＝90° の直角三角形 ABC の斜辺 BC 上に、AB＝DB となる点 D をとり、D を通る BC の垂線と AC の交点を E とします。AE＝DE であることを証明しました。□にあてはまるものは？', w6HypF(), [['△ABE と △DBE で'],['仮定より　∠BAE＝∠BDE＝90° ……①'],['BE は共通 ……②'],['仮定より　AB＝□ ……③','DB',['DE','AE','BC']],['①、②、③から、□ので','直角三角形の斜辺と他の1辺が、それぞれ等しい',cw1],['△ABE≡△DBE'],['合同な図形では、対応する辺は等しいので　AE＝□','DE',['BE','DB','EC']]]); },
   /* --- 2 四角形 --- */
   w6Para(){ const t=ri(0,3);
-    if(t===0){ const a=ri(10,25)*5, ask=pick(['B','C','D']), ans=ask==='C'?a:180-a; return w4m(`下の図の □ABCD で、∠${ask} の大きさを求めなさい。`, w6ParaF({ang:{A:String(a),[ask]:'x'}}), ans+'°', [(ask==='C'?180-a:a)+'°', (360-a)+'°', (ans+10)+'°'], '平行四辺形の向かいあう角は等しく、となりあう角の和は 180° です。', ask==='C'?`∠C＝∠A＝${a}°`:`∠${ask}＝180°−${a}°＝${180-a}°`, { figq:true }); }
-    if(t===1){ const ab=ri(3,8), ad=ab+ri(2,5), ask=pick(['CD','BC']), ans=ask==='CD'?ab:ad; return w4m(`下の図の □ABCD で、辺 ${ask} の長さを求めなさい。`, w6ParaF({side:{AB:ab+' cm',DA:ad+' cm'}}), ans+' cm', [(ask==='CD'?ad:ab)+' cm', (ab+ad)+' cm', (ans+1)+' cm'], '平行四辺形の向かいあう辺は等しい。', `${ask}＝${ask==='CD'?'AB':'AD'}＝${ans} cm`, { figq:true }); }
-    if(t===2){ const oa=ri(3,7), ob=ri(2,6), ask=pick(['AC','BD']), ans=ask==='AC'?2*oa:2*ob; return w4m(`下の図の □ABCD で、対角線の交点を O とします。OA＝${oa} cm、OB＝${ob} cm のとき、${ask} の長さは？`, w6ParaF({diag:true,OA:oa+' cm',OB:ob+' cm'}), ans+' cm', [(ans/2)+' cm', (ask==='AC'?2*ob:2*oa)+' cm', (oa+ob)+' cm', (ans+2)+' cm'].filter(z=>z!==ans+' cm'), '平行四辺形の対角線は、それぞれの中点で交わります。', `${ask}＝${ask==='AC'?'OA':'OB'}×2＝${ans} cm`, { figq:true }); }
+    if(t===0){ const a=ri(10,25)*5, ask=pick(['B','C','D']), ans=ask==='C'?a:180-a; return w4m(`下の図の 平行四辺形 ABCD で、∠${ask} の大きさを求めなさい。`, w6ParaF({ang:{A:String(a),[ask]:'x'}}), ans+'°', [(ask==='C'?180-a:a)+'°', (360-a)+'°', (ans+10)+'°'], '平行四辺形の向かいあう角は等しく、となりあう角の和は 180° です。', ask==='C'?`∠C＝∠A＝${a}°`:`∠${ask}＝180°−${a}°＝${180-a}°`, { figq:true }); }
+    if(t===1){ const ab=ri(3,8), ad=ab+ri(2,5), ask=pick(['CD','BC']), ans=ask==='CD'?ab:ad; return w4m(`下の図の 平行四辺形 ABCD で、辺 ${ask} の長さを求めなさい。`, w6ParaF({side:{AB:ab+' cm',DA:ad+' cm'}}), ans+' cm', [(ask==='CD'?ad:ab)+' cm', (ab+ad)+' cm', (ans+1)+' cm'], '平行四辺形の向かいあう辺は等しい。', `${ask}＝${ask==='CD'?'AB':'AD'}＝${ans} cm`, { figq:true }); }
+    if(t===2){ const oa=ri(3,7), ob=ri(2,6), ask=pick(['AC','BD']), ans=ask==='AC'?2*oa:2*ob; return w4m(`下の図の 平行四辺形 ABCD で、対角線の交点を O とします。OA＝${oa} cm、OB＝${ob} cm のとき、${ask} の長さは？`, w6ParaF({diag:true,OA:oa+' cm',OB:ob+' cm'}), ans+' cm', [(ans/2)+' cm', (ask==='AC'?2*ob:2*oa)+' cm', (oa+ob)+' cm', (ans+2)+' cm'].filter(z=>z!==ans+' cm'), '平行四辺形の対角線は、それぞれの中点で交わります。', `${ask}＝${ask==='AC'?'OA':'OB'}×2＝${ans} cm`, { figq:true }); }
     const [p,q]=pick([[1,2],[2,3],[3,2],[2,1],[1,3],[3,1],[4,5],[5,4]]), A=180*p/(p+q); if(!Number.isInteger(A)) return G.w6Para();
-    return w4m(`□ABCD で、∠A：∠B＝${p}：${q} のとき、∠C の大きさは？`, '', A+'°', [(180-A)+'°', (360*p/(p+q))+'°', (A/2)+'°'], 'となりあう角 ∠A と ∠B の和は 180° です。', `∠A＝180°×${frH(p,p+q)}＝${A}°、∠C＝∠A＝${A}°`); },
+    return w4m(`平行四辺形 ABCD で、∠A：∠B＝${p}：${q} のとき、∠C の大きさは？`, '', A+'°', [(180-A)+'°', (360*p/(p+q))+'°', (A/2)+'°'], 'となりあう角 ∠A と ∠B の和は 180° です。', `∠A＝180°×${frH(p,p+q)}＝${A}°、∠C＝∠A＝${A}°`); },
   w6ParaPf(){ if(Math.random()<.5){ const cw=W5COND.filter((_,i)=>i!==2).concat(['2組の角が、それぞれ等しい']);
-      return f5pf('□ABCD の対角線の交点を O とします。AO＝CO、BO＝DO であることを証明しました。□にあてはまるものは？', w6ParaF({diag:true}), [['△OAB と △OCD で'],['平行四辺形の□は、それぞれ等しいから　AB＝CD ……①','2組の向かいあう辺',['2組の向かいあう角','対角線','となりあう辺']],['AB∥DC から、平行線の□は等しいので　∠OAB＝∠OCD ……②','錯角',['同位角','対頂角','底角']],['同じように　∠OBA＝∠ODC ……③'],['①、②、③から、□ので','1組の辺とその両端の角が、それぞれ等しい',cw],['△OAB≡△OCD'],['合同な図形では、対応する辺は等しいので　AO＝CO、BO＝DO']]); }
+      return f5pf('平行四辺形 ABCD の対角線の交点を O とします。AO＝CO、BO＝DO であることを証明しました。□にあてはまるものは？', w6ParaF({diag:true}), [['△OAB と △OCD で'],['平行四辺形の□は、それぞれ等しいから　AB＝CD ……①','2組の向かいあう辺',['2組の向かいあう角','対角線','となりあう辺']],['AB∥DC から、平行線の□は等しいので　∠OAB＝∠OCD ……②','錯角',['同位角','対頂角','底角']],['同じように　∠OBA＝∠ODC ……③'],['①、②、③から、□ので','1組の辺とその両端の角が、それぞれ等しい',cw],['△OAB≡△OCD'],['合同な図形では、対応する辺は等しいので　AO＝CO、BO＝DO']]); }
     const cw=W5COND.filter((_,i)=>i!==1).concat(['2組の角が、それぞれ等しい']);
-    return f5pf('□ABCD の対角線 BD 上に、DE＝BF となるように点 E、F をとります。AE＝CF であることを証明しました。□にあてはまるものは？', w6ParaF({BD:true,EF:true}), [['△AED と △CFB で'],['平行四辺形の向かいあう辺は等しいから　AD＝□ ……①','CB',['CD','AB','CF']],['仮定より　DE＝□ ……②','BF',['DF','BE','CF']],['AD∥BC から、錯角は等しいので　∠ADE＝∠□ ……③','CBF',['BCF','CFB','ABE']],['①、②、③から、□ので','2組の辺とその間の角が、それぞれ等しい',cw],['△AED≡△CFB'],['合同な図形では、対応する辺は等しいので　AE＝CF']]); },
+    return f5pf('平行四辺形 ABCD の対角線 BD 上に、DE＝BF となるように点 E、F をとります。AE＝CF であることを証明しました。□にあてはまるものは？', w6ParaF({BD:true,EF:true}), [['△AED と △CFB で'],['平行四辺形の向かいあう辺は等しいから　AD＝□ ……①','CB',['CD','AB','CF']],['仮定より　DE＝□ ……②','BF',['DF','BE','CF']],['AD∥BC から、錯角は等しいので　∠ADE＝∠□ ……③','CBF',['BCF','CFB','ABE']],['①、②、③から、□ので','2組の辺とその間の角が、それぞれ等しい',cw],['△AED≡△CFB'],['合同な図形では、対応する辺は等しいので　AE＝CF']]); },
   w6ParaCond(){ const t=ri(0,1);
     if(t===0){ const ok=pick(W6PQ.filter(z=>z[1]>=0)), ng=shuffle(W6PQ.filter(z=>z[1]<0)).slice(0,3);
       return w4m('四角形 ABCD で、次のうち、かならず平行四辺形になるものは？', '', ok[0], ng.map(z=>z[0]), '平行四辺形になるための5つの条件のどれかにあてはまるか調べよう。簡単な図をかくとわかりやすい。', `${ok[0]} → ${W6PC[ok[1]]}`, { words:true }); }
     const ok=pick(W6PQ.filter(z=>z[1]>=0));
     return w4m(`四角形 ABCD で、${ok[0]} のとき、平行四辺形になるための条件のどれにあてはまる？`, '', W6PC[ok[1]], W6PC.filter((_,i)=>i!==ok[1]).slice(0,3), '平行四辺形になるための条件は5つあります。', W6PC[ok[1]], { words:true }); },
-  w6ParaPf2(){ if(Math.random()<.5) return f5pf('□ABCD の辺 AD、BC 上に、PD＝BQ となるように点 P、Q をとります。四角形 PBQD が平行四辺形であることを証明しました。□にあてはまるものは？', w6ParaF({PQ:true}), [['四角形 PBQD で'],['仮定より　PD＝□ ……①','BQ',['PB','QD','AP']],['AD∥BC から　PD□BQ ……②','∥',['⊥','＝','≡']],['①、②から、□ので','1組の向かいあう辺が、等しくて平行',W6PC.filter((_,i)=>i!==4).slice(0,3)],['四角形 PBQD は平行四辺形である']]);
-    return f5pf('□ABCD の対角線 AC 上に、AE＝CF となるように点 E、F をとります。対角線の交点を O とするとき、四角形 EBFD が平行四辺形であることを証明しました。□にあてはまるものは？', (()=>{ const A=[78,30],D=[252,30],B=[18,166],C=[192,166],O=g5mid(A,C),E=g5at(A,C,.25),F=g5at(A,C,.75); return w5svg(270,190, g5pg(A,B,C,D)+w5L(A,C)+w5L(B,D)+g5pg(E,B,F,D)+g5tick(A,E,1)+g5tick(F,C,1)+w6V(A,'A',-4,-6,'end')+w6V(D,'D',4,-6,'start')+w6V(B,'B',-6,6,'end')+w6V(C,'C',6,6,'start')+w6V(O,'O',0,20)+w6V(E,'E',0,-7)+w6V(F,'F',0,18),'平行四辺形と対角線'); })(),
+  w6ParaPf2(){ if(Math.random()<.5) return f5pf('平行四辺形 ABCD の辺 AD、BC 上に、PD＝BQ となるように点 P、Q をとります。四角形 PBQD が平行四辺形であることを証明しました。□にあてはまるものは？', w6ParaF({PQ:true}), [['四角形 PBQD で'],['仮定より　PD＝□ ……①','BQ',['PB','QD','AP']],['AD∥BC から　PD□BQ ……②','∥',['⊥','＝','≡']],['①、②から、□ので','1組の向かいあう辺が、等しくて平行',W6PC.filter((_,i)=>i!==4).slice(0,3)],['四角形 PBQD は平行四辺形である']]);
+    return f5pf('平行四辺形 ABCD の対角線 AC 上に、AE＝CF となるように点 E、F をとります。対角線の交点を O とするとき、四角形 EBFD が平行四辺形であることを証明しました。□にあてはまるものは？', (()=>{ const A=[78,30],D=[252,30],B=[18,166],C=[192,166],O=g5mid(A,C),E=g5at(A,C,.25),F=g5at(A,C,.75); return w5svg(270,190, g5pg(A,B,C,D)+w5L(A,C)+w5L(B,D)+g5pg(E,B,F,D)+g5tick(A,E,1)+g5tick(F,C,1)+w6V(A,'A',-4,-6,'end')+w6V(D,'D',4,-6,'start')+w6V(B,'B',-6,6,'end')+w6V(C,'C',6,6,'start')+w6V(O,'O',0,20)+w6V(E,'E',0,-7)+w6V(F,'F',0,18),'平行四辺形と対角線'); })(),
       [['平行四辺形の対角線は、それぞれの中点で交わるから　OA＝OC、OB＝□ ……①','OD',['OE','OC','BD']],['仮定より　AE＝CF ……②'],['①、②から　OE＝OA−AE＝OC−CF＝□ ……③','OF',['OD','OB','EF']],['①、③から、□ので','対角線が、それぞれの中点で交わる',W6PC.filter((_,i)=>i!==3).slice(0,3)],['四角形 EBFD は平行四辺形である']]); },
   w6Quad(){ const S=[['∠A＝90°','長方形'],['AB＝AD','ひし形'],['AC＝BD','長方形'],['AC⊥BD','ひし形'],['∠COD＝90°（O は対角線の交点）','ひし形'],['AC⊥BD、AC＝BD','正方形'],['AB＝AD、∠A＝90°','正方形'],['AC⊥BD、AO＝BO（O は対角線の交点）','正方形'],['AB＝CD','平行四辺形のまま（形は決まらない）']];
-    if(Math.random()<.7){ const [s,a]=pick(S); return w4m(`□ABCD に「${s}」という条件が加わると、どんな四角形になる？`, '', a, ['長方形','ひし形','正方形','平行四辺形のまま（形は決まらない）'].filter(z=>z!==a), '長方形は角、ひし形は辺の条件。対角線の性質も思い出そう。', `${s} → ${a}`, { words:true }); }
+    if(Math.random()<.7){ const [s,a]=pick(S); return w4m(`平行四辺形 ABCD に「${s}」という条件が加わると、どんな四角形になる？`, '', a, ['長方形','ひし形','正方形','平行四辺形のまま（形は決まらない）'].filter(z=>z!==a), '長方形は角、ひし形は辺の条件。対角線の性質も思い出そう。', `${s} → ${a}`, { words:true }); }
     const P=[['長方形の対角線の性質は？','長さが等しい'],['ひし形の対角線の性質は？','垂直に交わる'],['正方形の対角線の性質は？','長さが等しく、垂直に交わる']], [q,a]=pick(P);
     return w4m(q, '', a, ['長さが等しい','垂直に交わる','長さが等しく、垂直に交わる','それぞれの中点で交わるだけ'].filter(z=>z!==a), '長方形・ひし形・正方形は、どれも平行四辺形の性質をもっています。', a, { words:true }); },
   w6Area(){ const t=ri(0,1), S=[['△ABC','△DBC'],['△ABD','△ACD'],['△ABO','△DCO']];
@@ -7827,18 +7834,19 @@ const M2C5_LESSONS = [
     <section class="panel"><h3>証明の例</h3>${w6BisF()}<p>∠XOY の二等分線上の点 P から、OX、OY に垂線 PA、PB をひくと OA＝OB</p>
     <div class="pf mth"><div class="pf-h">［証明］</div><div>△OAP と △OBP で</div><div>∠OAP＝∠OBP＝90° ……①</div><div>OP は共通 ……②</div><div>∠AOP＝∠BOP ……③</div><div>①、②、③から、直角三角形の斜辺と1つの鋭角が、それぞれ等しいので　△OAP≡△OBP</div><div>よって　OA＝OB</div></div></section>` },
   { id:'2-1', sec:'2　四角形', t:'平行四辺形の性質', sub:'辺・角・対角線', plan:Array(5).fill('w6Para'), body:()=>`
-    <section class="panel"><h3>平行四辺形</h3>${rule('定義：2組の向かいあう辺が、それぞれ平行な四角形<br>（平行四辺形 ABCD を □ABCD と書く）')}
+    <section class="panel"><h3>平行四辺形</h3>${rule('定義：2組の向かいあう辺が、それぞれ平行な四角形')}
     ${rule('性質<br>① 2組の向かいあう辺は、それぞれ等しい<br>② 2組の向かいあう角は、それぞれ等しい<br>③ 対角線は、それぞれの中点で交わる')}
-    ${w6ParaF({diag:true,ang:{A:'110',C:'110'}})}<p class="small muted">となりあう角の和は 180° です（例：∠A＝110° なら ∠B＝70°）。</p></section>` },
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;margin:8px 0"><div style="text-align:center">${w6ParaF({par:true}).replace('<svg ','<svg style="max-width:180px" ')}<div class="small" style="font-weight:700">定義<br>AD∥BC、AB∥DC</div></div><div style="text-align:center">${w6ParaF({eqs:true}).replace('<svg ','<svg style="max-width:180px" ')}<div class="small" style="font-weight:700">①<br>AB＝DC、AD＝BC</div></div><div style="text-align:center">${w6ParaF({eqa:true}).replace('<svg ','<svg style="max-width:180px" ')}<div class="small" style="font-weight:700">②<br>∠A＝∠C、∠B＝∠D</div></div><div style="text-align:center">${w6ParaF({half:true}).replace('<svg ','<svg style="max-width:180px" ')}<div class="small" style="font-weight:700">③<br>AO＝CO、BO＝DO</div></div></div>
+    <p class="small muted">となりあう角の和は 180° です（例：∠A＝110° なら ∠B＝70°）。</p></section>` },
   { id:'2-2', t:'平行四辺形の性質を使った証明', sub:'合同を使う', plan:Array(5).fill('w6ParaPf'), body:()=>`
-    <section class="panel"><h3>証明の例</h3>${w6ParaF({BD:true,EF:true})}<p>□ABCD の対角線 BD 上に DE＝BF となる点 E、F をとると AE＝CF</p>
+    <section class="panel"><h3>証明の例</h3>${w6ParaF({BD:true,EF:true})}<p>平行四辺形 ABCD の対角線 BD 上に DE＝BF となる点 E、F をとると AE＝CF</p>
     <div class="pf mth"><div class="pf-h">［証明］</div><div>△AED と △CFB で</div><div>平行四辺形の向かいあう辺は等しいから　AD＝CB ……①</div><div>仮定より　DE＝BF ……②</div><div>AD∥BC で錯角は等しいから　∠ADE＝∠CBF ……③</div><div>①、②、③から、2組の辺とその間の角が、それぞれ等しいので　△AED≡△CFB</div><div>よって　AE＝CF</div></div></section>` },
   { id:'2-3', t:'平行四辺形になるための条件', sub:'5つの条件', plan:Array(5).fill('w6ParaCond'), body:()=>`
     <section class="panel"><h3>平行四辺形になるための条件</h3><p>四角形は、次のどれかが成り立つとき平行四辺形です。</p>
     ${rule('① 2組の向かいあう辺が、それぞれ平行（定義）<br>② 2組の向かいあう辺が、それぞれ等しい<br>③ 2組の向かいあう角が、それぞれ等しい<br>④ 対角線が、それぞれの中点で交わる<br>⑤ 1組の向かいあう辺が、等しくて平行')}
     <p class="small muted">「AD∥BC、AB＝DC」のように、平行な辺と等しい辺がちがう組のときは、平行四辺形とは限りません（台形になることがある）。</p></section>` },
   { id:'2-4', t:'平行四辺形になることの証明', sub:'条件を1つ使う', plan:Array(5).fill('w6ParaPf2'), body:()=>`
-    <section class="panel"><h3>証明の例</h3>${w6ParaF({PQ:true})}<p>□ABCD の辺 AD、BC 上に PD＝BQ となる点 P、Q をとると、四角形 PBQD は平行四辺形</p>
+    <section class="panel"><h3>証明の例</h3>${w6ParaF({PQ:true})}<p>平行四辺形 ABCD の辺 AD、BC 上に PD＝BQ となる点 P、Q をとると、四角形 PBQD は平行四辺形</p>
     <div class="pf mth"><div class="pf-h">［証明］</div><div>四角形 PBQD で</div><div>仮定より　PD＝BQ ……①</div><div>AD∥BC から　PD∥BQ ……②</div><div>①、②から、1組の向かいあう辺が、等しくて平行なので、四角形 PBQD は平行四辺形である</div></div></section>` },
   { id:'2-5', t:'いろいろな四角形', sub:'長方形・ひし形・正方形', plan:Array(5).fill('w6Quad'), body:()=>`
     <section class="panel"><h3>定義</h3>${rule('長方形：4つの角がすべて等しい四角形<br>ひし形：4つの辺がすべて等しい四角形<br>正方形：4つの辺がすべて等しく、4つの角がすべて等しい四角形')}
