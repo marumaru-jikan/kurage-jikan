@@ -1160,10 +1160,13 @@ const CATALOG = [
       { name:'文法', k:'文', units:U({ t:'be動詞', ready:'be' },{ t:'一般動詞', ready:'gv' },{ t:'名詞の複数形', ready:'pl' },{ t:'代名詞', ready:'pr' },{ t:'過去形', ready:'past' },{ t:'現在進行形', ready:'prg' },{ t:'過去進行形', ready:'pprg' },{ t:'未来', ready:'futr' },{ t:'現在・過去・未来', ready:'rv1', lab:'💧1' },{ t:'助動詞', ready:'aux' },{ t:'助動詞', ready:'rv2', lab:'💧2' },{ t:'命令文', ready:'imp' },{ t:'疑問詞', ready:'qw' },{ t:'接続詞', ready:'conj' },{ t:'前置詞', ready:'prep' },{ t:'接続詞・前置詞', ready:'rv3', lab:'💧3' },{ t:'There is ～. ／ There are ～.', ready:'there' },{ t:'不定詞', ready:'inf1' },{ t:'5文型', ready:'rv4' },{ t:'動名詞', ready:'ger' },{ t:'形容詞・副詞', ready:'adjv' },{ t:'比較', ready:'cpr' },{ t:'受動態', ready:'psv' },{ t:'現在完了', ready:'pf' },{ t:'現在完了進行形', ready:'pfp' },{ t:'分詞', ready:'ptp' },{ t:'関係代名詞', ready:'rel' },{ t:'分詞・関係代名詞', ready:'rv5', lab:'💧4' },{ t:'間接疑問文・付加疑問文', ready:'iq' },{ t:'原形不定詞', ready:'bi' },{ t:'仮定法', ready:'sj' }) },
       { name:'読解', k:'読', units:U('読解 ステップ1','読解 ステップ2','読解 ステップ3') } ] },
     { id:'jso', name:'社会', k:'社', note:'地理・歴史・公民', subjects:[
-      { name:'世界地理', k:'世', units:U({ t:'コラム　地理とは', lab:'0', ready:'geo0' },'世界の姿','世界各地の人々の生活と環境','世界の諸地域') },
+      { name:'コラム　地理とは', k:'コ', grp:'地理', go:'geo0', units:[] },
+      { name:'世界地理', k:'世', units:U('世界の姿','世界各地の人々の生活と環境','世界の諸地域') },
       { name:'日本地理', k:'日', units:U('日本の姿','地域調査','日本の地域的特色と地域区分','日本の諸地域','地域のあり方') },
-      { name:'歴史', k:'歴', units:U({ t:'コラム　歴史とは', lab:'0' },'原始','古代','中世','近世','近代','現代') },
-      { name:'公民', k:'公', units:U('現代社会と私たち','個人の尊重と日本国憲法','民主政治','私たちの暮らしと経済','国際社会') } ] },
+      { name:'コラム　歴史とは', k:'コ', grp:'歴史', units:[] },
+      { name:'原始', k:'1', units:[] }, { name:'古代', k:'2', units:[] }, { name:'中世', k:'3', units:[] }, { name:'近世', k:'4', units:[] }, { name:'近代', k:'5', units:[] }, { name:'現代', k:'6', units:[] },
+      { name:'コラム　公民とは', k:'コ', grp:'公民', units:[] },
+      { name:'現代社会', k:'1', units:[] }, { name:'政治', k:'2', units:[] }, { name:'経済', k:'3', units:[] }, { name:'国際社会', k:'4', units:[] } ] },
     { id:'exam', name:'高校受験', k:'受', subjects:[
       { name:'国語', k:'国', units:U('論説①『原子力』',{ t:'論説②『世界の薬剤師』', ready:'yak' },{ t:'小説①『喜娘』', ready:'nov1' },{ t:'小説②『蜘蛛の糸』', ready:'kum' },{ t:'小説③『木の鍵盤の向こう側』', ready:'ken' },'随筆①『？？？』','詩①『？？？』','会話文①『？？？』','古文①『源氏物語』','古文②『伊勢物語』','漢文①『戦国策』','過去問（熊本県）','過去問（広島県）') },
       { name:'数学', k:'数', units:U('数と式','方程式','関数','図形','データと確率','過去問（熊本県）','過去問（広島県）') },
@@ -14931,7 +14934,7 @@ const GEO0_LESSONS=[
 ];
 [NV7P,HOTP,MARP,DMP,YKP,KNP,FTP].forEach(a=>{ a.credit='（オリジナル問題）'; }); MLP.credit='（太宰治『走れメロス』）'; KMP.credit='（芥川龍之介『蜘蛛の糸』）'; HOTP.credit='（福田海凪『蛍のコミュニケーション』）'; MARP.credit='（福田海凪『マリンバの歴史』）';
 const UNITS = {
-  geo0:{ no:'0', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
+  geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
   pn:  { no:'1', title:'正負の数', subject:'数学', course:'j1', subj:0, lessons:LESSONS, cards:true, drill:'ch1' },
   kuku:{ no:'1', title:'九九', subject:'算数', course:'rev', subj:0, lessons:KUKU_LESSONS },
   wari:{ no:'2', title:'わり算', subject:'算数', course:'rev', subj:0, lessons:WARI_LESSONS },
@@ -15089,9 +15092,11 @@ function vHome(){
 }
 function vCourse(){
   const c=courseById(S.course);
-  return `${top(c.name)}<div class="stack"><p class="muted small">${c.subjects.length}${c.id==='jp'||c.id==='jen'?'項目':'教科'}・${unitCount(c)}${c.id==='jso'?'項目':'章'}</p><div class="list">
-  ${c.subjects.map((sb,i)=>{ const r=sb.units.filter(u=>u.ready).length;
-    return `<button class="item" data-act="subject" data-arg="${i}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${sb.units.filter(u=>!u.lab).length}${c.id==='jso'?'項目':'章'}</span></span><span class="tag ${r?'mid':''}">${r?'公開中 '+r:'準備中'}</span><span class="chev">›</span></button>`; }).join('')}</div></div>`;
+  return `${top(c.name)}<div class="stack"><p class="muted small">${c.id==='jso'?c.subjects.length+'項目':c.subjects.length+(c.id==='jp'||c.id==='jen'?'項目':'教科')+'・'+unitCount(c)+'章'}</p><div class="list">
+  ${c.subjects.map((sb,i)=>{ const r=sb.units.filter(u=>u.ready).length, gh=sb.grp?`<div class="secrow">${sb.grp}</div>`:'';
+    if(sb.go&&UNITS[sb.go]){ const d=doneCount(sb.go), n=UNITS[sb.go].lessons.length; return gh+`<button class="item" data-act="unit" data-arg="${sb.go}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${n}しずく</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
+    if(!sb.units.length) return gh+`<button class="item" disabled><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">準備中</span></span></button>`;
+    return gh+`<button class="item" data-act="subject" data-arg="${i}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${sb.units.filter(u=>!u.lab).length}${c.id==='jso'?'項目':'章'}</span></span><span class="tag ${r?'mid':''}">${r?'公開中 '+r:'準備中'}</span><span class="chev">›</span></button>`; }).join('')}</div></div>`;
 }
 function vSubject(){
   const c=courseById(S.course), sb=c.subjects[S.subj];
@@ -15103,7 +15108,7 @@ function vSubject(){
 }
 function vUnit(){
   const u=CU(), uid=S.uid;
-  return `${top(u.no+'　'+u.title)}<div class="stack"><p class="muted small">${u.lessons.length}しずく　1しずく約5分。上から順に進めるのがおすすめです。</p><div class="list">
+  return `${top((u.no?u.no+'　':'')+u.title)}<div class="stack"><p class="muted small">${u.lessons.length}しずく　1しずく約5分。上から順に進めるのがおすすめです。</p><div class="list">
   ${u.lessons.map((l,i)=>`${l.sec?`<div class="secrow">${String(l.sec).replace(/^[0-9０-９]+[\s　]*(?=章末)/,'')}</div>`:''}<button class="item" data-act="lesson" data-arg="${l.id}"><span class="lid ${R.lessons[lkey(uid,l.id)]?'done':''}">${l.id}</span><span class="body"><b>${l.t}</b><br><span class="small muted">${l.sub}</span></span>${lTag(uid,l.id)}<span class="chev">›</span></button>${((u.xlinks||{})[l.id]||[]).map(x=>`<button class="item" data-act="lesson" data-uid="${x.uid}" data-arg="${x.lid}"><span class="lid ${R.lessons[lkey(x.uid,x.lid)]?'done':''}">${x.id}</span><span class="body"><b>${x.t}</b><br><span class="small muted">${x.sub}</span></span><span class="tag">リンク</span><span class="chev">›</span></button>`).join('')}`).join('')}
   ${u.drill?`<button class="item" data-act="go" data-arg="drill"><span class="lid">▶</span><span class="body"><b>${u.drillLabel||'演習問題'}</b><br><span class="small muted">PDF・Lv1〜Lv5</span></span><span class="chev">›</span></button>`:''}
   </div>${u.cards?`<div class="list"><button class="item" data-act="cards"><span class="body"><b>用語カード</b><br><span class="small muted">用語の確認 ${CARDS.length}枚</span></span><span class="tag ${R.known.length===CARDS.length?'done':R.known.length?'mid':''}">${R.known.length}/${CARDS.length}</span><span class="chev">›</span></button></div>`:''}</div>`;
