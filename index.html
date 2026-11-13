@@ -15064,13 +15064,13 @@ function vHome(){
 }
 function vCourse(){
   const c=courseById(S.course);
-  return `${top(c.name)}<div class="stack"><p class="muted small">${c.subjects.length}${c.id==='jp'||c.id==='jen'?'項目':'教科'}・${unitCount(c)}章</p><div class="list">
+  return `${top(c.name)}<div class="stack"><p class="muted small">${c.subjects.length}${c.id==='jp'||c.id==='jen'?'項目':'教科'}・${unitCount(c)}${c.id==='jso'?'項目':'章'}</p><div class="list">
   ${c.subjects.map((sb,i)=>{ const r=sb.units.filter(u=>u.ready).length;
-    return `<button class="item" data-act="subject" data-arg="${i}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${sb.units.filter(u=>!u.lab).length}章</span></span><span class="tag ${r?'mid':''}">${r?'公開中 '+r:'準備中'}</span><span class="chev">›</span></button>`; }).join('')}</div></div>`;
+    return `<button class="item" data-act="subject" data-arg="${i}"><span class="lid">${sb.k}</span><span class="body"><b>${sb.name}</b><br><span class="small muted">${sb.units.filter(u=>!u.lab).length}${c.id==='jso'?'項目':'章'}</span></span><span class="tag ${r?'mid':''}">${r?'公開中 '+r:'準備中'}</span><span class="chev">›</span></button>`; }).join('')}</div></div>`;
 }
 function vSubject(){
   const c=courseById(S.course), sb=c.subjects[S.subj];
-  return `${top(c.name+'　'+sb.name)}<div class="stack"><p class="muted small">準備ができた章から順に公開します。</p><div class="list">
+  return `${top(c.name+'　'+sb.name)}<div class="stack"><p class="muted small">準備ができた${c.id==='jso'?'項目':'章'}から順に公開します。</p><div class="list">
   ${(()=>{ let k=0; return sb.units.map((un,i)=>{ const lab=un.lab||(++k); const u=un.ready&&UNITS[un.ready];
     if(u){ const d=doneCount(un.ready), n=u.lessons.length;
       return `<button class="item" data-act="unit" data-arg="${un.ready}"><span class="lid">${lab}</span><span class="body"><b>${un.t}</b><br><span class="small muted">${n}しずく　1しずく約5分</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
