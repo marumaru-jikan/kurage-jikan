@@ -7901,11 +7901,11 @@ function w7CoinTree(k){ const T=(x,y,t,st='')=>`<text x="${x}" y="${y}" text-anc
     const mid=(lo+hi)/2; [[lo,mid,0],[mid,hi,1]].forEach(([a,b,v])=>{ const y2=(ly(a)+ly(b-1))/2; g+=`<line x1="${X[lev]+10}" y1="${y}" x2="${X[lev+1]-10}" y2="${y2}" style="stroke:var(--ink);stroke-width:1"/>`; node(lev+1,a,b,[...path,v]); }); return y; };
   node(0,0,n/2,[0]); node(0,n/2,n,[1]);
   return `<svg class="gfig" viewBox="0 0 ${RX+50} ${H}" style="max-width:${k===2?230:300}px" role="img" aria-label="${k}枚の硬貨の樹形図">${g}</svg>`; }
-function w7PairTree(N,ordered){ const T=(x,y,t,st='')=>`<text x="${x}" y="${y}" text-anchor="middle" style="font-style:normal;${st}">${t}</text>`, st=17, gap=6;
-  let g=ordered?T(26,13,'1枚目','font-size:11px;font-weight:700')+T(100,13,'2枚目','font-size:11px;font-weight:700')+T(160,13,'整数','font-size:11px;font-weight:700'):T(160,13,'組','font-size:11px;font-weight:700');
+function w7PairTree(N,ordered,op={}){ const T=(x,y,t,st='')=>`<text x="${x}" y="${y}" text-anchor="middle" style="font-style:normal;${st}">${t}</text>`, st=17, gap=6, cl=v=>op.col?`;fill:${op.col(v)}`:'';
+  const H=op.h||(ordered?['1枚目','2枚目','整数']:['','','組']); let g=T(26,13,H[0],'font-size:11px;font-weight:700')+T(100,13,H[1],'font-size:11px;font-weight:700')+T(160,13,H[2],'font-size:11px;font-weight:700');
   let y=28; N.forEach((a,i)=>{ const sub=ordered?N.filter(b=>b!==a):N.slice(i+1); if(!sub.length) return; const ys=sub.map((_,j)=>y+j*st), ym=(ys[0]+ys[ys.length-1])/2;
-    g+=T(26,ym+5,a,'font-size:15px;font-weight:700');
-    sub.forEach((b,j)=>{ g+=`<line x1="36" y1="${ym}" x2="88" y2="${ys[j]}" style="stroke:var(--ink);stroke-width:1"/>`+T(100,ys[j]+5,b,'font-size:14px')+T(160,ys[j]+5,ordered?`${a}${b}`:`{${a}, ${b}}`,'font-size:13px;fill:#1ea0dc'); });
+    g+=T(26,ym+5,a,'font-size:15px;font-weight:700'+cl(a));
+    sub.forEach((b,j)=>{ g+=`<line x1="36" y1="${ym}" x2="88" y2="${ys[j]}" style="stroke:var(--ink);stroke-width:1"/>`+T(100,ys[j]+5,b,'font-size:14px'+cl(b))+(op.res?T(160,ys[j]+5,op.res(a,b),'font-size:13px;fill:'+(op.res(a,b)==='あたり'?'#e8414b':'#8a96a3')):T(160,ys[j]+5,ordered?`${a}${b}`:`{${a}, ${b}}`,'font-size:13px;fill:#1ea0dc')); });
     y+=sub.length*st+gap; });
   return `<svg class="gfig" viewBox="0 0 200 ${y}" style="max-width:220px" role="img" aria-label="樹形図">${g}</svg>`; }
 function w7TreeF(){ const T=(x,y,s)=>w5T(x,y,s,'gs'); let g=T(40,16,'10円')+T(170,16,'100円');
@@ -7998,7 +7998,9 @@ const M2C6_LESSONS = [
     ${w7E('全部で 5×4＝20 通り<br>偶数になるのは8通りだから<br>確率は '+frH(8,20)+'＝'+frH(2,5))}
     <p class="small muted">取り出した順に並べるときは、12 と 21 を別のものとして数えます。</p></section>` },
   { id:'2-5', t:'くじの確率', sub:'ひく順番と確率', plan:Array(5).fill('w7Lot'), body:()=>`
-    <section class="panel"><h3>くじびき</h3>${w7E('5 本のうちあたり 3 本。A、B の順に1本ずつひく<br>あたりを ①②③、はずれを ④⑤ として樹形図をかくと 5×4＝20 通り<br>A があたる確率 '+frH(12,20)+'＝'+frH(3,5)+'、B があたる確率 '+frH(12,20)+'＝'+frH(3,5))}
+    <section class="panel"><h3>くじびき</h3>${w7E('5 本のうちあたり 3 本。A、B の順に1本ずつひく')}<p>あたりを ①②③（赤）、はずれを ④⑤ として樹形図をかくと 5×4＝20 通り。</p>
+    ${w7PairTree(['①','②','③','④','⑤'],true,{h:['A','B','B は？'],col:v=>'①②③'.includes(v)?'#e8414b':'var(--ink)',res:(a,b)=>'①②③'.includes(b)?'あたり':'はずれ'})}
+    ${w7E('A があたるのは 3×4＝12 通り<br>確率は '+frH(12,20)+'＝'+frH(3,5)+'<br>B があたるのも 12 通り<br>確率は '+frH(12,20)+'＝'+frH(3,5))}
     <p class="small muted">くじをひく順番によって、あたりやすさは変わりません。</p></section>` },
   { id:'2-6', t:'起こらない確率', sub:'1−p', plan:Array(5).fill('w7Not'), body:()=>`
     <section class="panel"><h3>〜でない確率</h3>${rule('ことがら A の起こる確率を p とすると、<br>A の起こらない確率は　1−p')}
