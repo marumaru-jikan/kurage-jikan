@@ -232,7 +232,7 @@ ol.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
 .kkgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:2px;font-variant-numeric:tabular-nums;text-align:center;font-size:.85rem;margin-bottom:10px}
 .kkgrid b{background:var(--teal-soft);color:var(--teal);padding:4px 0;border-radius:4px}.kkgrid span{background:var(--sunk);padding:4px 0;border-radius:4px}
 .seabox{border-radius:22px;overflow:hidden;background:linear-gradient(172deg,#14507A 0%,#0B2E4A 58%,#061827 100%);color:#E6F4FA}
-.seabox .tank{display:block;width:100%;height:auto}
+.seabox .tank{display:block;height:auto;max-width:none}.tankwrap{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin}.tankhint{margin:2px 0 0;text-align:center;font-size:.72rem;color:#9FD8F2}
 .seacount{display:flex;justify-content:space-between;padding:8px 16px 12px;font-size:.82rem;color:#BFE3F3}
 .seacount b{color:#fff;font-size:1rem}
 .tank .sw{animation:swim 6s ease-in-out infinite alternate}
@@ -16336,12 +16336,16 @@ function stageSVG(fed){
   return `<svg class="stg" viewBox="0 0 220 170" aria-label="${g}"><g class="bob">${s}</g></svg>`;
 }
 function tankSVG(tank){
-  const n=tank.length, show=tank.slice(-24), k=n>12?.55:n>6?.7:.85;
-  let js=''; show.forEach((t,i)=>{ const sp=spOf(t.sp), m=show.length, cols=Math.max(1,Math.ceil(Math.sqrt(m*2))), rows=Math.ceil(m/cols), cx=i%cols, cy=Math.floor(i/cols), x=(cx+.5)*340/cols+10+((i*37)%17-8)+(cy%2?170/cols*.5:0), y=60+(rows>1?cy*(110/(rows-1)):40)+((i*23)%15-7), dur=5+(i%5), del=-(i*1.3)%dur;
+  const n=tank.length, P=Math.max(1,Math.ceil(n/8)), W=360*P, k=n>4?.7:.85;
+  let js=''; tank.forEach((t,i)=>{ const sp=spOf(t.sp); let x,y;
+    if(n<=8){ const m=n, cols=Math.max(1,Math.ceil(Math.sqrt(m*2))), rows=Math.ceil(m/cols), cx=i%cols, cy=Math.floor(i/cols); x=(cx+.5)*340/cols+10+((i*37)%17-8)+(cy%2?170/cols*.5:0); y=60+(rows>1?cy*(110/(rows-1)):40)+((i*23)%15-7); }
+    else { const pg=Math.floor(i/8), j=i%8, col=Math.floor(j/2), row=j%2; x=pg*360+(col+.5)*90+(row?18:-10)+((i*37)%13-6); y=(row?150:72)+((i*23)%17-8); }
+    const dur=5+(i%5), del=-(i*1.3)%dur;
     js+=`<g class="sw" style="animation-duration:${dur}s;animation-delay:${del}s">${jfSVG(sp,x,y,k)}</g>`; });
-  let bub=''; for(let i=0;i<9;i++) bub+=`<circle cx="${(i*41+15)%350}" cy="${(i*67+30)%210}" r="${1+(i%3)}" fill="rgba(255,255,255,.2)"/>`;
-  return `<svg class="tank" viewBox="0 0 360 220" role="img" aria-label="水そう　クラゲ ${n} ひき"><g fill="rgba(190,232,250,.06)"><polygon points="150,0 190,0 120,220 70,220"/><polygon points="250,0 272,0 230,220 196,220"/></g>${bub}${js}
-  ${n?'':`<text x="180" y="116" text-anchor="middle" fill="#9FD8F2" font-size="13">まだクラゲはいません</text>`}<path d="M0 212 Q90 200 180 210 T360 206 V220 H0Z" fill="rgba(230,215,180,.25)"/></svg>`;
+  let deco=''; for(let p=0;p<P;p++){ const o=p*360; deco+=`<g fill="rgba(190,232,250,.06)"><polygon points="${o+150},0 ${o+190},0 ${o+120},220 ${o+70},220"/><polygon points="${o+250},0 ${o+272},0 ${o+230},220 ${o+196},220"/></g>`; for(let i=0;i<9;i++) deco+=`<circle cx="${o+(i*41+15+p*23)%350}" cy="${(i*67+30+p*31)%210}" r="${1+(i%3)}" fill="rgba(255,255,255,.2)"/>`; }
+  let sand=`M0 212`; for(let p=0;p<P;p++){ const o=p*360; sand+=` Q${o+90} 200 ${o+180} 210 T${o+360} 206`; } sand+=` V220 H0Z`;
+  return `<div class="tankwrap" id="tankwrap"><svg class="tank" viewBox="0 0 ${W} 220" style="width:${P*100}%" role="img" aria-label="水そう　クラゲ ${n} ひき">${deco}${js}
+  ${n?'':`<text x="180" y="116" text-anchor="middle" fill="#9FD8F2" font-size="13">まだクラゲはいません</text>`}<path d="${sand}" fill="rgba(230,215,180,.25)"/></svg></div>${P>1?`<p class="tankhint">← 横にスクロールして水そうを見てね →</p>`:''}`;
 }
 const DROP_I = `<svg class="dropi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C9 7 6 10.5 6 14.2A6 6 0 0 0 18 14.2C18 10.5 15 7 12 2.5Z"/></svg>`;
 function vSea(){
@@ -16381,6 +16385,7 @@ function render(){
   if(c) c.addEventListener('change',e=>{ const v=normCode(e.target.value); if(CODE_RE.test(v)){ R.code=v; save(); } e.target.value=R.code; });
   if(n) n.addEventListener('input',e=>{ R.name=e.target.value.trim(); save(); });
   if ((S.view==='lesson'||S.view==='unit') && S.uid==='k1') kjFontLoad();
+  if (S.view==='sea' && S.hatched){ const tw=document.getElementById('tankwrap'); if(tw) tw.scrollLeft=tw.scrollWidth; }
   if (S.view==='pdf') renderPdf();
   if (S.view==='quiz'){ setupPad(); const Q=S.quiz, q=Q.qs[Q.i]; if(q.autoSay && Q.picked===null && Q.said!==Q.i){ Q.said=Q.i; say(q.say); } }
 }
