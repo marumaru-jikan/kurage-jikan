@@ -16282,19 +16282,92 @@ const SEA_NEED = 30;
 const GROW = [ {n:'プラヌラ', at:0, d:'小さなつぶ。海の中をただよっています。'}, {n:'ポリプ', at:5, d:'岩にくっついて、触手をのばしはじめました。'}, {n:'ストロビラ', at:12, d:'体がお皿をかさねたように、くびれてきました。'}, {n:'エフィラ', at:21, d:'星のような赤ちゃんクラゲ。もうすぐです。'} ];
 const SP = [
   {id:'mizu', name:'ミズクラゲ', h:200, s:55, pat:'ring', shape:'flat', note:'日本の海でいちばん身近なクラゲ。4つの輪が目じるし。'},
+  {id:'aka', name:'アカクラゲ', h:4, s:70, pat:'stripe', shape:'round', nt:6, len:70, note:'かさに赤いしまもよう。長い触手には毒がある。'},
+  {id:'katsuo', name:'カツオノエボシ', h:255, s:70, shape:'float', note:'青い浮き袋で海面をただよう群体。触手の毒がとても強い。'},
   {id:'tako', name:'タコクラゲ', h:28, s:55, pat:'dots', shape:'round', note:'水玉もようのかさと、タコの足のような腕をもつ。'},
-  {id:'aka', name:'アカクラゲ', h:4, s:70, pat:'stripe', shape:'round', note:'かさに赤いしまもよう。長い触手には毒がある。'},
   {id:'beni', name:'ベニクラゲ', h:350, s:75, pat:'core', shape:'tall', note:'小さな体で、若返りをくり返すといわれる。'},
-  {id:'owan', name:'オワンクラゲ', h:150, s:70, pat:'rim', shape:'flat', note:'緑色に光るたんぱく質が、ノーベル賞の研究につながった。'},
+  {id:'habu', name:'ハブクラゲ', h:195, s:20, shape:'box', nt:3, len:60, note:'沖縄の海にすむ箱形のクラゲ。強い毒をもつ。'},
+  {id:'echizen', name:'エチゼンクラゲ', h:32, s:35, pat:'dots', shape:'round', big:1.15, arms:1, nt:0, note:'かさの直径が1mをこえることもある、日本最大級のクラゲ。'},
   {id:'kabuto', name:'カブトクラゲ', h:190, s:40, pat:'comb', shape:'comb', note:'くし板が光を反射して、虹色に見える。'},
-  {id:'saka', name:'サカサクラゲ', h:85, s:35, pat:'frill', shape:'upside', note:'かさを下にして、さかさまにくらしている。'},
-  {id:'hana', name:'ハナガサクラゲ', h:300, s:60, pat:'rim', shape:'round', note:'花がさのような、色とりどりの触手をもつ。'},
   {id:'giya', name:'ギヤマンクラゲ', h:210, s:15, pat:'cross', shape:'tall', note:'ガラス細工のように、すきとおった体。'},
-  {id:'kami', name:'カミクラゲ', h:45, s:45, pat:'core', shape:'tall', note:'細い触手がたくさん。かみの毛のように見える。'},
-  {id:'blue', name:'ブルージェリー', h:225, s:80, pat:'none', shape:'round', note:'あざやかな青い色。水族館でも人気のクラゲ。'},
-  {id:'sea', name:'シーネットル', h:22, s:85, pat:'stripe', shape:'round', note:'オレンジ色のかさと、長くのびる触手。'},
+  {id:'saka', name:'サカサクラゲ', h:85, s:35, pat:'frill', shape:'upside', note:'かさを下にして、さかさまにくらしている。'},
+  {id:'bizen', name:'ビゼンクラゲ', h:22, s:45, shape:'round', arms:1, nt:0, note:'有明海などにすみ、食用にもされるクラゲ。'},
+  {id:'amakusa', name:'アマクサクラゲ', h:12, s:55, pat:'stripe', shape:'flat', nt:8, len:55, note:'天草（熊本県）の名前がついたクラゲ。触手に毒がある。'},
+  {id:'hana', name:'ハナガサクラゲ', h:300, s:60, pat:'rim', shape:'round', note:'花がさのような、色とりどりの触手をもつ。'},
+  {id:'blue', name:'カラージェリーフィッシュ（青）', h:225, s:80, pat:'none', shape:'round', arms:1, nt:0, note:'あざやかな青い色。水族館でも人気のクラゲ。'},
+  {id:'andon', name:'アンドンクラゲ', h:45, s:25, shape:'box', nt:1, len:62, note:'行灯（あんどん）のような箱形のかさ。夏の終わりに海水浴場に現れる。'},
+  {id:'owan', name:'オワンクラゲ', h:150, s:70, pat:'rim', shape:'flat', note:'緑色に光るたんぱく質が、ノーベル賞の研究につながった。'},
+  {id:'oki', name:'オキクラゲ', h:320, s:45, pat:'dots', shape:'round', nt:8, len:66, note:'外洋にすむ。かさに小さなぶつぶつがあり、刺激で光る。'},
+  {id:'kanmuri', name:'カツオノカンムリ', h:215, s:70, shape:'sail', note:'青い円盤と三角の帆で、風を受けて海面を進む。'},
+  {id:'karakasa', name:'カラカサクラゲ', h:180, s:30, shape:'round', stem:1, nt:4, len:40, note:'からかさ（傘）のような形で、長い柄が下にのびる。'},
+  {id:'chirimen', name:'チリメンクラゲ', h:35, s:40, pat:'frill', shape:'flat', nt:10, len:40, note:'ちりめんのような細かいしわのあるクラゲ。'},
+  {id:'tsuno', name:'ツノクラゲ', h:170, s:35, pat:'core', shape:'horn', nt:6, len:42, note:'かさの上がとがって、つののように見える。'},
+  {id:'yanagi', name:'ヤナギクラゲ', h:24, s:70, pat:'stripe', shape:'round', nt:7, len:80, arms:1, note:'柳の枝のように長くたれる触手。'},
+  {id:'hitomoshi', name:'ヒトモシクラゲ', h:40, s:80, pat:'core', shape:'tall', nt:4, len:36, note:'「火をともす」という名前をもつクラゲ。'},
+  {id:'murasaki', name:'ムラサキクラゲ', h:275, s:45, shape:'round', arms:1, nt:0, note:'むらさき色のかさをもつクラゲ。'},
+  {id:'batei', name:'バテイクラゲ', h:160, s:30, pat:'cross', shape:'flat', nt:12, len:34, note:'馬のひづめ（馬てい）にちなんだ名前のクラゲ。'},
+  {id:'mayoi', name:'マヨイアイオイクラゲ', h:190, s:30, shape:'chain', note:'小さな個体がつながって、ひものような群体をつくる。'},
+  {id:'chou', name:'チョウクラゲ', h:30, s:35, shape:'comb', cm:'lobe', note:'チョウのはねのような2枚の葉で泳ぐ、クシクラゲの仲間。'},
+  {id:'hikariboya', name:'ヒカリボヤ', h:335, s:40, shape:'tube', note:'ホヤの仲間が集まった筒形の群体。青白く光る。'},
+  {id:'temari', name:'テマリクラゲ', h:180, s:25, shape:'comb', cm:'ball', note:'てまりのような丸い体と、2本の長い触手。'},
+  {id:'niji', name:'ニジクラゲ', h:280, s:50, pat:'rim', shape:'flat', nt:10, len:38, note:'虹のように色がかわって見えるクラゲ。'},
+  {id:'unbachi', name:'オーストラリアウンバチクラゲ', h:200, s:12, shape:'box', nt:4, len:80, note:'世界で最も強い毒をもつといわれる箱形のクラゲ。'},
+  {id:'yurei', name:'ユウレイクラゲ', h:30, s:20, shape:'flat', nt:12, len:70, arms:1, note:'白っぽい体と長い触手が、ゆうれいのように見える。'},
+  {id:'jumonji', name:'ジュウモンジクラゲ', h:120, s:35, shape:'stalk', note:'十文字の形をした、海藻などにくっついてくらすクラゲ。'},
+  {id:'ginka', name:'ギンカクラゲ', h:205, s:75, shape:'disc', note:'銀貨のような丸い円盤と、青い触手。'},
+  {id:'otama', name:'オタマボヤ', h:60, s:25, shape:'tadpole', note:'おたまじゃくしの形をした小さな生き物。ホヤの仲間。'},
+  {id:'happou', name:'ハッポウクラゲモドキ', h:90, s:40, shape:'stalk', note:'8方向にのびた腕の先に、触手の房がある。'},
+  {id:'hydra', name:'ヒドラ', h:100, s:40, shape:'polyp', note:'池などの淡水にすむ小さなポリプ。体を切っても再生する。'},
+  {id:'himeandon', name:'ヒメアンドンクラゲ', h:30, s:25, shape:'box', nt:1, len:46, small:.8, note:'アンドンクラゲの仲間の、小さな箱形のクラゲ。'},
+  {id:'kisui', name:'キスイクラゲ', h:190, s:25, pat:'ring', shape:'flat', nt:10, len:30, small:.85, note:'海水と川の水がまじる汽水域にすむクラゲ。'},
+  {id:'black', name:'ブラックシーネットル', h:300, s:30, shape:'round', big:1.1, arms:1, nt:8, len:80, dark:1, note:'黒むらさき色の大きなかさと、長い口腕。'},
+  {id:'bazinga', name:'バジンガ', h:50, s:50, pat:'dots', shape:'round', arms:1, nt:0, small:.7, note:'オーストラリアで見つかった、小さなクラゲ。'},
+  {id:'bonaire', name:'ボネールシマハコクラゲ', h:0, s:70, shape:'box', nt:1, len:66, striped:1, note:'しまもようの触手をもつ、箱形のクラゲ。'},
+  {id:'mitsude', name:'ミツデリッポウクラゲ', h:40, s:20, shape:'box', nt:3, len:30, small:.75, note:'触手が3本ずつ4か所に生えた、小さな箱形のクラゲ。'},
+  {id:'wasalpa', name:'ワサルパ', h:190, s:20, shape:'barrel', note:'すきとおったたる形の体。海水を吸ってはいて進む。'},
+  {id:'obi', name:'オビクラゲ', h:270, s:30, shape:'belt', note:'帯のように長い体。クシクラゲの仲間。'},
+  {id:'irukandji', name:'イルカンジクラゲ', h:200, s:10, shape:'box', nt:1, len:70, small:.6, note:'指先ほどの小さな箱形のクラゲ。強い毒をもつ。'},
+  {id:'baren', name:'バレンクラゲ', h:15, s:55, shape:'chain', tuft:1, note:'ふさのような群体をつくる、クダクラゲの仲間。'},
+  {id:'nanyotako', name:'ナンヨウタコクラゲ', h:40, s:35, pat:'dots', shape:'round', arms:1, nt:0, note:'南の海のタコクラゲ。体の中の藻から栄養をもらう。'},
+  {id:'mamizu', name:'マミズクラゲ', h:120, s:20, shape:'flat', nt:16, len:22, small:.75, note:'川や池など、淡水にすむめずらしいクラゲ。'},
+  {id:'uri', name:'ウリクラゲ', h:345, s:35, shape:'comb', cm:'melon', note:'うりのような形。ほかのクシクラゲを丸のみにする。'},
+  {id:'kurokamuri', name:'クロカムリクラゲ', h:345, s:60, shape:'crown', dark:1, note:'深海にすむ、赤黒いかんむり形のクラゲ。'},
+  {id:'hiratakamuri', name:'ヒラタカムリクラゲ', h:5, s:65, shape:'crown', flatc:1, note:'深海にすむ、平たいかんむり形のクラゲ。'},
+  {id:'hai', name:'ハイクラゲ', h:200, s:15, shape:'tall', nt:8, len:30, small:.8, note:'すきとおった小さなかさのクラゲ。'},
+  {id:'kitakami', name:'キタカミクラゲ', h:170, s:20, pat:'cross', shape:'tall', nt:12, len:34, note:'すきとおったかさに、たくさんの触手をもつ。'},
+  {id:'walnut', name:'シーウォールナッツ', h:160, s:30, shape:'comb', cm:'walnut', note:'クルミのような形のクシクラゲ。世界中に広がっている。'},
+  {id:'niseiru', name:'ニセイルカンジクラゲ', h:210, s:12, shape:'box', nt:1, len:60, small:.6, note:'イルカンジクラゲによく似た、小さな箱形のクラゲ。'},
+  {id:'tomato', name:'シートマト', h:2, s:75, pat:'dots', shape:'round', arms:1, nt:0, note:'トマトのような、赤くて丸いかさ。'},
+  {id:'obelia', name:'オベリア', h:60, s:30, shape:'hydroid', note:'枝分かれしたポリプの群体から、小さなクラゲが生まれる。'},
+  {id:'bouzunira', name:'ボウズニラ', h:10, s:50, shape:'chain', thin:1, note:'長いひも状の群体をつくる、クダクラゲの仲間。'},
+  {id:'honsome', name:'ホンソメサルパ', h:200, s:25, shape:'barrel', train:1, note:'サルパの仲間。たくさんつながって長い列になる。'},
+  {id:'brown', name:'カラージェリーフィッシュ（茶）', h:30, s:50, pat:'dots', shape:'round', arms:1, nt:0, note:'茶色いかさのカラージェリーフィッシュ。'},
+  {id:'white', name:'カラージェリーフィッシュ（白）', h:200, s:5, pat:'dots', shape:'round', arms:1, nt:0, note:'白いかさのカラージェリーフィッシュ。'},
+  {id:'akadama', name:'アカダマクラゲ', h:0, s:75, pat:'core', shape:'round', nt:6, len:30, small:.85, note:'赤い玉のような部分が目立つクラゲ。'},
+  {id:'asagao', name:'アサガオクラゲ', h:330, s:35, shape:'stalk', note:'アサガオの花のような形で、海藻にくっついてくらす。'},
+  {id:'ibo', name:'イボクラゲ', h:45, s:45, pat:'dots', shape:'flat', arms:1, nt:0, note:'かさに、いぼのような突起がならぶ。'},
+  {id:'umicop', name:'ウミコップ', h:180, s:20, shape:'hydroid', cup:1, note:'コップのような形の小さなポリプが集まった群体。'},
+  {id:'umihinoki', name:'ウミヒノキ', h:95, s:30, shape:'hydroid', fern:1, note:'ヒノキの葉のように枝分かれしたポリプの群体。'},
+  {id:'urashima', name:'ウラシマクラゲ', h:250, s:35, pat:'core', shape:'tall', nt:2, len:90, note:'浦島太郎にちなんだ名前をもつクラゲ。'},
+  {id:'kogane', name:'コガネセンコウクラゲ', h:48, s:80, pat:'rim', shape:'round', nt:8, len:44, note:'金色にかがやくクラゲ。'},
+  {id:'shiraito', name:'シライトトンボダマクラゲ', h:200, s:10, pat:'core', shape:'tall', nt:10, len:56, note:'白い糸のような触手をもつクラゲ。'},
+  {id:'tama', name:'タマクラゲ', h:30, s:40, pat:'core', shape:'tall', nt:4, len:26, small:.7, note:'小さな玉のような形のクラゲ。'},
+  {id:'dof', name:'ドフラインクラゲ', h:15, s:40, pat:'stripe', shape:'flat', nt:10, len:52, note:'研究者ドフラインの名前がついたクラゲ。'},
+  {id:'nanyomizu', name:'ナンヨウミズクラゲ', h:230, s:45, pat:'ring', shape:'flat', note:'南の海にすむ、ミズクラゲの仲間。'},
+  {id:'hanaakari', name:'ハナアカリクラゲ', h:320, s:65, pat:'rim', shape:'flat', nt:9, len:40, rainbow:1, note:'花のように色あざやかなクラゲ。'},
+  {id:'higasa', name:'ヒガサクラゲ', h:55, s:40, pat:'stripe', shape:'flat', big:1.1, nt:12, len:36, note:'日がさ（日傘）のように広がったかさ。'},
+  {id:'fusen', name:'フウセンクラゲ', h:200, s:30, shape:'comb', cm:'ball', note:'風船のような丸い体のクシクラゲ。2本の触手をもつ。'},
+  {id:'furin', name:'フウリンクラゲ', h:185, s:30, pat:'cross', shape:'tall', nt:8, len:30, note:'風鈴のような、つりがね形のかさ。'},
+  {id:'futanari', name:'フタナリクラゲ', h:150, s:25, pat:'core', shape:'tall', nt:6, len:28, small:.8, note:'すきとおった小さなかさのクラゲ。'},
+  {id:'yajirobe', name:'ヤジロベエクラゲ', h:200, s:30, shape:'yaji', note:'やじろべえのように、2本の触手を左右に広げる。'},
+  {id:'wataboshi', name:'ワタボウシクラゲ', h:200, s:8, shape:'round', nt:14, len:40, fluffy:1, note:'綿帽子のように、ふわふわした白いクラゲ。'},
 ];
-const spOf = id => SP.find(x=>x.id===id) || SP[0];
+// 以前の水そうにいるクラゲ（図鑑には出さない）
+const SP_OLD = [
+  {id:'kami', name:'カミクラゲ', h:45, s:45, pat:'core', shape:'tall', note:'細い触手がたくさん。かみの毛のように見える。'},
+  {id:'sea', name:'シーネットル', h:22, s:85, pat:'stripe', shape:'round', nt:6, len:70, note:'オレンジ色のかさと、長くのびる触手。'},
+];
+const spOf = id => SP.find(x=>x.id===id) || SP_OLD.find(x=>x.id===id) || SP[0];
 function seaInit(){
   if(!R.sea){ const n=Object.keys(R.lessons||{}).length; R.sea={ drops:n, total:n, fed:0, sp:null, tank:[] }; }
   if(!R.sea.sp) R.sea.sp=seaNextSp();
@@ -16305,26 +16378,79 @@ const growOf = fed => { let g=GROW[0]; for(const s of GROW) if(fed>=s.at) g=s; r
 
 /* 成長したクラゲの絵 */
 function jfSVG(sp,x,y,k){
-  const H=sp.h, S=sp.s, c=(l,a)=>`hsla(${H},${S}%,${l}%,${a})`;
-  if(sp.shape==='comb'){ let st=''; for(let i=-2;i<=2;i++){ const hx=x+i*6*k; st+=`<path d="M${hx} ${y-22*k} Q${hx+(i*3)*k} ${y} ${hx} ${y+22*k}" stroke="hsl(${(i+2)*60},90%,70%)" stroke-width="${1.6*k}" stroke-dasharray="${2*k} ${2*k}" fill="none" opacity=".9"/>`; }
-    return `<ellipse cx="${x}" cy="${y}" rx="${17*k}" ry="${25*k}" fill="${c(85,.28)}" stroke="${c(92,.85)}" stroke-width="${1.2*k}"/>${st}`; }
-  const up=sp.shape==='upside', w=(sp.shape==='tall'?18:sp.shape==='flat'?28:24)*k, hh=(sp.shape==='tall'?38:sp.shape==='flat'?22:30)*k;
-  let ten=''; const nt=sp.id==='kami'||sp.id==='hana'?9:sp.id==='tako'?4:6, len=(sp.id==='aka'||sp.id==='sea'?70:sp.id==='tako'?28:48)*k;
-  for(let i=0;i<nt;i++){ const tx=x+(i-(nt-1)/2)*(2*w/(nt+1)), ww=(i%2?5:-5)*k, col=sp.id==='hana'?`hsla(${(i*40)%360},80%,70%,.8)`:c(85,.55);
+  k*=(sp.small||1)*(sp.big||1);
+  const H=sp.h, S=sp.s, c=(l,a)=>`hsla(${H},${S}%,${sp.dark?Math.max(12,l-38):l}%,${a})`, sw=1.2*k;
+  const curl=(tx,ty,L,ww,col,wd)=>`<path d="M${tx} ${ty} C${tx+ww} ${ty+L*.4} ${tx-ww} ${ty+L*.7} ${tx} ${ty+L}" stroke="${col}" stroke-width="${wd||sw}" fill="none" stroke-linecap="round"/>`;
+  const sh=sp.shape;
+  if(sh==='comb'){ const cm=sp.cm||'egg'; let rx=17,ry=25,ex='';
+    if(cm==='ball'){ rx=15; ry=16; ex=`<path d="M${x-6*k} ${y+12*k} C${x-30*k} ${y+30*k} ${x+10*k} ${y+45*k} ${x-22*k} ${y+62*k}" stroke="${c(90,.75)}" stroke-width="${k}" fill="none"/><path d="M${x+6*k} ${y+12*k} C${x+30*k} ${y+30*k} ${x-10*k} ${y+45*k} ${x+22*k} ${y+62*k}" stroke="${c(90,.75)}" stroke-width="${k}" fill="none"/>`; }
+    if(cm==='melon'){ rx=13; ry=28; }
+    if(cm==='walnut'){ rx=19; ry=21; }
+    if(cm==='lobe'){ ex=`<path d="M${x-16*k} ${y+4*k} Q${x-34*k} ${y+26*k} ${x-12*k} ${y+30*k}Z M${x+16*k} ${y+4*k} Q${x+34*k} ${y+26*k} ${x+12*k} ${y+30*k}Z" fill="${c(80,.3)}" stroke="${c(92,.7)}" stroke-width="${k}"/>`; rx=15; ry=22; }
+    let st=''; for(let i=-2;i<=2;i++){ const hx=x+i*rx*.36*k; st+=`<path d="M${hx} ${y-ry*.88*k} Q${hx+(i*3)*k} ${y} ${hx} ${y+ry*.88*k}" stroke="hsl(${(i+2)*60},90%,70%)" stroke-width="${1.6*k}" stroke-dasharray="${2*k} ${2*k}" fill="none" opacity=".9"/>`; }
+    return `${ex}<ellipse cx="${x}" cy="${y}" rx="${rx*k}" ry="${ry*k}" fill="${c(85,.28)}" stroke="${c(92,.85)}" stroke-width="${sw}"/>${st}`; }
+  if(sh==='box'){ const w=15*k, hh=26*k, n=sp.nt||1, L=(sp.len||60)*k; let t='';
+    [-1,-1/3,1/3,1].forEach((q,qi)=>{ for(let m=0;m<n;m++){ const tx=x+q*w+(m-(n-1)/2)*2.2*k, col=sp.striped?`url(#)`:c(88,.6);
+      t+= sp.striped ? `<path d="M${tx} ${y} V${y+L}" stroke="hsla(${H},80%,60%,.9)" stroke-width="${1.6*k}" stroke-dasharray="${3*k} ${3*k}"/><path d="M${tx} ${y+3*k} V${y+L}" stroke="rgba(255,255,255,.7)" stroke-width="${1.6*k}" stroke-dasharray="${3*k} ${3*k}"/>`
+        : curl(tx,y,L*(0.85+((qi+m)%3)*.08),(qi%2?3:-3)*k,col); } });
+    return `${t}<path d="M${x-w} ${y} V${y-hh*.8} Q${x-w} ${y-hh} ${x-w*.7} ${y-hh} H${x+w*.7} Q${x+w} ${y-hh} ${x+w} ${y-hh*.8} V${y} Q${x} ${y+3*k} ${x-w} ${y}Z" fill="${c(85,.3)}" stroke="${c(94,.9)}" stroke-width="${sw}"/><path d="M${x-w/3} ${y-hh} V${y} M${x+w/3} ${y-hh} V${y}" stroke="${c(94,.45)}" stroke-width="${.8*k}"/>`; }
+  if(sh==='float'){ let t=''; for(let i=0;i<7;i++){ const tx=x-10*k+i*3.5*k; t+=curl(tx,y+4*k,(40+(i%3)*18)*k,(i%2?4:-4)*k,`hsla(${H},80%,70%,.75)`); }
+    return `${t}<path d="M${x-24*k} ${y+2*k} Q${x-26*k} ${y-14*k} ${x-4*k} ${y-16*k} Q${x+22*k} ${y-18*k} ${x+26*k} ${y-2*k} Q${x+4*k} ${y+8*k} ${x-24*k} ${y+2*k}Z" fill="hsla(${H},70%,75%,.8)" stroke="hsla(${H},80%,90%,.9)" stroke-width="${sw}"/><path d="M${x-14*k} ${y-14*k} q4 -8 8 -2 q4 -8 8 -2 q4 -8 8 -1" stroke="hsla(320,70%,75%,.9)" stroke-width="${1.6*k}" fill="none"/>`; }
+  if(sh==='sail'){ let t=''; for(let i=0;i<9;i++){ const tx=x-16*k+i*4*k; t+=`<path d="M${tx} ${y+3*k} v${(6+(i%3)*2)*k}" stroke="hsla(${H},80%,65%,.8)" stroke-width="${1.4*k}" stroke-linecap="round"/>`; }
+    return `${t}<ellipse cx="${x}" cy="${y}" rx="${22*k}" ry="${7*k}" fill="hsla(${H},75%,55%,.85)" stroke="hsla(${H},80%,85%,.9)" stroke-width="${sw}"/><path d="M${x-14*k} ${y-2*k} L${x+10*k} ${y-26*k} L${x+12*k} ${y-2*k}Z" fill="rgba(230,245,255,.55)" stroke="rgba(255,255,255,.85)" stroke-width="${sw}"/>`; }
+  if(sh==='disc'){ let t=''; for(let i=0;i<18;i++){ const a=i*20*Math.PI/180, r1=12*k, r2=22*k; t+=`<path d="M${x+Math.cos(a)*r1} ${y+Math.sin(a)*r1*.6} L${x+Math.cos(a)*r2} ${y+Math.sin(a)*r2*.6+6*k}" stroke="hsla(${H},80%,65%,.85)" stroke-width="${1.6*k}" stroke-linecap="round"/><circle cx="${x+Math.cos(a)*r2}" cy="${y+Math.sin(a)*r2*.6+6*k}" r="${1.4*k}" fill="hsla(${H},90%,80%,.95)"/>`; }
+    return `${t}<ellipse cx="${x}" cy="${y}" rx="${13*k}" ry="${8*k}" fill="hsla(45,70%,70%,.9)" stroke="rgba(255,255,255,.9)" stroke-width="${sw}"/><ellipse cx="${x}" cy="${y}" rx="${6*k}" ry="${3.6*k}" fill="hsla(${H},60%,55%,.8)"/>`; }
+  if(sh==='chain'){ let t=`<path d="M${x} ${y-26*k} C${x+8*k} ${y} ${x-8*k} ${y+20*k} ${x+4*k} ${y+52*k}" stroke="${c(85,.6)}" stroke-width="${k}" fill="none"/>`;
+    const n=sp.thin?8:5; for(let i=0;i<n;i++){ const by=y-26*k+i*(sp.thin?8:10)*k, bx=x+Math.sin(i)*3*k, r=(sp.thin?3:5.5)*k;
+      t+=`<ellipse cx="${bx}" cy="${by}" rx="${r}" ry="${r*1.25}" fill="${c(80,.45)}" stroke="${c(94,.85)}" stroke-width="${.9*k}"/>`;
+      if(sp.tuft) t+=`<path d="M${bx-r} ${by} l${-5*k} ${6*k} M${bx+r} ${by} l${5*k} ${6*k}" stroke="${c(70,.8)}" stroke-width="${1.6*k}" stroke-linecap="round"/>`; }
+    if(sp.thin) t=`<circle cx="${x}" cy="${y-32*k}" r="${4*k}" fill="${c(65,.85)}"/>`+t;
+    return t; }
+  if(sh==='barrel'){ const one=(bx,by,q)=>`<rect x="${bx-11*q*k}" y="${by-16*q*k}" width="${22*q*k}" height="${32*q*k}" rx="${9*q*k}" fill="${c(88,.22)}" stroke="${c(94,.85)}" stroke-width="${sw}"/>`+[-.5,-.15,.2,.55].map(f=>`<path d="M${bx-10*q*k} ${by+f*28*q*k} Q${bx} ${by+(f-.08)*28*q*k} ${bx+10*q*k} ${by+f*28*q*k}" stroke="${c(80,.55)}" stroke-width="${1.4*k}" fill="none"/>`).join('')+`<circle cx="${bx}" cy="${by+8*q*k}" r="${2.6*q*k}" fill="hsla(30,70%,55%,.85)"/>`;
+    return sp.train ? one(x-16*k,y-10*k,.7)+one(x,y,.7)+one(x+16*k,y+10*k,.7) : one(x,y,1); }
+  if(sh==='tube'){ let d=''; for(let i=0;i<14;i++) d+=`<circle cx="${x+((i*37)%11-5)*k}" cy="${y-24*k+i*3.6*k}" r="${1.6*k}" fill="rgba(200,240,255,.85)"/>`;
+    return `<rect x="${x-9*k}" y="${y-30*k}" width="${18*k}" height="${60*k}" rx="${9*k}" fill="${c(72,.5)}" stroke="${c(90,.85)}" stroke-width="${sw}"/>${d}`; }
+  if(sh==='tadpole') return `<path d="M${x+8*k} ${y} C${x+20*k} ${y-8*k} ${x+28*k} ${y+8*k} ${x+40*k} ${y-2*k}" stroke="${c(85,.8)}" stroke-width="${3*k}" fill="none" stroke-linecap="round"/><ellipse cx="${x}" cy="${y}" rx="${10*k}" ry="${7*k}" fill="${c(75,.7)}" stroke="${c(92,.9)}" stroke-width="${sw}"/><ellipse cx="${x-30*k}" cy="${y}" rx="${0}" ry="0"/>`;
+  if(sh==='polyp'){ let t=''; for(let i=0;i<6;i++){ const a=(-150+i*24)*Math.PI/180; t+=`<path d="M${x} ${y-14*k} q${Math.cos(a)*14*k} ${Math.sin(a)*10*k} ${Math.cos(a)*24*k} ${Math.sin(a)*24*k}" stroke="${c(70,.9)}" stroke-width="${1.6*k}" fill="none" stroke-linecap="round"/>`; }
+    return `${t}<path d="M${x-3*k} ${y+26*k} Q${x-5*k} ${y} ${x-4*k} ${y-14*k} L${x+4*k} ${y-14*k} Q${x+5*k} ${y} ${x+3*k} ${y+26*k}Z" fill="${c(55,.85)}" stroke="${c(80,.9)}" stroke-width="${k}"/>`; }
+  if(sh==='hydroid'){ let t=`<path d="M${x} ${y+28*k} V${y-24*k}" stroke="${c(60,.9)}" stroke-width="${1.6*k}"/>`;
+    for(let i=0;i<5;i++){ const yy=y+18*k-i*10*k, dir=i%2?1:-1, ex=x+dir*14*k, ey=yy-8*k;
+      t+=`<path d="M${x} ${yy} Q${x+dir*6*k} ${yy-2*k} ${ex} ${ey}" stroke="${c(60,.9)}" stroke-width="${1.2*k}" fill="none"/>`;
+      t+= sp.fern ? `<path d="M${ex} ${ey} l${dir*3*k} ${-4*k} M${(x+ex)/2} ${(yy+ey)/2} l${dir*2*k} ${-5*k}" stroke="${c(65,.9)}" stroke-width="${1.6*k}" stroke-linecap="round"/>`
+        : `<path d="M${ex-3.5*k} ${ey-6*k} L${ex-2*k} ${ey} H${ex+2*k} L${ex+3.5*k} ${ey-6*k}" fill="${c(85,.45)}" stroke="${c(94,.9)}" stroke-width="${.9*k}"/>`; }
+    return t; }
+  if(sh==='stalk'){ let t=''; const arms=8; for(let i=0;i<arms;i++){ const ax=x-18*k+i*36*k/(arms-1), ay=y-18*k-Math.sin(i/(arms-1)*Math.PI)*6*k; t+=`<circle cx="${ax}" cy="${ay}" r="${3.2*k}" fill="${c(65,.85)}"/><circle cx="${ax}" cy="${ay-2*k}" r="${1.4*k}" fill="rgba(255,255,255,.7)"/>`; }
+    const cross= sp.id==='jumonji' ? `<path d="M${x-12*k} ${y-14*k} L${x+12*k} ${y-4*k} M${x+12*k} ${y-14*k} L${x-12*k} ${y-4*k}" stroke="${c(50,.8)}" stroke-width="${1.6*k}"/>` : '';
+    return `<path d="M${x-20*k} ${y-16*k} Q${x-6*k} ${y-2*k} ${x-3*k} ${y+8*k} L${x-3*k} ${y+26*k} H${x+3*k} L${x+3*k} ${y+8*k} Q${x+6*k} ${y-2*k} ${x+20*k} ${y-16*k} Q${x} ${y-10*k} ${x-20*k} ${y-16*k}Z" fill="${c(70,.55)}" stroke="${c(90,.85)}" stroke-width="${sw}"/>${cross}${t}`; }
+  if(sh==='belt') { let st=''; for(let i=0;i<9;i++){ const bx=x-36*k+i*9*k; st+=`<circle cx="${bx}" cy="${y-5*k+Math.sin(i)*3*k}" r="${1.2*k}" fill="hsl(${i*40},90%,72%)"/>`; }
+    return `<path d="M${x-40*k} ${y} C${x-20*k} ${y-14*k} ${x+20*k} ${y+10*k} ${x+40*k} ${y-4*k} L${x+40*k} ${y+6*k} C${x+20*k} ${y+20*k} ${x-20*k} ${y-4*k} ${x-40*k} ${y+10*k}Z" fill="${c(80,.35)}" stroke="${c(92,.85)}" stroke-width="${sw}"/>${st}`; }
+  if(sh==='yaji'){ const w=11*k, hh=14*k;
+    return `<path d="M${x-3*k} ${y} C${x-30*k} ${y+4*k} ${x-40*k} ${y+18*k} ${x-46*k} ${y+34*k}" stroke="${c(88,.8)}" stroke-width="${1.3*k}" fill="none"/><path d="M${x+3*k} ${y} C${x+30*k} ${y+4*k} ${x+40*k} ${y+18*k} ${x+46*k} ${y+34*k}" stroke="${c(88,.8)}" stroke-width="${1.3*k}" fill="none"/><path d="M${x-w} ${y} Q${x-w} ${y-hh*1.3} ${x} ${y-hh*1.3} Q${x+w} ${y-hh*1.3} ${x+w} ${y} Q${x} ${y+3*k} ${x-w} ${y}Z" fill="${c(82,.4)}" stroke="${c(94,.9)}" stroke-width="${sw}"/>`; }
+  if(sh==='crown'){ const w=(sp.flatc?24:18)*k, hh=(sp.flatc?14:30)*k; let t='';
+    for(let i=0;i<10;i++){ const tx=x-w+i*2*w/9; t+=`<path d="M${tx} ${y} q${(i%2?3:-3)*k} ${-10*k} ${(i<5?-6:6)*k} ${-16*k}" stroke="${c(60,.8)}" stroke-width="${1.8*k}" fill="none" stroke-linecap="round"/>`; }
+    return `${t}<path d="M${x-w} ${y} L${x-w*.8} ${y-hh*.45} Q${x-w*.8} ${y-hh*1.1} ${x} ${y-hh*1.15} Q${x+w*.8} ${y-hh*1.1} ${x+w*.8} ${y-hh*.45} L${x+w} ${y} Q${x} ${y+5*k} ${x-w} ${y}Z" fill="${c(55,.8)}" stroke="${c(80,.9)}" stroke-width="${sw}"/><path d="M${x-w*.8} ${y-hh*.45} Q${x} ${y-hh*.3} ${x+w*.8} ${y-hh*.45}" stroke="${c(80,.8)}" stroke-width="${1.4*k}" fill="none"/>`; }
+  const up=sh==='upside', horn=sh==='horn', w=(sh==='tall'||horn?18:sh==='flat'?28:24)*k, hh=(sh==='tall'||horn?38:sh==='flat'?22:30)*k;
+  let ten=''; const nt=sp.nt!==undefined?sp.nt:(sp.id==='kami'||sp.id==='hana'?9:sp.id==='tako'?4:6), len=(sp.len||(sp.id==='tako'?28:48))*k;
+  for(let i=0;i<nt;i++){ const tx=x+(i-(nt-1)/2)*(2*w/(nt+1)), ww=(i%2?5:-5)*k, col=(sp.id==='hana'||sp.rainbow)?`hsla(${(i*40)%360},80%,70%,.8)`:sp.fluffy?'rgba(255,255,255,.75)':c(85,.55);
     ten+= sp.id==='tako' ? `<path d="M${tx} ${y+2*k} q${ww} ${len*.5} 0 ${len}" stroke="${c(70,.8)}" stroke-width="${4*k}" stroke-linecap="round" fill="none"/>`
-      : `<path d="M${tx} ${y+2*k} C${tx+ww} ${y+len*.4} ${tx-ww} ${y+len*.7} ${tx} ${y+len}" stroke="${col}" stroke-width="${1.2*k}" fill="none"/>`; }
+      : curl(tx,y+2*k,len*(sp.fluffy?.6+(i%3)*.15:1),ww,col,sp.fluffy?2.2*k:sw); }
+  if(sp.arms){ for(let i=0;i<4;i++){ const ax=x+(i-1.5)*w*.28, L=(sp.len&&sp.nt?sp.len*.7:42)*k*(sp.big?1.1:1); ten+=`<path d="M${ax} ${y+2*k} C${ax+(i%2?6:-6)*k} ${y+L*.35} ${ax-(i%2?6:-6)*k} ${y+L*.7} ${ax+(i%2?2:-2)*k} ${y+L}" stroke="${c(sp.dark?70:72,.75)}" stroke-width="${4.2*k}" stroke-linecap="round" fill="none" stroke-dasharray="${5*k} ${1.2*k}"/>`; } }
+  if(sp.stem) ten+=`<path d="M${x} ${y-hh*.6} V${y+hh*1.6}" stroke="${c(80,.85)}" stroke-width="${2.6*k}" stroke-linecap="round"/><circle cx="${x}" cy="${y+hh*1.6}" r="${2.4*k}" fill="${c(70,.9)}"/>`;
   let pat='';
   if(sp.pat==='ring') for(let i=0;i<4;i++){ const a=(i*90+45)*Math.PI/180; pat+=`<circle cx="${x+Math.cos(a)*w*.32}" cy="${y-hh*.42+Math.sin(a)*hh*.18}" r="${4*k}" fill="none" stroke="hsla(${H+120},60%,80%,.9)" stroke-width="${1.6*k}"/>`; }
   if(sp.pat==='dots') for(let i=0;i<7;i++){ pat+=`<circle cx="${x+((i*37)%9-4)*w*.18}" cy="${y-hh*(.25+((i*53)%5)*.12)}" r="${2.2*k}" fill="rgba(255,255,255,.85)"/>`; }
   if(sp.pat==='stripe') for(let i=-3;i<=3;i++){ pat+=`<path d="M${x} ${y-hh*.95} L${x+i*w*.3} ${y-1*k}" stroke="${c(45,.7)}" stroke-width="${1.6*k}"/>`; }
   if(sp.pat==='core') pat+=`<ellipse cx="${x}" cy="${y-hh*.45}" rx="${w*.35}" ry="${hh*.3}" fill="${c(50,.85)}"/>`;
   if(sp.pat==='cross') pat+=`<path d="M${x-w*.6} ${y-hh*.35} H${x+w*.6} M${x} ${y-hh*.9} V${y}" stroke="${c(90,.8)}" stroke-width="${1*k}"/>`;
-  if(sp.pat==='rim') for(let i=0;i<9;i++){ pat+=`<circle cx="${x-w+i*w/4}" cy="${y-1*k}" r="${1.8*k}" fill="hsl(${sp.id==='owan'?140:(i*40)%360},90%,75%)"/>`; }
-  const bell=`<path d="M${x-w} ${y} Q${x-w} ${y-hh*1.25} ${x} ${y-hh*1.25} Q${x+w} ${y-hh*1.25} ${x+w} ${y} Q${x+w*.5} ${y+5*k} ${x} ${y} Q${x-w*.5} ${y+5*k} ${x-w} ${y}Z" fill="${c(sp.id==='giya'?92:78,sp.id==='giya'?.25:.55)}" stroke="${c(92,.9)}" stroke-width="${1.2*k}"/>`;
+  if(sp.pat==='rim') for(let i=0;i<9;i++){ pat+=`<circle cx="${x-w+i*w/4}" cy="${y-1*k}" r="${1.8*k}" fill="hsl(${sp.id==='owan'?140:sp.id==='kogane'?48:(i*40)%360},90%,75%)"/>`; }
+  if(sp.pat==='frill'&&!up) for(let i=0;i<10;i++){ pat+=`<path d="M${x-w+i*w/4.5} ${y-1*k} q${w/9} ${4*k} ${w/4.5} 0" stroke="${c(92,.9)}" stroke-width="${k}" fill="none"/>`; }
+  const top=horn?`Q${x-w} ${y-hh*.9} ${x} ${y-hh*1.45} Q${x+w} ${y-hh*.9}`:`Q${x-w} ${y-hh*1.25} ${x} ${y-hh*1.25} Q${x+w} ${y-hh*1.25}`;
+  const bell=`<path d="M${x-w} ${y} ${top} ${x+w} ${y} Q${x+w*.5} ${y+5*k} ${x} ${y} Q${x-w*.5} ${y+5*k} ${x-w} ${y}Z" fill="${c(sp.id==='giya'||sp.s<=15?92:78,sp.id==='giya'?.25:sp.s<=15?.35:.55)}" stroke="${c(92,.9)}" stroke-width="${sw}"/>`;
   if(up){ let fr=''; for(let i=0;i<8;i++){ const fx=x-w+i*w*2/7; fr+=`<circle cx="${fx}" cy="${y-hh*.5-(i%2)*6*k}" r="${5*k}" fill="${c(55,.75)}"/>`; }
     return `<path d="M${x-w} ${y} Q${x} ${y+hh*.9} ${x+w} ${y} Z" fill="${c(70,.55)}" stroke="${c(90,.85)}" stroke-width="${1.2*k}"/>${fr}<path d="M${x-w*.6} ${y} V${y-hh*.45} M${x+w*.6} ${y} V${y-hh*.45} M${x} ${y} V${y-hh*.55}" stroke="${c(70,.8)}" stroke-width="${2*k}"/>`; }
   return ten+bell+pat;
 }
+
 /* 育てているあいだの絵（中身はまだひみつ） */
 function stageSVG(fed){
   const g=growOf(fed).n, C='rgba(200,236,250,', x=110, y=92; let s='';
@@ -16349,7 +16475,7 @@ function tankSVG(tank){
 }
 const DROP_I = `<svg class="dropi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5C9 7 6 10.5 6 14.2A6 6 0 0 0 18 14.2C18 10.5 15 7 12 2.5Z"/></svg>`;
 function vSea(){
-  const s=seaInit(), g=growOf(s.fed), got=new Set(s.tank.map(t=>t.sp)), h=S.hatched?spOf(S.hatched):null;
+  const s=seaInit(), g=growOf(s.fed), got=new Set(s.tank.map(t=>t.sp).filter(id=>SP.some(x=>x.id===id))), h=S.hatched?spOf(S.hatched):null;
   const need=SEA_NEED-s.fed, nextG=GROW.find(x=>x.at>s.fed);
   return `<div class="stack"><div class="hello"><div class="eyebrow">クラゲの海</div><h1>しずくでクラゲを育てよう</h1></div>
   <div class="seabox">${tankSVG(s.tank)}<div class="seacount"><span>水そうのクラゲ <b class="num">${s.tank.length}</b> ひき</span><span>図鑑 <b class="num">${got.size}</b> / ${SP.length}</span></div></div>
