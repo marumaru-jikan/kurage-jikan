@@ -666,6 +666,11 @@ const PDF = {
   'm1c1-lv3': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[7,8], ar:[9,10] },
   'm1c1-lv4': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[11,12], ar:[13,14] },
   'm1c1-lv5': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[15,16], ar:[17,18] },
+  'm1c2-lv1': { q:'pdf/m1c2.pdf', a:'pdf/m1c2.pdf', qr:[1,1], ar:[2,2] },
+  'm1c2-lv2': { q:'pdf/m1c2.pdf', a:'pdf/m1c2.pdf', qr:[3,4], ar:[5,6] },
+  'm1c2-lv3': { q:'pdf/m1c2.pdf', a:'pdf/m1c2.pdf', qr:[7,8], ar:[9,10] },
+  'm1c2-lv4': { q:'pdf/m1c2.pdf', a:'pdf/m1c2.pdf', qr:[11,12], ar:[13,14] },
+  'm1c2-lv5': { q:'pdf/m1c2.pdf', a:'pdf/m1c2.pdf', qr:[15,16], ar:[17,18] },
   'm2c1-lv1': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[1,1], ar:[2,2] },
   'm2c1-lv2': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[3,4], ar:[5,6] },
   'm2c1-lv3': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[7,9], ar:[10,11] },
@@ -1217,6 +1222,40 @@ const CARDS = [
   ['加法のルール','同じ符号 → 絶対値の和に共通の符号。違う符号 → 絶対値の差に、絶対値が大きいほうの符号。'],
   ['減法のルール','引く数の符号を変えて、加法に直す。'],
   ['乗法・除法の符号','負の数が偶数個 → ＋。奇数個 → −。'],
+  ['整数','…, −2, −1, 0, 1, 2, … のように、負の整数・0・正の整数（自然数）をあわせたもの。'],
+  ['項','加法だけの式で、＋で結ばれた1つ1つの数。−5＋9 の項は −5 と ＋9。'],
+  ['加法の交換法則・結合法則','a＋b＝b＋a、(a＋b)＋c＝a＋(b＋c)。'],
+  ['乗法の交換法則・結合法則','a×b＝b×a、(a×b)×c＝a×(b×c)。'],
+  ['逆数','2つの数の積が1になるとき、一方を他方の逆数という。−2/3 の逆数は −3/2。'],
+  ['累乗・指数','同じ数をいくつかかけたものが累乗。5×5＝5² の右上の 2 を指数という。'],
+  ['(−3)² と −3²','(−3)²＝(−3)×(−3)＝9、−3²＝−(3×3)＝−9。'],
+  ['四則','加法・減法・乗法・除法をまとめた言い方。計算の順序は 指数・かっこ → 乗除 → 加減。'],
+  ['分配法則','(a＋b)×c＝a×c＋b×c、c×(a＋b)＝c×a＋c×b。'],
+  ['数の集合と四則','自然数どうしの減法・除法、整数どうしの除法は、答えがその集合に入らないことがある。'],
+  ['素数','1 とその数自身のほかに約数がない自然数。1 は素数にふくめない。'],
+  ['素因数分解','自然数を素数だけの積で表すこと。60＝2²×3×5。'],
+  ['仮平均','平均を求めるときに基準にする値。平均＝仮平均＋（仮平均との違いの合計）÷個数。'],
+];
+const M1C2_CARDS = [
+  ['文字式','文字を使った式。50×a など。'],
+  ['文字式の表し方①','かけ算の記号 × を省いて書く。a×b → ab'],
+  ['文字式の表し方②','文字と数の積では、数を文字の前に書く。1×a は a、(−1)×a は −a。'],
+  ['文字式の表し方③','同じ文字の積は指数を使って書く。a×a×a → a³'],
+  ['文字式の表し方④','わり算は ÷ を使わず、分数の形で書く。a÷3 → a/3'],
+  ['a％・a割','a％ → a/100、a割 → a/10。3割引き → 定価の 7/10。'],
+  ['速さの関係','道のり＝速さ×時間、時間＝道のり÷速さ、速さ＝道のり÷時間。'],
+  ['代入','式の中の文字に数をあてはめること。負の数は（ ）をつけて代入する。'],
+  ['式の値','文字に数を代入して計算した結果。'],
+  ['項（文字式）','＋で結ばれた1つ1つ。2x−y−3 の項は 2x、−y、−3。'],
+  ['係数','文字をふくむ項の数の部分。2x の係数は 2、−y の係数は −1。'],
+  ['1次の項・一次式','文字が1つだけの項が1次の項。1次の項だけ、または1次の項と数の項の和の式が一次式。'],
+  ['項をまとめる','mx＋nx＝(m＋n)x。文字の項どうし、数の項どうしをまとめる。'],
+  ['かっこのはずし方','a＋(b＋c)＝a＋b＋c、a−(b＋c)＝a−b−c。'],
+  ['文字式と数の乗除','m(a＋b)＝ma＋mb、(a＋b)÷m＝a/m＋b/m。分数でわるときは逆数をかける。'],
+  ['等式','等号＝を使って、2つの数量が等しい関係を表した式。'],
+  ['左辺・右辺・両辺','等号（不等号）の左側の式が左辺、右側が右辺、両方をあわせて両辺。'],
+  ['不等式','不等号を使って、2つの数量の大小関係を表した式。'],
+  ['不等号の意味','a＞b：aはbより大きい　a＜b：aはbより小さい（未満）　a≧b：以上　a≦b：以下'],
 ];
 
 /* ===== クラゲカード ===== */
@@ -16241,7 +16280,7 @@ const UNITS = {
   civ0:{ no:'', title:'コラム　公民とは', subject:'社会', course:'jso', subj:10, lessons:CIV0_LESSONS },
   hist0:{ no:'', title:'コラム　歴史とは', subject:'社会', course:'jso', subj:3, lessons:HIST0_LESSONS },
   geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
-  m1c2:{ no:'2', title:'文字の式', subject:'数学', course:'j1', subj:0, lessons:M1C2_LESSONS },
+  m1c2:{ no:'2', title:'文字の式', subject:'数学', course:'j1', subj:0, lessons:M1C2_LESSONS, cards:M1C2_CARDS, drill:'m1c2' },
   pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:M1C1_LESSONS, cards:true, drill:'m1c1' },
   kuku:{ no:'1', title:'九九', subject:'算数', course:'rev', subj:0, lessons:KUKU_LESSONS },
   wari:{ no:'2', title:'わり算', subject:'算数', course:'rev', subj:0, lessons:WARI_LESSONS },
@@ -16418,7 +16457,7 @@ function vUnit(){
   return `${top((u.no?u.no+'　':'')+u.title)}<div class="stack"><p class="muted small">${u.lessons.length}しずく　1しずく約5分。上から順に進めるのがおすすめです。</p><div class="list">
   ${u.lessons.map((l,i)=>`${l.sec?`<div class="secrow">${String(l.sec).replace(/^[0-9０-９]+[\s　]*(?=章末)/,'')}</div>`:''}<button class="item" data-act="lesson" data-arg="${l.id}"><span class="lid ${R.lessons[lkey(uid,l.id)]?'done':''}">${l.id}</span><span class="body"><b>${l.t}</b><br><span class="small muted">${l.sub}</span></span>${lTag(uid,l.id)}<span class="chev">›</span></button>${((u.xlinks||{})[l.id]||[]).map(x=>`<button class="item" data-act="lesson" data-uid="${x.uid}" data-arg="${x.lid}"><span class="lid ${R.lessons[lkey(x.uid,x.lid)]?'done':''}">${x.id}</span><span class="body"><b>${x.t}</b><br><span class="small muted">${x.sub}</span></span><span class="tag">リンク</span><span class="chev">›</span></button>`).join('')}`).join('')}
   ${u.drill?`<button class="item" data-act="go" data-arg="drill"><span class="lid">▶</span><span class="body"><b>${u.drillLabel||'演習問題'}</b><br><span class="small muted">PDF・Lv1〜Lv5</span></span><span class="chev">›</span></button>`:''}
-  </div>${u.cards?`<div class="list"><button class="item" data-act="cards"><span class="body"><b>用語カード</b><br><span class="small muted">用語の確認 ${CARDS.length}枚</span></span><span class="tag ${R.known.length===CARDS.length?'done':R.known.length?'mid':''}">${R.known.length}/${CARDS.length}</span><span class="chev">›</span></button></div>`:''}</div>`;
+  </div>${u.cards?`<div class="list"><button class="item" data-act="cards"><span class="body"><b>用語カード</b><br><span class="small muted">用語の確認 ${CD().length}枚</span></span><span class="tag ${KN().length===CD().length?'done':KN().length?'mid':''}">${KN().length}/${CD().length}</span><span class="chev">›</span></button></div>`:''}</div>`;
 }
 function vLesson(){
   const l=LX(S.lid);
@@ -16426,13 +16465,15 @@ function vLesson(){
   <div class="chips"><span class="tag">約5分</span><span class="tag">${l.test?'テスト':'説明 → 練習'} ${l.plan.length}問</span>${R.lessons[lkey(S.uid,l.id)]?'<span class="tag done">クリア済み</span>':''}</div>
   ${l.body()}${l.plan.length?`<button class="btn wide" data-act="quiz">${l.test?'テストを始める':'練習を始める（'+l.plan.length+'問）'}</button>`:`<button class="btn wide" data-act="readDone">読み終えた</button>`}</div>`;
 }
-function deckNext(){ const left=CARDS.map((_,i)=>i).filter(i=>!R.known.includes(i)); return left.length?left[0]:-1; }
+const CD=()=>{ const u=UNITS[S.uid]; return u&&Array.isArray(u.cards)?u.cards:CARDS; };
+const KN=()=>{ const u=UNITS[S.uid]; if(!u||!Array.isArray(u.cards)) return R.known; R.knownBy=R.knownBy||{}; return R.knownBy[S.uid]=R.knownBy[S.uid]||[]; };
+function deckNext(){ const left=CD().map((_,i)=>i).filter(i=>!KN().includes(i)); return left.length?left[0]:-1; }
 function vCards(){
-  const d=S.deck, known=R.known.length;
-  if (d.cur===-1) return `${top('用語カード')}<div class="stack"><div class="panel result pop"><div class="big">${CARDS.length}/${CARDS.length}</div><h2>全部覚えました</h2><p class="muted">ときどき見直すと、忘れにくくなります。</p></div><button class="btn ghost wide" data-act="cardsReset">最初から見直す</button></div>`;
-  const [term,def]=CARDS[d.cur];
-  return `${top('用語カード')}<div class="stack"><div class="row" style="justify-content:space-between"><span class="small muted">覚えた ${known} / ${CARDS.length}</span><span class="small muted">タップで裏返す</span></div>
-  <div class="meter"><i style="width:${Math.round(known/CARDS.length*100)}%"></i></div>
+  const d=S.deck, known=KN().length;
+  if (d.cur===-1) return `${top('用語カード')}<div class="stack"><div class="panel result pop"><div class="big">${CD().length}/${CD().length}</div><h2>全部覚えました</h2><p class="muted">ときどき見直すと、忘れにくくなります。</p></div><button class="btn ghost wide" data-act="cardsReset">最初から見直す</button></div>`;
+  const [term,def]=CD()[d.cur];
+  return `${top('用語カード')}<div class="stack"><div class="row" style="justify-content:space-between"><span class="small muted">覚えた ${known} / ${CD().length}</span><span class="small muted">タップで裏返す</span></div>
+  <div class="meter"><i style="width:${Math.round(known/CD().length*100)}%"></i></div>
   <button class="card ${S.flipped?'flipped':''} pop" data-act="flip" aria-label="カードを裏返す">${S.flipped?`<span class="side">意味</span><span class="term" style="font-size:1.2rem">${term}</span><span class="def">${def}</span>`:`<span class="side">用語</span><span class="term">${term}</span><span class="small muted">意味を思い出してからタップ</span>`}</button>
   <div class="two"><button class="btn ghost" data-act="cardLater">もう一回</button><button class="btn" data-act="cardKnown">覚えた</button></div></div>`;
 }
@@ -17035,9 +17076,9 @@ document.addEventListener('click', e=>{
   else if(a==='quiz') startQuiz();
   else if(a==='cards'){ S.deck={cur:deckNext()}; S.flipped=false; markDay(); go('cards'); }
   else if(a==='flip'){ S.flipped=!S.flipped; render(); }
-  else if(a==='cardKnown'){ if(!R.known.includes(S.deck.cur)) R.known.push(S.deck.cur); save(); S.deck.cur=deckNext(); S.flipped=false; render(); }
-  else if(a==='cardLater'){ const left=CARDS.map((_,i)=>i).filter(i=>!R.known.includes(i)); S.deck.cur=left[(left.indexOf(S.deck.cur)+1)%left.length]; S.flipped=false; render(); }
-  else if(a==='cardsReset'){ R.known=[]; save(); S.deck.cur=deckNext(); S.flipped=false; render(); }
+  else if(a==='cardKnown'){ if(!KN().includes(S.deck.cur)) KN().push(S.deck.cur); save(); S.deck.cur=deckNext(); S.flipped=false; render(); }
+  else if(a==='cardLater'){ const left=CD().map((_,i)=>i).filter(i=>!KN().includes(i)); S.deck.cur=left[(left.indexOf(S.deck.cur)+1)%left.length]; S.flipped=false; render(); }
+  else if(a==='cardsReset'){ KN().length=0; save(); S.deck.cur=deckNext(); S.flipped=false; render(); }
   else if(a==='hint'){ S.quiz.hint=true; render(); }
   else if(a==='padClear'){ S.pad.strokes=[]; drawPad(); }
   else if(a==='judge'){ const q=S.quiz.qs[S.quiz.i]; const res=q.kind==='kwrite'?judgeKanji(S.pad.strokes, q.target):judgeWriting(padToUnits(), q.target);
