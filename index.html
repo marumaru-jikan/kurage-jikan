@@ -7787,9 +7787,9 @@ const M1C4_LESSONS = [
   { id:'3-4', t:'反比例のグラフ', sub:'双曲線', plan:Array(5).fill('m1HiG'), body:()=>`
     <section class="panel"><h3>反比例のグラフ</h3>${m1Grid({hyps:[{a:8},{a:-8}]})}${ex('y＝'+frH(8,'x')+'（赤）、y＝−'+frH(8,'x')+'（青）')}${rule('反比例のグラフは、原点について対称な 双曲線<br>x 軸・y 軸にかぎりなく近づくが、交わらない')}<p class="small muted">対応する x、y の値の組をたくさんとって、なめらかな曲線で結ぶ。</p></section>` },
   { id:'4-1', sec:'4　比例，反比例の利用', t:'比例の利用', sub:'枚数・重さ・時間', plan:Array(5).fill('m1Use1'), body:()=>`
-    <section class="panel"><h3>比例を使う</h3>${ex('画用紙20枚で6mm。全部で96mm のときの枚数<br>y＝'+frH(3,10)+'x に y＝96 → x＝320（枚）')}${ex('4km を分速200m：y＝200x（0≦x≦20）')}<p class="small muted">x の変域にも注意しよう。</p></section>` },
+    <section class="panel"><h3>比例を使う</h3><p><b>〇 画用紙20枚を重ねると、厚さは6mmでした。同じ画用紙を重ねたら、厚さが96mmになりました。画用紙は何枚？</b></p>${ex('x 枚の厚さを y mm とすると、y は x に比例するので y＝ax<br>x＝20 のとき y＝6 より<br>'+m1EqA(['6＝20a','a＝'+frH(3,10)])+'<br>y＝'+frH(3,10)+'x に y＝96 を代入<br>'+m1EqA(['96＝'+frH(3,10)+'x','x＝320'])+'<br>答 320枚')}<p><b>〇 家から4km はなれた図書館まで、分速200mで歩きます。出発して x 分後に進んだ道のりを y m として、y を x の式で表そう。また、x の変域も求めよう。</b></p>${ex('道のり ＝ 速さ × 時間 より y＝200x<br>4km＝4000m なので、着くのは 4000÷200＝20（分後）<br>答 y＝200x（0≦x≦20）')}<p class="small muted">x の変域にも注意しよう。</p></section>` },
   { id:'4-2', t:'反比例の利用', sub:'積が一定', plan:Array(5).fill('m1Use2'), body:()=>`
-    <section class="panel"><h3>反比例を使う</h3>${ex('いす1列12脚で30列 → 全部で360脚<br>y＝'+frH(360,'x')+' に x＝18 → y＝20（列）')}${ex('かみ合う歯車：歯数×回転数 が等しい')}</section>` },
+    <section class="panel"><h3>反比例を使う</h3><p><b>〇 体育館にいすを1列に12脚ずつ並べると、ちょうど30列できました。1列に18脚ずつ並べると、何列できる？</b></p>${ex('1列に x 脚ずつ並べたときの列の数を y 列とすると<br>いすの数 ＝ 12×30 ＝ 360（脚）で一定なので<br>xy＝360、y＝'+frH(360,'x')+'<br>x＝18 を代入<br>'+m1EqA(['y＝'+frH(360,18),'y＝20'])+'<br>答 20列')}<p><b>〇 歯の数が30の歯車Aが毎分4回転しています。歯車Aにかみ合う、歯の数が x の歯車Bの毎分の回転数を y 回転として、y を x の式で表そう。</b></p>${rule('かみ合う歯車では、歯の数 × 回転数 が等しい')}${ex('30×4＝120 なので<br>xy＝120、y＝'+frH(120,'x')+'<br>（例）歯の数が20のとき y＝'+frH(120,20)+'＝6（回転）')}</section>` },
   { id:'5-1', sec:'章末テスト', t:'章末テスト', sub:'4章の総まとめ', test:true, plan:['m1Fn','m1Hen','m1PrE','m1PrP','m1PrF','m1Zahyo','m1PrG','m1HiE','m1HiP','m1HiF','m1HiG','m1Use1'], body:()=>`
     <section class="panel"><h3>4章　変化と対応　章末テスト</h3><p>1節〜4節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
 ];
@@ -17314,7 +17314,7 @@ function seaFeed(arg){
 const VIEWS={ jk:vJk, setup:vSetup, home:vHome, course:vCourse, subject:vSubject, unit:vUnit, lesson:vLesson, cards:vCards, quiz:vQuiz, result:vResult, record:vRecord, settings:vSettings, install:vInstall, drill:vDrill, pdf:vPdf, sea:vSea };
 function scriptXY(root){ const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest('svg,script,style,input,textarea,.noscr,.mv')?NodeFilter.FILTER_REJECT:(/[abcmnxy]/.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)}); const ns=[]; while(w.nextNode()) ns.push(w.currentNode);
   ns.forEach(n=>{ const str=n.nodeValue, re=/[A-Za-z]+/g; let m, last=0, parts=[], hit=false;
-    while((m=re.exec(str))){ const tok=m[0], off=m.index; let ok=/^[abcmnxy]+$/.test(tok)&&tok!=='cm';
+    while((m=re.exec(str))){ const tok=m[0], off=m.index; let ok=/^[abcmnxy]+$/.test(tok)&&tok!=='cm'&&tok!=='mm';
       if(ok&&tok==='m'){ const pv=str[off-1]||'', nx=str[off+1]||''; ok=(/[×²(（＋−+\-]/.test(nx)||/[×(（＋−+\-]/.test(pv))&&!/[)）]/.test(nx); }
       if(ok){ hit=true; parts.push(document.createTextNode(str.slice(last,off))); const e=document.createElement('i'); e.className='mv'; e.textContent=tok; parts.push(e); last=off+tok.length; } }
     if(!hit) return; parts.push(document.createTextNode(str.slice(last))); const f=document.createDocumentFragment(); parts.forEach(x=>f.appendChild(x)); n.parentNode.replaceChild(f,n); }); }
