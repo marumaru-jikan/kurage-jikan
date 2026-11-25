@@ -7982,15 +7982,15 @@ const M1C5_LESSONS = [
     <section class="panel"><h3>垂直と平行の記号</h3>${M5F_PP}${rule('垂直の記号は ⊥、平行の記号は //')}<p class="small muted">2直線が垂直のとき、一方を他方の 垂線 という。</p></section>
     <section class="panel"><h3>点と直線との距離</h3>${M5F_DIST}${rule('点 C から直線 AB に垂線をひき、交点を H とするとき、線分 CH の長さを 点 C と直線 AB との距離 という')}<p class="small muted">平行な2直線の距離は、どこではかっても等しい。</p></section>` },
   { id:'1-3', t:'三角形の表し方', sub:'△ABC', plan:['k5Tri','k5PP','k5Tri','k5Line','k5Tri'], body:()=>`
-    <section class="panel"><h3>三角形の表し方</h3>${rule('3点 A、B、C を頂点とする三角形を △ABC と表す')}<p><b>〇 図の中にあるすべての三角形を、記号を使って表そう。</b></p>${M5F_TRI(1)}${ex('△ABC、△ABD、△ADC')}<p class="small muted">たがいに平行でない3つの線分で囲まれた図形が三角形。</p></section>` },
+    <section class="panel"><h3>三角形の表し方</h3>${rule('3点 A、B、C を頂点とする三角形を △ABC と表す')}<p><b>〇 図の中のすべての三角形（記号で表す）</b></p>${M5F_TRI(1)}${ex('△ABC、△ABD、△ADC')}<p class="small muted">たがいに平行でない3つの線分で囲まれた図形が三角形。</p></section>` },
   { id:'2-1', sec:'2　移動と作図', t:'平行移動', sub:'一定の方向に一定の長さ', plan:Array(5).fill('k5Mv1'), body:()=>`
-    <section class="panel"><h3>平行移動</h3>${rule('図形を、一定の方向に一定の長さだけずらして移すことを 平行移動 という')}<p><b>〇 △PQR は △ABC を平行移動したものです。AP と長さが等しく、平行な線分は？</b></p>${M5F_TRANS}${rule('対応する点を結んだ線分どうしは 平行 で、その 長さはすべて等しい')}${ex('AP//BQ//CR、AP＝BQ＝CR')}</section>` },
+    <section class="panel"><h3>平行移動</h3>${rule('図形を、一定の方向に一定の長さだけずらして移すことを 平行移動 という')}<p><b>〇 △ABC を平行移動した図形が △PQR。AP と長さが等しく平行な線分</b></p>${M5F_TRANS}${rule('対応する点を結んだ線分どうしは 平行 で、その 長さはすべて等しい')}${ex('AP//BQ//CR、AP＝BQ＝CR')}</section>` },
   { id:'2-2', t:'回転移動', sub:'回転の中心と回転角', plan:Array(5).fill('k5Mv2'), body:()=>`
-    <section class="panel"><h3>回転移動</h3>${rule('図形を、1つの点 O を中心として一定の角度だけ回して移すことを 回転移動 といい、点 O を 回転の中心 という')}<p><b>〇 △PQR は △ABC を、点 O を中心として回転移動したものです。</b></p>${M5F_ROT}${rule('・対応する点は、回転の中心から 等しい距離 にある　OA＝OP<br>・対応する点と回転の中心を結んでできた角の大きさは すべて等しい　∠AOP＝∠BOQ＝∠COR')}<p class="small muted">180° の回転移動を 点対称移動 という。</p></section>` },
+    <section class="panel"><h3>回転移動</h3>${rule('図形を、1つの点 O を中心として一定の角度だけ回して移すことを 回転移動 といい、点 O を 回転の中心 という')}<p><b>〇 △ABC を、点 O を中心に回転移動した図形が △PQR</b></p>${M5F_ROT}${rule('・対応する点は、回転の中心から 等しい距離 にある　OA＝OP<br>・対応する点と回転の中心を結んでできた角の大きさは すべて等しい　∠AOP＝∠BOQ＝∠COR')}<p class="small muted">180° の回転移動を 点対称移動 という。</p></section>` },
   { id:'2-3', t:'対称移動', sub:'対称の軸で折り返す', plan:Array(5).fill('k5Mv3'), body:()=>`
-    <section class="panel"><h3>対称移動</h3>${rule('図形を、1つの直線 ℓ を折り目として折り返して移すことを 対称移動 といい、ℓ を 対称の軸 という')}<p><b>〇 △PQR は △ABC を、直線 ℓ を対称の軸として対称移動したものです。</b></p>${M5F_REF}${rule('対称の軸は、対応する2点を結んだ線分の 垂直二等分線')}<p class="small muted">AP⊥ℓ で、ℓ との交点で AP は2等分される。</p></section>` },
+    <section class="panel"><h3>対称移動</h3>${rule('図形を、1つの直線 ℓ を折り目として折り返して移すことを 対称移動 といい、ℓ を 対称の軸 という')}<p><b>〇 △ABC を、直線 ℓ を対称の軸として対称移動した図形が △PQR</b></p>${M5F_REF}${rule('対称の軸は、対応する2点を結んだ線分の 垂直二等分線')}<p class="small muted">AP⊥ℓ で、ℓ との交点で AP は2等分される。</p></section>` },
   { id:'2-4', t:'移動の組み合わせ', sub:'平行・回転・対称', plan:Array(5).fill('k5Mv4'), body:()=>`
-    <section class="panel"><h3>移動を見分ける</h3><p><b>〇 正方形 ABCD の各辺の中点を E、F、G、H、対角線の交点を O とします。△OAE を移動して重なる三角形は？</b></p>${M5F_SQ}${kmTbl([['平行移動','△OFC'],['点 O を中心に 180° 回転','△OCG'],['直線 EG について対称移動','△OEB'],['直線 HF について対称移動','△ODG']],['移動','重なる三角形'])}<p class="small muted">頂点の対応（A→？、E→？、O→？）を順に考えると、まちがえにくい。</p></section>` },
+    <section class="panel"><h3>移動を見分ける</h3><p><b>〇 正方形 ABCD（各辺の中点 E、F、G、H、対角線の交点 O）で、△OAE を移動して重なる三角形</b></p>${M5F_SQ}${kmTbl([['平行移動','△OFC'],['点 O を中心に 180° 回転','△OCG'],['直線 EG について対称移動','△OEB'],['直線 HF について対称移動','△ODG']],['移動','重なる三角形'])}<p class="small muted">頂点の対応（A→？、E→？、O→？）を順に考えると、まちがえにくい。</p></section>` },
   { id:'2-5', t:'垂直二等分線の作図', sub:'線分の中点', plan:Array(5).fill('k5Con'), body:()=>`
     <section class="panel"><h3>線分 AB の垂直二等分線</h3>${rule('線分の中点を通り、その線分に垂直な直線を 垂直二等分線 という')}${M5F_PB}${ex('① 点 A、B を中心として、等しい半径の円をかく<br>② その2円の交点を P、Q とする<br>③ 直線 PQ をひく')}<p class="small muted">垂直二等分線上の点は、2点 A、B から等しい距離にある。作図は定規とコンパスだけを使う。</p></section>` },
   { id:'2-6', t:'角の二等分線の作図', sub:'∠XOY を2等分', plan:Array(5).fill('k5Con'), body:()=>`
@@ -7999,18 +7999,18 @@ const M1C5_LESSONS = [
     <section class="panel"><h3>直線上の点 P を通る垂線</h3>${M5F_PL}${ex('① 点 P を中心とする円をかき、ℓ との交点を A、B とする<br>② A、B を中心として等しい半径の円をかき、交点を Q とする<br>③ 直線 PQ をひく')}<p class="small muted">180° の角（∠APB）の二等分線とみることができる。</p></section>
     <section class="panel"><h3>直線上にない点 P を通る垂線</h3>${ex('① 点 P を中心とする円をかき、ℓ との交点を A、B とする<br>② A、B を中心として等しい半径の円をかき、交点の1つを Q とする<br>③ 直線 PQ をひく')}<p class="small muted">線分 AB の垂直二等分線をひくのと同じ考え方。</p></section>` },
   { id:'2-8', t:'作図の利用', sub:'最短距離・いろいろな角', plan:Array(5).fill('k5Use'), body:()=>`
-    <section class="panel"><h3>最短距離</h3><p><b>〇 直線 ℓ 上に点 P をとり、AP＋PB が最短になるようにするには？</b></p>${M5F_SHORT}${ex('A を ℓ について対称移動した点を A′ とすると AP＝A′P<br>AP＋PB＝A′P＋PB が最短 → A′、P、B が一直線上<br>A′B と ℓ の交点を P とする')}</section>
+    <section class="panel"><h3>最短距離</h3><p><b>〇 AP＋PB が最短となる、直線 ℓ 上の点 P の位置</b></p>${M5F_SHORT}${ex('A を ℓ について対称移動した点を A′ とすると AP＝A′P<br>AP＋PB＝A′P＋PB が最短 → A′、P、B が一直線上<br>A′B と ℓ の交点を P とする')}</section>
     <section class="panel"><h3>いろいろな角</h3>${kmTbl([['60°','正三角形をかく'],['30°','60° の二等分線'],['90°','垂線'],['45°','90° の二等分線'],['15°','30° の二等分線（60° の '+frH(1,4)+'）']],['角','作図のしかた'])}</section>` },
   { id:'3-1', sec:'3　円とおうぎ形', t:'円の弧と弦', sub:'弧・弦・中心角', plan:Array(5).fill('k5Arc'), body:()=>`
     <section class="panel"><h3>弧・弦・中心角</h3>${M5F_ARC}${kmTbl([['弧 AB','円周の A から B までの部分'],['弦 AB','弧 AB の両端の点を結んだ線分'],['中心角','∠AOB を、弧 AB に対する中心角という']],['名前','意味'])}<p class="small muted">弦のうちいちばん長いのは直径。2つの半径と弧で囲まれた図形を おうぎ形 という。1つの円で、中心角が等しいおうぎ形は合同。</p></section>` },
   { id:'3-2', t:'円の接線', sub:'接線⊥半径', plan:Array(5).fill('k5Tan'), body:()=>`
     <section class="panel"><h3>円の接線</h3>${M5F_TAN}${rule('円と直線が1点だけを共有するとき、直線は円に 接する といい、その直線を 接線、共有する点を 接点 という')}${rule('円の接線は、その接点を通る半径に 垂直　ℓ⊥OA')}<p class="small muted">接点 A を通る接線は、半径 OA に A を通る垂線をひいて作図できる。</p></section>` },
   { id:'3-3', t:'円の周の長さと面積', sub:'π を使う', plan:['k5Circ','k5Circ','k5Circ','k5Circ','k5Circ'], body:()=>`
-    <section class="panel"><h3>円周率 π</h3>${rule('円周率を、ギリシャ文字の π（パイ）で表す<br>半径 r の円の周の長さを ℓ、面積を S とすると<br>ℓ＝2πr　　S＝πr²')}<p><b>〇 半径 4cm の円の周の長さと面積を求めよう。</b></p>${ex('周の長さ　2π×4＝8π（cm）<br>面積　π×4²＝16π（cm²）')}<p class="small muted">π をふくむ式では、数 → π → 文字 の順に書く（2πr）。</p></section>` },
+    <section class="panel"><h3>円周率 π</h3>${rule('円周率を、ギリシャ文字の π（パイ）で表す<br>半径 r の円の周の長さを ℓ、面積を S とすると<br>ℓ＝2πr　　S＝πr²')}<p><b>〇 半径 4cm の円の周の長さと面積</b></p>${ex('周の長さ　2π×4＝8π（cm）<br>面積　π×4²＝16π（cm²）')}<p class="small muted">π をふくむ式では、数 → π → 文字 の順に書く（2πr）。</p></section>` },
   { id:'3-4', t:'おうぎ形の弧の長さと面積', sub:'中心角 a°', plan:Array(5).fill('k5Sec'), body:()=>`
-    <section class="panel"><h3>おうぎ形の公式</h3>${M5F_SEC}${rule('半径 r、中心角 a° のおうぎ形の弧の長さを ℓ、面積を S とすると<br>ℓ＝2πr×'+frH('a',360)+'　　S＝πr²×'+frH('a',360))}<p><b>〇 半径 5cm、中心角 144° のおうぎ形の弧の長さと面積を求めよう。</b></p>${ex('弧の長さ　2π×5×'+frH(144,360)+'＝4π（cm）<br>面積　π×5²×'+frH(144,360)+'＝10π（cm²）')}<p class="small muted">おうぎ形の弧の長さや面積は、中心角の大きさに比例する。</p></section>` },
+    <section class="panel"><h3>おうぎ形の公式</h3>${M5F_SEC}${rule('半径 r、中心角 a° のおうぎ形の弧の長さを ℓ、面積を S とすると<br>ℓ＝2πr×'+frH('a',360)+'　　S＝πr²×'+frH('a',360))}<p><b>〇 半径 5cm、中心角 144° のおうぎ形の弧の長さと面積</b></p>${ex('弧の長さ　2π×5×'+frH(144,360)+'＝4π（cm）<br>面積　π×5²×'+frH(144,360)+'＝10π（cm²）')}<p class="small muted">おうぎ形の弧の長さや面積は、中心角の大きさに比例する。</p></section>` },
   { id:'3-5', t:'おうぎ形の中心角', sub:'比例式・公式で求める', plan:Array(5).fill('k5SecA'), body:()=>`
-    <section class="panel"><h3>中心角の求め方</h3>${rule('（おうぎ形の弧の長さ）：（円の周の長さ）＝（中心角）：360')}<p><b>〇 半径 6cm、弧の長さ 4π cm のおうぎ形の中心角の大きさを求めよう。</b></p>${ex('中心角を x° とすると、半径 6cm の円の周は 12π cm なので<br>'+m1EqA(['4π：12π＝x：360','12πx＝4π×360','x＝120']))}<p class="small muted">公式 4π＝2π×6×${frH('x',360)} を使って解いてもよい。</p></section>
+    <section class="panel"><h3>中心角の求め方</h3>${rule('（おうぎ形の弧の長さ）：（円の周の長さ）＝（中心角）：360')}<p><b>〇 半径 6cm、弧の長さ 4π cm のおうぎ形の中心角</b></p>${ex('中心角を x° とすると、半径 6cm の円の周は 12π cm なので<br>'+m1EqA(['4π：12π＝x：360','12πx＝4π×360','x＝120']))}<p class="small muted">公式 4π＝2π×6×${frH('x',360)} を使って解いてもよい。</p></section>
     <section class="panel"><h3>おうぎ形の面積（別の公式）</h3>${rule('S＝'+frH(1,2)+'ℓr（ℓ：弧の長さ、r：半径）')}${ex('半径 6cm、弧の長さ 4π cm → S＝'+frH(1,2)+'×4π×6＝12π（cm²）')}</section>` },
   { id:'4-1', sec:'章末テスト', t:'章末テスト', sub:'5章の総まとめ', test:true, plan:['k5Sym','k5Line','k5PP','k5Tri','k5Mv1','k5Mv2','k5Mv3','k5Mv4','k5Con','k5Use','k5Arc','k5Tan','k5Circ','k5Sec','k5SecA'], body:()=>`
     <section class="panel"><h3>5章　平面図形　章末テスト</h3><p>1節〜3節の範囲から15問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
