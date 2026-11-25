@@ -7507,7 +7507,7 @@ const M1C2_LESSONS = [
     <section class="panel"><h3>積・商の表し方</h3>${rule('① かけ算の記号 × を省く<br>② 数は文字の前に書く<br>③ 同じ文字の積は指数を使う<br>④ わり算は ÷ を使わず、分数の形で書く')}
     ${ex('b×4×a ＝ 4ab（文字はアルファベット順）')}${ex('m×m×3 ＝ 3m²')}${ex('(a＋b)÷2 ＝ '+frH('a＋b',2))}<p class="small muted">⚠ 1×x は x、(−1)×x は −x。記号 ＋、− は省略できません。</p></section>` },
   { id:'1-3', t:'文字式と数量', sub:'速さ・割合も文字式で', plan:Array(5).fill('m1Ryo'), body:()=>`
-    <section class="panel"><h3>ことばの式から</h3>${ex('1000円出して x 円のボールを2個<br>おつり ＝ 出したお金 − 代金 → 1000−2x（円）')}${ex('時速 y km で3時間 → 道のり ＝ 速さ × 時間 → 3y（km）')}${ex('a 人の11％ → '+frH(11,100)+'a（0.11a）人')}<p class="small muted">a％ ＝ ${frH('a',100)}、a割 ＝ ${frH('a',10)}。3割引き → 定価の ${frH(7,10)}</p></section>` },
+    <section class="panel"><h3>ことばの式から</h3><p><b>〇 1000円出して、1個 x 円のボールを2個買ったときのおつりは？</b></p>${rule('おつり ＝ 出したお金 − 代金')}${ex('1000 − x×2 ＝ 1000−2x（円）')}<p><b>〇 時速 y km で3時間進んだときの道のりは？</b></p>${rule('道のり ＝ 速さ × 時間')}${ex('y × 3 ＝ 3y（km）')}<p><b>〇 a 人の11％は何人？</b></p>${rule('11％ ＝ '+frH(11,100))}${ex('a × '+frH(11,100)+' ＝ '+frH(11,100)+'a（人）')}<p class="small muted">0.11a（人）と表してもよい。</p><p class="small muted">a％ ＝ ${frH('a',100)}、a割 ＝ ${frH('a',10)}。3割引き → 定価の ${frH(7,10)}</p></section>` },
   { id:'1-4', t:'式の意味', sub:'式が何を表すか', plan:Array(5).fill('m1Imi'), body:()=>`
     <section class="panel"><h3>式の意味を考える</h3><p>1本 a 円のばら、1本 b 円のゆり</p>${ex('a＋3b ＝ a×1 ＋ b×3<br>→ ばら1本とゆり3本の代金')}<p class="small muted">それぞれの項が何を表しているかを考えよう。</p></section>` },
   { id:'1-5', t:'式の値', sub:'代入する', plan:['m1Val1','m1Val1','m1Val1','m1ValF','m1Val1'], body:()=>`
