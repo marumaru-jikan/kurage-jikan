@@ -7153,63 +7153,168 @@ const M1C0 = [
     <section class="panel"><h3>キリのよい数をつくる</h3>${rule('99 ＝ 100−1、25×4 ＝ 100 などを使う')}${ex('57×99 ＝ 57×(100−1)<br>＝ 5700 − 57 ＝ 5643')}${ex('25×32 ＝ (25×4)×8<br>＝ 100×8 ＝ 800')}${ex('18×7＋18×3 ＝ 18×(7＋3)<br>＝ 18×10 ＝ 180')}</section>` },
 ];
 
+/* 中1 1章 ワーク準拠 */
+const m1NLz = (pts, lo=-6, hi=6, st=0.5) => { const x0=14, W=312, X=v=>x0+(v-lo)/(hi-lo)*W; let t='';
+  for(let v=lo; v<=hi+1e-9; v+=st){ const it=Math.abs(v-Math.round(v))<1e-9; t+=`<line x1="${X(v)}" y1="${it?24:27}" x2="${X(v)}" y2="${it?36:33}" stroke="currentColor" stroke-width="${it?1.3:.9}"/>`; }
+  [-5,-1,0,1,5].filter(v=>v>=lo&&v<=hi).forEach(v=>t+=`<text x="${X(v)}" y="52" text-anchor="middle" font-size="12" fill="currentColor">${v<0?'−'+(-v):v}</text>`);
+  (pts||[]).forEach(([lab,v],i)=>{ t+=`<circle cx="${X(v)}" cy="30" r="3.2" fill="#e0457b"/><text x="${X(v)}" y="14" text-anchor="middle" font-size="13" font-weight="700" fill="#e0457b">${lab}</text>`; });
+  return `<svg viewBox="0 0 340 58" style="width:100%;max-width:380px;display:block;margin:6px auto"><line x1="${x0-6}" y1="30" x2="${x0+W+8}" y2="30" stroke="currentColor" stroke-width="1.5"/><path d="M${x0+W+8} 30 l-7 -4 v8z" fill="currentColor"/>${t}</svg>`; };
+const m1Arr = (a,d) => { const lo=-9, hi=9, x0=14, W=312, X=v=>x0+(v-lo)/(hi-lo)*W; let t='';
+  for(let v=lo; v<=hi; v++) t+=`<line x1="${X(v)}" y1="33" x2="${X(v)}" y2="${v%5===0?43:40}" stroke="currentColor" stroke-width="${v===0?1.6:1}"/>`;
+  [-5,0,5].forEach(v=>t+=`<text x="${X(v)}" y="56" text-anchor="middle" font-size="11" fill="currentColor">${fmt(v)}</text>`);
+  const b=a+d; t+=`<circle cx="${X(a)}" cy="36" r="3" fill="#2b7bb9"/><path d="M${X(a)} 22 H${X(b)}" stroke="#e0457b" stroke-width="2.2"/><path d="M${X(b)} 22 l${d>0?-6:6} -4 v8z" fill="#e0457b"/><text x="${(X(a)+X(b))/2}" y="15" text-anchor="middle" font-size="11" fill="#e0457b">${d>0?'右へ '+d:'左へ '+(-d)}</text>`;
+  return `<svg viewBox="0 0 340 60" style="width:100%;max-width:380px;display:block;margin:6px auto"><line x1="${x0-6}" y1="36" x2="${x0+W+8}" y2="36" stroke="currentColor" stroke-width="1.5"/>${t}</svg>`; };
+const m1N = v => { if(Number.isInteger(v)) return fmt(v); return fmt(Math.round(v*100)/100); };
+const m1P = v => v<0 ? '('+m1N(v)+')' : '(+'+m1N(v)+')';
+const M1INT = [[-5,'−5'],[7,'+7'],[3.6,'3.6'],[0,'0'],[-0.5,'−'+frH(1,2)],[-4.5,'−4.5'],[2,'2'],[0.8,'+'+frH(4,5)],[-1,'−1'],[1.5,'+1.5'],[-7,'−7'],[3,'3'],[-2/3,'−'+frH(2,3)],[6,'+6'],[-4,'−4'],[-13.5,'−13.5'],[17,'17'],[-0.01,'−0.01'],[1,'1']];
+const M1WORD = [
+  ['5人少ない','多い','−5人多い',['+5人多い','−5人少ない','5人多い']],['8cm 短い','長い','−8cm 長い',['+8cm 長い','−8cm 短い','8cm 長い']],
+  ['100円余る','たりない','−100円たりない',['+100円たりない','−100円余る','100円たりない']],['5分おそい','早い','−5分早い',['+5分早い','−5分おそい','5分早い']],
+  ['200円安い','高い','−200円高い',['+200円高い','−200円安い','200円高い']],['3kg 軽い','重い','−3kg 重い',['+3kg 重い','−3kg 軽い','3kg 重い']],
+  ['6点低い','高い','−6点高い',['+6点高い','−6点低い','6点高い']],['2歳年下','年上','−2歳年上',['+2歳年上','−2歳年下','2歳年上']],
+];
+const M1OPP2 = [
+  ['200円の値上がりを＋で表すとき、150円の値下がりは？','−150円',['+150円','−200円','+50円']],['3500円の利益を＋で表すとき、1200円の損失は？','−1200円',['+1200円','−3500円','+2300円']],
+  ['地上 8200m を＋で表すとき、地下 5300m は？','−5300m',['+5300m','−8200m','+2900m']],['東へ 0.8km を＋で表すとき、西へ 1.5km は？','−1.5km',['+1.5km','−0.8km','+0.7km']],
+  ['300円の収入を +300円 と表すとき、200円の支出は？','−200円',['+200円','−300円','+100円']],['50分後を +50分 と表すとき、40分前は？','−40分',['+40分','−50分','+10分']],
+  ['8cm 長いを＋で表すとき、5cm 短いは？','−5cm',['+5cm','−8cm','+3cm']],['2kg 重いを＋で表すとき、5kg 軽いは？','−5kg',['+5kg','−2kg','+3kg']],
+];
+Object.assign(G,{
+  m1Lt0(){ const v=pick([3,5,8,10,2.5,3.4,0.6]), f=pick([[3,4],[3,7],[2,5]]), fr=Math.random()<.3, big=Math.random()<.5;
+    const s=fr?frH(f[0],f[1]):String(v), A=(big?'+':'−')+s; return mq2('符号をつけて表すと？', `0 より ${s} ${big?'大きい':'小さい'}数`, A, [(big?'−':'+')+s, (big?'+':'−')+'0'+(fr?'':'.'+String(v).replace('.','')), s+(big?'−':'+')].concat([(big?'−':'+')+'0']), '0 より小さい数には −、大きい数には ＋ をつける。', `0 より ${big?'大きい':'小さい'}ので ${A}`); },
+  m1Int(){ const kind=pick(['負の整数','自然数','整数','負の数']); const pool=shuffle(M1INT.slice()).slice(0,6);
+    const ok=v=> kind==='負の整数'?Number.isInteger(v)&&v<0 : kind==='自然数'?Number.isInteger(v)&&v>0 : kind==='整数'?Number.isInteger(v) : v<0;
+    const yes=pool.filter(p=>ok(p[0])), no=pool.filter(p=>!ok(p[0])); if(!yes.length||!no.length) return G.m1Int();
+    const A=yes.map(p=>p[1]).join('，'); const w1=pool.filter(p=>p[0]<0||kind!=='負の整数'&&p[0]>0).map(p=>p[1]).join('，'), w2=yes.concat(no.slice(0,1)).map(p=>p[1]).join('，'), w3=(yes.length>1?yes.slice(1):yes.concat(no.slice(1,2))).map(p=>p[1]).join('，');
+    return mq2(`${kind}をすべて選ぼう`, pool.map(p=>p[1]).join('，　'), A, [w2,w3,w1,no.map(p=>p[1]).join('，')], '自然数＝正の整数（0はふくまない）。整数には 負の整数・0・正の整数 がある。', `${kind}は ${A}`, { words:true }); },
+  m1NLn(){ const step=pick([0.5,1]); let v; do{ v=ri(-12,12)*0.5; }while(v===0||(step===1&&!Number.isInteger(v))||Math.abs(v)>5.5);
+    return mq2('点Aにあたる数は？', m1NLz([['A',v]]), m1N(v), [m1N(-v), m1N(v+(v<0?-0.5:0.5)), m1N(v-(v<0?-1:1)), m1N(v+1), m1N(v-0.5), m1N(v*2)], '0 より左は負の数。1目もりがいくつかをまず確かめよう（ここでは 0.5）。', `0 から${v<0?'左':'右'}へ ${Math.abs(v)} のところなので ${m1N(v)}`); },
+  m1Opp2(){ const [q,a,w]=kaPick(M1OPP2); return mq2('負の数を使って表すと？', q, a, w, '反対の性質をもつ量は、負の数で表されます。', `反対の意味なので「−」を使って ${a}`, { words:true }); },
+  m1Base(){ if(Math.random()<.6){ const base=pick([50,80,120,21]), x=base+nz(-9,9); const d=x-base; return mq2('基準とのちがいは？', `基準を ${base} として、${x} を正の数・負の数で表すと？`, d>0?'+'+d:fmt(d), [d>0?fmt(-d):'+'+(-d), String(x), (d>0?'+':'−')+(Math.abs(d)+1)], '基準より多い → ＋、少ない → −', `${x} は ${base} より ${Math.abs(d)} ${d>0?'多い':'少ない'}ので ${d>0?'+'+d:fmt(d)}`, { words:true }); }
+    const ds=shuffle([0.2,-0.3,0.4,-0.1,0.5,-0.6]).slice(0,3), names=['A','B','C'], i=ds.indexOf(Math.min(...ds));
+    return mq2('考えよう', `100m を 13 秒で走るのを目標にして、目標より多くかかった時間を正の数で表すと、${names.map((n,k)=>n+'は '+(ds[k]>0?'+':'−')+Math.abs(ds[k])+'秒').join('，')} でした。いちばん速く走った人は？`, names[i]+'さん', names.filter((n,k)=>k!==i).map(n=>n+'さん').concat(['全員同じ']), 'かかった時間が短いほど速い。いちばん小さい数の人。', `いちばん小さいのは ${fmt(ds[i])} 秒の ${names[i]}さん`, { words:true }); },
+  m1Word(){ const [o,w,a,ws]=kaPick(M1WORD); return mq2(`「${w}」ということばを使って表すと？`, o, a, ws, '負の数を使うと、反対のことばで表せます。（2個少ない ＝ −2個多い）', `「${o}」＝「${a}」`, { words:true }); },
+  m1Sgn(){ const v=pick([7,-9,4.5,-2.5,11,-6]), fr=Math.random()<.3; const s=fr?'−'+frH(2,3):m1N(v), A=fr?frH(2,3):(v<0?String(-v):fmt(-v));
+    return mq2('符号を変えた数は？', s, A, [s, fr?'−'+frH(3,2):m1N(1/v>0?1/v:1/v), fr?frH(3,2):String(Math.abs(v)+1)], '＋ と − を入れかえる。', `${s} の符号を変えると ${A}`); },
+  m1Cmp(){ const P=[[-3.1,-3],[-0.01,0],[-4/3,-1.4,'−'+frH(4,3),'−1.4'],[-7/2,-1/2,'−'+frH(7,2),'−'+frH(1,2)],[0.8,-1.3],[-3/5,-2/5,'−'+frH(3,5),'−'+frH(2,5)],[-2,-5],[-1,0],[-0.7,-2/3,'−0.7','−'+frH(2,3)],[-2.5,-3],[-6,4],[-7,-5]];
+    const p=pick(P), [a,b]=[p[0],p[1]], sa=p[2]||m1N(a), sb=p[3]||m1N(b); const A=a<b?'＜':'＞';
+    return mq2('□に入る不等号は？', `${sa} □ ${sb}`, A, [A==='＜'?'＞':'＜','＝'], '負の数は、絶対値が大きいほど小さい。', `数直線で右にあるほうが大きいので ${sa} ${A} ${sb}`); },
+  m1Order(){ const pool=shuffle([[-9,'−9'],[3,'+3'],[-10/9,'−'+frH(10,9)],[0,'0'],[-1.1,'−1.1'],[0.09,'0.09'],[0.1,frH(1,10)],[-1.4,'−1.4'],[-2,'−2'],[-0.3,'−'+frH(3,10)],[-1.25,'−'+frH(5,4)],[2.5,'2.5']]).slice(0,4);
+    const s=pool.slice().sort((x,y)=>x[0]-y[0]); const A=s.map(p=>p[1]).join(' ＜ '); const r=s.slice().reverse();
+    return mq2('小さい順に並べると？', pool.map(p=>p[1]).join('，　'), A, [[s[1],s[0],s[2],s[3]].map(p=>p[1]).join(' ＜ '), [s[0],s[2],s[1],s[3]].map(p=>p[1]).join(' ＜ '), pool.slice().sort((x,y)=>Math.abs(x[0])-Math.abs(y[0])).map(p=>p[1]).join(' ＜ '), r.map(p=>p[1]).join(' ＜ '), [s[0],s[1],s[3],s[2]].map(p=>p[1]).join(' ＜ ')], '分数は小数に直して、数直線で左から順に。', `小さい順に ${A}`, { words:true }); },
+  m1NLf(){ const a=ri(-5,5), d=nz(-7,7), word=Math.random()<.5?'大きい':'小さい'; const r= word==='大きい'?a+d:a-d;
+    return mq2('数直線を使って求めよう', `${fmt(a)} より ${fmt(d)} ${word}数`, fmt(r), [fmt(word==='大きい'?a-d:a+d), fmt(-r), fmt(r+1), fmt(r-1), fmt(r+2)], '「−〇 大きい」は「〇 小さい」と同じ。ことばを言いかえてから数直線を進もう。', `${d<0?`「${fmt(a)} より ${fmt(d)} ${word}」＝「${fmt(a)} より ${-d} ${word==='大きい'?'小さい':'大きい'}」。`:''}${fmt(a)} から${(word==='大きい')===(d>0)?'右':'左'}へ ${Math.abs(d)} 進んで ${fmt(r)}`, { viz:m1Arr(a, word==='大きい'?d:-d), words:true }); },
+  m1DecA(){ const dec=Math.random()<.5;
+    if(dec){ const a=nz(-90,90)/10, b=nz(-90,90)/10, s=Math.round((a+b)*10)/10; if(!s) return G.m1DecA(); return mq2('計算しよう', `${m1P(a)} ＋ ${m1P(b)}`, m1N(s), [m1N(-s), m1N(Math.round((a-b)*10)/10), m1N(Math.round((s+1)*10)/10), m1N(Math.round((s-1)*10)/10)], '小数でも、まず符号を決めてから絶対値を計算。', `${m1P(a)} ＋ ${m1P(b)} ＝ ${m1N(s)}`); }
+    const d1=pick([2,3,4,5,7]), d2=pick([2,3,4,5,6]), n1=nz(-4,4), n2=nz(-4,4); if(Math.abs(n1)>=d1&&d1>2||gcd(n1,d1)>1||gcd(n2,d2)>1) return G.m1DecA(); const L=d1*d2/gcd(d1,d2), N=n1*L/d1+n2*L/d2; if(!N) return G.m1DecA();
+    return mq2('計算しよう', `${m1Fp(n1,d1)} ＋ ${m1Fp(n2,d2)}`, m1F(N,L), [m1F(-N,L), m1F(n1*L/d1-n2*L/d2||7,L), m1F(n1+n2||5,d1+d2), m1F(N+1,L)], '通分してから、符号を決めて計算。', `${m1Fp(n1*L/d1,L)} ＋ ${m1Fp(n2*L/d2,L)} ＝ ${m1F(N,L)}`); },
+  m1Sub2(){ if(Math.random()<.4) return G.sub(); const dec=Math.random()<.5;
+    if(dec){ const a=nz(-60,60)/10, b=nz(-60,60)/10, s=Math.round((a-b)*10)/10; if(!s) return G.m1Sub2(); return mq2('計算しよう', `${m1P(a)} − ${m1P(b)}`, m1N(s), [m1N(Math.round((a+b)*10)/10), m1N(-s), m1N(Math.round((s+1)*10)/10), m1N(Math.round((s-1)*10)/10)], 'ひく数の符号を変えて、たし算に。', `${m1P(a)} ＋ ${m1P(-b)} ＝ ${m1N(s)}`); }
+    const d=pick([2,3,4,5,6]), d2=pick([2,3,4,6]), n1=nz(-3,3), n2=nz(-3,3); if(gcd(n1,d)>1||gcd(n2,d2)>1) return G.m1Sub2(); const L=d*d2/gcd(d,d2), N=n1*L/d-n2*L/d2; if(!N) return G.m1Sub2();
+    return mq2('計算しよう', `${m1Fp(n1,d)} − ${m1Fp(n2,d2)}`, m1F(N,L), [m1F(n1*L/d+n2*L/d2||7,L), m1F(-N,L), m1F(N+1,L), m1F(N-1,L)], 'ひく数の符号を変えて、たし算に直してから通分。', `${m1Fp(n1,d)} ＋ ${m1Fp(-n2,d2)} ＝ ${m1F(N,L)}`); },
+  m1NoSign(){ const t=ri(0,2), a=nz(-15,15), b=ri(2,15);
+    if(t===0){ const op=pick(['＋','−']), v=op==='＋'?a+b:a-b; return mq2('計算しよう', `${fmt(a)} ${op} ${b}`, fmt(v), [fmt(-v), fmt(op==='＋'?a-b:a+b), fmt(v+1), fmt(v-1)], `${fmt(a)} ${op} ${b} は ${sg(a)} ${op} (+${b}) のこと。`, `${sg(a)} ${op} (+${b}) ＝ ${fmt(v)}`); }
+    if(t===1){ const v=a-b; return mq2('計算しよう', `${fmt(a)} ＋ (${M}${b})`, fmt(v), [fmt(a+b), fmt(-v), fmt(v+1), fmt(v-1)], '＋(−〇) は −〇 と同じ。', `${fmt(a)} − ${b} ＝ ${fmt(v)}`); }
+    const v=a+b; return mq2('計算しよう', `${fmt(a)} − (${M}${b})`, fmt(v), [fmt(a-b), fmt(-v), fmt(v+1), fmt(v-1)], '−(−〇) は ＋〇 と同じ。', `${fmt(a)} ＋ ${b} ＝ ${fmt(v)}`); },
+  m1Mix4(){ const t=[nz(-9,9),nz(-9,9),nz(-9,9),nz(-9,9)], par=[0,1,2,3].map(()=>Math.random()<.4); let e=fmt(t[0]), s=t[0];
+    for(let i=1;i<4;i++){ const op=Math.random()<.5?'＋':'−', v=t[i]; e+= par[i]? ` ${op} ${sg(v)}` : (v>0?` ${op} ${v}`:` ${op==='＋'?'−':'＋'} ${-v}`); s+= par[i]? (op==='＋'?v:-v) : (op==='＋'?v:-v)*(v>0?1:1)*(v>0?1:1); if(!par[i]&&v<0) s+= (op==='＋'? 0:0); }
+    // recompute safely from expression
+    s=0; e.replace(/−/g,'-').replace(/＋/g,'+').replace(/\s/g,'').replace(/\(/g,'(').match(/./g);
+    s=Function('return '+e.replace(/−/g,'-').replace(/＋/g,'+'))();
+    return mq2('計算しよう', e, fmt(s), [fmt(-s), fmt(s+2), fmt(s-2), fmt(s+4)], '項を並べた式に直して、正の項・負の項をそれぞれまとめよう。', `正の項・負の項に分けてまとめると ${fmt(s)}`); },
+  m1DecMD(){ const a=nz(-9,9)/10*pick([1,10]), b=nz(-8,8)/(Math.random()<.5?10:1), op=pick(['×','÷']); let v; if(op==='×') v=Math.round(a*b*1000)/1000; else { const q=nz(-9,9); v=q; return mq2('計算しよう', `${m1P(Math.round(q*b*100)/100)} ÷ ${m1P(b)}`, fmt(q), [fmt(-q), m1N(q*10), m1N(q/10), fmt(q+1)], '符号を先に決めてから、絶対値の商を計算。', `${m1P(Math.round(q*b*100)/100)} ÷ ${m1P(b)} ＝ ${fmt(q)}`); }
+    return mq2('計算しよう', `${m1P(a)} × ${m1P(b)}`, m1N(v), [m1N(-v), m1N(v*10), m1N(v/10), m1N(Math.round((v+1)*1000)/1000)], '小数をふくむ乗除でも、計算のしかたは同じ。', `${m1P(a)} × ${m1P(b)} ＝ ${m1N(v)}`); },
+  m1FrSMD(){ const n1=nz(-5,5), d1=ri(2,9), n2=nz(-5,5), d2=ri(2,9), op=pick(['×','÷']); if(gcd(n1,d1)>1||gcd(n2,d2)>1||Math.abs(n1)===d1||Math.abs(n2)===d2) return G.m1FrSMD();
+    const [n,d]= op==='×'?[n1*n2,d1*d2]:[n1*d2,d1*n2]; const A=m1F(n,d);
+    return mq2('計算しよう', `${m1Fp(n1,d1)} ${op} ${m1Fp(n2,d2)}`, A, [m1F(-n,d), op==='×'?m1F(n1*d2,d1*n2):m1F(n1*n2,d1*d2), m1F(d,n), m1F(n+1,d)], op==='×'?'符号を決めてから、分子どうし・分母どうしをかける。':'わる数の逆数をかけて、乗法に直す。', op==='×'?`${m1Fp(n1,d1)} × ${m1Fp(n2,d2)} ＝ ${A}`:`${m1Fp(n1,d1)} × ${m1Fp(d2,n2)} ＝ ${A}`); },
+  m1Law2(){ const pair=pick([[-5,-20],[25,4],[-25,-4],[2,-50],[-4,25]]), c=nz(-19,19), v=pair[0]*pair[1]*c; if(Math.abs(c)<3) return G.m1Law2();
+    return mq2('乗法の計算法則を使って計算しよう', `${sg(pair[0])} × ${sg(c)} × ${sg(pair[1])}`, fmt(v), [fmt(-v), fmt(v+100), fmt(v-100), fmt(c*100)], 'かけるとキリのよい数になる組を先にかける（交換法則・結合法則）。', `${sg(pair[0])}×${sg(pair[1])} ＝ ${fmt(pair[0]*pair[1])}、${fmt(pair[0]*pair[1])}×${sg(c)} ＝ ${fmt(v)}`); },
+  m1Four2(){ if(Math.random()<.5) return G.m1Four(); const a=nz(-9,9), b=nz(-5,5), c=nz(-5,5), d=nz(-9,9); const v=a*(b-c)+d; if(b===c) return G.m1Four2();
+    return mq2('計算しよう', `${sg(a)} × {${fmt(b)} − ${sg(c)}} ＋ ${d<0?'('+fmt(d)+')':d}`, fmt(v), [fmt(a*b-c+d), fmt(-v), fmt(a*(b+c)+d), fmt(v+1), fmt(v-1), fmt(v+2)], 'かっこの中 → 乗法・除法 → 加法・減法 の順。', `{${fmt(b)} − ${sg(c)}} ＝ ${fmt(b-c)}、${sg(a)}×${sg(b-c)} ＝ ${fmt(a*(b-c))}、${fmt(a*(b-c))}＋${sg(d)} ＝ ${fmt(v)}`); },
+  m1PrimeX(){ const t=ri(0,2);
+    if(t===0){ const n=pick([12,18,20,28,45,50,63,75,98,108]); const f=m1Fac(n), c={}; f.forEach(p=>c[p]=(c[p]||0)+1); let k=1; Object.keys(c).forEach(p=>{ if(c[p]%2) k*=+p; });
+      if(k===1) return G.m1PrimeX(); return mq2('考えよう', `${n} にできるだけ小さい自然数をかけて、ある自然数の2乗にするには？`, String(k), [String(k*2), String(n), String(f[0]), String(k+1)].filter(x=>x!==String(k)), '素因数分解して、指数がすべて偶数になるようにする。', `${n} ＝ ${m1FacS(f)}。${k} をかけると指数がすべて偶数になる。`, { words:true }); }
+    if(t===1){ const n=pick([105,165,70,42,30]), m=pick([12,18,20]); const fn=m1Fac(n), fm=m1Fac(m); let k=1; const cn={}; fn.forEach(p=>cn[p]=(cn[p]||0)+1); const cm={}; fm.forEach(p=>cm[p]=(cm[p]||0)+1); Object.keys(cm).forEach(p=>{ const need=cm[p]-(cn[p]||0); if(need>0) k*=(+p)**need; });
+      if(k===1) return G.m1PrimeX(); return mq2('考えよう', `${n} にできるだけ小さい自然数をかけて、${m} の倍数にするには？`, String(k), [String(m), String(k*2), String(Math.max(2,k/2|0)), String(k+1)].filter(x=>x!==String(k)), `${n} と ${m} を素因数分解して、${m} の素因数で足りないものをかける。`, `${n} ＝ ${m1FacS(fn)}、${m} ＝ ${m1FacS(fm)}。足りないのは ${k}。`, { words:true }); }
+    const cand=[[pick([2,3,5]),'2<sup>4</sup>×5',80],[0,'2×3<sup>2</sup>×17',306],[0,'2<sup>2</sup>×5×11',220],[0,'3<sup>2</sup>×5×7',315],[0,'2×3×7<sup>2</sup>',294]];
+    const q=pick([[4,'2<sup>2</sup>×5×11',['2×3<sup>2</sup>×17','3<sup>2</sup>×5×7','2×3×7']],[21,'3<sup>2</sup>×5×7',['2<sup>4</sup>×5','2<sup>2</sup>×5×11','3<sup>2</sup>×5']],[4,'2<sup>4</sup>×5',['2×3<sup>2</sup>×17','3×5<sup>2</sup>×13','2×5×7']],[21,'2×3×7<sup>2</sup>',['2×3<sup>2</sup>×17','2<sup>2</sup>×5×11','3×5<sup>2</sup>']]]);
+    return mq2(`${q[0]} の倍数はどれ？`, '素因数分解された数', q[1], q[2], q[0]===4?'4 ＝ 2<sup>2</sup>。2<sup>2</sup> をふくむか見よう。':'21 ＝ 3×7。3 と 7 を両方ふくむか見よう。', `${q[1]} は ${q[0]===4?'2<sup>2</sup>':'3×7'} をふくむので ${q[0]} の倍数。`); },
+  m1Prime1(){ const p=pick(M1PRIME.filter(x=>x>10&&x<55)); const nonp=shuffle([1,9,15,21,27,33,39,49,51,57,25,35,16,20,52,34]).slice(0,3);
+    return mq2('素数はどれ？', '1 とその数のほかに約数がない自然数', String(p), nonp.map(String), '1 は素数ではありません。素数の約数は必ず2個。', `${p} の約数は 1 と ${p} だけ。`); },
+  m1Fac2(){ const n=pick([36,98,168,70,280,594,950,42,60,84,126,150]); const f=m1Fac(n), A=m1FacS(f);
+    return mq2('素因数分解しよう', String(n), A, [f.join('×')!==A?f.join('×'):'2×'+n/2, `${f[0]}×${n/f[0]}`, m1FacS(f.slice(1))+'×'+f[0]*f[0], `${n}×1`], '小さい素数から順にわっていこう。同じ素数は累乗で。', `${n} ＝ ${f.join('×')} ＝ ${A}`); },
+  m1Kari(){ const kb=pick([20,50,70,80,120]), d=[nz(-8,8),nz(-8,8),nz(-8,8),nz(-8,8),nz(-8,8)], s=d.reduce((a,b)=>a+b,0); if(s%5||!s) return G.m1Kari(); const av=kb+s/5;
+    return mq2('平均はいくつ？', `${kb} を仮平均として、5つの記録の仮平均との違いは ${d.map(v=>v>0?'+'+v:fmt(v)).join('，')} でした。平均は？`, String(av), [String(kb+s), String(kb), String(kb-s/5), String(av+1)], '平均 ＝ 仮平均 ＋（仮平均との違いの合計）÷ 個数', `違いの合計 ${fmt(s)}、${fmt(s)}÷5＝${fmt(s/5)}、${kb}${s<0?'−':'＋'}${Math.abs(s/5)}＝${av}`, { words:true }); },
+});
+const M1C1N = [
+  { id:'1-1', sec:'1　正の数・負の数', t:'0より小さい数', sub:'符号・整数と自然数', plan:['m1Lt0','m1Lt0','sign','m1Int','m1Int'], body:()=>`
+    <section class="panel"><h3>正の数・負の数</h3>${rule('0 より小さい数を 負の数、0 より大きい数を 正の数 という<br>負の数には −（負の符号）、正の数には ＋（正の符号）をつける')}${ex('0 より 8 小さい数 → −8　　0 より '+frH(3,4)+' 大きい数 → +'+frH(3,4))}<p class="small muted">−5 は「マイナス5」、+3 は「プラス3」と読みます。0 は正の数でも負の数でもありません。</p></section>
+    <section class="panel"><h3>整数と自然数</h3>${rule('正の整数 1, 2, 3, … を 自然数 ともいう')}<p class="ex">…, −3, −2, −1, 0, 1, 2, 3, …</p><p class="small muted">負の整数・0・正の整数（自然数）をあわせて 整数。</p></section>` },
+  { id:'1-2', t:'数直線', sub:'負の数も表す', plan:Array(5).fill('m1NLn'), body:()=>`
+    <section class="panel"><h3>数直線</h3>${rule('0 より右 → 正の数　0 より左 → 負の数')}${m1NLz([['A',-6],['B',-2.5],['C',1.5],['D',4]])}<p class="small">1目もりは 0.5。A は −6、B は −2.5、C は 1.5（+1.5）、D は 4（+4）。</p><p class="small muted">0 より左にある数を読むときは、0 から左へいくつかを数えよう。</p></section>` },
+  { id:'1-3', t:'反対の性質をもつ量', sub:'負の数を使って表す', plan:['m1Opp2','m1Opp2','m1Opp2','m1Opp','m1Opp2'], body:()=>`
+    <section class="panel"><h3>反対の性質をもつ量</h3>${rule('一方を正の数で表すと、もう一方は 負の数 で表せる')}${ex('300円の収入を +300円 → 200円の支出は −200円')}${ex('50分後を +50分 → 40分前は −40分')}</section>` },
+  { id:'1-4', t:'基準からの増減・過不足', sub:'基準とのちがい', plan:Array(5).fill('m1Base'), body:()=>`
+    <section class="panel"><h3>基準を決めて表す</h3>${rule('基準より多い → 正の数　少ない → 負の数')}
+    ${kmTbl([['生産数（個）','76','83','87','71','80'],['目標80個との違い','−4','+3','+7','−9','0']],['','月','火','水','木','金'])}<p class="small muted">87 は 80 より 7 多いので +7、71 は 9 少ないので −9、80 は 0。</p></section>` },
+  { id:'1-5', t:'負の数を使って表すことば', sub:'反対のことばで言いかえ', plan:Array(5).fill('m1Word'), body:()=>`
+    <section class="panel"><h3>言いかえ</h3>${rule('負の数を使うと、反対の性質をもつ量を 一方のことばだけで表せる')}${ex('2個少ない ＝ −2個多い')}${ex('200円安い ＝ −200円高い')}</section>` },
+  { id:'1-6', t:'絶対値', sub:'0からの距離・符号を変えた数', plan:['abs','abs','m1Sgn','m1AbsInt','m1AbsInt'], body:()=>`
+    <section class="panel"><h3>絶対値</h3>${rule('数直線上で、0 からある数までの距離を その数の 絶対値 という<br>0 の絶対値は 0')}${ex('+5 → 5　　−6 → 6　　−4.3 → 4.3　　−'+frH(2,3)+' → '+frH(2,3))}<p class="small muted">つまみを動かして確かめよう。</p>${slider('abs')}</section>
+    <section class="panel"><h3>符号を変えた数</h3>${ex('+7 → −7　　−9 → 9（+9）')}<p class="small muted">絶対値が 3 より小さい整数：−2, −1, 0, 1, 2（0 を忘れない）</p></section>` },
+  { id:'1-7', t:'数の大小', sub:'不等号・小さい順', plan:['compare','m1Cmp','m1Cmp','m1Cmp','m1Order'], body:()=>`
+    <section class="panel"><h3>数の大小</h3>${rule('数直線で 右にあるほど大きい<br>正の数は 0 より大きく、絶対値が大きいほど大きい<br>負の数は 0 より小さく、絶対値が大きいほど小さい')}${ex('4 ＞ −5　　−'+frH(7,2)+' ＜ −'+frH(1,2))}<p class="small muted">3つ以上は −5 ＜ −1 ＜ 3 のように、不等号の向きをそろえて書く。</p></section>` },
+  { id:'1-8', t:'数直線を使って数を求める', sub:'〜より大きい数・小さい数', plan:Array(5).fill('m1NLf'), body:()=>`
+    <section class="panel"><h3>進む向き</h3>${rule('ある数より 正の数だけ大きい → 右へ進む<br>ある数より 正の数だけ小さい → 左へ進む')}${ex('3 より 5 小さい数 → 3 から左へ 5 → −2')}${m1Arr(3,-5)}
+    ${rule('負の数を使ったことばは、言いかえてから考える')}${ex('「1 より −4 小さい数」＝「1 より 4 大きい数」→ 5')}</section>` },
+  { id:'2-1', sec:'2　正の数・負の数の計算', t:'正の数・負の数の加法', sub:'同符号・異符号の2数の和', plan:['add','add','add','add','add'], body:()=>`
+    <section class="panel"><h3>数直線で考える</h3>${ex('(−3)＋7 → −3 から右へ 7 → 4')}${m1Arr(-3,7)}${ex('5＋(−4) → 5 より 4 小さい → 1')}</section>
+    <section class="panel"><h3>2数の加法</h3>${rule('同符号の2数の和<br>符号…2数と同じ符号　絶対値…2数の絶対値の和')}${ex('(−3)＋(−7) ＝ −(3＋7) ＝ −10')}${rule('異符号の2数の和<br>符号…絶対値の大きい方の符号<br>絶対値…大きい方から小さい方をひいた差')}${ex('(＋3)＋(−7) ＝ −(7−3) ＝ −4')}<p class="small muted">0 と正の数・0 と負の数の和は、その数のまま。</p></section>` },
+  { id:'2-2', t:'小数・分数の和', sub:'整数と同じように', plan:Array(5).fill('m1DecA'), body:()=>`
+    <section class="panel"><h3>小数・分数の加法</h3>${rule('小数・分数でも、まず符号を決めてから絶対値の計算')}${ex('(−3.6)＋(＋2.3) ＝ −(3.6−2.3) ＝ −1.3')}${ex('(−'+frH(1,4)+')＋(−'+frH(1,2)+') ＝ −('+frH(1,4)+'＋'+frH(2,4)+') ＝ −'+frH(3,4))}</section>` },
+  { id:'2-3', t:'正の数・負の数の減法', sub:'符号を変えた数をたす', plan:['sub','sub','m1Sub2','m1Sub2','m1Sub2'], body:()=>`
+    <section class="panel"><h3>減法</h3>${rule('正の数・負の数をひくには、符号を変えた数をたせばよい')}${ex('(−7)−(＋4) ＝ (−7)＋(−4) ＝ −11')}${ex('(−3)−(−6) ＝ (−3)＋(＋6) ＝ 3')}<p class="small muted">加法と減法をあわせて 加減 ともいいます。</p></section>` },
+  { id:'2-4', t:'符号＋をつけない加減', sub:'−5＋9、7−(−3)', plan:Array(5).fill('m1NoSign'), body:()=>`
+    <section class="panel"><h3>かっこのない式</h3>${rule('−5＋9 は (−5)＋(＋9) のこと')}${ex('−5＋9 ＝ ＋(9−5) ＝ 4')}${ex('−12−7 ＝ (−12)＋(−7) ＝ −19')}<p class="small muted">⚠ 7−(−3) は (＋7)＋(＋3) ＝ 10、−14−9 は (−14)−(＋9) ＝ −23</p></section>` },
+  { id:'2-5', t:'正の項・負の項と3数以上の加減', sub:'項・加法の計算法則', plan:['m1Term','m1Term','mix3','m1Mix4','m1Mix4'], body:()=>`
+    <section class="panel"><h3>項</h3>${rule('加法だけの式で、＋で結ばれたそれぞれの数を 項 という<br>正の数を 正の項、負の数を 負の項 という')}${ex('23−35＋8−14 ＝ 23＋(−35)＋8＋(−14)<br>正の項：23, 8　負の項：−35, −14')}</section>
+    <section class="panel"><h3>加法の計算法則</h3>${rule('交換法則 a＋b ＝ b＋a<br>結合法則 (a＋b)＋c ＝ a＋(b＋c)')}${ex('5−4−1＋6 ＝ 5＋6−4−1 ＝ 11−5 ＝ 6')}${ex('−5−(−6)＋(−8)＋4 ＝ −5＋6−8＋4 ＝ 10−13 ＝ −3')}<p class="small muted">① 項を並べた式に直す → ② 同符号の数を集める → ③ それぞれの和を求める</p></section>` },
+  { id:'2-6', t:'正の数・負の数の乗法', sub:'積の符号と絶対値', plan:['mul','mul','mul','m1DecMD','mul'], body:()=>`
+    <section class="panel"><h3>乗法</h3>${rule('同符号の2数の積 → 絶対値の積に ＋<br>異符号の2数の積 → 絶対値の積に −')}<div class="signs"><div>(＋)×(＋) → ＋</div><div>(−)×(−) → ＋</div><div>(＋)×(−) → −</div><div>(−)×(＋) → −</div></div>${ex('(−5)×3 ＝ −(5×3) ＝ −15　　(−8)×(−4) ＝ ＋(8×4) ＝ 32')}<p class="small muted">負の数が1個の積は −、2個の積は ＋。0 との積は 0。</p></section>` },
+  { id:'2-7', t:'正の数・負の数の除法', sub:'商の符号と絶対値', plan:['div','div','div','m1DecMD','m1DecMD'], body:()=>`
+    <section class="panel"><h3>除法</h3>${rule('同符号の2数の商 → 絶対値の商に ＋<br>異符号の2数の商 → 絶対値の商に −')}${ex('(−15)÷3 ＝ −5　　(−24)÷(−6) ＝ 4')}${ex('(−2.4)×(−0.3) ＝ ＋0.72　　(−3.6)÷9 ＝ −0.4')}<p class="small muted">乗法と除法をあわせて 乗除 ともいいます。0 を負の数でわっても 0。</p></section>` },
+  { id:'2-8', t:'分数をふくむ乗除・逆数', sub:'わる数の逆数をかける', plan:['m1Recip','m1Recip','m1FrSMD','m1FrSMD','m1FrSMD'], body:()=>`
+    <section class="panel"><h3>逆数</h3>${rule('2つの数の積が 1 になるとき、一方の数を他方の数の 逆数 という')}${ex('−'+frH(5,6)+' の逆数 → −'+frH(6,5)+'　　−8 の逆数 → −'+frH(1,8))}<p class="small muted">⚠ 負の数の逆数は、負の数。</p></section>
+    <section class="panel"><h3>分数をふくむ乗除</h3>${ex('(−'+frH(5,8)+')×'+frH(4,5)+' ＝ −('+frH(5,8)+'×'+frH(4,5)+') ＝ −'+frH(1,2))}${ex(frH(2,3)+'÷(−'+frH(3,5)+') ＝ '+frH(2,3)+'×(−'+frH(5,3)+') ＝ −'+frH(10,9))}</section>` },
+  { id:'2-9', t:'乗法の計算法則・3数以上の乗除', sub:'負の数の個数で符号', plan:['m1Law2','mul3','mul3','m1MD3','m1MD3'], body:()=>`
+    <section class="panel"><h3>乗法の計算法則</h3>${rule('交換法則 a×b ＝ b×a<br>結合法則 (a×b)×c ＝ a×(b×c)')}${ex('(−5)×13×(−20) ＝ 13×{(−5)×(−20)} ＝ 13×100 ＝ 1300')}</section>
+    <section class="panel"><h3>3数以上の乗除</h3>${rule('乗法だけの式にしてから、負の数の個数で符号を決める<br>奇数個 → −　偶数個 → ＋')}${ex('8÷(−'+frH(4,3)+')×(−'+frH(1,2)+') ＝ 8×(−'+frH(3,4)+')×(−'+frH(1,2)+') ＝ ＋3')}</section>` },
+  { id:'2-10', t:'指数をふくむ計算', sub:'(−3)²と−3²', plan:Array(5).fill('m1Pow'), body:()=>`
+    <section class="panel"><h3>累乗と指数</h3>${rule('同じ数の積 4×4 を 4<sup>2</sup>、4×4×4 を 4<sup>3</sup> と表す<br>右上の小さい数を 指数 という')}${ex('2<sup>2</sup>×3<sup>2</sup> ＝ 4×9 ＝ 36')}</section>
+    <section class="panel"><h3>ミスに注意</h3>${ex('(−3)<sup>2</sup> ＝ (−3)×(−3) ＝ 9')}${ex('−3<sup>2</sup> ＝ −(3×3) ＝ −9')}<p class="small muted">(−a)<sup>2</sup> ＝ (−a)×(−a)、−a<sup>2</sup> ＝ −(a×a)</p></section>` },
+  { id:'2-11', t:'四則が混じった計算', sub:'計算の順序', plan:['m1Four','m1Four','m1Four2','m1Four2','m1Four2'], body:()=>`
+    <section class="panel"><h3>計算の順序</h3>${rule('① 指数　② ( ) の中　③ 乗法・除法　④ 加法・減法')}${ex('18−(−4)×(−7) ＝ 18−28 ＝ −10')}${ex('(−4)×{−5−(−2)}＋9 ＝ (−4)×(−3)＋9 ＝ 12＋9 ＝ 21')}${ex('4×(−3)＋2×{(−2)<sup>2</sup>−1} ＝ −12＋2×3 ＝ −6')}<p class="small muted">加法・減法・乗法・除法をまとめて 四則 といいます。</p></section>` },
+  { id:'2-12', t:'分配法則', sub:'(a＋b)×c ＝ a×c＋b×c', plan:Array(5).fill('m1Dist'), body:()=>`
+    <section class="panel"><h3>分配法則</h3>${rule('(a＋b)×c ＝ a×c＋b×c<br>c×(a＋b) ＝ c×a＋c×b')}${ex('('+frH(2,3)+'＋'+frH(3,4)+')×(−12) ＝ −8＋(−9) ＝ −17')}${ex('18×(−'+frH(1,6)+'＋'+frH(1,2)+') ＝ −3＋9 ＝ 6')}${ex('(−71)×86−29×86 ＝ (−71−29)×86 ＝ −8600')}</section>` },
+  { id:'2-13', t:'数の集合と四則計算', sub:'いつでも計算できるか', plan:Array(5).fill('m1Set'), body:()=>`
+    <section class="panel"><h3>数の集合</h3>${rule('自然数の集合 … 自然数全体の集まり<br>整数の集合 … 自然数と 0 と負の整数をあわせた集まり<br>数全体の集合 … 整数に加えて、小数や分数までふくめた数の集まり')}
+    ${kmTbl([['自然数','○','△','○','△'],['整数','○','○','○','△'],['数全体','○','○','○','○']],['','加法','減法','乗法','除法'])}<p class="small muted">○：いつでもできる　△：できないことがある（0 でわる場合を除く）</p></section>` },
+  { id:'2-14', t:'素数と素因数分解', sub:'自然数を素数の積に', plan:['m1Prime1','m1Prime1','m1Fac2','m1Fac2','m1Fac2'], body:()=>`
+    <section class="panel"><h3>素数</h3>${rule('1 とその数のほかに約数がない自然数を 素数 という<br>1 は素数にふくめない')}<p class="small">2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, …</p><p class="small muted">素数の約数は必ず2個。</p></section>
+    <section class="panel"><h3>素因数分解</h3>${rule('自然数を素数だけの積で表すことを 素因数分解 という')}<table style="margin:6px auto;border-collapse:collapse;font-size:1.05rem"><tr><td style="padding:2px 6px;text-align:right">2</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">70</td></tr><tr><td style="padding:2px 6px;text-align:right">5</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">35</td></tr><tr><td></td><td style="padding:2px 10px">7</td></tr></table>${ex('70 ＝ 2×5×7　　24 ＝ 2<sup>3</sup>×3')}<p class="small muted">偶数なら、まず 2 でわろう。</p></section>` },
+  { id:'2-15', t:'素因数分解の利用', sub:'倍数・2乗にする', plan:Array(5).fill('m1PrimeX'), body:()=>`
+    <section class="panel"><h3>倍数を見分ける</h3>${rule('4 ＝ 2<sup>2</sup> なので、4 の倍数は 2<sup>2</sup> と整数の積<br>21 ＝ 3×7 なので、21 の倍数は 3×7 と整数の積')}${ex('2<sup>2</sup>×5×11 → 4 の倍数')}</section>
+    <section class="panel"><h3>できるだけ小さい自然数をかける</h3>${ex('105 ＝ 3×5×7、18 ＝ 2×3<sup>2</sup><br>18 の倍数にするには 2×3 ＝ 6 をかける')}${ex('504 ＝ 2<sup>3</sup>×3<sup>2</sup>×7<br>2乗にするには、2×7 ＝ 14 でわる（指数を偶数に）')}</section>` },
+  { id:'3-1', sec:'3　正の数・負の数の利用', t:'正の数・負の数の利用', sub:'仮平均を使った平均', plan:['m1Base','m1Kari','m1Kari','m1Kari','m1Kari'], body:()=>`
+    <section class="panel"><h3>仮平均</h3>${rule('平均 ＝ 仮平均 ＋（仮平均との違いの合計）÷ 個数')}
+    ${kmTbl([['投げた距離（m）','18','24','15','22','26'],['仮平均20mとの違い','−2','+4','−5','+2','+6']],['','A','B','C','D','E'])}${ex('{(−2)＋(＋4)＋(−5)＋(＋2)＋(＋6)}÷5＋20<br>＝ 5÷5＋20 ＝ 21（m）')}<p class="small muted">仮平均より短いときは、負の数を使う。</p></section>` },
+  { id:'4-1', sec:'章末テスト', t:'章末テスト', sub:'1章の総まとめ', test:true, plan:['m1Opp2','m1Cmp','m1AbsInt','m1NLf','add','m1Sub2','m1Mix4','m1FrSMD','m1Pow','m1Four2','m1Fac2','m1Kari'], body:()=>`
+    <section class="panel"><h3>1章　正の数・負の数　章末テスト</h3><p>1節〜3節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
+];
+
 const M1C1_LESSONS = [
   ...M1C0,
-  { id:'1-1', sec:'1　正の数・負の数', t:'正の数・負の数', sub:'0より小さい数・符号・自然数', plan:['sign','sign','less','nat','nat'], body:()=>`
-    <section class="panel"><h3>0 より小さい数</h3><p>冬の朝、気温が 0℃ より 3℃ 低いことを <span class="ex">${M}3℃</span> と表します。</p>
-    ${rule('0 より大きい数 → 正の数（＋：正の符号）<br>0 より小さい数 → 負の数（−：負の符号）<br>0 は 正の数でも負の数でもない')}</section>
-    <section class="panel"><h3>数直線で見てみよう</h3><p class="small muted">つまみを左右に動かしてみよう。</p>${slider('sign')}</section>
-    <section class="panel"><h3>自然数</h3>${rule('自然数 ＝ 正の整数（1, 2, 3, …）')}<p class="small muted">0 や 負の整数は 自然数ではありません。</p></section>` },
-  { id:'1-2', t:'反対の性質をもつ量', sub:'＋と−で表す', plan:['ew','m1Opp','m1Opp','m1Opp','m1Opp'], body:()=>`
-    <section class="panel"><h3>反対の方向・性質</h3>${rule('基準からみて 反対の性質をもつ量は<br>一方を正の数、もう一方を負の数で表せる')}
-    ${kmTbl([['東へ 3km<br>→ +3km','西へ 3km<br>→ −3km'],['500円の利益<br>→ +500円','500円の損失<br>→ −500円'],['5kg 増える<br>→ +5kg','5kg 減る<br>→ −5kg']],['正の数で表す','負の数で表す'])}</section>
-    <section class="panel"><h3>言いかえ</h3>${ex('「−3kg 増える」＝「3kg 減る」')}<p class="small muted">負の数を使うと、反対のことばに言いかえられます。</p></section>` },
-  { id:'1-3', t:'数の大小', sub:'数直線・不等号', plan:['compare','compare','compare','ineq','ineq'], body:()=>`
-    <section class="panel"><h3>大小の比べ方</h3>${rule('数直線で 右にあるほど 大きい<br>負の数は 絶対値が大きいほど 小さい')}
-    <p>だから <span class="ex">${M}8 &lt; ${M}2</span>。</p><p class="small muted">不等号「&lt;」「&gt;」は、開いているほうが大きい数です。3つの数は ${M}5 &lt; ${M}1 &lt; 3 のように書きます。</p></section>` },
-  { id:'1-4', t:'絶対値', sub:'0からの距離', plan:['abs','abs','m1AbsInt','m1AbsInt','m1AbsInt'], body:()=>`
-    <section class="panel"><h3>絶対値</h3>${rule('絶対値 ＝ 数直線で 0 からの距離')}<p class="small muted">つまみを動かして、オレンジの長さを確認しよう。</p>${slider('abs')}</section>
-    <section class="panel"><h3>例</h3>${ex('+5 の絶対値は 5、'+M+'5 の絶対値も 5')}${ex('絶対値が 2 以下の整数<br>→ '+M+'2, '+M+'1, 0, 1, 2 の 5個')}</section>` },
-  { id:'2-1', sec:'2　正の数・負の数の計算', t:'加法', sub:'同じ符号・ちがう符号', plan:['add','add','add','add','add'], body:()=>`
-    <section class="panel"><h3>ルール</h3>${rule('同じ符号 → 絶対値の和に、共通の符号<br>ちがう符号 → 絶対値の差に、絶対値の大きいほうの符号')}</section>
-    <section class="panel"><h3>例1　ちがう符号</h3><p class="ex">(+3) ＋ (${M}5) ＝ ${M}2</p>${arrowLine(3,-5)}<p class="small muted">0 から右へ 3、そこから左へ 5 進むと ${M}2。</p></section>
-    <section class="panel"><h3>例2　同じ符号</h3><p class="ex">(${M}2) ＋ (${M}4) ＝ ${M}6</p>${arrowLine(-2,-4)}</section>` },
-  { id:'2-2', t:'減法', sub:'加法に直す', plan:['sub','sub','sub','sub','sub'], body:()=>`
-    <section class="panel"><h3>ルール</h3>${rule('ひく数の符号を変えて、加法に直す')}</section>
-    <section class="panel"><h3>例</h3><p class="ex">(+2) − (${M}4)<br>＝ (+2) ＋ (+4) ＝ 6</p><p class="ex">(${M}3) − (+5)<br>＝ (${M}3) ＋ (${M}5) ＝ ${M}8</p>${arrowLine(-3,-5)}<p class="small muted">0 から ある数をひくと、符号だけが変わる：0 − (${M}7) ＝ 7</p></section>` },
-  { id:'2-3', t:'小数・分数の加法・減法', sub:'整数と同じルール', plan:['m1Dec','m1Dec','m1Dec','m1Dec','m1Dec'], body:()=>`
-    <section class="panel"><h3>小数・分数でも同じ</h3>${rule('小数や分数でも、整数と同じルールで計算する')}${ex('(+1.2) ＋ ('+M+'3.5) ＝ '+M+'2.3')}${ex('('+M+frH(1,4)+') − (+'+frH(3,4)+') ＝ ('+M+frH(1,4)+') ＋ ('+M+frH(3,4)+') ＝ '+M+'1')}</section>` },
-  { id:'2-4', t:'加法と減法の混じった計算', sub:'項・正の項と負の項', plan:['m1Term','m1Term','mix3','mix3','mix3'], body:()=>`
-    <section class="panel"><h3>項</h3><p>${M}3 ＋ 8 − 2 は、(${M}3) ＋ (+8) ＋ (${M}2) と同じ意味です。</p>${rule('加法だけの式で、＋で結ばれた1つ1つの数を「項」という')}<p class="small">項は ${M}3，+8，${M}2　（正の項 +8、負の項 ${M}3 と ${M}2）</p></section>
-    <section class="panel"><h3>計算のしかた</h3>${rule('正の項どうし、負の項どうしを まとめてから計算')}${ex(M+'3 ＋ 8 − 2<br>＝ 8 − 3 − 2<br>＝ 8 − 5 ＝ 3')}</section>` },
-  { id:'2-5', t:'乗法', sub:'符号のルール', plan:['mul','mul','mul','mul','mul'], body:()=>`
-    <section class="panel"><h3>ルール</h3>${rule('同じ符号どうし → ＋（絶対値の積）<br>ちがう符号どうし → −（絶対値の積）')}
-    <div class="signs"><div>(＋)×(＋) → ＋</div><div>(${M})×(${M}) → ＋</div><div>(＋)×(${M}) → ${M}</div><div>(${M})×(＋) → ${M}</div></div></section>
-    <section class="panel"><h3>例</h3><p class="ex">(${M}4) × (${M}3) ＝ 12<br>(+5) × (${M}2) ＝ ${M}10</p><p class="small muted">どんな数に 0 をかけても 0。</p></section>` },
-  { id:'2-6', t:'累乗', sub:'指数・(−3)²と−3²', plan:['m1Pow','m1Pow','m1Pow','m1Pow','m1Pow'], body:()=>`
-    <section class="panel"><h3>累乗と指数</h3>${rule('同じ数をいくつかかけたものを 累乗 という<br>右上の小さい数（かけた個数）を 指数 という')}${ex('5×5 ＝ 5<sup>2</sup>（5の2乗）　　a×a×a ＝ a<sup>3</sup>（aの3乗）')}</section>
-    <section class="panel"><h3>ちがいに注意</h3>${ex('('+M+'3)<sup>2</sup> ＝ ('+M+'3)×('+M+'3) ＝ 9')}${ex(M+'3<sup>2</sup> ＝ '+M+'(3×3) ＝ '+M+'9')}<p class="small muted">かっこがないときは、3 だけを2回かけます。</p></section>` },
-  { id:'2-7', t:'除法', sub:'符号のルール・逆数', plan:['div','div','m1Recip','m1Recip','m1DivR'], body:()=>`
-    <section class="panel"><h3>ルール</h3>${rule('符号のルールは 乗法と同じ<br>同じ符号 → ＋　ちがう符号 → −')}<p class="ex">(${M}12) ÷ (+3) ＝ ${M}4<br>(${M}6) ÷ (${M}2) ＝ 3</p><p class="small muted">0 をどんな数でわっても 0。0 でわることは考えない。</p></section>
-    <section class="panel"><h3>逆数</h3>${rule('2つの数の積が 1 のとき、一方を他方の 逆数 という')}${ex(M+frH(2,3)+' の逆数は '+M+frH(3,2)+'　（符号はそのまま）')}${rule('わる数の逆数をかけて、乗法に直せる')}${ex('(+6) ÷ ('+M+frH(2,3)+') ＝ (+6) × ('+M+frH(3,2)+') ＝ '+M+'9')}</section>` },
-  { id:'2-8', t:'乗法と除法の混じった計算', sub:'負の数の個数で符号', plan:['mul3','mul3','m1MD3','m1MD3','m1MD3'], body:()=>`
-    <section class="panel"><h3>符号を先に決める</h3>${rule('負の数が 偶数個 → ＋<br>負の数が 奇数個 → −')}${ex('('+M+'2) × 3 × ('+M+'4) ＝ +(2×3×4) ＝ 24')}</section>
-    <section class="panel"><h3>乗法だけの式に直す</h3>${ex('(+12) × ('+M+'3) ÷ ('+M+'4)<br>＝ (+12) × ('+M+'3) × ('+M+frH(1,4)+')<br>＝ +'+frH('12×3','4')+' ＝ 9')}</section>` },
-  { id:'2-9', t:'四則の混じった計算', sub:'計算の順序・分配法則', plan:['m1Four','m1Four','m1Four','m1Dist','m1Dist'], body:()=>`
-    <section class="panel"><h3>計算の順序</h3>${rule('① かっこの中・累乗<br>② 乗法・除法<br>③ 加法・減法')}${ex('5 ＋ ('+M+'3) × 4<br>＝ 5 ＋ ('+M+'12) ＝ '+M+'7')}${ex('('+M+'2)<sup>2</sup> − 10 ÷ 5<br>＝ 4 − 2 ＝ 2')}</section>
-    <section class="panel"><h3>分配法則</h3>${rule('(a＋b)×c ＝ a×c＋b×c<br>c×(a＋b) ＝ c×a＋c×b')}${ex('('+frH(1,2)+' − '+frH(1,3)+') × 12<br>＝ '+frH(1,2)+'×12 − '+frH(1,3)+'×12 ＝ 6 − 4 ＝ 2')}</section>` },
-  { id:'2-10', t:'数の集合と四則', sub:'計算がいつもできるか', plan:Array(5).fill('m1Set'), body:()=>`
-    <section class="panel"><h3>数の範囲と計算</h3>${kmTbl([['自然数','○','△','○','△'],['整数','○','○','○','△'],['数全体','○','○','○','○']],['','加法','減法','乗法','除法'])}<p class="small muted">○：いつもできる　△：できないことがある（0 でわる場合は除く）</p>
-    ${ex('自然数どうしの減法：2 − 5 ＝ '+M+'3（自然数ではない）')}${ex('整数どうしの除法：1 ÷ 3 ＝ '+frH(1,3)+'（整数ではない）')}</section>` },
-  { id:'3-1', sec:'3　正の数・負の数の利用', t:'素数と素因数分解', sub:'自然数を素数の積に', plan:['m1Prime','m1Prime','m1Prime','m1Prime','m1Prime'], body:()=>`
-    <section class="panel"><h3>素数</h3>${rule('1 とその数自身のほかに 約数がない自然数を 素数 という<br>（1 は素数にふくめない）')}<p class="small">2, 3, 5, 7, 11, 13, 17, 19, 23, 29, …</p></section>
-    <section class="panel"><h3>素因数分解</h3>${rule('自然数を 素数だけの積で表すこと')}<table style="margin:6px auto;border-collapse:collapse;font-size:1.05rem"><tr><td style="padding:2px 6px;text-align:right">2</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">60</td></tr><tr><td style="padding:2px 6px;text-align:right">2</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">30</td></tr><tr><td style="padding:2px 6px;text-align:right">3</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">15</td></tr><tr><td></td><td style="padding:2px 10px">5</td></tr></table>${ex('60 ＝ 2×2×3×5 ＝ 2<sup>2</sup>×3×5')}<p class="small muted">小さい素数から順にわっていこう。</p></section>` },
-  { id:'3-2', t:'基準とのちがいと平均', sub:'正の数・負の数を使って', plan:['m1Diff','m1Diff','m1Avg','m1Avg','m1Avg'], body:()=>`
-    <section class="panel"><h3>基準とのちがい</h3>${rule('基準より大きい → 正の数　基準より小さい → 負の数')}
-    ${kmTbl([['Aさん','52','+2'],['Bさん','47',M+'3'],['Cさん','55','+5'],['Dさん','46',M+'4']],['','記録','基準50とのちがい'])}</section>
-    <section class="panel"><h3>平均の求め方</h3>${rule('平均 ＝ 基準 ＋（ちがいの合計 ÷ 個数）')}${ex('ちがいの合計：(+2)＋('+M+'3)＋(+5)＋('+M+'4) ＝ 0<br>平均：50 ＋ 0÷4 ＝ 50')}<p class="small muted">大きな数をそのままたすより、計算が楽になります。</p></section>` },
-  { id:'4-1', sec:'章末テスト', t:'章末テスト', sub:'1章の総まとめ', test:true, plan:['m1Opp','compare','m1AbsInt','add','sub','m1Dec','mix3','m1Pow','m1MD3','m1Four','m1Prime','m1Avg'], body:()=>`
-    <section class="panel"><h3>1章　正の数・負の数　章末テスト</h3><p>1節〜3節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
+  ...M1C1N,
 ];
 
 /* ===== 中2数学 2章 連立方程式 ===== */
