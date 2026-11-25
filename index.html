@@ -17309,7 +17309,8 @@ function seaFeed(arg){
 }
 
 const VIEWS={ jk:vJk, setup:vSetup, home:vHome, course:vCourse, subject:vSubject, unit:vUnit, lesson:vLesson, cards:vCards, quiz:vQuiz, result:vResult, record:vRecord, settings:vSettings, install:vInstall, drill:vDrill, pdf:vPdf, sea:vSea };
-function scriptXY(root){ const MAP={x:'𝔁',y:'𝔂'}; const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest('svg,script,style,input,textarea')?NodeFilter.FILTER_REJECT:(/[xy]/.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)}); const ns=[]; while(w.nextNode()) ns.push(w.currentNode); ns.forEach(n=>{ n.nodeValue=n.nodeValue.replace(/(^|[^A-Za-z])([xy]+)(?=[^A-Za-z]|$)/g,(m,p,v)=>p+v.replace(/[xy]/g,c=>MAP[c])); }); }
+function scriptXY(root){ const sc=c=>String.fromCodePoint(0x1D4EA+c.charCodeAt(0)-97); const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest('svg,script,style,input,textarea')?NodeFilter.FILTER_REJECT:(/[abcmnxy]/.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)}); const ns=[]; while(w.nextNode()) ns.push(w.currentNode);
+  ns.forEach(n=>{ n.nodeValue=n.nodeValue.replace(/[A-Za-z]+/g,(tok,off,str)=>{ if(!/^[abcmnxy]+$/.test(tok)||tok==='cm') return tok; if(tok==='m'){ const pv=str[off-1]||'', nx=str[off+1]||''; if(!(/[×²(（]/.test(nx)||/[×(（]/.test(pv)||nx==='²')) return tok; } return [...tok].map(sc).join(''); }); }); }
 function render(){
   app.innerHTML=VIEWS[S.view]();
   tabs.hidden = S.view==='setup';
