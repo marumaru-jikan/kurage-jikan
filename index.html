@@ -7635,6 +7635,7 @@ const M1C3_CARDS = [
   ['方程式で問題を解く手順','①数量の関係を見つける ②わからない数量を文字で表して方程式をつくって解く ③解が問題にあっているか調べて答えを書く'],
   ['速さの公式','速さ＝道のり÷時間、道のり＝速さ×時間、時間＝道のり÷速さ'],
 ];
+const m1EqA = (L)=>'<span style="display:inline-grid;grid-template-columns:auto auto auto;column-gap:.25em;row-gap:.15em;align-items:center">'+L.map(l=>{ if(l[0]==='#') return '<span style="grid-column:1/4;font-size:.85em;opacity:.75">'+l.slice(1)+'</span>'; const i=l.indexOf('＝'); return '<span style="text-align:right">'+l.slice(0,i)+'</span><span>＝</span><span>'+l.slice(i+1)+'</span>'; }).join('')+'</span>';
 const M1C3_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'速さ・道のり・時間', sub:'小学5年', plan:Array(5).fill('m1Spd'), body:()=>`
     <section class="panel"><h3>速さの関係</h3>${rule('速さ ＝ 道のり ÷ 時間<br>道のり ＝ 速さ × 時間<br>時間 ＝ 道のり ÷ 速さ')}<div class="noscr" style="text-align:center;margin:.6em 0"><svg viewBox="0 0 280 320" style="width:100%;max-width:240px;height:auto;aspect-ratio:280/320"><defs><clipPath id="mhjC"><ellipse cx="140" cy="160" rx="125" ry="150"/></clipPath></defs><g clip-path="url(#mhjC)"><rect x="0" y="0" width="280" height="135" fill="#ccfbfd"/><rect x="0" y="135" width="140" height="200" fill="#ffd3d6"/><rect x="140" y="135" width="140" height="200" fill="#fffbc8"/></g><line x1="15" y1="135" x2="265" y2="135" stroke="#2b1d1d" stroke-width="9"/><line x1="140" y1="135" x2="140" y2="310" stroke="#2b1d1d" stroke-width="9"/><ellipse cx="140" cy="160" rx="125" ry="150" fill="none" stroke="#2b1d1d" stroke-width="10"/><rect x="72" y="126" width="24" height="18" fill="#ccfbfd"/><rect x="184" y="126" width="24" height="18" fill="#ccfbfd"/><text x="84" y="141" text-anchor="middle" font-size="20" font-weight="700" fill="#2b1d1d">÷</text><text x="196" y="141" text-anchor="middle" font-size="20" font-weight="700" fill="#2b1d1d">÷</text><rect x="130" y="196" width="20" height="26" fill="#fff"/><text x="140" y="217" text-anchor="middle" font-size="22" font-weight="700" fill="#2b1d1d">×</text><text x="140" y="80" text-anchor="middle" font-size="46" font-weight="800" fill="#111">み</text><text x="140" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#111">（道のり）</text><text x="78" y="215" text-anchor="middle" font-size="46" font-weight="800" fill="#111">は</text><text x="78" y="246" text-anchor="middle" font-size="17" font-weight="700" fill="#111">（速さ）</text><text x="204" y="215" text-anchor="middle" font-size="46" font-weight="800" fill="#111">じ</text><text x="204" y="246" text-anchor="middle" font-size="17" font-weight="700" fill="#111">（時間）</text></svg></div><p class="small muted">求めたいところを指でかくすと、残りの式が見える。<br>み をかくす → は × じ<br>は をかくす → み ÷ じ<br>じ をかくす → み ÷ は</p>${ex('400m を5分 → 分速 400÷5 ＝ 80（m）')}<p class="small muted">単位（m と km、分と時間）をそろえてから計算しよう。</p></section>` },
@@ -7645,27 +7646,27 @@ const M1C3_LESSONS = [
   { id:'1-2', t:'等式の性質', sub:'両辺に同じ操作', plan:Array(5).fill('m1Prop'), body:()=>`
     <section class="panel"><h3>等式の性質</h3>${rule('A＝B ならば<br>① A＋C＝B＋C　② A−C＝B−C<br>③ AC＝BC　④ '+frH('A','C')+'＝'+frH('B','C')+'（C≠0）')}${ex('x−4＝3 → 両辺に4をたして x＝7')}${ex('3x＝12 → 両辺を3でわって x＝4')}${ex(frH('x',4)+'＝3 → 両辺に4をかけて x＝12')}</section>` },
   { id:'1-3', t:'移項して方程式を解く', sub:'符号を変えて移す', plan:Array(5).fill('m1Ik1'), body:()=>`
-    <section class="panel"><h3>移項</h3>${rule('等式の一方の辺の項を、符号を変えて他方の辺に移すことを 移項 という')}${ex('4x−7＝9<br>4x＝9＋7<br>4x＝16<br>x＝4')}<p class="small muted">−7 を右辺に移項すると ＋7 になる。</p></section>` },
+    <section class="panel"><h3>移項</h3>${rule('等式の一方の辺の項を、符号を変えて他方の辺に移すことを 移項 という')}${ex(m1EqA(['4x−7＝9','4x＝9＋7','4x＝16','x＝4']))}<p class="small muted">−7 を右辺に移項すると ＋7 になる。</p></section>` },
   { id:'1-4', t:'方程式の解き方', sub:'文字の項は左、数の項は右', plan:Array(5).fill('m1Ik2'), body:()=>`
-    <section class="panel"><h3>解き方の手順</h3>${rule('① 文字の項を左辺、数の項を右辺に移項<br>② ax＝b の形にする<br>③ 両辺を x の係数 a でわる')}${ex('3x−4＝x−10<br>3x−x＝−10＋4<br>2x＝−6<br>x＝−3')}</section>` },
+    <section class="panel"><h3>解き方の手順</h3>${rule('① 文字の項を左辺、数の項を右辺に移項<br>② ax＝b の形にする<br>③ 両辺を x の係数 a でわる')}${ex(m1EqA(['3x−4＝x−10','3x−x＝−10＋4','2x＝−6','x＝−3']))}</section>` },
   { id:'1-5', t:'かっこがある方程式', sub:'かっこをはずしてから', plan:Array(5).fill('m1Kk'), body:()=>`
-    <section class="panel"><h3>かっこをはずす</h3>${ex('6(x−5)＝8x＋2<br>6x−30＝8x＋2<br>6x−8x＝2＋30<br>−2x＝32<br>x＝−16')}<p class="small muted">分配法則でかっこをはずしてから、移項して解く。</p></section>` },
+    <section class="panel"><h3>かっこをはずす</h3>${ex(m1EqA(['6(x−5)＝8x＋2','6x−30＝8x＋2','6x−8x＝2＋30','−2x＝32','x＝−16']))}<p class="small muted">分配法則でかっこをはずしてから、移項して解く。</p></section>` },
   { id:'1-6', t:'分数をふくむ方程式', sub:'分母をはらう', plan:Array(5).fill('m1FrE'), body:()=>`
-    <section class="panel"><h3>分母をはらう</h3>${rule('両辺に分母の公倍数をかけて、分数をふくまない式にする')}${ex(frH(1,2)+'x＋4＝'+frH('x＋2',3)+'<br>両辺に 6 をかけて 3x＋24＝2(x＋2)<br>3x＋24＝2x＋4<br>x＝−20')}</section>` },
+    <section class="panel"><h3>分母をはらう</h3>${rule('両辺に分母の公倍数をかけて、分数をふくまない式にする')}${ex(m1EqA([frH(1,2)+'x＋4＝'+frH('x＋2',3),'#両辺に 6 をかけて','3x＋24＝2(x＋2)','3x＋24＝2x＋4','3x−2x＝4−24','x＝−20']))}</section>` },
   { id:'1-7', t:'小数をふくむ方程式', sub:'10倍・100倍して整数に', plan:Array(5).fill('m1DecE'), body:()=>`
-    <section class="panel"><h3>係数を整数にする</h3>${ex('0.4x−0.7＝2−0.5x<br>両辺に 10 をかけて 4x−7＝20−5x<br>9x＝27<br>x＝3')}<p class="small muted">0.02 のように小数第2位まであるときは 100 をかける。90x＋400＝50x−120 のように大きいときは 10 でわってもよい。</p></section>` },
+    <section class="panel"><h3>係数を整数にする</h3>${ex(m1EqA(['0.4x−0.7＝2−0.5x','#両辺に 10 をかけて','4x−7＝20−5x','4x＋5x＝20＋7','9x＝27','x＝3']))}<p class="small muted">0.02 のように小数第2位まであるときは 100 をかける。90x＋400＝50x−120 のように大きいときは 10 でわってもよい。</p></section>` },
   { id:'1-8', t:'比例式', sub:'ad＝bc', plan:Array(5).fill('m1Hr'), body:()=>`
-    <section class="panel"><h3>比例式</h3>${rule('a：b＝c：d のように、比が等しいことを表す式を 比例式 という')}${rule('比例式の性質：a：b＝c：d ならば ad＝bc')}${ex('x：4＝3：2<br>2x＝4×3、x＝6')}${ex('x：(x＋2)＝4：5<br>5x＝4(x＋2)、x＝8')}</section>` },
+    <section class="panel"><h3>比例式</h3>${rule('a：b＝c：d のように、比が等しいことを表す式を 比例式 という')}${rule('比例式の性質：a：b＝c：d ならば ad＝bc')}${ex(m1EqA(['x：4＝3：2','2x＝4×3','x＝6']))}${ex(m1EqA(['x：(x＋2)＝4：5','5x＝4(x＋2)','5x＝4x＋8','x＝8']))}</section>` },
   { id:'2-1', sec:'2　方程式の利用', t:'代金の問題', sub:'方程式で問題を解く', plan:Array(5).fill('m1UseA'), body:()=>`
-    <section class="panel"><h3>問題を解く手順</h3>${rule('① 数量の関係を見つける<br>② わからない数量を x として方程式をつくって解く<br>③ 解が問題にあっているか調べて答えを書く')}${ex('500円で鉛筆4本と90円の消しゴムを買うと、おつり170円<br>500−(4x＋90)＝170<br>−4x＝−240、x＝60 → 60円')}</section>` },
+    <section class="panel"><h3>問題を解く手順</h3>${rule('① 数量の関係を見つける<br>② わからない数量を x として方程式をつくって解く<br>③ 解が問題にあっているか調べて答えを書く')}${ex('500円で鉛筆4本と90円の消しゴムを買うと、おつり170円<br>'+m1EqA(['500−(4x＋90)＝170','500−4x−90＝170','−4x＝170−410','−4x＝−240','x＝60'])+'<br>答 60円')}</section>` },
   { id:'2-2', t:'過不足の問題', sub:'全体の数を2通りに表す', plan:Array(5).fill('m1UseB'), body:()=>`
-    <section class="panel"><h3>2通りの式</h3>${rule('分け方を変えても、はじめにある全体の数は変わらない')}${ex('袋に4個ずつ → 12個余る：4x＋12<br>6個ずつ → 2個たりない：6x−2<br>4x＋12＝6x−2、x＝7（袋7枚）')}</section>` },
+    <section class="panel"><h3>2通りの式</h3>${rule('分け方を変えても、はじめにある全体の数は変わらない')}${ex('袋に4個ずつ → 12個余る：4x＋12<br>6個ずつ → 2個たりない：6x−2<br>'+m1EqA(['4x＋12＝6x−2','4x−6x＝−2−12','−2x＝−14','x＝7'])+'<br>答 袋7枚')}</section>` },
   { id:'2-3', t:'年齢・数・平均の問題', sub:'x 年後を考える', plan:Array(5).fill('m1UseC'), body:()=>`
-    <section class="panel"><h3>年齢の問題</h3>${ex('ゆうき12歳、父40歳。父の年齢が3倍になるのは？<br>x 年後：40＋x＝3(12＋x)<br>x＝2 → 2年後')}<p class="small muted">解が自然数になっているかなど、問題にあっているか確かめよう。</p></section>` },
+    <section class="panel"><h3>年齢の問題</h3>${ex('ゆうき12歳、父40歳。父の年齢が3倍になるのは？<br>x 年後とすると<br>'+m1EqA(['40＋x＝3(12＋x)','40＋x＝36＋3x','x−3x＝36−40','−2x＝−4','x＝2'])+'<br>答 2年後')}<p class="small muted">解が自然数になっているかなど、問題にあっているか確かめよう。</p></section>` },
   { id:'2-4', t:'速さ・時間・道のりの問題', sub:'追いつく問題', plan:Array(5).fill('m1UseD'), body:()=>`
-    <section class="panel"><h3>追いつくとき</h3>${rule('追いつくとき、2人が進んだ道のりは等しい')}${ex('弟 分速90m、10分後に兄 分速240m<br>兄の道のり 240x ＝ 弟の道のり 90(10＋x)<br>150x＝900、x＝6 → 6分後')}</section>` },
+    <section class="panel"><h3>追いつくとき</h3>${rule('追いつくとき、2人が進んだ道のりは等しい')}${ex('弟 分速90m、10分後に兄 分速240m<br>兄の道のり ＝ 弟の道のり<br>'+m1EqA(['240x＝90(10＋x)','240x＝900＋90x','240x−90x＝900','150x＝900','x＝6'])+'<br>答 6分後')}</section>` },
   { id:'2-5', t:'比例式を利用する問題', sub:'比が等しいことから', plan:Array(5).fill('m1UseE'), body:()=>`
-    <section class="panel"><h3>比例式をつくる</h3>${ex('A、B に20個ずつ。A から x 個 B へ → 比 2：3<br>(20−x)：(20＋x)＝2：3<br>3(20−x)＝2(20＋x)、x＝4')}</section>` },
+    <section class="panel"><h3>比例式をつくる</h3>${ex('A、B に20個ずつ。A から x 個 B へ → 比 2：3<br>'+m1EqA(['(20−x)：(20＋x)＝2：3','3(20−x)＝2(20＋x)','60−3x＝40＋2x','−3x−2x＝40−60','−5x＝−20','x＝4']))}</section>` },
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'3章の総まとめ', test:true, plan:['m1Sol','m1Prop','m1Ik1','m1Ik2','m1Kk','m1FrE','m1DecE','m1Hr','m1UseA','m1UseB','m1UseD','m1UseE'], body:()=>`
     <section class="panel"><h3>3章　方程式　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
 ];
