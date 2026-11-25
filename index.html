@@ -7964,8 +7964,8 @@ Object.assign(G,{
     if(t===1) return mq2(`△${p}${q}${r} は △${a}${b}${c} を平行移動したものです。線分 ${a}${p} と長さが等しい線分は？`, '', `線分 ${b}${q} と ${c}${r}`, [`線分 ${a}${b} と ${p}${q}`,`線分 ${b}${c} と ${q}${r}`,`線分 ${a}${q} と ${b}${p}`], '平行移動では、対応する点を結んだ線分の長さはすべて等しい。', `${a}${p}＝${b}${q}＝${c}${r}`, { words:true });
     return mq2(`平行移動で、対応する点を結んだ線分どうしの関係は？`, '', '平行で、長さが等しい', ['垂直で、長さが等しい','平行で、長さがちがう','1点で交わる'], '一定の方向に一定の長さだけずらす移動。', '平行で長さが等しい（例：AP//BQ、AP＝BQ）', { words:true }); },
   k5Mv2(){ const d=pick([40,60,70,80,90,105,120,135,150]), t=ri(0,2);
-    if(t===0) return mq2(`△PQR は △ABC を、点 O を中心として ${d}° 回転移動したものです。∠BOQ の大きさは？`, '', d+'°', [180-d, 2*d>360?d/2:2*d, 360-d, d/2, d+10, d-10].filter(v=>v!==d&&v>0).map(v=>v+'°'), '回転移動では、対応する点と回転の中心を結んでできた角はすべて等しい。', `∠AOP＝∠BOQ＝∠COR＝${d}°`);
-    if(t===1){ const r=ri(3,9); return mq2(`△PQR は △ABC を、点 O を中心として ${d}° 回転移動したものです。OA＝${r}cm のとき、OP の長さは？`, '', r+'cm', [2*r, r+1, r-1, r+2, 3*r].filter(v=>v!==r).map(v=>v+'cm'), '回転移動では、対応する点は回転の中心から等しい距離にある。', `OP＝OA＝${r}cm`); }
+    if(t===0) return mq2(`△PQR は △ABC を、点 O を中心として ${d}° 回転移動したものです。∠BOQ の大きさは？`, M5F_ROT, d+'°', [180-d, 2*d>360?d/2:2*d, 360-d, d/2, d+10, d-10].filter(v=>v!==d&&v>0).map(v=>v+'°'), '回転移動では、対応する点と回転の中心を結んでできた角はすべて等しい。', `∠AOP＝∠BOQ＝∠COR＝${d}°`);
+    if(t===1){ const r=ri(3,9); return mq2(`△PQR は △ABC を、点 O を中心として ${d}° 回転移動したものです。OA＝${r}cm のとき、OP の長さは？`, M5F_ROT, r+'cm', [2*r, r+1, r-1, r+2, 3*r].filter(v=>v!==r).map(v=>v+'cm'), '回転移動では、対応する点は回転の中心から等しい距離にある。', `OP＝OA＝${r}cm`); }
     return mq2('回転移動について正しいものは？', '', '対応する点は、回転の中心から等しい距離にある', ['対応する点を結んだ線分はすべて平行','回転の中心は図形の頂点でなければならない','対応する点を結んだ線分の中点が回転の中心'], '回転の中心からの距離が等しく、回転した角はすべて等しい。', '対応する点は回転の中心から等しい距離にある', { words:true }); },
   k5Mv3(){ const t=ri(0,2);
     if(t===0){ const m=ri(2,9); return mq2(`△PQR は △ABC を、直線 ℓ を対称の軸として対称移動したものです。AP と ℓ の交点を M とすると、AM＝${m}cm のとき、AP の長さは？`, M5F_REF, 2*m+'cm', [m, m+2, 3*m, 2*m+1].filter(v=>v!==2*m).map(v=>v+'cm'), 'ℓ は AP の垂直二等分線。M は AP の中点。', `AP＝2×${m}＝${2*m}cm`); }
@@ -7975,11 +7975,11 @@ Object.assign(G,{
   k5Con(){ const [q,a,w]=kaPick(M5CON); return mq2('基本の作図', q, a, w, '垂直二等分線は2点から等しい距離、角の二等分線は2辺から等しい距離。', a, { words:true }); },
   k5Use(){ const [q,a,w]=kaPick(M5USE); return mq2('作図の利用', q, a, w, '垂線・垂直二等分線・角の二等分線と、正三角形の 60° を組み合わせる。', a, { words:true }); },
   k5Arc(){ const [q,a,w]=kaPick(M5ARC); return mq2('円の弧と弦', q, a, w, '弧は円周の一部、弦は円周上の2点を結ぶ線分。', a, { words:true }); },
-  k5Tan(){ const [q,a,w]=kaPick(M5TAN); return mq2('円の接線', q, a, w, '接線は、接点を通る半径に垂直。', a, { words:true }); },
+  k5Tan(){ const [q,a,w]=kaPick(M5TAN); return mq2('円の接線', q+M5F_TAN, a, w, '接線は、接点を通る半径に垂直。', a, { words:true }); },
   k5Circ(){ const r=ri(2,12), t=ri(0,3);
-    if(t===0) return mq2(`半径 ${r}cm の円の周の長さは？`, '', m5Pi(2*r)+' cm', [m5Pi(r),m5Pi(r*r),m5Pi(4*r),m5Pi(2*r*r),m5Pi(2*r+2)].filter(v=>v!==m5Pi(2*r)).map(v=>v+' cm'), 'ℓ＝2πr', `2π×${r}＝${m5Pi(2*r)}（cm）`);
-    if(t===1) return mq2(`半径 ${r}cm の円の面積は？`, '', m5Pi(r*r)+' cm²', [m5Pi(2*r),m5Pi(4*r*r),m5Pi(2*r*r),m5Pi(r),m5Pi(r*r+r)].filter(v=>v!==m5Pi(r*r)).map(v=>v+' cm²'), 'S＝πr²', `π×${r}²＝${m5Pi(r*r)}（cm²）`);
-    if(t===2){ const d=2*r; return mq2(`直径 ${d}cm の円の周の長さと面積は？`, '', `周 ${m5Pi(d)} cm、面積 ${m5Pi(r*r)} cm²`, [`周 ${m5Pi(2*d)} cm、面積 ${m5Pi(d*d)} cm²`,`周 ${m5Pi(d)} cm、面積 ${m5Pi(d*d)} cm²`,`周 ${m5Pi(r)} cm、面積 ${m5Pi(r*r)} cm²`], '半径は直径の半分。', `半径 ${r}cm：周 2π×${r}＝${m5Pi(d)}、面積 π×${r}²＝${m5Pi(r*r)}`, { words:true }); }
+    if(t===0) return mq2(`半径 ${r}cm の円の周の長さは？`, fzCirc(r+'cm'), m5Pi(2*r)+' cm', [m5Pi(r),m5Pi(r*r),m5Pi(4*r),m5Pi(2*r*r),m5Pi(2*r+2)].filter(v=>v!==m5Pi(2*r)).map(v=>v+' cm'), 'ℓ＝2πr', `2π×${r}＝${m5Pi(2*r)}（cm）`);
+    if(t===1) return mq2(`半径 ${r}cm の円の面積は？`, fzCirc(r+'cm'), m5Pi(r*r)+' cm²', [m5Pi(2*r),m5Pi(4*r*r),m5Pi(2*r*r),m5Pi(r),m5Pi(r*r+r)].filter(v=>v!==m5Pi(r*r)).map(v=>v+' cm²'), 'S＝πr²', `π×${r}²＝${m5Pi(r*r)}（cm²）`);
+    if(t===2){ const d=2*r; return mq2(`直径 ${d}cm の円の周の長さと面積は？`, fzCirc(d+'cm',true), `周 ${m5Pi(d)} cm、面積 ${m5Pi(r*r)} cm²`, [`周 ${m5Pi(2*d)} cm、面積 ${m5Pi(d*d)} cm²`,`周 ${m5Pi(d)} cm、面積 ${m5Pi(d*d)} cm²`,`周 ${m5Pi(r)} cm、面積 ${m5Pi(r*r)} cm²`], '半径は直径の半分。', `半径 ${r}cm：周 2π×${r}＝${m5Pi(d)}、面積 π×${r}²＝${m5Pi(r*r)}`, { words:true }); }
     return mq2(`周の長さが ${m5Pi(2*r)} cm の円の半径は？`, '', r+'cm', [2*r, r+1, r*r, 4*r, r+2].filter(v=>v!==r).map(v=>v+'cm'), '2πr＝周の長さ', `2πr＝${m5Pi(2*r)} より r＝${r}`); },
   k5Sec(){ const a=pick([30,36,40,45,60,72,90,120,135,144,150,180,210,240,270,300]), r=pick([2,3,4,5,6,8,9,10,12]), t=ri(0,1);
     const L=m5Pi(r*a,180), S=m5Pi(r*r*a,360);
@@ -7987,8 +7987,8 @@ Object.assign(G,{
     return mq2(`半径 ${r}cm、中心角 ${a}° のおうぎ形の面積は？`, M5F_SEC, S+' cm²', [m5Pi(r*r*a,180),L,m5Pi(r*r*a,720),m5Pi(r*a,360),m5Pi(r*r*a,90),m5Pi(r*r*a+360,360)].filter(v=>v!==S).map(v=>v+' cm²'), 'S＝πr²×'+frH('a',360), `π×${r}²×${frH(a,360)}＝${S}（cm²）`); },
   k5SecA(){ const a=pick([30,40,45,60,72,90,120,135,144,150,240]), r=pick([3,4,6,8,9,10,12]), t=ri(0,2);
     const L=m5Pi(r*a,180), S=m5Pi(r*r*a,360), W=[a/2,2*a,360-a,a+30,a-15].filter(v=>v!==a&&v>0&&v<360&&Number.isInteger(v)).map(v=>v+'°');
-    if(t===0) return mq2(`半径 ${r}cm、弧の長さ ${L} cm のおうぎ形の中心角は？`, '', a+'°', W, '（おうぎ形の弧の長さ）：（円周）＝（中心角）：360', `円周は ${m5Pi(2*r)}。${L}：${m5Pi(2*r)}＝x：360 より x＝${a}`);
-    if(t===1) return mq2(`半径 ${r}cm、面積 ${S} cm² のおうぎ形の中心角は？`, '', a+'°', W, '（おうぎ形の面積）：（円の面積）＝（中心角）：360', `円の面積は ${m5Pi(r*r)}。${S}：${m5Pi(r*r)}＝x：360 より x＝${a}`);
+    if(t===0) return mq2(`半径 ${r}cm、弧の長さ ${L} cm のおうぎ形の中心角は？`, M5F_SEC, a+'°', W, '（おうぎ形の弧の長さ）：（円周）＝（中心角）：360', `円周は ${m5Pi(2*r)}。${L}：${m5Pi(2*r)}＝x：360 より x＝${a}`);
+    if(t===1) return mq2(`半径 ${r}cm、面積 ${S} cm² のおうぎ形の中心角は？`, M5F_SEC, a+'°', W, '（おうぎ形の面積）：（円の面積）＝（中心角）：360', `円の面積は ${m5Pi(r*r)}。${S}：${m5Pi(r*r)}＝x：360 より x＝${a}`);
     const Sv=m5Pi(r*r*a,360); return mq2(`半径 ${r}cm、弧の長さ ${L} cm のおうぎ形の面積は？`, '', Sv+' cm²', [m5Pi(r*r*a,180),L,m5Pi(r*a,360),m5Pi(r*r*a,720),m5Pi(r*r*a,90)].filter(v=>v!==Sv).map(v=>v+' cm²'), 'S＝'+frH(1,2)+'ℓr を使うと速い。', `${frH(1,2)}×${L}×${r}＝${Sv}（cm²）`); },
 });
 const M1C5_CARDS = [
@@ -8303,6 +8303,104 @@ const M1C6_LESSONS = [
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'6章の総まとめ', test:true, plan:['k6NamePic','k6Reg','k6Proj','k6Net','k6Plane','k6Line','k6Line','k6RotPic','k6V1','k6V2','k6V3','k6S1','k6S2','k6S3','k6S4'], body:()=>`
     <section class="panel"><h3>6章　空間図形　章末テスト</h3><p>1節・2節の範囲から15問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
 ];
+/* ===== 図・グラフの問題（中1〜中3 追加） ===== */
+const fzNL = (a,ac,b,bc) => { const X=v=>150+v*26; let g=`<line x1="10" y1="40" x2="290" y2="40"/>`; for(let v=-5;v<=5;v++) g+=`<line x1="${X(v)}" y1="35" x2="${X(v)}" y2="45" stroke-width="1"/>`+m5T(X(v)-(v<0?7:4),62,v<0?'−'+(-v):String(v),'font-size="12"');
+  const L=a==null?12:X(a), R=b==null?288:X(b); g+=`<line x1="${L}" y1="40" x2="${R}" y2="40" stroke="${M5PK}" stroke-width="4"/>`;
+  if(a==null) g+=`<path d="M20 34 L10 40 L20 46" stroke="${M5PK}" stroke-width="2.5"/>`; if(b==null) g+=`<path d="M280 34 L290 40 L280 46" stroke="${M5PK}" stroke-width="2.5"/>`;
+  if(a!=null) g+=`<circle cx="${X(a)}" cy="40" r="6" fill="${ac?M5PK:'#fff'}" stroke="${M5PK}" stroke-width="2"/>`; if(b!=null) g+=`<circle cx="${X(b)}" cy="40" r="6" fill="${bc?M5PK:'#fff'}" stroke="${M5PK}" stroke-width="2"/>`;
+  return m5V(300,72,g,320); };
+const fzQ1 = (xm,ym,xs,ys,xl,yl,lines,labs=[]) => { const W=300,H=220,L=46,B=30,Tp=12,Rr=16, px=x=>L+x*(W-L-Rr)/xm, py=y=>H-B-y*(H-B-Tp)/ym; let g='';
+  for(let x=0;x<=xm;x+=xs) g+=`<line x1="${px(x)}" y1="${py(0)}" x2="${px(x)}" y2="${py(ym)}" stroke="#bcd6e6" stroke-width=".7"/>`+m5T(px(x)-4,py(0)+14,x,'font-size="10"');
+  for(let y=ys;y<=ym;y+=ys) g+=`<line x1="${px(0)}" y1="${py(y)}" x2="${px(xm)}" y2="${py(y)}" stroke="#bcd6e6" stroke-width=".7"/>`+m5T(px(0)-4-String(y).length*6,py(y)+4,y,'font-size="10"');
+  g+=`<line x1="${px(0)}" y1="${py(0)}" x2="${W-6}" y2="${py(0)}" stroke-width="1.3"/><line x1="${px(0)}" y1="${py(0)}" x2="${px(0)}" y2="6" stroke-width="1.3"/>`+m5T(W-44,py(0)-6,xl,'font-size="11" font-family="sans-serif"')+m5T(px(0)+6,16,yl,'font-size="11" font-family="sans-serif"');
+  const cols=[M5PK,M5BL]; lines.forEach((p,i)=>{ g+=`<polyline points="${p.map(([x,y])=>px(x).toFixed(1)+','+py(y).toFixed(1)).join(' ')}" stroke="${cols[i%2]}" stroke-width="2.2"/>`; });
+  labs.forEach(([x,y,t,i])=>{ g+=m5T(px(x)+4,py(y)-6,t,`font-size="12" fill="${cols[i%2]}" font-family="sans-serif"`); });
+  return m5V(W,H,g,320); };
+/* 中1 5章：対称な図形 */
+const FZSHAPE = [['正三角形','線対称のみ','<path d="M80 15 L20 120 L140 120 Z"/>'],['二等辺三角形','線対称のみ','<path d="M80 10 L45 125 L115 125 Z"/>'],['正方形','線対称・点対称の両方','<rect x="30" y="20" width="100" height="100"/>'],
+  ['長方形','線対称・点対称の両方','<rect x="15" y="35" width="130" height="70"/>'],['ひし形','線対称・点対称の両方','<path d="M80 10 L135 70 L80 130 L25 70 Z"/>'],['平行四辺形','点対称のみ','<path d="M45 30 L150 30 L115 110 L10 110 Z"/>'],
+  ['等脚台形','線対称のみ','<path d="M50 30 L110 30 L145 110 L15 110 Z"/>'],['正六角形','線対称・点対称の両方','<path d="M50 20 L110 20 L140 70 L110 120 L50 120 L20 70 Z"/>'],['不等辺三角形','どちらでもない','<path d="M30 20 L15 120 L150 100 Z"/>'],['台形（左右が等しくない）','どちらでもない','<path d="M30 30 L95 30 L150 110 L15 110 Z"/>']];
+const FZLINE = [['直線 AB',`<line x1="10" y1="40" x2="230" y2="40"/><path d="M20 34 L10 40 L20 46 M220 34 L230 40 L220 46" stroke-width="1.4"/>`],['線分 AB',`<line x1="70" y1="40" x2="170" y2="40"/>`],['半直線 AB',`<line x1="70" y1="40" x2="230" y2="40"/><path d="M220 34 L230 40 L220 46" stroke-width="1.4"/>`],['半直線 BA',`<line x1="10" y1="40" x2="170" y2="40"/><path d="M20 34 L10 40 L20 46" stroke-width="1.4"/>`]];
+const fzLineFig = g => m5V(240,70,g+`<circle cx="70" cy="40" r="3.5" fill="currentColor"/><circle cx="170" cy="40" r="3.5" fill="currentColor"/>${m5T(64,30,'A')}${m5T(164,30,'B')}`,260);
+const FZCON = [['線分 AB の垂直二等分線',()=>M5F_PB],['∠XOY の二等分線',()=>M5F_AB],['点 P を通る直線 ℓ の垂線',()=>M5F_PL]];
+const FZARC = (k) => { const hl=[`<path d="M146.4 59.5 A60 60 0 0 1 136 118.6" stroke="${M5PK}" stroke-width="4"/>`,`<line x1="146.4" y1="59.5" x2="136" y2="118.6" stroke="${M5PK}" stroke-width="3"/>`,`<path d="M108 73.5 A19 19 0 0 1 104.6 92.2" stroke="${M5PK}" stroke-width="3"/><path d="M90 80 L108 73.5 A19 19 0 0 1 104.6 92.2 Z" fill="rgba(224,69,123,.25)" stroke="none"/>`,`<line x1="90" y1="80" x2="146.4" y2="59.5" stroke="${M5PK}" stroke-width="3"/>`][k];
+  return m5V(200,160,`<circle cx="90" cy="80" r="60"/><line x1="90" y1="80" x2="146.4" y2="59.5" stroke-width="1.2"/><line x1="90" y1="80" x2="136" y2="118.6" stroke-width="1.2"/><line x1="146.4" y1="59.5" x2="136" y2="118.6" stroke-width="1" stroke-dasharray="3 3"/>${hl}<circle cx="90" cy="80" r="2.5" fill="currentColor"/>${m5T(76,84,'O')}${m5T(150,56,'A')}${m5T(140,132,'B')}`,200); };
+const fzCirc = (lab,isD) => m5V(180,150,`<circle cx="90" cy="75" r="60" fill="${M5FILL}"/><circle cx="90" cy="75" r="2.5" fill="currentColor"/><line x1="${isD?30:90}" y1="75" x2="150" y2="75" stroke-width="1.3"/>${m5T(isD?78:108,68,lab,'font-size="13"')}`,170);
+/* 中2：多角形・三角形・四角形・樹形図・表 */
+const fzPoly = n => { let p=[]; for(let i=0;i<n;i++){ const t=-Math.PI/2+2*Math.PI*i/n; p.push([100+70*Math.cos(t),90+70*Math.sin(t)]); } return m5V(200,180,`<path d="M${k6P(p)} Z" fill="${K6F}"/>`,180); };
+const fzTri = (A,B) => { const C=180-A-B, rad=d=>d*Math.PI/180, b=Math.sin(rad(B))/Math.sin(rad(C)); let L=Math.min(190, 115/(b*Math.sin(rad(A)))); const ox=Math.max(0,-L*b*Math.cos(rad(A))); if(L+ox>210) L=210*L/(L+ox);
+  const ox2=Math.max(0,-L*b*Math.cos(rad(A))); const P=[20+ox2,140], Q=[20+ox2+L,140], r=[P[0]+L*b*Math.cos(rad(A)), 140-L*b*Math.sin(rad(A))];
+  return m5V(250,165,`<path d="M${k6P([P,Q,r])} Z" fill="${K6F}"/>${m5T(P[0]+(A>90?-10:14),P[1]-6,A+'°','font-size="12"')}${m5T(Q[0]-34,Q[1]-6,B+'°','font-size="12"')}${m5T(r[0]-10,r[1]-6,C+'°','font-size="12"')}`,250); };
+const fzTick = (P,Q,k) => { const mx=(P[0]+Q[0])/2, my=(P[1]+Q[1])/2, dx=Q[0]-P[0], dy=Q[1]-P[1], L=Math.hypot(dx,dy), ux=dx/L, uy=dy/L, nx=-uy*5, ny=ux*5; let g=''; for(let i=0;i<k;i++){ const o=(i-(k-1)/2)*4; g+=`<line x1="${(mx+ux*o-nx).toFixed(1)}" y1="${(my+uy*o-ny).toFixed(1)}" x2="${(mx+ux*o+nx).toFixed(1)}" y2="${(my+uy*o+ny).toFixed(1)}" stroke="${M5PK}" stroke-width="1.4"/>`; } return g; };
+const fzAng = (V,P,Q,k,r=16) => { const a1=Math.atan2(P[1]-V[1],P[0]-V[0]), a2=Math.atan2(Q[1]-V[1],Q[0]-V[0]); let g=''; for(let i=0;i<k;i++){ const rr=r+i*4, s=[V[0]+rr*Math.cos(a1),V[1]+rr*Math.sin(a1)], e=[V[0]+rr*Math.cos(a2),V[1]+rr*Math.sin(a2)]; let d=a2-a1; while(d<-Math.PI) d+=2*Math.PI; while(d>Math.PI) d-=2*Math.PI; g+=`<path d="M${s[0].toFixed(1)} ${s[1].toFixed(1)} A${rr} ${rr} 0 0 ${d>0?1:0} ${e[0].toFixed(1)} ${e[1].toFixed(1)}" stroke="${M5BL}" stroke-width="1.4"/>`; } return g; };
+const fzCongFig = (t) => { const T1=[[50,20],[15,110],[120,110]], off=[140,0], T2=T1.map(([x,y])=>[x+off[0],y+off[1]]); let g='';
+  [T1,T2].forEach((T,j)=>{ const [A,B,C]=T; g+=`<path d="M${k6P(T)} Z" fill="${K6F}"/>`+m5T(A[0]-4,A[1]-6,j?'D':'A')+m5T(B[0]-14,B[1]+6,j?'E':'B')+m5T(C[0]+4,C[1]+6,j?'F':'C');
+    if(t===0) g+=fzTick(A,B,1)+fzTick(B,C,2)+fzTick(C,A,3);
+    if(t===1) g+=fzTick(A,B,1)+fzTick(B,C,2)+fzAng(B,A,C,1);
+    if(t===2) g+=fzTick(B,C,2)+fzAng(B,A,C,1)+fzAng(C,B,A,2); });
+  return m5V(280,125,g,300); };
+const fzRightFig = (t) => { const T1=[[20,20],[20,110],[110,110]], off=[140,0], T2=T1.map(([x,y])=>[x+off[0],y]); let g='';
+  [T1,T2].forEach((T,j)=>{ const [A,B,C]=T; g+=`<path d="M${k6P(T)} Z" fill="${K6F}"/><path d="M${B[0]} ${B[1]-10} h10 v10" stroke-width="1"/>`+m5T(A[0]-4,A[1]-6,j?'D':'A')+m5T(B[0]-14,B[1]+6,j?'E':'B')+m5T(C[0]+4,C[1]+6,j?'F':'C');
+    g+=fzTick(A,C,1); g+= t===0 ? fzAng(C,B,A,1,20) : fzTick(A,B,2); });
+  return m5V(270,125,g,290); };
+const FZQUAD = [['正方形','<rect x="50" y="20" width="100" height="100"/>','<path d="M50 30 h10 v-10 M140 20 v10 h10 M150 110 h-10 v10 M60 120 v-10 h-10" stroke-width="1"/>'+'',[[50,20,150,20],[150,20,150,120],[150,120,50,120],[50,120,50,20]],1],
+  ['長方形','<rect x="25" y="35" width="150" height="80"/>','<path d="M25 45 h10 v-10 M165 35 v10 h10 M175 105 h-10 v10 M35 115 v-10 h-10" stroke-width="1"/>',[[25,35,175,35],[175,35,175,115],[175,115,25,115],[25,115,25,35]],0],
+  ['ひし形','<path d="M100 10 L165 70 L100 130 L35 70 Z"/>','',[[100,10,165,70],[165,70,100,130],[100,130,35,70],[35,70,100,10]],1],
+  ['平行四辺形','<path d="M60 30 L180 30 L140 115 L20 115 Z"/>','',[[60,30,180,30],[180,30,140,115],[140,115,20,115],[20,115,60,30]],2]];
+const fzQuadFig = q => { let g=`<g fill="${K6F}">${q[1]}</g>${q[2]}`; const E=q[3]; if(q[4]===1) E.forEach(e=>g+=fzTick([e[0],e[1]],[e[2],e[3]],1)); if(q[4]===2){ g+=fzTick([E[0][0],E[0][1]],[E[0][2],E[0][3]],1)+fzTick([E[2][0],E[2][1]],[E[2][2],E[2][3]],1)+fzTick([E[1][0],E[1][1]],[E[1][2],E[1][3]],2)+fzTick([E[3][0],E[3][1]],[E[3][2],E[3][3]],2); } if(q[4]===0){ g+=fzTick([E[0][0],E[0][1]],[E[0][2],E[0][3]],1)+fzTick([E[2][0],E[2][1]],[E[2][2],E[2][3]],1)+fzTick([E[1][0],E[1][1]],[E[1][2],E[1][3]],2)+fzTick([E[3][0],E[3][1]],[E[3][2],E[3][3]],2); } return m5V(200,140,g,200); };
+const fzTree = n => { const N=2**n, sp=22, H=N*sp+10; let g=''; const Y=(d,i)=>10+(i+0.5)*(N/2**d)*sp, X=d=>20+d*70;
+  for(let d=1;d<=n;d++) for(let i=0;i<2**d;i++){ const px=X(d-1)+(d>1?16:0), py=Y(d-1,i>>1); g+=`<line x1="${px}" y1="${py}" x2="${X(d)-3}" y2="${Y(d,i)}" stroke-width="1"/>`+m5T(X(d),Y(d,i)+5,i%2?'裏':'表','font-size="12" font-family="sans-serif"'); }
+  return m5V(X(n)+30,H,g,Math.min(300,X(n)+40)); };
+const fzDice = s => { const C=26, o=36; let g=''; for(let i=1;i<=6;i++){ g+=m5T(o+(i-1)*C+9,24,i,'font-size="12"')+m5T(14,o+(i-1)*C+18,i,'font-size="12"'); }
+  for(let a=1;a<=6;a++) for(let b=1;b<=6;b++){ const hit=a+b===s; g+=`<rect x="${o+(b-1)*C}" y="${o+(a-1)*C}" width="${C}" height="${C}" fill="${hit?'rgba(224,69,123,.35)':'none'}" stroke-width=".8"/>`+m5T(o+(b-1)*C+(a+b>9?5:9),o+(a-1)*C+18,a+b,'font-size="11"'); }
+  return m5V(o+6*C+6,o+6*C+6,g+m5T(2,14,'大＼小','font-size="9" font-family="sans-serif"'),230); };
+Object.assign(G,{
+  fz4Hen(){ const a=ri(-4,1), b=ri(a+2,5), t=ri(0,3), ac=Math.random()<.5, bc=Math.random()<.5; const op=c=>c?'≦':'＜', fa=v=>v<0?'−'+(-v):String(v);
+    if(t===0){ const A=`${fa(a)}${op(ac)}x${op(bc)}${fa(b)}`; return mq2('数直線で表された x の変域を、不等号で表すと？', fzNL(a,ac,b,bc), A, [`${fa(a)}${op(!ac)}x${op(bc)}${fa(b)}`,`${fa(a)}${op(ac)}x${op(!bc)}${fa(b)}`,`${fa(a)}${op(!ac)}x${op(!bc)}${fa(b)}`,`${fa(b)}${op(ac)}x${op(bc)}${fa(a)}`], '●はその数をふくむ（≦）、○はふくまない（＜）。', A); }
+    const lo=t===1; const A=lo?`x${ac?'≧':'＞'}${fa(a)}`:`x${bc?'≦':'＜'}${fa(b)}`;
+    return mq2('数直線で表された x の変域を、不等号で表すと？', lo?fzNL(a,ac,null,0):fzNL(null,0,b,bc), A, lo?[`x${ac?'＞':'≧'}${fa(a)}`,`x${ac?'≦':'＜'}${fa(a)}`,`x${ac?'＜':'≦'}${fa(a)}`]:[`x${bc?'＜':'≦'}${fa(b)}`,`x${bc?'≧':'＞'}${fa(b)}`,`x${bc?'＞':'≧'}${fa(b)}`], '●はその数をふくむ、○はふくまない。矢印の向きに注意。', A); },
+  fz4PrSign(){ const n=nz(-4,4), d=pick([1,1,2,3]); if(Math.abs(n)===d&&d>1) return G.fz4PrSign(); const up=n>0, t=ri(0,1);
+    return t? mq2('このグラフで、x の値が増加すると y の値は？', m1Grid({lines:[{n,d}]}), up?'増加する':'減少する', [up?'減少する':'増加する','変わらない','増加してから減少する'], '右上がり → 増加、右下がり → 減少。', up?'右上がりなので増加する（比例定数は正）':'右下がりなので減少する（比例定数は負）')
+            : mq2('このグラフの比例定数は、正の数？負の数？', m1Grid({lines:[{n,d}]}), up?'正の数':'負の数', [up?'負の数':'正の数','0','決まらない'], '右上がり → a＞0、右下がり → a＜0', up?'右上がりなので正の数':'右下がりなので負の数'); },
+  fz4HiSign(){ const a=pick([4,6,8,12,-4,-6,-8,-12]), t=ri(0,1);
+    return t? mq2('このグラフで、x＞0 の範囲で x の値が増加すると y の値は？', m1Grid({hyps:[{a}]}), a>0?'減少する':'増加する', [a>0?'増加する':'減少する','変わらない','0になる'], 'a＞0 のとき x＞0 で y は減少、a＜0 のとき x＞0 で y は増加。', `比例定数は${a>0?'正':'負'}なので、x＞0 で y は${a>0?'減少':'増加'}する`)
+            : mq2('この反比例のグラフの比例定数は、正の数？負の数？', m1Grid({hyps:[{a}]}), a>0?'正の数':'負の数', [a>0?'負の数':'正の数','0','決まらない'], '第1・第3象限 → a＞0、第2・第4象限 → a＜0', `グラフが${a>0?'右上と左下':'左上と右下'}にあるので${a>0?'正':'負'}の数`); },
+  fz4Use(){ const v1=pick([60,80,100,120]), v2=pick([40,50,60,70].filter(v=>v<v1)), t=pick([2,3,4,5,6,8,10].filter(t=>t*v1<=1200)), ym=1200;
+    const fig=fzQ1(10,ym,1,200,'x（分）','y（m）',[[[0,0],[Math.min(10,ym/v1),Math.min(10,ym/v1)*v1]],[[0,0],[Math.min(10,ym/v2),Math.min(10,ym/v2)*v2]]],[[Math.min(9,ym/v1-1),Math.min(9,ym/v1-1)*v1,'兄',0],[9,9*v2,'弟',1]]);
+    const A=(v1-v2)*t; return mq2(`兄と弟が同時に家を出て、同じ道を歩きました。グラフは x 分後に進んだ道のり y m を表しています。${t}分後、2人は何m はなれている？`, fig, A+'m', [v1*t, v2*t, A+100, A-20, (v1+v2)*t].filter(x=>x!==A&&x>0).map(x=>x+'m'), 'グラフから、それぞれの分速を読みとろう。', `兄は分速${v1}m、弟は分速${v2}m。${t}分後の差は ${v1*t}−${v2*t}＝${A}（m）`); },
+  fz5Sym(){ const [nm,a,sh]=kaPick(FZSHAPE); return mq2('この図形は、線対称？点対称？', m5V(160,140,`<g fill="${M5FILL}">${sh}</g>`,150), a, ['線対称のみ','点対称のみ','線対称・点対称の両方','どちらでもない'].filter(v=>v!==a), '折って重なれば線対称、180°回して重なれば点対称。', `${nm}は ${a}`, { words:true }); },
+  fz5Line(){ const [nm,g]=pick(FZLINE); return mq2('図の線を、記号を使って表すと？', fzLineFig(g), nm, FZLINE.map(x=>x[0]).filter(v=>v!==nm), '両方にのびる → 直線、両端がある → 線分、片方にのびる → 半直線（端の点を先に書く）。', nm); },
+  fz5Con(){ const [nm,f]=pick(FZCON); return mq2('この図は、何を作図したもの？', f(), nm, FZCON.map(x=>x[0]).concat(['線分 AB の中点を通る平行線']).filter(v=>v!==nm), 'コンパスの弧の中心がどこかを見よう。', nm, { words:true }); },
+  fz5Arc(){ const k=ri(0,3), nm=['弧 AB','弦 AB','中心角（∠AOB）','半径 OA'][k]; return mq2('図のピンクの部分を何という？', FZARC(k), nm, ['弧 AB','弦 AB','中心角（∠AOB）','半径 OA','直径'].filter(v=>v!==nm), '弧は円周の一部、弦は円周上の2点を結ぶ線分。', nm); },
+  fz2Poly(){ const n=ri(5,10), t=ri(0,2), nm=['','','','三','四','五','六','七','八','九','十'][n]+'角形';
+    if(t===0){ const A=180*(n-2); return mq2(`図の${nm}の内角の和は？`, fzPoly(n), A+'°', [180*(n-1),180*n,180*(n-3),360].filter(x=>x!==A).map(x=>x+'°'), 'n角形の内角の和＝180°×(n−2)', `180°×(${n}−2)＝${A}°`); }
+    if(t===1){ const A=360/n; if(!Number.isInteger(A)) return G.fz2Poly(); return mq2(`図の正${nm}の1つの外角は？`, fzPoly(n), A+'°', [180-A,180*(n-2)/n,360,A*2,A+10,A+20].filter(x=>x!==A&&Number.isInteger(x)).map(x=>x+'°'), '多角形の外角の和は360°', `360°÷${n}＝${A}°`); }
+    const A=180*(n-2)/n; if(!Number.isInteger(A)) return G.fz2Poly(); return mq2(`図の正${nm}の1つの内角は？`, fzPoly(n), A+'°', [180-A,180*(n-2),360/n+A,A-10,A+10,A-20].filter(x=>x!==A&&Number.isInteger(x)&&x>0).map(x=>x+'°'), '内角の和÷n', `180°×(${n}−2)÷${n}＝${A}°`); },
+  fz2TriK(){ const k=ri(0,2); let A,B; if(k===0){ do{ A=ri(5,17)*5; B=ri(5,17)*5; }while(A>=90||B>=90||180-A-B>=90||180-A-B<=0); } else if(k===1){ A=90; B=ri(3,15)*5; if(Math.random()<.5){ A=ri(3,15)*5; B=90; } } else { A=ri(19,26)*5; B=ri(2,(180-A)/5-2)*5; }
+    const nm=['鋭角三角形','直角三角形','鈍角三角形'][k]; return mq2('図の三角形を、角の大きさで分類すると？', fzTri(A,B), nm, ['鋭角三角形','直角三角形','鈍角三角形','正三角形'].filter(v=>v!==nm), '3つとも鋭角 → 鋭角三角形、直角が1つ → 直角三角形、鈍角が1つ → 鈍角三角形', `角は ${A}°、${B}°、${180-A-B}° → ${nm}`); },
+  fz2Cong(){ const t=ri(0,2), nm=['3組の辺がそれぞれ等しい','2組の辺とその間の角がそれぞれ等しい','1組の辺とその両端の角がそれぞれ等しい'][t]; return mq2('図で、同じ印は等しいことを表す。△ABC≡△DEF となる合同条件は？', fzCongFig(t), nm, ['3組の辺がそれぞれ等しい','2組の辺とその間の角がそれぞれ等しい','1組の辺とその両端の角がそれぞれ等しい','3組の角がそれぞれ等しい'].filter(v=>v!==nm), '辺の印（｜）と角の印（弧）を数えよう。', nm, { words:true }); },
+  fz2Right(){ const t=ri(0,1), nm=t?'斜辺と他の1辺がそれぞれ等しい':'斜辺と1つの鋭角がそれぞれ等しい'; return mq2('図で、同じ印は等しいことを表す。直角三角形 ABC と DEF が合同になる条件は？', fzRightFig(t), nm, ['斜辺と1つの鋭角がそれぞれ等しい','斜辺と他の1辺がそれぞれ等しい','2組の辺とその間の角がそれぞれ等しい','3組の角がそれぞれ等しい'].filter(v=>v!==nm), '直角三角形の合同条件は2つ。どちらも「斜辺」が等しい。', nm, { words:true }); },
+  fz2Quad(){ const q=pick(FZQUAD); return mq2('図の印から考えて、この四角形の名前は？', fzQuadFig(q), q[0], ['正方形','長方形','ひし形','平行四辺形','台形'].filter(v=>v!==q[0]), '辺の印（同じ長さ）と直角の印を見よう。', q[0]); },
+  fz2Tree(){ const n=ri(2,3), t=ri(0,1), tot=2**n; if(t===0) return mq2(`硬貨を${n}枚投げるときの樹形図です。表と裏の出方は全部で何通り？`, fzTree(n), tot+'通り', [tot/2,tot+2,n*2,n+2,tot*2].filter(x=>x!==tot).map(x=>x+'通り'), '樹形図の右はしの数を数えよう。', `2×${n===2?'2':'2×2'}＝${tot}通り`);
+    const k=ri(1,n-1), c=n===2?2:3; return mq2(`硬貨を${n}枚投げるときの樹形図です。表がちょうど${k}枚出る確率は？`, fzTree(n), frH(c,tot), [frH(1,tot),frH(1,2),frH(c+1,tot),frH(1,n)].filter(x=>x!==frH(c,tot)), '全部の出方のうち、表が'+k+'枚のものを数える。', `${tot}通りのうち${c}通り → ${frH(c,tot)}`); },
+  fz2Dice(){ const s=ri(3,11), c=6-Math.abs(7-s), g=gcd(c,36), A=frH(c/g,36/g); return mq2(`2つのさいころを投げるとき、出る目の和が ${s} になる確率は？（表の色の部分）`, fzDice(s), A, [frH(c,6),frH(c+1,36),frH(1,6),frH(1,36),frH(c,12)].filter(x=>x!==A), '全部で36通り。色の部分の数を数えよう。', `色の部分は${c}通り → ${frH(c,36)}＝${A}`); },
+  fz3ParSign(){ const a=pick([[1,1],[2,1],[1,2],[1,4],[3,1]]), neg=Math.random()<.5, aa=neg?[-a[0],a[1]]:a, t=ri(0,1), fig=parSVG([{a:aa}],{X:5,Y:8,ys:2,cy:neg?24:216});
+    return t? mq2('このグラフは y＝ax² のグラフです。a は正の数？負の数？', fig, neg?'負の数':'正の数', [neg?'正の数':'負の数','0','決まらない'], '上に開く → a＞0、下に開く → a＜0', neg?'下に開いているので負の数':'上に開いているので正の数', { figq:true })
+             : mq2('このグラフで、x＜0 の範囲で x の値が増加すると、y の値は？', fig, neg?'増加する':'減少する', [neg?'減少する':'増加する','変わらない','0のまま'], 'グラフを左から右へたどろう。', neg?'下に開くので x＜0 では増加':'上に開くので x＜0 では減少', { figq:true }); },
+  fz3ParWide(){ const L=[[1,4],[1,2],[1,1],[2,1],[3,1]]; let i=ri(0,4), j; do{ j=ri(0,4); }while(j===i); const f=parSVG([{a:L[i]},{a:L[j]}],{X:5,Y:8,ys:2,cy:216}); const big=L[i][0]/L[i][1]>L[j][0]/L[j][1]?i:j;
+    return mq2('2つの放物線は y＝'+(L[i][1]>1?frH(L[i][0],L[i][1]):L[i][0]===1?'':L[i][0])+'x² と y＝'+(L[j][1]>1?frH(L[j][0],L[j][1]):L[j][0]===1?'':L[j][0])+'x² のグラフです。開き方が小さい（細い）のはどちら？', f, 'y＝'+(L[big][1]>1?frH(L[big][0],L[big][1]):L[big][0]===1?'':L[big][0])+'x²', ['y＝'+(L[i+j-big][1]>1?frH(L[i+j-big][0],L[i+j-big][1]):L[i+j-big][0]===1?'':L[i+j-big][0])+'x²','どちらも同じ','決まらない'], 'a の絶対値が大きいほど、グラフの開き方は小さい。', 'a の絶対値が大きいほうが細い', { figq:true }); },
+  fz3SimA(){ const k=ri(1,4), m=ri(k+1,6); if(gcd(k,m)!==1) return G.fz3SimA(); const S=k*k*ri(2,5), A=S/(k*k)*m*m; const sc=m/k, s1=50, s2=Math.min(110,50*sc);
+    const fig=m5V(260,150,`<path d="M10 130 L${10+s1} 130 L10 ${130-s1*0.9} Z" fill="${K6F}"/><path d="M${90} 130 L${90+s2} 130 L90 ${130-s2*0.9} Z" fill="${K6F}"/>${m5T(10+s1/2-8,146,k+'cm','font-size="12"')}${m5T(90+s2/2-8,146,m+'cm','font-size="12"')}${m5T(16,124,'P','font-size="12"')}${m5T(96,124,'Q','font-size="12"')}`,260);
+    return mq2(`△P∽△Q で、対応する辺が ${k}cm と ${m}cm です。△P の面積が ${S}cm² のとき、△Q の面積は？`, fig, A+'cm²', [S*m/k, S*m*m*m/(k*k*k), A+k, S*(m-k)].filter(x=>x!==A&&Number.isInteger(x)&&x>0).map(x=>x+'cm²').concat([(A*2)+'cm²']), '面積の比は相似比の2乗。', `相似比 ${k}：${m} → 面積比 ${k*k}：${m*m}。${S}×${frH(m*m,k*k)}＝${A}（cm²）`); },
+  fz3SimV(){ const k=ri(1,3), m=ri(k+1,5); if(gcd(k,m)!==1) return G.fz3SimV(); const V=k**3*ri(1,4), A=V/(k**3)*m**3;
+    const r2=Math.min(60,25*m/k), h2=Math.min(140,60*m/k); const fig=m5V(260,175,k6Cone(25,60,{x:50,y:100})+k6Cone(r2,h2,{x:180,y:160-h2})+m5T(46,175,'P','font-size="12"')+m5T(176,175,'Q','font-size="12"'),250);
+    return mq2(`相似な円錐 P、Q の相似比は ${k}：${m} です。P の体積が ${V}cm³ のとき、Q の体積は？`, fig, A+'cm³', [V*m*m/(k*k), V*m/k, A+V, V*(m**3-k**3)].filter(x=>x!==A&&Number.isInteger(x)&&x>0).map(x=>x+'cm³').concat([(2*A)+'cm³']), '体積の比は相似比の3乗。', `体積比 ${k**3}：${m**3}。${V}×${frH(m**3,k**3)}＝${A}（cm³）`); },
+  fz3Dist(){ let p,q,r,s; do{ p=ri(-5,5); q=ri(-5,5); r=ri(-5,5); s=ri(-5,5); }while(p===r||q===s); const d2=(p-r)**2+(q-s)**2;
+    return fq7('2点 A、B の間の距離は？（1目もりは1cm）', m1Grid({pts:[['A',p,q],['B',r,s]]}), SE([1,d2]), [SE([Math.abs(p-r)+Math.abs(q-s)]), SE([1,d2+1]), SE([1,Math.abs((p-r)**2-(q-s)**2)||2])], '横の差と縦の差を2辺とする直角三角形をつくる。', `横 ${Math.abs(p-r)}、縦 ${Math.abs(q-s)} → √(${Math.abs(p-r)}²＋${Math.abs(q-s)}²)＝${rt7(d2)}`); },
+  fz3BoxD(){ const a=ri(2,8), b=ri(2,8), c=ri(2,8), d2=a*a+b*b+c*c; return fq7(`縦 ${b}cm、横 ${a}cm、高さ ${c}cm の直方体の対角線の長さは？`, m5V(220,165,k6Box(100,70,80,{dims:[a+'cm',b+'cm',c+'cm'],x:40,y:140})+`<line x1="40" y1="140" x2="182" y2="28.5" stroke="${M5PK}" stroke-width="2"/>`,200), SE([1,d2]), [SE([a+b+c]), SE([1,a*a+b*b]), SE([1,d2+c])], '対角線＝√(a²＋b²＋c²)', `√(${a}²＋${b}²＋${c}²)＝${rt7(d2)}`); },
+  fz3ConeH(){ const r=ri(2,8), l=ri(r+1,12), d2=l*l-r*r; return fq7(`底面の半径 ${r}cm、母線の長さ ${l}cm の円錐の高さは？`, m5V(200,180,k6Cone(60,120,{hl:'h',rl:r+'cm',ll:l+'cm',x:90}),180), SE([1,d2]), [SE([1,l*l+r*r]), SE([l-r]), SE([1,d2+1])], '高さ、半径、母線で直角三角形ができる。', `h²＝${l}²−${r}²＝${d2} → h＝${rt7(d2)}`); },
+  fz3RectD(){ const a=ri(2,9), b=ri(2,9), d2=a*a+b*b; const k=Math.min(160/a,100/b), W=a*k, H=b*k; return fq7(`縦 ${b}cm、横 ${a}cm の長方形の対角線の長さは？`, m5V(220,140,`<rect x="30" y="20" width="${W}" height="${H}" fill="${K6F}"/><line x1="30" y1="${20+H}" x2="${30+W}" y2="20" stroke="${M5PK}" stroke-width="2"/>${m5T(30+W/2-10,16,a+'cm','font-size="12"')}${m5T(34+W,20+H/2,b+'cm','font-size="12"')}`,210),, SE([1,d2]), [SE([a+b]), SE([1,Math.abs(a*a-b*b)||3]), SE([1,d2+2])], '三平方の定理 a²＋b²＝c²', `√(${a}²＋${b}²)＝${rt7(d2)}`); },
+});
 
 /* ===== 中2数学 2章 連立方程式 ===== */
 const w3f = n => n<0 ? '−'+(-n) : String(n);
@@ -17824,6 +17922,8 @@ function seaFeed(arg){
 }
 
 const VIEWS={ jk:vJk, setup:vSetup, home:vHome, course:vCourse, subject:vSubject, unit:vUnit, lesson:vLesson, cards:vCards, quiz:vQuiz, result:vResult, record:vRecord, settings:vSettings, install:vInstall, drill:vDrill, pdf:vPdf, sea:vSea };
+const FZMIX={m1c4:{'1-2':'fz4Hen','2-2':'fz4PrSign','2-3':'m1PrG','3-2':'fz4HiSign','3-3':'m1HiG','4-1':'fz4Use'}, m1c5:{'0-1':'fz5Sym','0-2':'fz5Sym','1-1':'fz5Line','2-5':'fz5Con','2-6':'fz5Con','2-7':'fz5Con','3-1':'fz5Arc'}, m2c3:{'1-3':'w4Pick'}, m2c4:{'1-7':'fz2TriK','1-8':'fz2Poly','1-9':'fz2Poly','1-11':'fz2Cong'}, m2c5:{'1-6':'fz2Right','2-5':'fz2Quad'}, m2c6:{'2-1':'fz2Tree','2-2':'fz2Tree','2-3':'fz2Dice'}, m2c7:{'1-3':'w8Read'}, m3c4:{'1-5':'fz3ParWide','2-1':'fz3ParSign'}, m3c5:{'3-1':'fz3SimA','3-2':'fz3SimV'}, m3c7:{'2-3':'fz3RectD','2-5':'fz3Dist','2-6':'fz3BoxD','2-7':'fz3ConeH'}};
+for(const u in FZMIX){ const U=UNITS[u]; if(!U) continue; U.lessons.forEach(l=>{ const g=FZMIX[u][l.id]; if(g&&!l.test) l.plan=l.plan.map((x,i)=>i%2===0?g:x); }); }
 function scriptXY(root){ const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest('svg,script,style,input,textarea,.noscr,.mv')?NodeFilter.FILTER_REJECT:(/[abcmnxy]/.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)}); const ns=[]; while(w.nextNode()) ns.push(w.currentNode);
   ns.forEach(n=>{ const str=n.nodeValue, re=/[A-Za-z]+/g; let m, last=0, parts=[], hit=false;
     while((m=re.exec(str))){ const tok=m[0], off=m.index; let ok=/^[abcmnxy]+$/.test(tok)&&tok!=='cm'&&tok!=='mm';
