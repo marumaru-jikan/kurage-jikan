@@ -8340,6 +8340,46 @@ const K6F_2PL = (() => { const C=(x,t)=>m5T(x,150,t,'font-size="11.5" font-famil
   let g=`<path d="M30 70 L140 70 L120 120 L10 120 Z" fill="rgba(43,123,185,.25)" stroke-width="1.2"/><path d="M45 15 L115 35 L105 135 L35 115 Z" fill="rgba(230,200,140,.55)" stroke-width="1.2"/><line x1="40" y1="74" x2="110" y2="114" stroke-width="2" stroke="${M5PK}"/>`+m5T(14,114,'P','font-style="italic" font-size="13"')+m5T(50,30,'Q','font-style="italic" font-size="13"')+C(52,'交わる');
   g+=`<path d="M200 90 L310 90 L290 135 L180 135 Z" fill="rgba(43,123,185,.25)" stroke-width="1.2"/><path d="M200 25 L310 25 L290 70 L180 70 Z" fill="rgba(230,200,140,.55)" stroke-width="1.2"/>`+m5T(186,130,'P','font-style="italic" font-size="13"')+m5T(186,65,'Q','font-style="italic" font-size="13"')+C(222,'平行である');
   return m5V(330,158,g,340); })();
+/* ===== 回転体を作って見るツール（中1 6章 1-10） ===== */
+window.k6R = (() => {
+  const semi = Array.from({length:13},(_,i)=>{ const t=Math.PI*i/12; return [Math.sin(t)*1.1, Math.cos(t)*1.1]; });
+  const P = { '長方形':[[[0,-1],[1,-1],[1,1],[0,1]],'円柱'], '直角三角形':[[[0,-1],[1.1,-1],[0,1]],'円錐'], '半円':[semi,'球'],
+    '台形':[[[0,-1],[1.15,-1],[0.6,1],[0,1]],'円錐の上を切り取った形（円錐台）'], '二等辺三角形':[[[0,-1.1],[1,0],[0,1.1]],'2つの円錐を合わせた形'], 'はなれた長方形':[[[0.45,-1],[1.1,-1],[1.1,1],[0.45,1]],'穴のあいた円柱'] };
+  const svg = (name, th, yaw, pitch) => { const prof=P[name][0], y=yaw*Math.PI/180, p=pitch*Math.PI/180, cy=Math.cos(y), sy=Math.sin(y), cp=Math.cos(p), sp=Math.sin(p);
+    const T=v=>{ const x1=v[0]*cy+v[2]*sy, z1=-v[0]*sy+v[2]*cy; return [x1, v[1]*cp-z1*sp, v[1]*sp+z1*cp]; };
+    const W=(r,h,f)=>[r*Math.cos(f),h,-r*Math.sin(f)], X=v=>(140+v[0]*78).toFixed(1), Y=v=>(130-v[1]*78).toFixed(1);
+    const N=Math.max(1,Math.ceil(th/8)), ang=k=>th*Math.PI/180*k/N, prims=[];
+    const shade=n=>{ const L=Math.abs(n[2]*0.75+n[1]*0.35-n[0]*0.25); const l=0.45+0.55*Math.min(1,L); return `rgb(${Math.round(120+110*l)},${Math.round(165+75*l)},${Math.round(205+45*l)})`; };
+    const norm=(a,b,c)=>{ const u=[0,1,2].map(i=>b[i]-a[i]), w=[0,1,2].map(i=>c[i]-a[i]); const n=[u[1]*w[2]-u[2]*w[1],u[2]*w[0]-u[0]*w[2],u[0]*w[1]-u[1]*w[0]]; const L=Math.hypot(...n)||1; return n.map(x=>x/L); };
+    if(th>0) for(let i=0;i<prof.length;i++){ const a=prof[i], b=prof[(i+1)%prof.length]; if(a[0]<1e-6&&b[0]<1e-6) continue;
+      for(let k=0;k<N;k++){ const q=[W(a[0],a[1],ang(k)),W(b[0],b[1],ang(k)),W(b[0],b[1],ang(k+1)),W(a[0],a[1],ang(k+1))].map(T); const n=norm(q[0],q[1],q[2][0]===q[1][0]&&q[2][1]===q[1][1]?q[3]:q[2]);
+        prims.push({d:q.reduce((t,v)=>t+v[2],0)/4, s:`<path d="M${q.map(v=>X(v)+' '+Y(v)).join(' L')} Z" fill="${shade(n)}" stroke="${shade(n)}" stroke-width=".7"/>`}); } }
+    const cut=f=>{ const q=prof.map(v=>T(W(v[0],v[1],f))); return {d:q.reduce((t,v)=>t+v[2],0)/q.length+0.02, s:`<path d="M${q.map(v=>X(v)+' '+Y(v)).join(' L')} Z" fill="rgba(224,69,123,.35)" stroke="#e0457b" stroke-width="1.2"/>`}; };
+    if(th<360){ prims.push(cut(0)); } prims.sort((a,b)=>a.d-b.d);
+    let rim=''; prof.forEach((v,vi)=>{ if(v[0]<1e-6||th===0||(prof.length>6&&vi!==6)) return; const pts=[]; for(let k=0;k<=N;k++) pts.push(T(W(v[0],v[1],ang(k)))); rim+=`<polyline points="${pts.map(q=>X(q)+','+Y(q)).join(' ')}" stroke-width="1" opacity=".55"/>`; });
+    const cur=prof.map(v=>T(W(v[0],v[1],th*Math.PI/180))), a1=T([0,1.55,0]), a2=T([0,-1.55,0]);
+    const fig=th<360?`<path d="M${cur.map(v=>X(v)+' '+Y(v)).join(' L')} Z" fill="rgba(224,69,123,.55)" stroke="#e0457b" stroke-width="2"/>`:'';
+    return `<svg viewBox="0 0 280 260" style="width:100%;max-width:300px;height:auto;aspect-ratio:280/260;display:block;margin:0 auto;touch-action:none;cursor:grab" fill="none" stroke="currentColor">${prims.map(p=>p.s).join('')}${rim}${fig}<line x1="${X(a1)}" y1="${Y(a1)}" x2="${X(a2)}" y2="${Y(a2)}" stroke-width="1.3" stroke-dasharray="7 3 2 3"/><text x="${(+X(a1)+6)}" y="${(+Y(a1)+10)}" fill="currentColor" stroke="none" font-style="italic" font-size="15" font-family="'Times New Roman',serif">ℓ</text></svg>`; };
+  const box=el=>el.closest('.k6r');
+  const upd=b=>{ const st=b.dataset; b.querySelector('.k6rs').innerHTML=svg(st.s,+st.t,+st.y,+st.p); b.querySelector('.k6rt').value=st.t; b.querySelector('.k6ra').textContent=st.t+'°';
+    b.querySelector('.k6rl').textContent=+st.t>=360?`${st.s} → ${P[st.s][1]}ができる`:'　'; };
+  let drag=null, anim=null;
+  return {
+    html(name='長方形'){ return `<div class="k6r noscr" data-s="${name}" data-t="0" data-y="-25" data-p="18" style="border:1px solid #cfe0ea;border-radius:12px;padding:8px;margin:8px 0;background:#f7fbfd">
+      <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:4px">${Object.keys(P).map(k=>`<button type="button" class="chip" style="font-size:12px;padding:3px 8px;border-radius:12px;border:1px solid #9cc3d5;background:${k===name?'#2b7bb9':'#fff'};color:${k===name?'#fff':'inherit'}" onclick="k6R.sel(this,'${k}')">${k}</button>`).join('')}</div>
+      <div class="k6rs" onpointerdown="k6R.down(event,this)" onpointermove="k6R.move(event)" onpointerup="k6R.up()" onpointercancel="k6R.up()">${svg(name,0,-25,18)}</div>
+      <div class="k6rl" style="text-align:center;font-weight:700;color:#e0457b;min-height:1.3em;font-size:14px">　</div>
+      <div style="display:flex;align-items:center;gap:8px;margin:4px 0"><button type="button" style="font-size:13px;padding:5px 12px;border-radius:8px;border:1px solid #9cc3d5;background:#fff;white-space:nowrap" onclick="k6R.play(this)">▶ 1回転</button>
+        <input class="k6rt" type="range" min="0" max="360" step="5" value="0" style="flex:1" oninput="k6R.slide(this)"><span class="k6ra" style="font-size:12px;min-width:3em">0°</span></div>
+      <p class="small muted" style="text-align:center;margin:2px 0 0">ピンクの図形が ℓ のまわりを回ったあとが回転体。図を指でなぞると見る向きが変わります。</p></div>`; },
+    sel(btn,name){ const b=box(btn); b.dataset.s=name; b.dataset.t=0; b.querySelectorAll('.chip').forEach(c=>{ const on=c.textContent===name; c.style.background=on?'#2b7bb9':'#fff'; c.style.color=on?'#fff':'inherit'; }); upd(b); },
+    slide(inp){ const b=box(inp); b.dataset.t=inp.value; upd(b); },
+    play(btn){ const b=box(btn); if(anim) cancelAnimationFrame(anim); const t0=performance.now(); const step=t=>{ const k=Math.min(1,(t-t0)/3200); b.dataset.t=Math.round(360*k/5)*5; upd(b); if(k<1) anim=requestAnimationFrame(step); }; anim=requestAnimationFrame(step); },
+    down(ev,el){ const b=box(el); drag={x:ev.clientX,y:ev.clientY,b,y0:+b.dataset.y,p0:+b.dataset.p}; try{ el.setPointerCapture(ev.pointerId); }catch(e){} },
+    move(ev){ if(!drag) return; const st=drag.b.dataset; st.y=Math.round(drag.y0+(ev.clientX-drag.x)*0.8); st.p=Math.round(Math.max(-10,Math.min(80,drag.p0+(ev.clientY-drag.y)*0.6))); upd(drag.b); },
+    up(){ drag=null; }
+  };
+})();
 const M1C6_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'見取図と展開図', sub:'小学4・5年', plan:['k6NetPic','k6NetPic','k6Net0','k6NetPic','k6NetPic'], body:()=>`
     <section class="panel"><h3>見取図と展開図</h3>${m5V(395,148,k6Box(100,50,60,{x:12,y:100})+`<g transform="translate(165,8)" fill="${K6F}"><rect x="32" y="0" width="80" height="32"/><rect x="0" y="32" width="32" height="48"/><rect x="32" y="32" width="80" height="48"/><rect x="112" y="32" width="32" height="48"/><rect x="144" y="32" width="80" height="48"/><rect x="32" y="80" width="80" height="32"/></g>`+m5T(40,138,'見取図','font-size="12" font-family="sans-serif"')+m5T(250,138,'展開図','font-size="12" font-family="sans-serif"'),340)}${rule('見取図：立体の形がわかるようにかいた図（見えない辺は点線）<br>展開図：立体を切り開いて平面に広げた図')}<p class="small muted">展開図を組み立てたとき、重なる辺・重なる頂点を考えられるようにしよう。</p></section>` },
@@ -8369,7 +8409,7 @@ const M1C6_LESSONS = [
     <section class="panel"><h3>面を平行に動かす</h3>${rule('角柱や円柱は、底面をその面に垂直な方向に一定の距離だけ平行に動かしてできる立体とみることができる')}<div class="noscr" style="display:flex;justify-content:center;gap:6px"><div style="flex:1;text-align:center">${k6MovFig(K6MOV[0])}<div class="small">三角形 → 三角柱</div></div><div style="flex:1;text-align:center">${k6MovFig(K6MOV[1])}<div class="small">円 → 円柱</div></div></div></section>
     <section class="panel"><h3>線を動かす</h3>${rule('角柱や円柱の側面は、底面に垂直に立てた線分をその周にそって1まわりさせてできたものとみることができる。この線分を 母線 という')}${m5V(240,192,k6Box(120,70,100,{x:40,y:150})+`<line x1="100" y1="150" x2="100" y2="50" stroke="${M5PK}" stroke-width="3"/><path d="M108 162 L150 162 M144 157 L150 162 L144 167" stroke="${M5PK}" stroke-width="1.8"/>${m5T(104,46,'A','fill="'+M5PK+'"')}${m5T(104,145,'B','fill="'+M5PK+'"')}${m5T(56,187,'底面の周にそって1まわり','font-size="11" font-family="sans-serif" fill="'+M5PK+'"')}`,240)}<p class="small muted" style="text-align:center">線分 AB を底面に垂直に立てたまま1まわりさせると、AB が動いたあとは四角柱の側面になる。</p></section>` },
   { id:'1-10', t:'回転体', sub:'回転させてできる立体', plan:['k6RotPic','k6Rot','k6RotPic','k6Rot','k6RotPic'], body:()=>`
-    <section class="panel"><h3>回転体</h3>${rule('平面図形を、ある直線 ℓ のまわりに1回転させてできる立体を 回転体 といい、ℓ を 回転の軸 という')}${kmTbl([['長方形','円柱'],['直角三角形','円錐'],['半円','球']],['回転させる図形','回転体'])}${rule('回転体を回転の軸に垂直な平面で切ると、切り口は 円<br>回転の軸をふくむ平面で切ると、切り口は軸について 線対称 な図形')}</section>` },
+    <section class="panel"><h3>回転体</h3>${rule('平面図形を、ある直線 ℓ のまわりに1回転させてできる立体を 回転体 といい、ℓ を 回転の軸 という')}<p><b>〇 図形を ℓ のまわりに回すと、どんな立体ができる？</b></p>${k6R.html('長方形')}${kmTbl([['長方形','円柱'],['直角三角形','円錐'],['半円','球']],['回転させる図形','回転体'])}${rule('回転体を回転の軸に垂直な平面で切ると、切り口は 円<br>回転の軸をふくむ平面で切ると、切り口は軸について 線対称 な図形')}</section>` },
   { id:'2-1', sec:'2　立体の体積と表面積', t:'角柱・円柱の体積', sub:'V＝Sh', plan:Array(5).fill('k6V1'), body:()=>`
     <section class="panel"><h3>角柱・円柱の体積</h3>${rule('底面積を S、高さを h、体積を V とすると V＝Sh<br>円柱では V＝πr²h')}<p><b>〇 底面の半径 4cm、高さ 10cm の円柱の体積は？</b></p>${m5V(200,170,k6Cyl(55,110,{rl:'4cm',hl:'10cm',x:90}),180)}${ex('π×4²×10＝160π（cm³）')}</section>` },
   { id:'2-2', t:'角錐・円錐の体積', sub:'V＝⅓Sh', plan:Array(5).fill('k6V2'), body:()=>`
