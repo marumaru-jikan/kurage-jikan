@@ -8163,7 +8163,19 @@ const M6NET0 = [
   ['おうぎ形と円でできる展開図からできる立体は？','円錐',['円柱','球','角錐']],
   ['底面が正方形で、側面が4つの合同な二等辺三角形の展開図からできる立体は？','正四角錐',['四角柱','立方体','三角錐']],
   ['4つの合同な正三角形でできる展開図からできる立体は？','正四面体',['三角柱','正八面体','四角錐']]];
+const K6NETS = (()=>{ const f=`fill="${K6F}"`, V=g=>m5V(220,165,g,230);
+  return [
+   ['立方体', K6F_CUBENET],
+   ['直方体', V(`<g ${f}><rect x="42" y="10" width="70" height="28"/><rect x="14" y="38" width="28" height="56"/><rect x="42" y="38" width="70" height="56"/><rect x="112" y="38" width="28" height="56"/><rect x="140" y="38" width="70" height="56"/><rect x="42" y="94" width="70" height="28"/></g>`)],
+   ['三角柱', V(`<g ${f}><rect x="40" y="50" width="45" height="62"/><rect x="85" y="50" width="45" height="62"/><rect x="130" y="50" width="45" height="62"/><path d="M85 50 L130 50 L107.5 11 Z"/><path d="M85 112 L130 112 L107.5 151 Z"/></g>`)],
+   ['円柱', V(`<g ${f}><rect x="45" y="45" width="130" height="70"/><circle cx="85" cy="25" r="20"/><circle cx="85" cy="135" r="20"/></g>`)],
+   ['円錐', V(`<g ${f}><path d="M110 12 L45 100 A110 110 0 0 0 175 100 Z"/><circle cx="110" cy="143" r="20"/></g>`)],
+   ['正四角錐', V(`<g ${f}><rect x="85" y="58" width="50" height="50"/><path d="M85 58 L135 58 L110 14 Z"/><path d="M85 108 L135 108 L110 152 Z"/><path d="M85 58 L85 108 L41 83 Z"/><path d="M135 58 L135 108 L179 83 Z"/></g>`)],
+   ['正四面体', V(`<g ${f}><path d="M30 150 L190 150 L110 11.4 Z"/></g><path d="M70 80.7 L150 80.7 L110 150 Z" stroke-width="1.4"/>`)],
+   ['四角柱（直方体）', null]
+  ].filter(x=>x[1]); })();
 Object.assign(G,{
+  k6NetPic(){ const [nm,fig]=kaPick(K6NETS); return mq2('この展開図を組み立ててできる立体は？', fig, nm, ['立方体','直方体','三角柱','円柱','円錐','正四角錐','正四面体','三角錐','四角柱'].filter(v=>v!==nm&&!(nm==='正四面体'&&v==='三角錐')&&!(nm==='直方体'&&v==='四角柱')).sort(()=>Math.random()-.5), '底面の形（三角形・四角形・円）と、側面の形（長方形→柱、三角形・おうぎ形→錐）を見る。', `${nm}の展開図`, { words:true }); },
   k6Net0(){ const [q,a,w]=kaPick(M6NET0); return mq2('展開図と立体', q, a, w, '底面の形と側面の形を見る。', a, { words:true }); },
   k6Vol0(){ const t=ri(0,2);
     if(t===0){ const a=ri(2,9),b=ri(2,9),c=ri(2,9),v=a*b*c; return mq2(`縦 ${a}cm、横 ${b}cm、高さ ${c}cm の直方体の体積は？`, '', v+'cm³', [v+a, a*b+c, 2*(a*b+b*c+c*a), v*2].filter(x=>x!==v).map(x=>x+'cm³'), '体積＝縦×横×高さ（底面積×高さ）', `${a}×${b}×${c}＝${v}（cm³）`); }
@@ -8225,7 +8237,7 @@ const K6F_POLY = m5V(300,120,`<path d="M30 20 L10 95 L60 105 Z" fill="${K6F}"/><
   `<path d="M175 15 L150 60 L175 105 L200 60 Z" fill="${K6F}"/><path d="M175 15 L170 72 L175 105 M150 60 L170 72 L200 60" stroke-width="1.1"/><path d="M175 15 L182 52 L175 105 M150 60 L182 52 L200 60" ${K6D}/>${m5T(150,118,'正八面体','font-size="10" font-family="sans-serif"')}`+
   `${m5T(214,50,'ほかに','font-size="10" font-family="sans-serif"')}${m5T(214,66,'正十二面体','font-size="10" font-family="sans-serif"')}${m5T(214,82,'正二十面体','font-size="10" font-family="sans-serif"')}`,320);
 const M1C6_LESSONS = [
-  { id:'0-1', sec:'0　この章のための復習', t:'見取図と展開図', sub:'小学4・5年', plan:Array(5).fill('k6Net0'), body:()=>`
+  { id:'0-1', sec:'0　この章のための復習', t:'見取図と展開図', sub:'小学4・5年', plan:['k6NetPic','k6NetPic','k6Net0','k6NetPic','k6NetPic'], body:()=>`
     <section class="panel"><h3>見取図と展開図</h3>${m5V(395,148,k6Box(100,50,60,{x:12,y:100})+`<g transform="translate(165,8)" fill="${K6F}"><rect x="32" y="0" width="80" height="32"/><rect x="0" y="32" width="32" height="48"/><rect x="32" y="32" width="80" height="48"/><rect x="112" y="32" width="32" height="48"/><rect x="144" y="32" width="80" height="48"/><rect x="32" y="80" width="80" height="32"/></g>`+m5T(40,138,'見取図','font-size="12" font-family="sans-serif"')+m5T(250,138,'展開図','font-size="12" font-family="sans-serif"'),340)}${rule('見取図：立体の形がわかるようにかいた図（見えない辺は点線）<br>展開図：立体を切り開いて平面に広げた図')}<p class="small muted">展開図を組み立てたとき、重なる辺・重なる頂点を考えられるようにしよう。</p></section>` },
   { id:'0-2', t:'角柱・円柱の体積', sub:'小学6年', plan:Array(5).fill('k6Vol0'), body:()=>`
     <section class="panel"><h3>角柱・円柱の体積</h3>${rule('角柱の体積＝底面積×高さ<br>円柱の体積＝底面積×高さ')}<p><b>〇 底面の半径 10cm、高さ 7cm の円柱の体積は？（円周率は 3.14）</b></p>${ex('10×10×3.14×7＝2198（cm³）')}</section>` },
