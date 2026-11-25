@@ -8331,6 +8331,15 @@ const K6F_2LINE = (() => { const pl=ox=>`<path d="M${ox+22} 30 L${ox+102} 30 L${
   g+=pl(225)+`<line x1="230" y1="88" x2="300" y2="64" stroke-width="2"/><line x1="282" y1="6" x2="278" y2="52" stroke-width="2"/><line x1="278" y1="52" x2="275" y2="100" stroke-width="1.6" stroke-dasharray="4 3"/><line x1="275" y1="100" x2="273" y2="118" stroke-width="2"/><circle cx="278" cy="52" r="2.6" fill="currentColor"/>`+T(286,14,'ℓ')+T(232,84,'m')+C(226,'ねじれの位置にある',M5PK);
   g+=`<path d="M10 140 v5 h200 v-5" stroke-width="1"/>${m5T(62,158,'同じ平面上にある','font-size="11" font-family="sans-serif"')}<path d="M230 140 v5 h95 v-5" stroke-width="1"/>${m5T(232,158,'同じ平面上にない','font-size="11" font-family="sans-serif"')}`;
   return m5V(335,165,g,360); })();
+const K6F_LP = (() => { const pl=ox=>`<path d="M${ox+22} 40 L${ox+102} 40 L${ox+82} 100 L${ox+2} 100 Z" fill="rgba(230,200,140,.45)" stroke-width="1.2"/>`+m5T(ox+8,95,'P','font-style="italic" font-size="13"'), C=(x,t)=>m5T(x,128,t,'font-size="11.5" font-family="sans-serif"');
+  let g=pl(5)+`<line x1="22" y1="50" x2="92" y2="88" stroke-width="2"/><circle cx="40" cy="60" r="2.6" fill="currentColor"/><circle cx="75" cy="79" r="2.6" fill="currentColor"/>`+m5T(30,70,'ℓ','font-style="italic" font-size="13"')+C(14,'平面上にある');
+  g+=pl(115)+`<line x1="150" y1="8" x2="168" y2="68" stroke-width="2"/><line x1="168" y1="68" x2="177" y2="100" stroke-width="1.6" stroke-dasharray="4 3"/><line x1="177" y1="100" x2="182" y2="118" stroke-width="2"/><circle cx="168" cy="68" r="2.6" fill="currentColor"/>`+m5T(140,14,'ℓ','font-style="italic" font-size="13"')+C(146,'交わる');
+  g+=pl(225)+`<line x1="222" y1="28" x2="330" y2="12" stroke-width="2"/>`+m5T(222,22,'ℓ','font-style="italic" font-size="13"')+C(250,'平行である');
+  return m5V(335,135,g,360); })();
+const K6F_2PL = (() => { const C=(x,t)=>m5T(x,150,t,'font-size="11.5" font-family="sans-serif"');
+  let g=`<path d="M30 70 L140 70 L120 120 L10 120 Z" fill="rgba(43,123,185,.25)" stroke-width="1.2"/><path d="M45 15 L115 35 L105 135 L35 115 Z" fill="rgba(230,200,140,.55)" stroke-width="1.2"/><line x1="40" y1="74" x2="110" y2="114" stroke-width="2" stroke="${M5PK}"/>`+m5T(14,114,'P','font-style="italic" font-size="13"')+m5T(50,30,'Q','font-style="italic" font-size="13"')+C(52,'交わる');
+  g+=`<path d="M200 90 L310 90 L290 135 L180 135 Z" fill="rgba(43,123,185,.25)" stroke-width="1.2"/><path d="M200 25 L310 25 L290 70 L180 70 Z" fill="rgba(230,200,140,.55)" stroke-width="1.2"/>`+m5T(186,130,'P','font-style="italic" font-size="13"')+m5T(186,65,'Q','font-style="italic" font-size="13"')+C(222,'平行である');
+  return m5V(330,158,g,340); })();
 const M1C6_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'見取図と展開図', sub:'小学4・5年', plan:['k6NetPic','k6NetPic','k6Net0','k6NetPic','k6NetPic'], body:()=>`
     <section class="panel"><h3>見取図と展開図</h3>${m5V(395,148,k6Box(100,50,60,{x:12,y:100})+`<g transform="translate(165,8)" fill="${K6F}"><rect x="32" y="0" width="80" height="32"/><rect x="0" y="32" width="32" height="48"/><rect x="32" y="32" width="80" height="48"/><rect x="112" y="32" width="32" height="48"/><rect x="144" y="32" width="80" height="48"/><rect x="32" y="80" width="80" height="32"/></g>`+m5T(40,138,'見取図','font-size="12" font-family="sans-serif"')+m5T(250,138,'展開図','font-size="12" font-family="sans-serif"'),340)}${rule('見取図：立体の形がわかるようにかいた図（見えない辺は点線）<br>展開図：立体を切り開いて平面に広げた図')}<p class="small muted">展開図を組み立てたとき、重なる辺・重なる頂点を考えられるようにしよう。</p></section>` },
@@ -8354,8 +8363,8 @@ const M1C6_LESSONS = [
   { id:'1-7', t:'2直線の位置関係', sub:'ねじれの位置', plan:Array(5).fill('k6Line'), body:()=>`
     <section class="panel"><h3>空間内の2直線</h3>${K6F_2LINE}${kmTbl([['交わる','同じ平面上にある'],['平行である','同じ平面上にある'],['ねじれの位置にある','同じ平面上にない']],['位置関係',''])}${rule('平行でなく、交わらない2直線は ねじれの位置 にある')}<p><b>〇 直方体 ABCD−EFGH で、辺 AB とねじれの位置にある辺は？</b></p>${K6F_BOX}${ex('辺 CG、DH、FG、EH')}<p class="small muted">平行な辺（DC、EF、HG）と、交わる辺（AD、AE、BC、BF）をのぞく。</p></section>` },
   { id:'1-8', t:'直線と平面・2平面', sub:'垂直と平行', plan:Array(5).fill('k6Line'), body:()=>`
-    <section class="panel"><h3>直線と平面の位置関係</h3>${kmTbl([['直線が平面上にある'],['交わる'],['平行である']],['直線 ℓ と平面 P'])}${rule('直線 ℓ が平面 P との交点を通る P 上のすべての直線と垂直なとき、ℓ⊥P。ℓ を平面 P の 垂線 という')}</section>
-    <section class="panel"><h3>2平面の位置関係</h3>${rule('2平面は 交わる か 平行である')}<p><b>〇 直方体 ABCD−EFGH で、面 AEHD と垂直に交わる辺、平行な面は？</b></p>${K6F_BOX}${ex('垂直に交わる辺：AB、DC、EF、HG<br>平行な面：面 BFGC')}<p class="small muted">点と平面との距離は、点から平面にひいた垂線の長さ。角柱・円柱の高さは2つの底面の距離。</p></section>` },
+    <section class="panel"><h3>直線と平面の位置関係</h3>${K6F_LP}${rule('直線 ℓ が平面 P との交点を通る P 上のすべての直線と垂直なとき、ℓ⊥P。ℓ を平面 P の 垂線 という')}</section>
+    <section class="panel"><h3>2平面の位置関係</h3>${rule('2平面は 交わる か 平行である')}${K6F_2PL}<p><b>〇 直方体 ABCD−EFGH で、面 AEHD と垂直に交わる辺、平行な面は？</b></p>${K6F_BOX}${ex('垂直に交わる辺：AB、DC、EF、HG<br>平行な面：面 BFGC')}<p class="small muted">点と平面との距離は、点から平面にひいた垂線の長さ。角柱・円柱の高さは2つの底面の距離。</p></section>` },
   { id:'1-9', t:'面や線を動かしてできる立体', sub:'平行移動・母線', plan:['k6MovePic','k6Move','k6MovePic','k6Move','k6MovePic'], body:()=>`
     <section class="panel"><h3>面を平行に動かす</h3>${rule('角柱や円柱は、底面をその面に垂直な方向に一定の距離だけ平行に動かしてできる立体とみることができる')}${ex('三角形 → 三角柱、円 → 円柱')}</section>
     <section class="panel"><h3>線を動かす</h3>${rule('角柱や円柱の側面は、底面に垂直に立てた線分をその周にそって1まわりさせてできたものとみることができる。この線分を 母線 という')}</section>` },
