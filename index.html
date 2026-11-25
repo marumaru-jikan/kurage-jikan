@@ -7149,7 +7149,7 @@ Object.assign(G,{
     return mq2(big?'いちばん大きい数は？':'いちばん小さい数は？', all.map(o=>o.s).join('，　'), A.s, all.filter(o=>o!==A).map(o=>o.s), '分数を小数に直してくらべよう（分子÷分母）。', all.map(o=>`${o.s} ＝ ${m1Dc(o.v)}`).join('<br>')); },
   m1Ineq0(){ const P=[[3,'2.9'],[2,frH(9,4),2,9/4],[frH(7,10),'0.8',.7,.8],[frH(5,3),frH(5,4),5/3,5/4],['0.5',frH(1,2),.5,.5],[frH(3,4),'0.75',.75,.75],['1.2',frH(6,5),1.2,1.2],[frH(2,3),'0.6',2/3,.6],['2.5',frH(9,4),2.5,2.25],[frH(4,5),frH(5,6),.8,5/6],['0.3',frH(1,3),.3,1/3],[frH(7,8),'1',7/8,1]];
     let it=pick(P); if(it.length===2) it=[String(it[0]),it[1],it[0],parseFloat(it[1])]; const [a,b,va,vb]=it; const A=Math.abs(va-vb)<1e-9?'＝':va<vb?'＜':'＞';
-    return mq2('□に入る記号は？', `${a} □ ${b}`, A, ['＜','＞','＝'].filter(x=>x!==A), '分数は 分子÷分母 で小数に直してくらべよう。', `${a} ＝ ${m1Dc(va)}、${b} ＝ ${m1Dc(vb)} なので ${a} ${A} ${b}`); },
+    return mq2('□に入る記号は？', `${a}${M1BOX}${b}`, A, ['＜','＞','＝'].filter(x=>x!==A), '分数は 分子÷分母 で小数に直してくらべよう。', `${a} ＝ ${m1Dc(va)}、${b} ＝ ${m1Dc(vb)} なので ${a} ${A} ${b}`); },
   m1FrAS2(){ if(Math.random()<.6) return G.m1FrAS(); const w1=ri(1,3), w2=ri(1,3), d1=pick([3,4,6]), d2=pick([2,3,4,6,12].filter(x=>x!==d1)), n1=ri(1,d1-1), n2=ri(1,d2-1), op=pick(['＋','−']);
     const L=d1*d2/gcd(d1,d2); let a=(w1*d1+n1)*(L/d1), b=(w2*d2+n2)*(L/d2); if(op==='−'&&a<=b) return G.m1FrAS2(); const n=op==='＋'?a+b:a-b; const [rn,rd]=m1R(n,L);
     const mixed=(n,d)=>{ const w=Math.floor(n/d), r=n%d; return w&&r?`${w}${frH(r,d)}`:r?frH(r,d):String(w); };
@@ -7178,13 +7178,14 @@ Object.assign(G,{
     if(t===1){ const m=pick([8,12,16,28,32,36,44]), v=25*m; return mq2('くふうして計算しよう', `25×${m}`, String(v), [String(v+25), String(v-25), String(v+100), String(250*m/10+50)], '25×4 ＝ 100 を使おう。', `25×${m} ＝ 25×4×${m/4} ＝ 100×${m/4} ＝ ${v}`); }
     const a=ri(12,49), b=ri(2,8), c=10-b, v=a*10; return mq2('くふうして計算しよう', `${a}×${b} ＋ ${a}×${c}`, String(v), [String(v+a), String(a*b+c), String(v-a), String(a*(b+c+1))], 'a×b＋a×c ＝ a×(b＋c)（分配法則を逆に使う）', `${a}×(${b}＋${c}) ＝ ${a}×10 ＝ ${v}`); },
 });
+const M1BOX = '<span style="display:inline-block;width:1.15em;height:1.15em;border:2px solid currentColor;border-radius:2px;vertical-align:-0.2em;margin:0 .25em"></span>';
 const M1C0 = [
   { id:'0-1', sec:'0　この章のための復習', t:'数直線', sub:'小学5年　分数と小数', plan:['m1NL','m1NL','m1NL','m1NL','m1NL'], body:()=>`
     <section class="panel"><h3>数直線の読み方</h3>${rule('まず 1目もりがいくつかを調べる')}${m1NLsvg(1.3)}<p class="small muted">0 と 1 の間が 10 等分されているので、1目もりは 0.1。A は 1.3 です。</p></section>
     <section class="panel"><h3>分数と小数</h3>${rule('分数 ＝ 分子 ÷ 分母 で、小数に直せる')}${ex(frH(3,10)+' ＝ 0.3　　'+frH(3,2)+' ＝ 1.5　　2'+frH(1,5)+' ＝ 2.2')}<p class="small muted">小数にそろえると、数直線上の位置や大きさがくらべやすくなります。</p></section>` },
   { id:'0-2', t:'不等号', sub:'小学3年・5年　数の大小', plan:['m1Ineq0','m1Ineq0','m1Ineq0','m1Ineq0','m1Ineq0'], body:()=>`
     <section class="panel"><h3>等号と不等号</h3>${rule('等しいことを表す記号 ＝ を 等号<br>大小を表す記号 ＞、＜ を 不等号 という')}${ex(frH(8,8)+' ＝ 1　　1 ＞ '+frH(5,8)+'　　'+frH(3,8)+' ＜ '+frH(5,8))}<p class="small muted">不等号は、開いているほうが大きい数です。</p></section>
-    <section class="panel"><h3>分数と小数をくらべる</h3>${ex(frH(7,10)+' □ 0.8<br>→ '+frH(7,10)+' ＝ 0.7 なので '+frH(7,10)+' ＜ 0.8')}</section>` },
+    <section class="panel"><h3>分数と小数をくらべる</h3>${ex(frH(7,10)+M1BOX+'0.8<br>→ '+frH(7,10)+' ＝ 0.7 なので '+frH(7,10)+' ＜ 0.8')}</section>` },
   { id:'0-3', t:'分数の足し算・引き算', sub:'小学5年', plan:['m1FrAS','m1FrAS','m1FrAS2','m1FrAS2','m1FrAS2'], body:()=>`
     <section class="panel"><h3>通分してから計算</h3>${rule('分母がちがう分数は、分母をそろえて（通分して）から計算する')}${ex(frH(1,3)+' ＋ '+frH(1,2)+'<br>＝ '+frH(2,6)+' ＋ '+frH(3,6)+' ＝ '+frH(5,6))}${ex(frH(9,10)+' − '+frH(11,15)+'<br>＝ '+frH(27,30)+' − '+frH(22,30)+' ＝ '+frH(5,30)+' ＝ '+frH(1,6))}<p class="small muted">答えが約分できるときは、約分しておこう。</p></section>
     <section class="panel"><h3>帯分数の計算</h3>${ex('3'+frH(1,3)+' − 2'+frH(11,12)+'<br>＝ '+frH(10,3)+' − '+frH(35,12)+'<br>＝ '+frH(40,12)+' − '+frH(35,12)+' ＝ '+frH(5,12))}<p class="small muted">仮分数に直すと、くり下がりで迷いません。</p></section>` },
@@ -7247,7 +7248,7 @@ Object.assign(G,{
     return mq2('符号を変えた数は？', s, A, [s, fr?'−'+frH(3,2):m1N(1/v>0?1/v:1/v), fr?frH(3,2):String(Math.abs(v)+1)], '＋ と − を入れかえる。', `${s} の符号を変えると ${A}`); },
   m1Cmp(){ const P=[[-3.1,-3],[-0.01,0],[-4/3,-1.4,'−'+frH(4,3),'−1.4'],[-7/2,-1/2,'−'+frH(7,2),'−'+frH(1,2)],[0.8,-1.3],[-3/5,-2/5,'−'+frH(3,5),'−'+frH(2,5)],[-2,-5],[-1,0],[-0.7,-2/3,'−0.7','−'+frH(2,3)],[-2.5,-3],[-6,4],[-7,-5]];
     const p=pick(P), [a,b]=[p[0],p[1]], sa=p[2]||m1N(a), sb=p[3]||m1N(b); const A=a<b?'＜':'＞';
-    return mq2('□に入る不等号は？', `${sa} □ ${sb}`, A, [A==='＜'?'＞':'＜','＝'], '負の数は、絶対値が大きいほど小さい。', `数直線で右にあるほうが大きいので ${sa} ${A} ${sb}`); },
+    return mq2('□に入る不等号は？', `${sa}${M1BOX}${sb}`, A, [A==='＜'?'＞':'＜','＝'], '負の数は、絶対値が大きいほど小さい。', `数直線で右にあるほうが大きいので ${sa} ${A} ${sb}`); },
   m1Order(){ const pool=shuffle([[-9,'−9'],[3,'+3'],[-10/9,'−'+frH(10,9)],[0,'0'],[-1.1,'−1.1'],[0.09,'0.09'],[0.1,frH(1,10)],[-1.4,'−1.4'],[-2,'−2'],[-0.3,'−'+frH(3,10)],[-1.25,'−'+frH(5,4)],[2.5,'2.5']]).slice(0,4);
     const s=pool.slice().sort((x,y)=>x[0]-y[0]); const A=s.map(p=>p[1]).join(' ＜ '); const r=s.slice().reverse();
     return mq2('小さい順に並べると？', pool.map(p=>p[1]).join('，　'), A, [[s[1],s[0],s[2],s[3]].map(p=>p[1]).join(' ＜ '), [s[0],s[2],s[1],s[3]].map(p=>p[1]).join(' ＜ '), pool.slice().sort((x,y)=>Math.abs(x[0])-Math.abs(y[0])).map(p=>p[1]).join(' ＜ '), r.map(p=>p[1]).join(' ＜ '), [s[0],s[1],s[3],s[2]].map(p=>p[1]).join(' ＜ ')], '分数は小数に直して、数直線で左から順に。', `小さい順に ${A}`, { words:true }); },
