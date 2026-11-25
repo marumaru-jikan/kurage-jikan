@@ -8075,7 +8075,7 @@ const k6Box = (a,b,c,o={}) => { const x0=o.x||20, y0=o.y||(c+b*0.45+20), dx=b*0.
   if(o.dims){ const [da,db,dc]=o.dims; if(da) g+=m5T(x0+a/2-10,y0+16,da,'font-size="12"'); if(db) g+=m5T(x0+a+dx/2+6,y0+dy/2+12,db,'font-size="12"'); if(dc) g+=m5T(x0-34,y0-c/2+4,dc,'font-size="12"'); }
   return g; };
 const k6Cyl = (r,h,o={}) => { const cx=o.x||(r+24), ry=r*0.3, top=o.y||(ry+12), bot=top+h;
-  let g=`<path d="M${cx-r} ${top} L${cx-r} ${bot} A${r} ${ry} 0 0 0 ${cx+r} ${bot} L${cx+r} ${top} Z" fill="${K6F}"/><ellipse cx="${cx}" cy="${top}" rx="${r}" ry="${ry}" fill="${K6F}"/>`;
+  let g=`<path d="M${cx-r} ${top} A${r} ${ry} 0 0 1 ${cx+r} ${top} L${cx+r} ${bot} A${r} ${ry} 0 0 1 ${cx-r} ${bot} Z" fill="${K6F}" stroke="none"/><path d="M${cx-r} ${top} L${cx-r} ${bot} A${r} ${ry} 0 0 0 ${cx+r} ${bot} L${cx+r} ${top}"/><ellipse cx="${cx}" cy="${top}" rx="${r}" ry="${ry}"/>`;
   g+=`<path d="M${cx-r} ${bot} A${r} ${ry} 0 0 1 ${cx+r} ${bot}" ${K6D}/>`;
   if(o.rl){ g+=`<line x1="${cx}" y1="${bot}" x2="${cx+r}" y2="${bot}" stroke-width="1.1"/><circle cx="${cx}" cy="${bot}" r="2" fill="currentColor"/>`+m5T(cx+r/2-10,bot+16,o.rl,'font-size="12"'); }
   if(o.hl) g+=m5T(cx+r+4,top+h/2+4,o.hl,'font-size="12"');
