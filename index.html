@@ -1178,7 +1178,7 @@ const CATALOG = [
         { t:'変化と対応', ready:'m1c4', secs:['関数','比例','反比例','比例，反比例の利用'] },
         { t:'平面図形', ready:'m1c5', secs:['直線と図形','移動と作図','円とおうぎ形'] },
         { t:'空間図形', ready:'m1c6', secs:['立体と空間図形','立体の体積と表面積'] },
-        { t:'データの活用', secs:['ヒストグラムと相対度数','データにもとづく確率'] }) },
+        { t:'データの活用', ready:'m1c7', secs:['ヒストグラムと相対度数','データにもとづく確率'] }) },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
       { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },{ t:'一次関数', ready:'m2c3' },{ t:'図形の調べ方', ready:'m2c4' },{ t:'図形の性質と証明', ready:'m2c5' },{ t:'場合の数と確率', ready:'m2c6' },{ t:'箱ひげ図とデータの活用', ready:'m2c7' }) },
@@ -8433,6 +8433,106 @@ const M1C6_LESSONS = [
     <section class="panel"><h3>覚え方</h3><div style="text-align:center;font-size:1.5em;margin:4px 0">S＝4πr²</div><div style="text-align:center;font-size:1.35em;font-weight:800;letter-spacing:.05em;margin-top:8px">心配あるある</div><div style="display:grid;grid-template-columns:repeat(3,auto);justify-content:center;column-gap:26px;row-gap:2px;margin:6px 0 4px;text-align:center"><span style="font-weight:700">心配</span><span style="font-weight:700">ある</span><span style="font-weight:700">ある</span><span style="color:#e0457b;font-weight:800">4 π</span><span style="color:#e0457b;font-weight:800">r</span><span style="color:#e0457b;font-weight:800">r</span></div><p class="small muted" style="text-align:center">r が2つ → r² なので、4πr²</p></section>` },
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'6章の総まとめ', test:true, plan:['k6NamePic','k6Reg','k6Proj','k6Net','k6Plane','k6Line','k6Line','k6RotPic','k6V1','k6V2','k6V3','k6S1','k6S2','k6S3','k6S4'], body:()=>`
     <section class="panel"><h3>6章　空間図形　章末テスト</h3><p>1節・2節の範囲から15問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
+];
+/* ===== 中1数学 7章 データの活用 ===== */
+const K7CTX = [['身長','cm',135,5],['ハンドボール投げの記録','m',8,4],['通学時間','分',0,10],['体重','kg',35,5],['数学のテストの得点','点',40,10],['反復横とびの回数','回',32,4]];
+const k7d = v => Number.isInteger(v)?String(v):String(+v.toFixed(2));
+const k7Make = (N) => { const c=pick(K7CTX), k=ri(5,6), n=N||pick([20,25,40,50]); let f;
+  do{ const w=Array.from({length:k},(_,i)=>Math.max(0.2, 1.2-Math.abs(i-(k-1)/2+ri(-1,1)*0.5)*0.45+Math.random()*0.3)); const s=w.reduce((a,b)=>a+b,0); f=w.map(x=>Math.max(1,Math.round(x/s*n))); let d=n-f.reduce((a,b)=>a+b,0); let g=0; while(d!==0&&g<50){ const i=ri(0,k-1); if(d>0){f[i]++;d--;} else if(f[i]>1){f[i]--;d++;} g++; } }while(f.reduce((a,b)=>a+b,0)!==n||new Set(f).size<3||f.filter(x=>x===Math.max(...f)).length>1);
+  const cls=f.map((_,i)=>[c[2]+i*c[3], c[2]+(i+1)*c[3]]); return {c,f,n,cls,mid:cls.map(([a,b])=>(a+b)/2)}; };
+const k7Tab = (T,o={}) => { const rows=T.cls.map(([a,b],i)=>{ const r=[`${a}〜${b}`, String(T.f[i])]; if(o.rel) r.push(o.hideRel===i?'？':(T.f[i]/T.n).toFixed(2)); if(o.cum) r.push(o.hideCum===i?'？':String(T.f.slice(0,i+1).reduce((x,y)=>x+y,0))); return r; });
+  rows.push(['計', String(T.n), ...(o.rel?['1.00']:[]), ...(o.cum?['']:[])]); return kmTbl(rows, [`${T.c[0]}（${T.c[1]}）`, '度数', ...(o.rel?['相対度数']:[]), ...(o.cum?['累積度数']:[])]); };
+const k7Hist = (T,o={}) => { const k=T.f.length, W=280, H=190, L=34, B=30, Tp=12, R=12, mx=Math.max(...T.f), ys=mx>12?4:mx>6?2:1, ym=Math.ceil((mx+1)/ys)*ys, bw=(W-L-R)/(k+2), px=i=>L+(i+1)*bw, py=v=>H-B-v*(H-B-Tp)/ym; let g='';
+  for(let v=0;v<=ym;v+=ys) g+=`<line x1="${L}" y1="${py(v)}" x2="${W-R}" y2="${py(v)}" stroke="#d5e3ea" stroke-width=".7"/>`+m5T(L-5,py(v)+4,v,'font-size="10" text-anchor="end"');
+  T.f.forEach((v,i)=>{ g+=`<rect x="${px(i)}" y="${py(v)}" width="${bw}" height="${py(0)-py(v)}" fill="${o.hl===i?'rgba(224,69,123,.45)':'rgba(43,123,185,.25)'}" stroke-width="1.1"/>`; });
+  for(let i=0;i<=k;i++) g+=m5T(px(i),py(0)+14,T.cls[0][0]+i*T.c[3],'font-size="10" text-anchor="middle"');
+  if(o.poly){ const pts=[[px(-1)+bw/2,py(0)],...T.f.map((v,i)=>[px(i)+bw/2,py(v)]),[px(k)+bw/2,py(0)]]; g+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" stroke="${M5PK}" stroke-width="2"/>`+pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="${M5PK}" stroke="none"/>`).join(''); }
+  g+=`<line x1="${L}" y1="${py(0)}" x2="${W-R}" y2="${py(0)}" stroke-width="1.3"/><line x1="${L}" y1="${py(0)}" x2="${L}" y2="${Tp-4}" stroke-width="1.3"/>`+m5T(W-R,H-2,`（${T.c[1]}）`,'font-size="10" text-anchor="end" font-family="sans-serif"')+m5T(L+4,Tp+2,'（人）','font-size="10" font-family="sans-serif"');
+  return m5V(W,H,g,300); };
+const k7Dot = (vals,lo,hi) => { const W=300, px=v=>20+(v-lo)*(W-40)/(hi-lo), cnt={}; let g=`<line x1="14" y1="110" x2="${W-10}" y2="110" stroke-width="1.3"/>`;
+  for(let v=lo;v<=hi;v++) g+=`<line x1="${px(v)}" y1="106" x2="${px(v)}" y2="114" stroke-width="1"/>`+((v-lo)%2===0?m5T(px(v),128,v,'font-size="11" text-anchor="middle"'):'');
+  vals.forEach(v=>{ cnt[v]=(cnt[v]||0)+1; g+=`<circle cx="${px(v)}" cy="${110-cnt[v]*12}" r="5" fill="rgba(43,123,185,.35)" stroke-width="1.1"/>`; }); return m5V(W,135,g,310); };
+const K7TERM = [
+  ['データの最大値と最小値の差を何という？','範囲（レンジ）',['階級','度数','平均値']],['度数分布表で、区切られたそれぞれの区間を何という？','階級',['度数','範囲','階級値']],
+  ['区間の幅を何という？','階級の幅',['範囲','度数','相対度数']],['それぞれの階級にはいるデータの個数を何という？','度数',['階級','相対度数','累積度数']],
+  ['度数分布表で、それぞれの階級のまん中の値を何という？','階級値',['中央値','平均値','最頻値']],['階級の幅を横、度数を縦とする長方形を並べたグラフを何という？','ヒストグラム（柱状グラフ）',['度数分布多角形','帯グラフ','円グラフ']],
+  ['ヒストグラムの長方形の上の辺の中点を結んだ折れ線を何という？','度数分布多角形（度数折れ線）',['ヒストグラム','累積度数','箱ひげ図']],['最初の階級から、ある階級までの度数の合計を何という？','累積度数',['相対度数','度数','累積相対度数']],
+  ['それぞれの階級の度数の、全体に対する割合を何という？','相対度数',['累積度数','度数','確率']],['最初の階級から、ある階級までの相対度数の合計を何という？','累積相対度数',['相対度数','累積度数','確率']],
+  ['相対度数の合計は、いつもいくつになる？','1',['100','0','度数の合計']],['平均値・中央値・最頻値をまとめて何という？','代表値',['範囲','階級値','度数']],
+  ['データを大きさの順に並べたとき、ちょうどまん中の値を何という？','中央値（メジアン）',['平均値','最頻値','階級値']],['データの中でもっとも多く出てくる値を何という？','最頻値（モード）',['中央値','平均値','範囲']],
+  ['多数回の実験で、あることがらの起こる相対度数が一定の値に近づくとき、その値を何という？','確率',['相対度数','累積相対度数','階級値']]];
+Object.assign(G,{
+  k7Rep0(){ let v; do{ const n=pick([8,9,10,11,12]), lo=ri(15,25); v=Array.from({length:n},()=>lo+ri(0,8)); }while((()=>{ const c={}; v.forEach(x=>c[x]=(c[x]||0)+1); const m=Math.max(...Object.values(c)); return Object.values(c).filter(x=>x===m).length>1 || v.reduce((a,b)=>a+b,0)%v.length!==0; })());
+    const s=[...v].sort((a,b)=>a-b), n=s.length, lo=s[0]-1, hi=s[0]+9, mean=v.reduce((a,b)=>a+b,0)/n, med=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2, c={}; v.forEach(x=>c[x]=(c[x]||0)+1); const mode=+Object.keys(c).sort((a,b)=>c[b]-c[a])[0];
+    const t=ri(0,2), lab=['平均値','中央値','最頻値'][t], A=[mean,med,mode][t];
+    return mq2(`ドットプロットは${n}人の記録（m）です。${lab}は？`, k7Dot(v,lo,hi), k7d(A)+'m', [mean,med,mode,A+1,A-1,s[n-1]-s[0]].filter(x=>x!==A).map(x=>k7d(x)+'m'), '平均値＝合計÷個数、中央値＝まん中の値、最頻値＝いちばん多い値', `平均値 ${k7d(mean)}、中央値 ${k7d(med)}、最頻値 ${mode}`); },
+  k7Hist0(){ const T=k7Make(pick([20,25,30])), i=ri(0,T.f.length-1), [a,b]=T.cls[i]; return mq2(`ヒストグラムで、${a}${T.c[1]}以上${b}${T.c[1]}未満の人数は？`, k7Hist(T,{hl:i}), T.f[i]+'人', [T.f[i]+1,T.f[i]-1,T.f[i]+2,T.n-T.f[i]].filter(x=>x>0&&x!==T.f[i]).map(x=>x+'人'), '長方形の高さを目もりで読む。', `${T.f[i]}人`); },
+  k7Class(){ const T=k7Make(), t=ri(0,2);
+    if(t===0) return mq2('この度数分布表の階級の幅は？', k7Tab(T), T.c[3]+T.c[1], [T.c[3]*2,T.n,T.cls.length,T.c[3]/2,T.c[3]+1,T.c[3]*3].filter((x,k,s)=>x!==T.c[3]&&Number.isInteger(x)&&s.indexOf(x)===k).map(x=>x+T.c[1]), '1つの階級の区間の幅', `${T.cls[0][1]}−${T.cls[0][0]}＝${T.c[3]}`);
+    if(t===1){ const i=T.f.indexOf(Math.max(...T.f)), [a,b]=T.cls[i]; return mq2('度数がもっとも多い階級は？', k7Tab(T), `${a}${T.c[1]}以上${b}${T.c[1]}未満`, T.cls.filter((_,j)=>j!==i).slice(0,4).map(([x,y])=>`${x}${T.c[1]}以上${y}${T.c[1]}未満`), '度数の欄でいちばん大きい数をさがす。', `度数 ${T.f[i]} の階級`, { words:true }); }
+    const i=ri(1,T.f.length-2), [a,b]=T.cls[i]; return mq2(`${T.c[0]}が${b}${T.c[1]}以上の人は何人？`, k7Tab(T), T.f.slice(i+1).reduce((x,y)=>x+y,0)+'人', [T.f.slice(i).reduce((x,y)=>x+y,0), T.f.slice(0,i+1).reduce((x,y)=>x+y,0), T.f[i+1], T.n-T.f[i], T.f.slice(i+1).reduce((p,q)=>p+q,0)+1, T.f.slice(i+1).reduce((p,q)=>p+q,0)+2, T.f.slice(i+1).reduce((p,q)=>p+q,0)-1].filter((x,k,s)=>x>0&&x!==T.f.slice(i+1).reduce((p,q)=>p+q,0)).map(x=>x+'人'), `${b}${T.c[1]}以上の階級の度数をたす。`, `${T.f.slice(i+1).join('＋')}＝${T.f.slice(i+1).reduce((x,y)=>x+y,0)}`); },
+  k7Range(){ let v; do{ v=Array.from({length:ri(8,12)},()=>ri(30,99)); }while(new Set(v).size<5); const mx=Math.max(...v), mn=Math.min(...v), A=mx-mn;
+    return mq2('次のデータの範囲は？', v.join('　'), A+'', [mx,mn,mx+mn,A+1,A-1].filter(x=>x!==A).map(String), '範囲＝最大値−最小値', `${mx}−${mn}＝${A}`); },
+  k7Cum(){ const T=k7Make(), i=ri(1,T.f.length-1), A=T.f.slice(0,i+1).reduce((x,y)=>x+y,0); return mq2(`表の「？」にあてはまる累積度数は？`, k7Tab(T,{cum:1,hideCum:i}), A+'', [T.f[i], A-T.f[i], A+T.f[i], T.n-A, A+1, A-1].filter(x=>x!==A&&x>0).map(String), '最初の階級からその階級までの度数の合計', `${T.f.slice(0,i+1).join('＋')}＝${A}`); },
+  k7Hist(){ const T=k7Make(pick([20,25,30])), t=ri(0,2);
+    if(t===0) return mq2('このヒストグラムで、全体の人数は？', k7Hist(T), T.n+'人', [T.n+1,T.n-1,T.n+5,Math.max(...T.f)].filter(x=>x!==T.n).map(x=>x+'人'), '長方形の高さをすべてたす。', `${T.f.join('＋')}＝${T.n}`);
+    if(t===1){ const i=T.f.indexOf(Math.max(...T.f)), A=T.mid[i]; return mq2('このヒストグラムから最頻値を求めると？', k7Hist(T,{poly:1}), k7d(A)+T.c[1], T.mid.filter(x=>x!==A).slice(0,4).map(x=>k7d(x)+T.c[1]), '度数がもっとも多い階級の階級値', `度数がもっとも多い階級の階級値 ${k7d(A)}`); }
+    return mq2('ピンクの折れ線を何という？', k7Hist(T,{poly:1}), '度数分布多角形', ['ヒストグラム','累積度数','相対度数'], '長方形の上の辺の中点を結んだ折れ線。両はしは度数0の階級まで結ぶ。', '度数分布多角形（度数折れ線）'); },
+  k7Mode(){ const T=k7Make(), t=ri(0,1), i=T.f.indexOf(Math.max(...T.f));
+    if(t===0) return mq2('度数分布表から最頻値を求めると？', k7Tab(T), k7d(T.mid[i])+T.c[1], [T.cls[i][0],T.cls[i][1],T.f[i],...T.mid.filter((_,j)=>j!==i)].filter(x=>x!==T.mid[i]).slice(0,4).map(x=>k7d(x)+T.c[1]), '度数がもっとも多い階級の階級値を最頻値とする。', `度数 ${T.f[i]} の階級の階級値 ${k7d(T.mid[i])}`);
+    const j=ri(0,T.f.length-1); return mq2(`${T.cls[j][0]}${T.c[1]}以上${T.cls[j][1]}${T.c[1]}未満の階級の階級値は？`, '', k7d(T.mid[j])+T.c[1], [T.cls[j][0],T.cls[j][1],T.c[3],T.mid[j]+T.c[3]].map(x=>k7d(x)+T.c[1]), '階級値＝（階級の両はしの値の和）÷2', `(${T.cls[j][0]}＋${T.cls[j][1]})÷2＝${k7d(T.mid[j])}`); },
+  k7Rel(){ const T=k7Make(pick([20,25,40,50])), i=ri(0,T.f.length-1), A=(T.f[i]/T.n).toFixed(2);
+    return mq2('表の「？」にあてはまる相対度数は？', k7Tab(T,{rel:1,hideRel:i}), A, [(T.f[i]/100).toFixed(2), ((T.f[i]+1)/T.n).toFixed(2), (T.n/100/T.f[i]).toFixed(2), ((T.f[i]-1)/T.n).toFixed(2), (T.f[i]*2/T.n).toFixed(2)].filter(x=>x!==A), '相対度数＝その階級の度数÷度数の合計', `${T.f[i]}÷${T.n}＝${A}`); },
+  k7CumRel(){ const T=k7Make(pick([20,25,40,50])), i=ri(1,T.f.length-2), c=T.f.slice(0,i+1).reduce((x,y)=>x+y,0), A=(c/T.n).toFixed(2), [,b]=T.cls[i];
+    return mq2(`${T.c[0]}が${b}${T.c[1]}未満の人の累積相対度数は？`, k7Tab(T), A, [(T.f[i]/T.n).toFixed(2), ((c-T.f[i])/T.n).toFixed(2), (1-c/T.n).toFixed(2), ((c+T.f[i+1])/T.n).toFixed(2), ((c+1)/T.n).toFixed(2), ((c-1)/T.n).toFixed(2)].filter(x=>x!==A), '累積相対度数＝累積度数÷度数の合計', `累積度数 ${c}、${c}÷${T.n}＝${A}`); },
+  k7Mean(){ let T,s; do{ T=k7Make(pick([10,20,25])); s=T.f.reduce((x,y,i)=>x+y*T.mid[i],0); }while(!Number.isInteger(s/T.n*10));
+    const A=k7d(s/T.n); return mq2('度数分布表から平均値を求めると？（階級値を使う）', kmTbl(T.cls.map(([a,b],i)=>[`${a}〜${b}`,k7d(T.mid[i]),String(T.f[i])]).concat([['計','',String(T.n)]]),[`${T.c[0]}（${T.c[1]}）`,'階級値','度数']), A+T.c[1], [s/T.f.length, T.mid[Math.floor(T.f.length/2)], s/T.n+T.c[3]/2, s/T.n-T.c[3]/2].map(x=>k7d(Math.round(x*10)/10)).filter(x=>x!==A).map(x=>x+T.c[1]), '（階級値×度数）の合計÷度数の合計', `${k7d(s)}÷${T.n}＝${A}`); },
+  k7Med(){ const T=k7Make(pick([20,25,30,40])), n=T.n, pos=n%2?[(n+1)/2]:[n/2,n/2+1]; let c=0, idx=-1; for(let i=0;i<T.f.length;i++){ c+=T.f[i]; if(c>=pos[pos.length-1]){ idx=i; break; } }
+    let c2=0, i0=-1; for(let i=0;i<T.f.length;i++){ c2+=T.f[i]; if(c2>=pos[0]){ i0=i; break; } } if(i0!==idx) return G.k7Med();
+    const lab=([a,b])=>`${a}${T.c[1]}以上${b}${T.c[1]}未満`; return mq2('中央値がふくまれる階級は？', k7Tab(T), lab(T.cls[idx]), T.cls.filter((_,j)=>j!==idx).slice(0,4).map(lab), `${n}人なので、小さい方から ${pos.join('番目と')}番目がはいる階級`, `累積度数で ${pos.join('、')}番目をさがす → ${lab(T.cls[idx])}`, { words:true }); },
+  k7Prob(){ const p=pick([0.42,0.45,0.48,0.53,0.56,0.58,0.61,0.37]), Ns=[100,200,400,600,800,1000], c=Ns.map(n=>Math.round(n*(p+(Math.random()-0.5)*0.12*Math.sqrt(100/n)))), last=c[5], A=(last/1000).toFixed(2);
+    const tab=kmTbl([['上向き',...c.map(String)],['相対度数',...c.map((x,i)=>(x/Ns[i]).toFixed(2))]],['投げた回数',...Ns.map(String)]);
+    return mq2('1個の画びょうを投げた結果です。上向きになる確率はどのくらいと考えられる？', tab, A, [(c[0]/100).toFixed(2),(1-last/1000).toFixed(2),'0.50',(last/2000).toFixed(2),(last/1000+0.05).toFixed(2),(last/1000-0.05).toFixed(2)].filter(x=>x!==A), '投げた回数が多いほど、相対度数はある値に近づく。いちばん多い回数の相対度数を使う。', `1000回のときの相対度数 ${A}`); },
+  k7Cmp(){ const a=ri(100,200), na=pick([150,200,250]), b=ri(150,300), nb=pick([250,300,400]); const ra=a/na, rb=b/nb; if(a>=na||b>=nb||Math.abs(ra-rb)<0.03) return G.k7Cmp();
+    const A=ra>rb?'A':'B'; return mq2(`ペットボトルのキャップ A は ${na}回中 ${a}回、B は ${nb}回中 ${b}回、表が出た。表が出やすいのはどちら？`, '', A, [A==='A'?'B':'A','どちらも同じ','回数が多い B'].filter(x=>x!==A).slice(0,3).concat(['決められない']), '回数が違うときは、相対度数（割合）で比べる。', `A ${(ra).toFixed(2)}、B ${(rb).toFixed(2)} → ${A}`, { words:true }); },
+  k7Term(){ const [q,a,w]=kaPick(K7TERM); return mq2('データの活用のことば', q, a, w, '度数分布表・ヒストグラム・相対度数のことばを確認しよう。', a, { words:true }); },
+});
+const M1C7_CARDS = [
+  ['平均値','データの値の合計÷データの個数'],['中央値（メジアン）','データを大きさの順に並べたとき、ちょうどまん中の値。個数が偶数のときは、まん中の2つの平均。'],
+  ['最頻値（モード）','データの中でいちばん多く出てくる値。度数分布表では、度数がもっとも多い階級の階級値。'],['代表値','平均値・中央値・最頻値のように、データ全体の特徴を1つの数で表す値。'],
+  ['範囲（レンジ）','最大値−最小値'],['階級','データを整理するための区間。'],['階級の幅','区間の幅。'],['度数','それぞれの階級にはいるデータの個数。'],['度数分布表','データをいくつかの階級に分け、度数を整理した表。'],
+  ['階級値','階級のまん中の値。（両はしの和）÷2'],['ヒストグラム','階級の幅を横、度数を縦とする長方形を並べたグラフ。柱状グラフ。'],['度数分布多角形','ヒストグラムの長方形の上の辺の中点を順に結んだ折れ線。度数折れ線。両はしは度数0の階級まで結ぶ。'],
+  ['累積度数','最初の階級から、ある階級までの度数の合計。'],['相対度数','その階級の度数÷度数の合計。合計は1。'],['累積相対度数','最初の階級から、ある階級までの相対度数の合計。累積度数÷度数の合計でも求められる。'],
+  ['度数分布表からの平均値','（階級値×度数）の合計÷度数の合計'],['確率','多数回の実験で、あることがらの起こる相対度数が一定の値に近づくとき、その値。']];
+const K7EX = { c:['50m走の記録','秒',7,0.5], f:[1,5,8,5,1], n:20, cls:[[7,7.5],[7.5,8],[8,8.5],[8.5,9],[9,9.5]], mid:[7.25,7.75,8.25,8.75,9.25] };
+const K7EH = { c:['身長','cm',140,5], f:[1,3,6,7,5,3], n:25, cls:[140,145,150,155,160,165].map(a=>[a,a+5]), mid:[142.5,147.5,152.5,157.5,162.5,167.5] };
+const M1C7_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'平均値・中央値・最頻値', sub:'小学6年', plan:Array(5).fill('k7Rep0'), body:()=>`
+    <section class="panel"><h3>代表値</h3>${rule('平均値＝データの値の合計÷データの個数<br>中央値…データを大きさの順に並べたとき、ちょうどまん中の値<br>最頻値…データの値の中で、いちばん多い値')}<p><b>〇 ドットプロットは10人のソフトボール投げの記録（m）。平均値・中央値・最頻値は？</b></p>${k7Dot([16,18,18,20,21,21,21,23,25,27],15,25+2)}${ex('平均値　210÷10＝21（m）<br>中央値　5番目と6番目の平均　(21＋21)÷2＝21（m）<br>最頻値　21（m）')}<p class="small muted">データの個数が偶数のときは、まん中の2つの値の平均を中央値とする。</p></section>` },
+  { id:'0-2', t:'ちらばりを表やグラフに表す', sub:'小学6年', plan:Array(5).fill('k7Hist0'), body:()=>`
+    <section class="panel"><h3>度数分布表とヒストグラム</h3>${rule('データをいくつかの区間に分けて数えた表を 度数分布表、それを柱のように表したグラフを ヒストグラム（柱状グラフ）という')}${k7Tab(K7EH)}${k7Hist(K7EH)}<p class="small muted">「以上」はその数をふくみ、「未満」はふくまない。</p></section>` },
+  { id:'1-1', sec:'1　ヒストグラムと相対度数', t:'度数分布表と範囲', sub:'階級・度数・範囲', plan:['k7Class','k7Range','k7Class','k7Term','k7Class'], body:()=>`
+    <section class="panel"><h3>度数分布表のことば</h3>${kmTbl([['階級','データを整理するための区間'],['階級の幅','区間の幅'],['度数','各階級にはいるデータの個数'],['範囲','最大値−最小値']],['ことば','意味'])}<p><b>〇 次のデータの範囲は？　64　53　72　90　84　59　77　40</b></p>${ex('最大値 90、最小値 40<br>範囲＝90−40＝50（点）')}</section>` },
+  { id:'1-2', t:'累積度数', sub:'度数の合計', plan:Array(5).fill('k7Cum'), body:()=>`
+    <section class="panel"><h3>累積度数</h3>${rule('最初の階級から、ある階級までの度数の合計を 累積度数 という')}<p><b>〇 50m走の記録。8.5秒未満の人数は？</b></p>${k7Tab(K7EX,{cum:1})}${ex('1＋5＋8＝14（人）← 8.0〜8.5 の累積度数')}</section>` },
+  { id:'1-3', t:'ヒストグラムと度数分布多角形', sub:'柱と折れ線', plan:Array(5).fill('k7Hist'), body:()=>`
+    <section class="panel"><h3>ヒストグラムと度数分布多角形</h3>${rule('ヒストグラム：階級の幅を横、度数を縦とする長方形を並べたグラフ<br>度数分布多角形：長方形の上の辺の中点を順に結んだ折れ線（両はしは度数0の階級まで）')}${k7Hist(K7EH,{poly:1})}<p class="small muted">度数分布多角形を重ねると、2つのデータの分布のちがいがくらべやすい。</p></section>` },
+  { id:'1-4', t:'度数分布表と代表値', sub:'階級値・最頻値', plan:Array(5).fill('k7Mode'), body:()=>`
+    <section class="panel"><h3>階級値と最頻値</h3>${rule('階級値：それぞれの階級のまん中の値<br>度数分布表の最頻値：度数がもっとも多い階級の階級値')}${ex('「20m以上30m未満」の階級値　(20＋30)÷2＝25（m）')}<p><b>〇 上の身長の度数分布表（0-2）の最頻値は？</b></p>${ex('度数 7人の 155〜160cm の階級値　157.5cm')}</section>` },
+  { id:'1-5', t:'相対度数', sub:'全体に対する割合', plan:Array(5).fill('k7Rel'), body:()=>`
+    <section class="panel"><h3>相対度数</h3>${rule('相対度数＝その階級の度数÷度数の合計')}<p><b>〇 50m走（20人）で、8.0〜8.5秒の階級の相対度数は？</b></p>${k7Tab(K7EX,{rel:1})}${ex('8÷20＝0.40')}<p class="small muted">相対度数の合計は 1。全体の人数がちがう集団をくらべるときに使う。</p></section>` },
+  { id:'1-6', t:'累積相対度数', sub:'ある階級未満の割合', plan:Array(5).fill('k7CumRel'), body:()=>`
+    <section class="panel"><h3>累積相対度数</h3>${rule('最初の階級から、ある階級までの相対度数の合計を 累積相対度数 という<br>累積相対度数＝累積度数÷度数の合計')}<p><b>〇 50m走（20人）で、8.5秒未満の人の割合は？</b></p>${ex('累積度数 1＋5＋8＝14<br>14÷20＝0.70（70％）')}</section>` },
+  { id:'1-7', t:'度数分布表から平均値', sub:'階級値×度数', plan:Array(5).fill('k7Mean'), body:()=>`
+    <section class="panel"><h3>度数分布表から平均値を求める</h3>${rule('平均値＝（階級値×度数）の合計÷度数の合計')}<p class="small muted">それぞれの階級にはいるデータは、すべてその階級の階級値をとるものと考える。</p><p><b>〇 50m走（20人）の記録の平均値は？</b></p>${kmTbl(K7EX.cls.map(([a,b],i)=>[`${a}〜${b}`,k7d(K7EX.mid[i]),String(K7EX.f[i]),k7d(K7EX.mid[i]*K7EX.f[i])]).concat([['計','','20','165']]),['階級（秒）','階級値','度数','階級値×度数'])}${ex('165÷20＝8.25（秒）')}</section>` },
+  { id:'1-8', t:'データの比較', sub:'中央値の階級・相対度数で比べる', plan:['k7Med','k7Rel','k7Med','k7CumRel','k7Med'], body:()=>`
+    <section class="panel"><h3>中央値がふくまれる階級</h3>${rule('データが n 個のとき、小さい方から数えて まん中の順番 のデータがはいる階級をさがす')}<p><b>〇 50m走（20人）で、中央値がふくまれる階級は？</b></p>${ex('20人なので、10番目と11番目の平均<br>累積度数　7.5秒未満 1、8.0秒未満 6、8.5秒未満 14<br>→ 8.0秒以上8.5秒未満')}<p class="small muted">人数がちがう2つの集団は、相対度数や累積相対度数でくらべる。</p></section>` },
+  { id:'2-1', sec:'2　データにもとづく確率', t:'相対度数と確率', sub:'多数回の実験', plan:Array(5).fill('k7Prob'), body:()=>`
+    <section class="panel"><h3>確率</h3>${rule('多数回の実験の結果、あることがらの起こる相対度数がある一定の値に近づくとき、その値を そのことがらの起こる確率 という')}<p><b>〇 画びょうを投げた結果。上向きが出る確率は？</b></p>${kmTbl([['上向き','54','117','225','343','458','569'],['相対度数','0.54','0.59','0.56','0.57','0.57','0.57']],['投げた回数','100','200','400','600','800','1000'])}${ex('相対度数は 0.57 に近づいている → 確率は 0.57')}</section>` },
+  { id:'2-2', t:'データをもとにした確率', sub:'くらべて判断する', plan:['k7Cmp','k7Prob','k7Cmp','k7Cmp','k7Prob'], body:()=>`
+    <section class="panel"><h3>確率で判断する</h3><p><b>〇 クジラに出会えたのは、A社のツアーで150回中131回、B社で250回中228回。出会いやすいのは？</b></p>${ex('A社　131÷150＝0.873… → 0.87<br>B社　228÷250＝0.912 → 0.91<br>答 B社')}<p class="small muted">回数がちがうときは、相対度数（割合）でくらべる。実験できないことがらも、データをもとに確率を考えられる。</p></section>` },
+  { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'7章の総まとめ', test:true, plan:['k7Term','k7Range','k7Class','k7Cum','k7Hist','k7Mode','k7Rel','k7CumRel','k7Mean','k7Med','k7Prob','k7Cmp'], body:()=>`
+    <section class="panel"><h3>7章　データの活用　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
 ];
 /* ===== 図・グラフの問題（中1〜中3 追加） ===== */
 const fzNL = (a,ac,b,bc) => { const X=v=>150+v*26; let g=`<line x1="10" y1="40" x2="290" y2="40"/>`; for(let v=-5;v<=5;v++) g+=`<line x1="${X(v)}" y1="35" x2="${X(v)}" y2="45" stroke-width="1"/>`+m5T(X(v)-(v<0?7:4),62,v<0?'−'+(-v):String(v),'font-size="12"');
@@ -17308,6 +17408,7 @@ const UNITS = {
   m1c4:{ no:'4', title:'変化と対応', subject:'数学', course:'j1', subj:0, lessons:M1C4_LESSONS, cards:M1C4_CARDS, drill:'m1c4' },
   m1c5:{ no:'5', title:'平面図形', subject:'数学', course:'j1', subj:0, lessons:M1C5_LESSONS, cards:M1C5_CARDS, drill:'m1c5' },
   m1c6:{ no:'6', title:'空間図形', subject:'数学', course:'j1', subj:0, lessons:M1C6_LESSONS, cards:M1C6_CARDS, drill:'m1c6' },
+  m1c7:{ no:'7', title:'データの活用', subject:'数学', course:'j1', subj:0, lessons:M1C7_LESSONS, cards:M1C7_CARDS },
   m1c3:{ no:'3', title:'方程式', subject:'数学', course:'j1', subj:0, lessons:M1C3_LESSONS, cards:M1C3_CARDS, drill:'m1c3' },
   m1c2:{ no:'2', title:'文字の式', subject:'数学', course:'j1', subj:0, lessons:M1C2_LESSONS, cards:M1C2_CARDS, drill:'m1c2' },
   pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:M1C1_LESSONS, cards:true, drill:'m1c1' },
