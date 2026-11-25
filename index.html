@@ -1172,7 +1172,7 @@ const CATALOG = [
         { t:'方程式', ready:'m1c3', secs:['方程式','方程式の利用'] },
         { t:'変化と対応', ready:'m1c4', secs:['関数','比例','反比例','比例，反比例の利用'] },
         { t:'平面図形', ready:'m1c5', secs:['直線と図形','移動と作図','円とおうぎ形'] },
-        { t:'空間図形', secs:['立体と空間図形','立体の体積と表面積'] },
+        { t:'空間図形', ready:'m1c6', secs:['立体と空間図形','立体の体積と表面積'] },
         { t:'データの活用', secs:['ヒストグラムと相対度数','データにもとづく確率'] }) },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
@@ -8062,6 +8062,213 @@ const M1C5_LESSONS = [
     <section class="panel"><h3>おうぎ形の面積（別の公式）</h3>${M5F_SLR}<p class="small muted" style="text-align:center">おうぎ形を細かく切って並べかえると、底辺 ℓ、高さ r の三角形と考えられる。</p>${rule('S＝'+frH(1,2)+'ℓr（ℓ：弧の長さ、r：半径）')}${ex('半径 6cm、弧の長さ 4π cm → S＝'+frH(1,2)+'×4π×6＝12π（cm²）')}</section>` },
   { id:'4-1', sec:'章末テスト', t:'章末テスト', sub:'5章の総まとめ', test:true, plan:['k5Sym','k5Line','k5PP','k5Tri','k5Mv1','k5Mv2','k5Mv3','k5Mv4','k5Con','k5Use','k5Arc','k5Tan','k5Circ','k5Sec','k5SecA'], body:()=>`
     <section class="panel"><h3>5章　平面図形　章末テスト</h3><p>1節〜3節の範囲から15問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
+];
+/* ===== 中1数学 6章 空間図形 ===== */
+const K6F='rgba(43,123,185,.13)', K6D='stroke-dasharray="4 3" stroke-width="1.1"';
+const k6P = pts => pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L');
+/* 直方体（見取図）：a 横、b 奥行き、c 高さ、lab で頂点名 */
+const k6Box = (a,b,c,o={}) => { const x0=o.x||20, y0=o.y||(c+b*0.45+20), dx=b*0.6, dy=-b*0.45;
+  const F0=[x0,y0],F1=[x0+a,y0],F2=[x0+a,y0-c],F3=[x0,y0-c],B0=[x0+dx,y0+dy],B1=[x0+a+dx,y0+dy],B2=[x0+a+dx,y0-c+dy],B3=[x0+dx,y0-c+dy];
+  let g=`<path d="M${k6P([F0,F1,F2,F3])} Z" fill="${o.fill||K6F}"/><path d="M${k6P([F3,B3,B2,F2])} Z" fill="${o.fill||K6F}"/><path d="M${k6P([F1,B1,B2,F2])} Z" fill="${o.fill||K6F}"/>`;
+  g+=`<g ${K6D}><line x1="${B0[0]}" y1="${B0[1]}" x2="${B1[0]}" y2="${B1[1]}"/><line x1="${B0[0]}" y1="${B0[1]}" x2="${B3[0]}" y2="${B3[1]}"/><line x1="${B0[0]}" y1="${B0[1]}" x2="${F0[0]}" y2="${F0[1]}"/></g>`;
+  if(o.lab){ const P={A:F3,B:F2,C:B2,D:B3,E:F0,F:F1,G:B1,H:B0}, off={A:[-12,-4],B:[2,14],C:[4,-4],D:[-4,-6],E:[-12,12],F:[2,14],G:[4,4],H:[-14,0]}; for(const k in P) g+=m5T(P[k][0]+off[k][0],P[k][1]+off[k][1],k); }
+  if(o.dims){ const [da,db,dc]=o.dims; if(da) g+=m5T(x0+a/2-10,y0+16,da,'font-size="12"'); if(db) g+=m5T(x0+a+dx/2+6,y0+dy/2+12,db,'font-size="12"'); if(dc) g+=m5T(x0-34,y0-c/2+4,dc,'font-size="12"'); }
+  return g; };
+const k6Cyl = (r,h,o={}) => { const cx=o.x||(r+24), ry=r*0.3, top=o.y||(ry+12), bot=top+h;
+  let g=`<path d="M${cx-r} ${top} L${cx-r} ${bot} A${r} ${ry} 0 0 0 ${cx+r} ${bot} L${cx+r} ${top} Z" fill="${K6F}"/><ellipse cx="${cx}" cy="${top}" rx="${r}" ry="${ry}" fill="${K6F}"/>`;
+  g+=`<path d="M${cx-r} ${bot} A${r} ${ry} 0 0 1 ${cx+r} ${bot}" ${K6D}/>`;
+  if(o.rl){ g+=`<line x1="${cx}" y1="${bot}" x2="${cx+r}" y2="${bot}" stroke-width="1.1"/><circle cx="${cx}" cy="${bot}" r="2" fill="currentColor"/>`+m5T(cx+r/2-10,bot+16,o.rl,'font-size="12"'); }
+  if(o.hl) g+=m5T(cx+r+4,top+h/2+4,o.hl,'font-size="12"');
+  return g; };
+const k6Cone = (r,h,o={}) => { const cx=o.x||(r+24), ry=r*0.3, ap=o.y||12, bot=ap+h;
+  let g=`<path d="M${cx} ${ap} L${cx-r} ${bot} A${r} ${ry} 0 0 0 ${cx+r} ${bot} Z" fill="${K6F}"/><path d="M${cx-r} ${bot} A${r} ${ry} 0 0 1 ${cx+r} ${bot}" ${K6D}/>`;
+  if(o.hl){ g+=`<line x1="${cx}" y1="${ap}" x2="${cx}" y2="${bot}" ${K6D}/><path d="M${cx} ${bot-8} h8 v8" stroke-width="1"/>`+m5T(cx-30,ap+h/2+14,o.hl,'font-size="12"'); }
+  if(o.rl){ g+=`<line x1="${cx}" y1="${bot}" x2="${cx+r}" y2="${bot}" stroke-width="1.1"/><circle cx="${cx}" cy="${bot}" r="2" fill="currentColor"/>`+m5T(cx+r/2-8,bot+16,o.rl,'font-size="12"'); }
+  if(o.ll) g+=m5T(cx+r/2+6,ap+h/2,o.ll,'font-size="12"');
+  return g; };
+const k6Pyr = (a,h,o={}) => { const x0=o.x||20, y0=o.y||(h+a*0.45+16), dx=a*0.6, dy=-a*0.45;
+  const F0=[x0,y0],F1=[x0+a,y0],B1=[x0+a+dx,y0+dy],B0=[x0+dx,y0+dy], C=[x0+a/2+dx/2,y0+dy/2], T=[C[0],C[1]-h];
+  let g=`<path d="M${k6P([T,F0,F1,B1])} Z" fill="${K6F}"/><line x1="${T[0]}" y1="${T[1]}" x2="${F1[0]}" y2="${F1[1]}"/>`;
+  g+=`<g ${K6D}><line x1="${F0[0]}" y1="${F0[1]}" x2="${B0[0]}" y2="${B0[1]}"/><line x1="${B0[0]}" y1="${B0[1]}" x2="${B1[0]}" y2="${B1[1]}"/><line x1="${T[0]}" y1="${T[1]}" x2="${B0[0]}" y2="${B0[1]}"/>${o.hl?`<line x1="${T[0]}" y1="${T[1]}" x2="${C[0]}" y2="${C[1]}"/>`:''}</g>`;
+  if(o.hl) g+=m5T(C[0]+4,C[1]-h/2,o.hl,'font-size="12"');
+  if(o.al) g+=m5T(x0+a/2-10,y0+16,o.al,'font-size="12"');
+  if(o.sl){ const M=[(F1[0]+B1[0])/2,(F1[1]+B1[1])/2]; g+=`<line x1="${T[0]}" y1="${T[1]}" x2="${M[0]}" y2="${M[1]}" stroke="${M5PK}" stroke-width="1.2"/>`+m5T(M[0]+2,(T[1]+M[1])/2,o.sl,'font-size="12" fill="'+M5PK+'"'); }
+  return g; };
+const k6Sph = (r,o={}) => { const cx=o.x||(r+16), cy=o.y||(r+12), ry=r*0.3;
+  let g=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${K6F}"/><path d="M${cx-r} ${cy} A${r} ${ry} 0 0 0 ${cx+r} ${cy}"/><path d="M${cx-r} ${cy} A${r} ${ry} 0 0 1 ${cx+r} ${cy}" ${K6D}/>`;
+  if(o.rl) g+=`<line x1="${cx}" y1="${cy}" x2="${cx+r}" y2="${cy}" stroke-width="1.1"/><circle cx="${cx}" cy="${cy}" r="2" fill="currentColor"/>`+m5T(cx+r/2-10,cy-5,o.rl,'font-size="12"');
+  return g; };
+const k6TriP = (o={}) => { const F=[[20,110],[110,110],[50,60]], d=[60,-35], B=F.map(p=>[p[0]+d[0],p[1]+d[1]]);
+  return `<path d="M${k6P(F)} Z" fill="${K6F}"/><path d="M${k6P([F[1],B[1],B[2],F[2]])} Z" fill="${K6F}"/><path d="M${k6P([F[2],B[2],B[0],F[0]])} Z" fill="${K6F}" stroke="none"/><line x1="${F[2][0]}" y1="${F[2][1]}" x2="${B[2][0]}" y2="${B[2][1]}"/><g ${K6D}><line x1="${F[0][0]}" y1="${F[0][1]}" x2="${B[0][0]}" y2="${B[0][1]}"/><line x1="${B[0][0]}" y1="${B[0][1]}" x2="${B[1][0]}" y2="${B[1][1]}"/><line x1="${B[0][0]}" y1="${B[0][1]}" x2="${B[2][0]}" y2="${B[2][1]}"/></g>`; };
+/* 投影図：top が立面図、bottom が平面図 */
+const k6Proj = (el, pl, w=200) => m5V(w,190,`${el}<line x1="10" y1="92" x2="${w-10}" y2="92" stroke-width="1.2"/>${pl}${m5T(w-44,40,'立面図','font-size="11" font-family="sans-serif"')}${m5T(w-44,140,'平面図','font-size="11" font-family="sans-serif"')}`,220);
+const K6PR = {
+  rect:'<rect x="50" y="18" width="90" height="62" fill="'+K6F+'"/>',
+  tri:'<path d="M95 14 L50 80 L140 80 Z" fill="'+K6F+'"/>',
+  circ:'<circle cx="95" cy="48" r="36" fill="'+K6F+'"/>',
+  pTri:'<path d="M50 112 L140 112 L95 172 Z" fill="'+K6F+'"/>',
+  pSq:'<rect x="55" y="106" width="80" height="66" fill="'+K6F+'"/>',
+  pSqX:'<rect x="55" y="106" width="80" height="66" fill="'+K6F+'"/><path d="M55 106 L135 172 M135 106 L55 172" stroke-width="1"/>',
+  pTriX:'<path d="M50 112 L140 112 L95 172 Z" fill="'+K6F+'"/><path d="M95 136 L50 112 M95 136 L140 112 M95 136 L95 172" stroke-width="1"/>',
+  pCirc:'<circle cx="95" cy="140" r="34" fill="'+K6F+'"/>',
+  pCircC:'<circle cx="95" cy="140" r="34" fill="'+K6F+'"/><circle cx="95" cy="140" r="2" fill="currentColor"/>',
+  pHex:'<path d="M75 108 L115 108 L135 140 L115 172 L75 172 L55 140 Z" fill="'+K6F+'"/>'};
+const K6PJ = [['円柱','rect','pCirc'],['円錐','tri','pCircC'],['三角柱','rect','pTri'],['四角柱','rect','pSq'],['三角錐','tri','pTriX'],['四角錐','tri','pSqX'],['球','circ','pCirc'],['六角柱','rect','pHex']];
+/* 立方体の展開図 */
+const K6F_CUBENET = m5V(220,170,`<g fill="${K6F}"><rect x="20" y="55" width="45" height="45"/><rect x="65" y="55" width="45" height="45"/><rect x="110" y="55" width="45" height="45"/><rect x="155" y="55" width="45" height="45"/><rect x="65" y="10" width="45" height="45"/><rect x="65" y="100" width="45" height="45"/></g>`,240);
+const K6F_CONENET = (o={}) => m5V(220,200,`<path d="M110 20 L36 110 A116 116 0 0 0 184 110 Z" fill="${K6F}"/><path d="M36 110 A116 116 0 0 0 184 110" stroke="${M5BL}" stroke-width="2.6"/><circle cx="110" cy="166" r="25" fill="${K6F}"/><circle cx="110" cy="166" r="25" stroke="${M5BL}" stroke-width="2.6" fill="none"/><path d="M98 32 A16 16 0 0 0 122 32" stroke-width="1"/>${m5T(105,50,'a°','font-style="italic" font-size="12"')}${m5T(30,58,o.l||'母線','font-size="12" font-family="sans-serif"')}${m5T(138,170,o.r||'r','font-size="12" font-style="italic"')}<line x1="110" y1="166" x2="135" y2="166" stroke-width="1"/>${m5T(150,145,'等しい','font-size="11" font-family="sans-serif" fill="'+M5BL+'"')}`,240);
+const K6F_CYLNET = m5V(240,192,`<rect x="40" y="45" width="160" height="80" fill="${K6F}"/><line x1="40" y1="45" x2="200" y2="45" stroke="${M5BL}" stroke-width="2.6"/><circle cx="90" cy="25" r="20" fill="${K6F}"/><circle cx="90" cy="145" r="20" fill="${K6F}"/>${m5T(204,90,'h','font-style="italic"')}${m5T(96,42,'','')}${m5T(60,186,'横の長さ＝底面の円周 2πr','font-size="11" font-family="sans-serif" fill="'+M5BL+'"')}`,250);
+/* 直方体の辺の関係（A〜H） */
+const K6V = {A:[0,0,1],B:[1,0,1],C:[1,1,1],D:[0,1,1],E:[0,0,0],F:[1,0,0],G:[1,1,0],H:[0,1,0]};
+const K6E = ['AB','BC','CD','DA','EF','FG','GH','HE','AE','BF','CG','DH'];
+const k6Rel = (e1,e2) => { if(e1===e2) return 'same'; if([...e1].some(c=>e2.includes(c))) return '交わる'; const d=e=>K6V[e[1]].map((v,i)=>v-K6V[e[0]][i]); const a=d(e1), b=d(e2); return a.every((v,i)=>Math.abs(v)===Math.abs(b[i]))?'平行':'ねじれ'; };
+const K6F_BOX = m5V(220,170,k6Box(110,90,80,{lab:1,x:30,y:150}),240);
+const M6PLANE = [
+  ['同じ直線上にない3点をふくむ平面はいくつある？','1つ',['ない','2つ','無数にある']],
+  ['1つの直線をふくむ平面はいくつある？','無数にある',['1つ','2つ','ない']],
+  ['交わる2直線をふくむ平面はいくつある？','1つ',['無数にある','2つ','ない']],
+  ['平行な2直線をふくむ平面はいくつある？','1つ',['無数にある','2つ','ない']],
+  ['ねじれの位置にある2直線をふくむ平面はいくつある？','ない',['1つ','2つ','無数にある']],
+  ['1つの直線と、その直線上にない1点をふくむ平面はいくつある？','1つ',['無数にある','2つ','ない']],
+  ['空間内で、平行でなく、交わらない2直線の位置関係を何という？','ねじれの位置',['垂直','平行','一致']],
+  ['空間内の2直線の位置関係で、同じ平面上にないのはどれ？','ねじれの位置にある',['交わる','平行である','垂直に交わる']]];
+const M6REG = [
+  ['正四面体の面の形は？','正三角形',['正方形','正五角形','正六角形']],['正六面体（立方体）の面の形は？','正方形',['正三角形','正五角形','長方形']],
+  ['正十二面体の面の形は？','正五角形',['正三角形','正方形','正六角形']],['正八面体の面の形は？','正三角形',['正方形','正五角形','正六角形']],
+  ['正二十面体の面の形は？','正三角形',['正方形','正五角形','正六角形']],['正八面体の1つの頂点に集まる面の数は？','4',['3','5','6']],
+  ['正二十面体の1つの頂点に集まる面の数は？','5',['3','4','6']],['正四面体の1つの頂点に集まる面の数は？','3',['4','5','6']],
+  ['正多面体は全部で何種類ある？','5種類',['4種類','6種類','無数にある']],['すべての面が合同な正多角形で、どの頂点に集まる面の数も等しく、へこみのない多面体を何という？','正多面体',['角柱','多面体','角錐']],
+  ['面が正五角形でできている正多面体は？','正十二面体',['正八面体','正二十面体','正六面体']],['面が正方形でできている正多面体は？','正六面体',['正四面体','正八面体','正十二面体']]];
+const M6MOVE = [
+  ['三角形を、その面に垂直な方向に一定の距離だけ平行に動かすと、何ができる？','三角柱',['三角錐','四角柱','円柱']],
+  ['円を、その面に垂直な方向に一定の距離だけ平行に動かすと、何ができる？','円柱',['円錐','球','半球']],
+  ['五角形を、その面に垂直な方向に平行に動かすと、何ができる？','五角柱',['五角錐','六角柱','円柱']],
+  ['線分 AB を、四角形に垂直に立てたまま、その周にそって1まわりさせると、線分の動いたあとは何になる？','四角柱の側面',['四角柱の底面','四角錐の側面','四角柱全体']],
+  ['円柱や円錐の側面をつくり出す線分を何という？','母線',['半径','高さ','回転の軸']],
+  ['平面図形を、ある直線のまわりに1回転させてできる立体を何という？','回転体',['多面体','正多面体','角柱']],
+  ['回転体をつくるときの軸となる直線を何という？','回転の軸',['母線','対称の軸','高さ']]];
+const M6ROT = [
+  ['長方形を、1辺をふくむ直線を軸として1回転させると、何ができる？','円柱',['円錐','球','三角柱']],
+  ['直角三角形を、直角をはさむ1辺をふくむ直線を軸として1回転させると、何ができる？','円錐',['円柱','球','三角錐']],
+  ['半円を、直径をふくむ直線を軸として1回転させると、何ができる？','球',['円柱','円錐','半球']],
+  ['円柱を、回転の軸をふくむ平面で切ると、切り口は？','長方形',['円','三角形','台形']],
+  ['円錐を、回転の軸をふくむ平面で切ると、切り口は？','二等辺三角形',['円','長方形','台形']],
+  ['球を、中心を通る平面で切ると、切り口は？','円',['長方形','三角形','だ円']],
+  ['回転体を、回転の軸に垂直な平面で切ると、切り口はいつも何になる？','円',['長方形','三角形','正方形']],
+  ['回転体を、回転の軸をふくむ平面で切ると、切り口は軸についてどんな図形？','線対称な図形',['点対称な図形','正多角形','合同でない図形']]];
+const M6NET0 = [
+  ['底面が三角形で、側面が長方形の展開図からできる立体は？','三角柱',['三角錐','四角柱','円柱']],
+  ['合同な正方形6つでできる展開図を組み立てると、何ができる？','立方体',['直方体','四角錐','正八面体']],
+  ['長方形と2つの円でできる展開図からできる立体は？','円柱',['円錐','球','四角柱']],
+  ['おうぎ形と円でできる展開図からできる立体は？','円錐',['円柱','球','角錐']],
+  ['底面が正方形で、側面が4つの合同な二等辺三角形の展開図からできる立体は？','正四角錐',['四角柱','立方体','三角錐']],
+  ['4つの合同な正三角形でできる展開図からできる立体は？','正四面体',['三角柱','正八面体','四角錐']]];
+Object.assign(G,{
+  k6Net0(){ const [q,a,w]=kaPick(M6NET0); return mq2('展開図と立体', q, a, w, '底面の形と側面の形を見る。', a, { words:true }); },
+  k6Vol0(){ const t=ri(0,2);
+    if(t===0){ const a=ri(2,9),b=ri(2,9),c=ri(2,9),v=a*b*c; return mq2(`縦 ${a}cm、横 ${b}cm、高さ ${c}cm の直方体の体積は？`, '', v+'cm³', [v+a, a*b+c, 2*(a*b+b*c+c*a), v*2].filter(x=>x!==v).map(x=>x+'cm³'), '体積＝縦×横×高さ（底面積×高さ）', `${a}×${b}×${c}＝${v}（cm³）`); }
+    if(t===1){ const a=2*ri(1,5),b=ri(2,8),h=ri(3,10),v=a*b/2*h; return mq2(`底面が、直角をはさむ2辺 ${a}cm、${b}cm の直角三角形で、高さ ${h}cm の三角柱の体積は？`, '', v+'cm³', [a*b*h, v+h, a*b/2+h, v/2].filter(x=>x!==v&&Number.isInteger(x)).map(x=>x+'cm³'), '角柱の体積＝底面積×高さ', `底面積 ${a}×${b}÷2＝${a*b/2}、${a*b/2}×${h}＝${v}（cm³）`); }
+    const r=ri(1,5),h=ri(2,10),v=Math.round(3.14*r*r*h*100)/100; return mq2(`底面の半径 ${r}cm、高さ ${h}cm の円柱の体積は？（円周率は 3.14）`, '', v+'cm³', [Math.round(3.14*2*r*h*100)/100, Math.round(3.14*r*h*100)/100, Math.round(3.14*r*r*100)/100, Math.round(3.14*4*r*r*h*100)/100, Math.round(3.14*2*r*r*h*100)/100, r*r*h].filter(x=>x!==v).map(x=>x+'cm³'), '円柱の体積＝底面積×高さ', `${r}×${r}×3.14×${h}＝${v}（cm³）`); },
+  k6Name(){ const n=ri(3,8), nm=['','','','三','四','五','六','七','八'][n], pr=Math.random()<.5, s=nm+(pr?'角柱':'角錐'), k=ri(0,2);
+    const v=pr?[n+2,3*n,2*n]:[n+1,2*n,n+1], lab=['面','辺','頂点'][k], A=v[k];
+    return mq2(`${s}の${lab}の数は？`, '', A+'', [A+1,A-1,A+2,pr?[n+1,2*n,n+1][k]:[n+2,3*n,2*n][k],2*A].filter(x=>x!==A&&x>0).map(String), pr?'n角柱：面 n+2、辺 3n、頂点 2n':'n角錐：面 n+1、辺 2n、頂点 n+1', `${s}：面 ${v[0]}、辺 ${v[1]}、頂点 ${v[2]} → ${lab}は ${A}${k===0?`（${A}面体）`:''}`); },
+  k6Reg(){ const [q,a,w]=kaPick(M6REG); return mq2('正多面体', q, a, w, '正四面体・正六面体・正八面体・正十二面体・正二十面体の5種類。', a, { words:true }); },
+  k6Proj(){ const [nm,e,p]=kaPick(K6PJ); return mq2('この投影図で表される立体は？', k6Proj(K6PR[e],K6PR[p]), nm, ['円柱','円錐','三角柱','四角柱','三角錐','四角錐','球','六角柱'].filter(v=>v!==nm).sort(()=>Math.random()-.5), '立面図で柱か錐か（長方形→柱、三角形→錐）、平面図で底面の形を見る。', `立面図が${e==='rect'?'長方形→柱':e==='tri'?'三角形→錐':'円→球'}、平面図${p.startsWith('pCirc')?'が円':'が多角形'} → ${nm}`); },
+  k6Net(){ const t=ri(0,2);
+    if(t===0){ const r=pick([2,3,4,5,6]), l=pick([6,8,9,10,12,15,18]); if(r>=l) return G.k6Net(); const a=360*r/l; if(!Number.isInteger(a)) return G.k6Net();
+      return mq2(`底面の半径 ${r}cm、母線の長さ ${l}cm の円錐の展開図で、側面のおうぎ形の中心角は？`, K6F_CONENET({l:l+'cm',r:r+'cm'}), a+'°', [360*l/r>360?a/2:360*l/r, 180-a>0?180-a:a+30, 2*a<360?2*a:a-20, a+10].filter(x=>x!==a&&x>0&&Number.isInteger(x)).map(x=>x+'°'), 'おうぎ形の弧の長さ＝底面の円周。中心角 a＝360×'+frH('r','母線'), `360×${frH(r,l)}＝${a}°`); }
+    if(t===1){ const r=ri(2,9); return mq2(`底面の半径 ${r}cm の円柱の展開図で、側面の長方形の横の長さは？`, K6F_CYLNET, m5Pi(2*r)+' cm', [m5Pi(r),m5Pi(r*r),m5Pi(4*r),2*r+''].filter(v=>v!==m5Pi(2*r)).map(v=>/π/.test(v)?v+' cm':v+'cm'), '側面の長方形の横の長さは、底面の円周と等しい。', `2π×${r}＝${m5Pi(2*r)}（cm）`); }
+    const [q,a,w]=kaPick(M6NET0); return mq2('展開図と立体', q, a, w, '底面と側面の形を見る。', a, { words:true }); },
+  k6Plane(){ const [q,a,w]=kaPick(M6PLANE); return mq2('平面の決定・2直線', q, a, w, '一直線上にない3点、交わる2直線、平行な2直線で平面が1つに決まる。', a, { words:true }); },
+  k6Line(){ const t=ri(0,3);
+    if(t<=1){ const e=pick(K6E), want=pick(['平行','交わる','ねじれ']); const ok=K6E.filter(x=>k6Rel(e,x)===want), ng=K6E.filter(x=>x!==e&&k6Rel(e,x)!==want); const A='辺 '+pick(ok);
+      return mq2(`直方体 ABCD−EFGH で、辺 ${e} と${want==='ねじれ'?'ねじれの位置にある':want==='平行'?'平行な':'交わる'}辺を1つ選ぶと？`, K6F_BOX, A, shuffle(ng).slice(0,3).map(x=>'辺 '+x), 'ねじれの位置：平行でなく、交わらない。同じ平面上にない。', `辺 ${e} と${want==='ねじれ'?'ねじれの位置':want==='平行'?'平行':'交わる'}：${ok.join('、')}`, { words:true }); }
+    const F=pick([['ABCD','AE BF CG DH','EF FG GH HE'],['EFGH','AE BF CG DH','AB BC CD DA'],['AEFB','BC FG EH AD','DC HG'],['DHGC','AD BC EH FG','AB EF']]);
+    const per=F[1].split(' '), par=F[2].split(' '), inP=[...F[0]].map((c,i,s)=>c+s[(i+1)%4]); const k=t===2;
+    const ans=pick(k?per:par), w=shuffle([...(k?par:per),...inP.filter(x=>K6E.includes(x)||K6E.includes(x[1]+x[0]))]).filter(x=>x!==ans).slice(0,3);
+    return mq2(`直方体 ABCD−EFGH で、面 ${F[0]} と${k?'垂直な':'平行な'}辺を1つ選ぶと？`, K6F_BOX, '辺 '+ans, w.map(x=>'辺 '+x), k?'面と垂直な辺は、その面のどの直線とも垂直。':'面と平行な辺は、その面と交わらない辺。', `面 ${F[0]} と${k?'垂直':'平行'}：${(k?per:par).join('、')}`, { words:true }); },
+  k6Move(){ const [q,a,w]=kaPick(M6MOVE); return mq2('面や線を動かしてできる立体', q, a, w, '角柱・円柱は底面を平行に動かした立体、側面は線分（母線）を動かしたあと。', a, { words:true }); },
+  k6Rot(){ const [q,a,w]=kaPick(M6ROT); return mq2('回転体', q, a, w, '回転体を軸に垂直に切ると円、軸をふくむ平面で切ると線対称な図形。', a, { words:true }); },
+  k6V1(){ const t=ri(0,1);
+    if(t===0){ const a=ri(2,8),b=ri(2,8),h=ri(3,12),S=a*b,v=S*h; return mq2(`底面が縦 ${a}cm、横 ${b}cm の長方形で、高さ ${h}cm の四角柱の体積は？`, m5V(220,170,k6Box(100,70,80,{dims:[b+'cm',a+'cm',h+'cm'],x:40,y:140}),200), v+'cm³', [v/3,2*(a*b+b*h+h*a),v+S,S+h,2*v,v+h].filter(x=>x!==v&&Number.isInteger(x)).map(x=>x+'cm³'), 'V＝Sh', `${a}×${b}×${h}＝${v}（cm³）`); }
+    const r=ri(2,6),h=ri(3,12),v=r*r*h; return mq2(`底面の半径 ${r}cm、高さ ${h}cm の円柱の体積は？`, m5V(200,170,k6Cyl(55,110,{rl:r+'cm',hl:h+'cm',x:90}),180), m5Pi(v)+' cm³', [m5Pi(v,3),m5Pi(2*r*h),m5Pi(2*r*r*h),m5Pi(r*h)].filter(x=>x!==m5Pi(v)).map(x=>x+' cm³'), 'V＝πr²h', `π×${r}²×${h}＝${m5Pi(v)}（cm³）`); },
+  k6V2(){ const t=ri(0,1);
+    if(t===0){ const a=pick([3,4,6,9]),h=pick([3,5,6,7,8,10]),v=a*a*h/3; if(!Number.isInteger(v)) return G.k6V2(); return mq2(`底面が1辺 ${a}cm の正方形で、高さ ${h}cm の正四角錐の体積は？`, m5V(220,190,k6Pyr(90,110,{hl:h+'cm',al:a+'cm',x:30,y:170}),200), v+'cm³', [a*a*h, v*2, a*a*h/2, v+a].filter(x=>x!==v&&Number.isInteger(x)).map(x=>x+'cm³'), 'V＝'+frH(1,3)+'Sh', `${frH(1,3)}×${a}²×${h}＝${v}（cm³）`); }
+    const r=ri(2,6),h=pick([3,6,9,4,5,7]),n=r*r*h; return mq2(`底面の半径 ${r}cm、高さ ${h}cm の円錐の体積は？`, m5V(200,180,k6Cone(60,120,{hl:h+'cm',rl:r+'cm',x:90}),180), m5Pi(n,3)+' cm³', [m5Pi(n),m5Pi(n,2),m5Pi(r*h,3),m5Pi(2*n,3)].filter(x=>x!==m5Pi(n,3)).map(x=>x+' cm³'), 'V＝'+frH(1,3)+'πr²h', `${frH(1,3)}×π×${r}²×${h}＝${m5Pi(n,3)}（cm³）`); },
+  k6V3(){ const r=ri(1,9), h=Math.random()<.3; const A=h?m5Pi(2*r*r*r,3):m5Pi(4*r*r*r,3);
+    return mq2(`半径 ${r}cm の${h?'半球':'球'}の体積は？`, m5V(200,150,k6Sph(62,{rl:r+'cm',x:100,y:72}),170), A+' cm³', [m5Pi(4*r*r),m5Pi(4*r*r*r),m5Pi(r*r*r,3),h?m5Pi(4*r*r*r,3):m5Pi(2*r*r*r,3),m5Pi(8*r*r*r,3)].filter(x=>x!==A).map(x=>x+' cm³'), '球の体積 V＝'+frH(4,3)+'πr³'+(h?'（半球はその半分）':''), `${frH(4,3)}π×${r}³${h?'×'+frH(1,2):''}＝${A}（cm³）`); },
+  k6S1(){ const t=ri(0,1);
+    if(t===0){ const a=ri(2,8),b=ri(2,8),c=ri(2,9),S=2*(a*b+b*c+c*a); return mq2(`縦 ${a}cm、横 ${b}cm、高さ ${c}cm の直方体の表面積は？`, '', S+'cm²', [a*b*c, S/2, S+a*b, 2*a*b+c*(a+b), S+2].filter(x=>x!==S).map(x=>x+'cm²'), '表面積＝底面積×2＋側面積', `底面積 ${a*b}×2＋側面積 ${c}×${2*(a+b)}＝${S}（cm²）`); }
+    const r=ri(2,6),h=ri(3,12),S=2*r*r+2*r*h; return mq2(`底面の半径 ${r}cm、高さ ${h}cm の円柱の表面積は？`, m5V(200,170,k6Cyl(55,110,{rl:r+'cm',hl:h+'cm',x:90}),180), m5Pi(S)+' cm²', [m5Pi(r*r+2*r*h),m5Pi(2*r*h),m5Pi(r*r*h),m5Pi(2*r*r+r*h),m5Pi(S+r),m5Pi(4*r*r+2*r*h)].filter(x=>x!==m5Pi(S)).map(x=>x+' cm²'), '側面積＝高さ×底面の円周', `底面 π×${r}²×2＝${m5Pi(2*r*r)}、側面 ${h}×2π×${r}＝${m5Pi(2*r*h)} → ${m5Pi(S)}`); },
+  k6S2(){ const a=pick([4,6,8,10]), l=pick([5,6,7,8,9,10,12]), S=a*a+2*a*l; return mq2(`底面の1辺 ${a}cm、側面の二等辺三角形の高さ ${l}cm の正四角錐の表面積は？`, m5V(220,190,k6Pyr(90,110,{al:a+'cm',sl:l+'cm',x:30,y:170}),200), S+'cm²', [a*a+a*l, 4*a*l, a*a*l/3, a*a+4*a*l, 2*a*l, S+a].filter(x=>x!==S&&Number.isInteger(x)).map(x=>x+'cm²'), '表面積＝底面積＋側面積（三角形4つ）', `${a}²＋${frH(1,2)}×${a}×${l}×4＝${S}（cm²）`); },
+  k6S3(){ const r=pick([2,3,4,5,6]), l=pick([5,6,8,9,10,12,15]); if(r>=l) return G.k6S3(); const t=ri(0,1), side=r*l, tot=r*r+r*l;
+    if(t===0) return mq2(`底面の半径 ${r}cm、母線の長さ ${l}cm の円錐の側面積は？`, m5V(200,180,k6Cone(60,120,{rl:r+'cm',ll:l+'cm',x:90}),180), m5Pi(side)+' cm²', [m5Pi(2*r*l),m5Pi(l*l),m5Pi(tot),m5Pi(r*r)].filter(x=>x!==m5Pi(side)).map(x=>x+' cm²'), '側面積＝π×母線×半径（πℓr）', `π×${l}²×${frH(r,l)}＝${m5Pi(side)}（cm²）`);
+    return mq2(`底面の半径 ${r}cm、母線の長さ ${l}cm の円錐の表面積は？`, m5V(200,180,k6Cone(60,120,{rl:r+'cm',ll:l+'cm',x:90}),180), m5Pi(tot)+' cm²', [m5Pi(side),m5Pi(2*r*l+r*r),m5Pi(2*r*r+r*l),m5Pi(r*r+l*l)].filter(x=>x!==m5Pi(tot)).map(x=>x+' cm²'), '表面積＝底面積＋側面積', `底面 ${m5Pi(r*r)}＋側面 ${m5Pi(side)}＝${m5Pi(tot)}（cm²）`); },
+  k6S4(){ const r=ri(1,9), h=Math.random()<.35, A=h?m5Pi(3*r*r):m5Pi(4*r*r);
+    return mq2(`半径 ${r}cm の${h?'半球':'球'}の表面積は？`, m5V(200,150,k6Sph(62,{rl:r+'cm',x:100,y:72}),170), A+' cm²', [m5Pi(4*r*r,3),m5Pi(2*r*r),m5Pi(r*r),m5Pi(4*r*r*r,3),h?m5Pi(4*r*r):m5Pi(3*r*r),m5Pi(8*r*r)].filter(x=>x!==A).map(x=>x+' cm²'), '球の表面積 S＝4πr²'+(h?'。半球は 球の半分＋切り口の円':''), h?`4π×${r}²×${frH(1,2)}＋π×${r}²＝${A}`:`4π×${r}²＝${A}（cm²）`); },
+});
+const M1C6_CARDS = [
+  ['見取図','立体の全体の形がわかるようにかいた図。見えない辺は点線でかく。'],['展開図','立体の表面を切り開いて、平面上に広げた図。'],
+  ['角錐','底面が多角形で、側面が三角形の、先のとがった立体。底面の形で三角錐、四角錐…という。'],['円錐','底面が円で、先のとがった立体。'],
+  ['多面体','いくつかの平面だけで囲まれた立体。面の数で四面体、五面体…という。'],['正多面体','すべての面が合同な正多角形で、どの頂点にも面が同じ数だけ集まる、へこみのない多面体。5種類ある。'],
+  ['正角錐','底面が正多角形で、側面がすべて合同な二等辺三角形の角錐。'],['投影図','立体を正面から見た立面図と、真上から見た平面図を組み合わせた図。'],
+  ['平面の決定','一直線上にない3点／1つの直線とその上にない1点／交わる2直線／平行な2直線 で平面は1つに決まる。'],
+  ['ねじれの位置','空間内の2直線が、平行でなく交わらない位置関係。同じ平面上にない。'],['直線と平面の垂直','直線 ℓ が平面 P との交点を通る P 上のすべての直線と垂直なとき、ℓ⊥P。'],
+  ['点と平面との距離','点から平面にひいた垂線の長さ。角柱・円柱の高さは2つの底面の距離。'],['母線','円柱や円錐の側面をつくり出す線分。'],
+  ['回転体','平面図形を、ある直線のまわりに1回転させてできる立体。その直線を回転の軸という。'],
+  ['角柱・円柱の体積','V＝Sh（S：底面積、h：高さ）。円柱は V＝πr²h'],['角錐・円錐の体積','V＝⅓Sh。円錐は V＝⅓πr²h'],
+  ['球の体積','V＝⁴⁄₃πr³'],['表面積','立体のすべての面の面積の和。角柱・円柱は 底面積×2＋側面積'],
+  ['円錐の側面積','展開図のおうぎ形の面積。π×母線×半径 で求められる。'],['球の表面積','S＝4πr²'],
+];
+const K6F_POLY = m5V(300,120,`<path d="M30 20 L10 95 L60 105 Z" fill="${K6F}"/><line x1="30" y1="20" x2="55" y2="80" ${K6D}/><path d="M55 80 L10 95 M55 80 L60 105" ${K6D}/>${m5T(10,118,'正四面体','font-size="10" font-family="sans-serif"')}`+
+  `${k6Box(42,34,42,{x:80,y:100})}${m5T(78,118,'正六面体','font-size="10" font-family="sans-serif"')}`+
+  `<path d="M175 15 L150 60 L175 105 L200 60 Z" fill="${K6F}"/><path d="M175 15 L170 72 L175 105 M150 60 L170 72 L200 60" stroke-width="1.1"/><path d="M175 15 L182 52 L175 105 M150 60 L182 52 L200 60" ${K6D}/>${m5T(150,118,'正八面体','font-size="10" font-family="sans-serif"')}`+
+  `${m5T(214,50,'ほかに','font-size="10" font-family="sans-serif"')}${m5T(214,66,'正十二面体','font-size="10" font-family="sans-serif"')}${m5T(214,82,'正二十面体','font-size="10" font-family="sans-serif"')}`,320);
+const M1C6_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'見取図と展開図', sub:'小学4・5年', plan:Array(5).fill('k6Net0'), body:()=>`
+    <section class="panel"><h3>見取図と展開図</h3>${m5V(290,130,k6Box(80,60,60,{x:20,y:110})+`<g transform="translate(140,8)" fill="${K6F}"><rect x="0" y="35" width="30" height="40"/><rect x="30" y="35" width="40" height="40"/><rect x="70" y="35" width="30" height="40"/><rect x="100" y="35" width="40" height="40"/><rect x="30" y="5" width="40" height="30"/><rect x="30" y="75" width="40" height="30"/></g>`+m5T(30,128,'見取図','font-size="11" font-family="sans-serif"')+m5T(190,128,'展開図','font-size="11" font-family="sans-serif"'),300)}${rule('見取図：立体の形がわかるようにかいた図（見えない辺は点線）<br>展開図：立体を切り開いて平面に広げた図')}<p class="small muted">展開図を組み立てたとき、重なる辺・重なる頂点を考えられるようにしよう。</p></section>` },
+  { id:'0-2', t:'角柱・円柱の体積', sub:'小学6年', plan:Array(5).fill('k6Vol0'), body:()=>`
+    <section class="panel"><h3>角柱・円柱の体積</h3>${rule('角柱の体積＝底面積×高さ<br>円柱の体積＝底面積×高さ')}<p><b>〇 底面の半径 10cm、高さ 7cm の円柱の体積は？（円周率は 3.14）</b></p>${ex('10×10×3.14×7＝2198（cm³）')}</section>` },
+  { id:'1-1', sec:'1　立体と空間図形', t:'いろいろな立体', sub:'角錐・円錐・多面体', plan:Array(5).fill('k6Name'), body:()=>`
+    <section class="panel"><h3>角錐と円錐</h3>${m5V(260,150,k6Pyr(80,100,{x:20,y:135})+k6Cone(45,110,{x:200,y:20}),280)}${rule('先のとがった立体で、底面が多角形のものを 角錐、円のものを 円錐 という<br>底面の形によって、三角錐、四角錐、五角錐…という')}</section>
+    <section class="panel"><h3>多面体</h3>${rule('いくつかの平面だけで囲まれた立体を 多面体 という。面の数によって四面体、五面体…という')}${kmTbl([['三角柱','5','9','6'],['四角柱','6','12','8'],['三角錐','4','6','4'],['四角錐','5','8','5'],['n角柱','n＋2','3n','2n'],['n角錐','n＋1','2n','n＋1']],['立体','面','辺','頂点'])}<p class="small muted">円柱・円錐・球は曲面があるので多面体ではない。</p></section>` },
+  { id:'1-2', t:'正多面体', sub:'5種類だけ', plan:Array(5).fill('k6Reg'), body:()=>`
+    <section class="panel"><h3>正多面体</h3>${rule('すべての面が合同な正多角形で、どの頂点にも面が同じ数だけ集まり、へこみのない多面体を 正多面体 という')}${K6F_POLY}${kmTbl([['正四面体','正三角形','4','3'],['正六面体','正方形','6','3'],['正八面体','正三角形','8','4'],['正十二面体','正五角形','12','3'],['正二十面体','正三角形','20','5']],['名前','面の形','面の数','1頂点に集まる面'])}<p class="small muted">正多面体は、この5種類しかない。</p></section>` },
+  { id:'1-3', t:'投影図', sub:'立面図と平面図', plan:Array(5).fill('k6Proj'), body:()=>`
+    <section class="panel"><h3>投影図</h3>${rule('正面から見た図を 立面図、真上から見た図を 平面図 といい、これらを合わせて 投影図 という')}<p><b>〇 この投影図で表される立体は？</b></p>${k6Proj(K6PR.tri,K6PR.pCircC)}${ex('立面図が三角形 → 錐、平面図が円 → 円錐')}${kmTbl([['長方形','柱（角柱・円柱）'],['三角形','錐（角錐・円錐）'],['円','球']],['立面図','立体'])}</section>` },
+  { id:'1-4', t:'角柱と角錐の展開図', sub:'正角柱・正角錐', plan:['k6Net0','k6Net0','k6Name','k6Net0','k6Net0'], body:()=>`
+    <section class="panel"><h3>正角柱・正角錐</h3>${rule('底面が正多角形で、側面がすべて合同な長方形の角柱を 正角柱、側面がすべて合同な二等辺三角形の角錐を 正角錐 という')}${K6F_CUBENET}<p class="small muted">立方体の展開図は11種類ある。組み立てて重なる辺・頂点を考えよう。</p></section>` },
+  { id:'1-5', t:'円柱と円錐の展開図', sub:'長方形とおうぎ形', plan:Array(5).fill('k6Net'), body:()=>`
+    <section class="panel"><h3>円柱の展開図</h3>${K6F_CYLNET}${rule('円柱の側面は 長方形。横の長さは底面の円周に等しい')}</section>
+    <section class="panel"><h3>円錐の展開図</h3>${K6F_CONENET()}${rule('円錐の側面は おうぎ形。半径は母線の長さ、弧の長さは底面の円周に等しい')}<p><b>〇 底面の半径 4cm、母線の長さ 10cm の円錐の展開図で、側面のおうぎ形の中心角は？</b></p>${ex('2π×4＝2π×10×'+frH('a',360)+'<br>a＝360×'+frH(4,10)+'＝144（°）')}</section>` },
+  { id:'1-6', t:'平面の決定', sub:'平面が1つに決まる条件', plan:Array(5).fill('k6Plane'), body:()=>`
+    <section class="panel"><h3>平面が1つに決まる条件</h3>${rule('・同じ直線上にない3点<br>・1つの直線とその直線上にない1点<br>・交わる2直線<br>・平行な2直線')}<p class="small muted">2点だけでは、それをふくむ平面は無数にある。</p></section>` },
+  { id:'1-7', t:'2直線の位置関係', sub:'ねじれの位置', plan:Array(5).fill('k6Line'), body:()=>`
+    <section class="panel"><h3>空間内の2直線</h3>${kmTbl([['交わる','同じ平面上にある'],['平行である','同じ平面上にある'],['ねじれの位置にある','同じ平面上にない']],['位置関係',''])}${rule('平行でなく、交わらない2直線は ねじれの位置 にある')}<p><b>〇 直方体 ABCD−EFGH で、辺 AB とねじれの位置にある辺は？</b></p>${K6F_BOX}${ex('辺 CG、DH、FG、EH')}<p class="small muted">平行な辺（DC、EF、HG）と、交わる辺（AD、AE、BC、BF）をのぞく。</p></section>` },
+  { id:'1-8', t:'直線と平面・2平面', sub:'垂直と平行', plan:Array(5).fill('k6Line'), body:()=>`
+    <section class="panel"><h3>直線と平面の位置関係</h3>${kmTbl([['直線が平面上にある'],['交わる'],['平行である']],['直線 ℓ と平面 P'])}${rule('直線 ℓ が平面 P との交点を通る P 上のすべての直線と垂直なとき、ℓ⊥P。ℓ を平面 P の 垂線 という')}</section>
+    <section class="panel"><h3>2平面の位置関係</h3>${rule('2平面は 交わる か 平行である')}<p><b>〇 直方体 ABCD−EFGH で、面 AEHD と垂直に交わる辺、平行な面は？</b></p>${K6F_BOX}${ex('垂直に交わる辺：AB、DC、EF、HG<br>平行な面：面 BFGC')}<p class="small muted">点と平面との距離は、点から平面にひいた垂線の長さ。角柱・円柱の高さは2つの底面の距離。</p></section>` },
+  { id:'1-9', t:'面や線を動かしてできる立体', sub:'平行移動・母線', plan:Array(5).fill('k6Move'), body:()=>`
+    <section class="panel"><h3>面を平行に動かす</h3>${rule('角柱や円柱は、底面をその面に垂直な方向に一定の距離だけ平行に動かしてできる立体とみることができる')}${ex('三角形 → 三角柱、円 → 円柱')}</section>
+    <section class="panel"><h3>線を動かす</h3>${rule('角柱や円柱の側面は、底面に垂直に立てた線分をその周にそって1まわりさせてできたものとみることができる。この線分を 母線 という')}</section>` },
+  { id:'1-10', t:'回転体', sub:'回転させてできる立体', plan:Array(5).fill('k6Rot'), body:()=>`
+    <section class="panel"><h3>回転体</h3>${rule('平面図形を、ある直線 ℓ のまわりに1回転させてできる立体を 回転体 といい、ℓ を 回転の軸 という')}${kmTbl([['長方形','円柱'],['直角三角形','円錐'],['半円','球']],['回転させる図形','回転体'])}${rule('回転体を回転の軸に垂直な平面で切ると、切り口は 円<br>回転の軸をふくむ平面で切ると、切り口は軸について 線対称 な図形')}</section>` },
+  { id:'2-1', sec:'2　立体の体積と表面積', t:'角柱・円柱の体積', sub:'V＝Sh', plan:Array(5).fill('k6V1'), body:()=>`
+    <section class="panel"><h3>角柱・円柱の体積</h3>${rule('底面積を S、高さを h、体積を V とすると V＝Sh<br>円柱では V＝πr²h')}<p><b>〇 底面の半径 4cm、高さ 10cm の円柱の体積は？</b></p>${m5V(200,170,k6Cyl(55,110,{rl:'4cm',hl:'10cm',x:90}),180)}${ex('π×4²×10＝160π（cm³）')}</section>` },
+  { id:'2-2', t:'角錐・円錐の体積', sub:'V＝⅓Sh', plan:Array(5).fill('k6V2'), body:()=>`
+    <section class="panel"><h3>角錐・円錐の体積</h3>${rule('V＝'+frH(1,3)+'Sh　（円錐は V＝'+frH(1,3)+'πr²h）')}<p class="small muted">底面が合同で高さが等しい角柱・円柱の体積の ${frH(1,3)}。</p><p><b>〇 底面の半径 6cm、高さ 9cm の円錐の体積は？</b></p>${m5V(200,180,k6Cone(60,120,{hl:'9cm',rl:'6cm',x:90}),180)}${ex(frH(1,3)+'×π×6²×9＝108π（cm³）')}</section>` },
+  { id:'2-3', t:'球の体積', sub:'V＝⁴⁄₃πr³', plan:Array(5).fill('k6V3'), body:()=>`
+    <section class="panel"><h3>球の体積</h3>${rule('半径 r の球の体積 V＝'+frH(4,3)+'πr³')}<p><b>〇 半径 3cm の球の体積は？</b></p>${m5V(200,150,k6Sph(62,{rl:'3cm',x:100,y:72}),170)}${ex(frH(4,3)+'π×3³＝36π（cm³）')}<p class="small muted">球の体積は、球がちょうど入る円柱の体積の ${frH(2,3)}。</p></section>` },
+  { id:'2-4', t:'角柱・円柱の表面積', sub:'底面積×2＋側面積', plan:Array(5).fill('k6S1'), body:()=>`
+    <section class="panel"><h3>角柱・円柱の表面積</h3>${rule('表面積＝底面積×2＋側面積')}<p><b>〇 底面の半径 3cm、高さ 8cm の円柱の表面積は？</b></p>${K6F_CYLNET}${ex('底面積 π×3²＝9π<br>側面積 8×(2π×3)＝48π<br>表面積 9π×2＋48π＝66π（cm²）')}<p class="small muted">側面の長方形の横の長さ＝底面の円周。</p></section>` },
+  { id:'2-5', t:'角錐の表面積', sub:'底面積＋側面積', plan:Array(5).fill('k6S2'), body:()=>`
+    <section class="panel"><h3>角錐の表面積</h3>${rule('表面積＝底面積＋側面積')}<p><b>〇 底面の1辺 6cm、側面の二等辺三角形の高さ 8cm の正四角錐の表面積は？</b></p>${m5V(220,190,k6Pyr(90,110,{al:'6cm',sl:'8cm',x:30,y:170}),200)}${ex('底面積 6×6＝36<br>側面積 ('+frH(1,2)+'×6×8)×4＝96<br>表面積 36＋96＝132（cm²）')}</section>` },
+  { id:'2-6', t:'円錐の表面積', sub:'側面はおうぎ形', plan:Array(5).fill('k6S3'), body:()=>`
+    <section class="panel"><h3>円錐の表面積</h3>${K6F_CONENET({l:'10cm',r:'4cm'})}<p><b>〇 底面の半径 4cm、母線の長さ 10cm の円錐の表面積は？</b></p>${ex('側面のおうぎ形の中心角　360×'+frH(4,10)+'＝144°<br>側面積　π×10²×'+frH(144,360)+'＝40π<br>底面積　π×4²＝16π<br>表面積　16π＋40π＝56π（cm²）')}<p class="small muted">側面積は π×母線×半径（π×10×4＝40π）でも求められる。</p></section>` },
+  { id:'2-7', t:'球の表面積', sub:'S＝4πr²', plan:Array(5).fill('k6S4'), body:()=>`
+    <section class="panel"><h3>球の表面積</h3>${rule('半径 r の球の表面積 S＝4πr²')}<p><b>〇 半径 3cm の球と、半径 5cm の半球の表面積は？</b></p>${ex('球　4π×3²＝36π（cm²）<br>半球　4π×5²×'+frH(1,2)+'＋π×5²＝75π（cm²）')}<p class="small muted">半球は、球の表面積の半分に切り口の円の面積をたす。</p></section>` },
+  { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'6章の総まとめ', test:true, plan:['k6Name','k6Reg','k6Proj','k6Net','k6Plane','k6Line','k6Line','k6Rot','k6V1','k6V2','k6V3','k6S1','k6S2','k6S3','k6S4'], body:()=>`
+    <section class="panel"><h3>6章　空間図形　章末テスト</h3><p>1節・2節の範囲から15問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
 ];
 
 /* ===== 中2数学 2章 連立方程式 ===== */
@@ -16838,6 +17045,7 @@ const UNITS = {
   geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
   m1c4:{ no:'4', title:'変化と対応', subject:'数学', course:'j1', subj:0, lessons:M1C4_LESSONS, cards:M1C4_CARDS, drill:'m1c4' },
   m1c5:{ no:'5', title:'平面図形', subject:'数学', course:'j1', subj:0, lessons:M1C5_LESSONS, cards:M1C5_CARDS, drill:'m1c5' },
+  m1c6:{ no:'6', title:'空間図形', subject:'数学', course:'j1', subj:0, lessons:M1C6_LESSONS, cards:M1C6_CARDS },
   m1c3:{ no:'3', title:'方程式', subject:'数学', course:'j1', subj:0, lessons:M1C3_LESSONS, cards:M1C3_CARDS, drill:'m1c3' },
   m1c2:{ no:'2', title:'文字の式', subject:'数学', course:'j1', subj:0, lessons:M1C2_LESSONS, cards:M1C2_CARDS, drill:'m1c2' },
   pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:M1C1_LESSONS, cards:true, drill:'m1c1' },
@@ -17602,7 +17810,7 @@ function render(){
   if ((S.view==='lesson'||S.view==='unit') && S.uid==='k1') kjFontLoad();
   if (S.view==='sea' && S.hatched){ const tw=document.getElementById('tankwrap'); if(tw) tw.scrollLeft=tw.scrollWidth; }
   if (S.view==='pdf') renderPdf();
-  if (['m1c2','m1c3','m1c4','m1c5'].includes(S.uid) && ['lesson','quiz','result'].includes(S.view)) scriptXY(app);
+  if (['m1c2','m1c3','m1c4','m1c5','m1c6'].includes(S.uid) && ['lesson','quiz','result'].includes(S.view)) scriptXY(app);
   if (S.view==='quiz'){ setupPad(); const Q=S.quiz, q=Q.qs[Q.i]; if(q.autoSay && Q.picked===null && Q.said!==Q.i){ Q.said=Q.i; say(q.say); } }
 }
 function answerQ(ok, picked){
