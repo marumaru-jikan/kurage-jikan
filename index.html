@@ -1159,7 +1159,7 @@ const CATALOG = [
         { t:'正の数・負の数', ready:'pn', secs:['正の数・負の数','正の数・負の数の計算','正の数・負の数の利用'] },
         { t:'文字の式', ready:'m1c2', secs:['文字を使った式','文字式の計算'] },
         { t:'方程式', ready:'m1c3', secs:['方程式','方程式の利用'] },
-        { t:'変化と対応', secs:['関数','比例','反比例','比例，反比例の利用'] },
+        { t:'変化と対応', ready:'m1c4', secs:['関数','比例','反比例','比例，反比例の利用'] },
         { t:'平面図形', secs:['直線と図形','移動と作図','円とおうぎ形'] },
         { t:'空間図形', secs:['立体と空間図形','立体の体積と表面積'] },
         { t:'データの活用', secs:['ヒストグラムと相対度数','データにもとづく確率'] }) },
@@ -7661,6 +7661,129 @@ const M1C3_LESSONS = [
     <section class="panel"><h3>比例式をつくる</h3>${ex('A、B に20個ずつ。A から x 個 B へ → 比 2：3<br>(20−x)：(20＋x)＝2：3<br>3(20−x)＝2(20＋x)、x＝4')}</section>` },
   { id:'3-1', sec:'章末テスト', t:'章末テスト', sub:'3章の総まとめ', test:true, plan:['m1Sol','m1Prop','m1Ik1','m1Ik2','m1Kk','m1FrE','m1DecE','m1Hr','m1UseA','m1UseB','m1UseD','m1UseE'], body:()=>`
     <section class="panel"><h3>3章　方程式　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
+];
+
+/* ===== 中1数学 4章 変化と対応 ===== */
+const m1Ye = (n,d=1) => 'y＝'+m1Cv(n,d,'x');
+const m1Yh = a => 'y＝'+(a<0?'−':'')+frH(Math.abs(a),'x');
+let M1GID=0;
+const m1Grid = (o={}) => { const R=6, C=19, W=2*R*C+40, c0=W/2, X=v=>c0+v*C, Y=v=>c0-v*C, id='g'+(++M1GID); let g='';
+  for(let i=-R;i<=R;i++){ g+=`<line x1="${X(i)}" y1="${Y(-R)}" x2="${X(i)}" y2="${Y(R)}" stroke="#bcd6e6" stroke-width="${i%5?0.6:1}"/><line x1="${X(-R)}" y1="${Y(i)}" x2="${X(R)}" y2="${Y(i)}" stroke="#bcd6e6" stroke-width="${i%5?0.6:1}"/>`; }
+  g+=`<line x1="${X(-R)-8}" y1="${Y(0)}" x2="${X(R)+10}" y2="${Y(0)}" stroke="currentColor" stroke-width="1.4"/><line x1="${X(0)}" y1="${Y(-R)-8}" x2="${X(0)}" y2="${Y(R)-10}" stroke="currentColor" stroke-width="1.4"/>`;
+  g+=`<text x="${X(R)+12}" y="${Y(0)+4}" font-size="12" font-style="italic" fill="currentColor">x</text><text x="${X(0)+5}" y="${Y(R)-8}" font-size="12" font-style="italic" fill="currentColor">y</text><text x="${X(0)-10}" y="${Y(0)+13}" font-size="10" fill="currentColor">O</text>`;
+  [-5,5].forEach(v=>{ g+=`<text x="${X(v)}" y="${Y(0)+13}" text-anchor="middle" font-size="10" fill="currentColor">${fmt(v)}</text><text x="${X(0)-5}" y="${Y(v)+4}" text-anchor="end" font-size="10" fill="currentColor">${fmt(v)}</text>`; });
+  const cols=['#e0457b','#2b7bb9','#2e9a5a','#c67b12'];
+  let cl=''; (o.lines||[]).forEach((L,i)=>{ const a=L.n/(L.d||1), col=L.col||cols[i%4]; cl+=`<line x1="${X(-R-1)}" y1="${Y(a*(-R-1))}" x2="${X(R+1)}" y2="${Y(a*(R+1))}" stroke="${col}" stroke-width="2"/>`;
+    if(L.lab){ let xl=Math.abs(a)*5<=5?5:5/Math.abs(a); g+=`<text x="${X(xl)+6}" y="${Y(a*xl)-4}" font-size="12" font-weight="700" fill="${col}">${L.lab}</text>`; } });
+  (o.hyps||[]).forEach((H,i)=>{ const col=H.col||cols[i%4]; [1,-1].forEach(s=>{ let pts=[]; for(let t=0.12;t<=R+1;t+=0.06){ const x=s*t; pts.push(`${X(x).toFixed(1)},${Y(H.a/x).toFixed(1)}`); } cl+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${col}" stroke-width="2"/>`; });
+    for(let x=-R;x<=R;x++){ if(x&&Number.isInteger(H.a/x)&&Math.abs(H.a/x)<=R) cl+=`<circle cx="${X(x)}" cy="${Y(H.a/x)}" r="2.6" fill="${col}"/>`; }
+    if(H.lab){ const x=H.a>0?5:5, y=H.a/x; g+=`<text x="${X(x)+4}" y="${Y(y)-6}" font-size="12" font-weight="700" fill="${col}">${H.lab}</text>`; } });
+  (o.pts||[]).forEach(([lab,x,y])=>{ g+=`<circle cx="${X(x)}" cy="${Y(y)}" r="3.4" fill="#e0457b"/><text x="${X(x)+5}" y="${Y(y)-5}" font-size="13" font-weight="700" fill="#e0457b">${lab}</text>`; });
+  return `<svg viewBox="0 0 ${W} ${W}" style="width:100%;max-width:280px;display:block;margin:6px auto"><defs><clipPath id="${id}"><rect x="${X(-R)}" y="${Y(R)}" width="${2*R*C}" height="${2*R*C}"/></clipPath></defs>${g}<g clip-path="url(#${id})">${cl}</g></svg>`; };
+const M1HP0 = [['1000円持っているとき、使ったお金 x 円と残りのお金 y 円','どちらでもない'],['分速90mで歩くとき、歩いた時間 x 分と道のり y m','比例'],['面積100cm²の長方形の縦 x cm と横 y cm','反比例'],['高さ6cmの三角形の底辺 x cm と面積 y cm²','比例'],['24個のあめを x 人で同じ数ずつ分けるときの1人分 y 個','反比例'],['1本60円の鉛筆 x 本の代金 y 円','比例'],['ある人の年齢 x 歳と身長 y cm','どちらでもない'],['30L の水そうに毎分 x L 入れるとき、満水までの時間 y 分','反比例'],['20cm のろうそくが x cm 燃えたときの残りの長さ y cm','どちらでもない']];
+const M1FN = [['正方形の周の長さ x cm と面積 y cm²','いえる'],['長方形の周の長さ x cm と面積 y cm²','いえない'],['1000円出して x 円の買い物をしたときのおつり y 円','いえる'],['あるクラスの男子の平均点 x 点と女子の平均点 y 点','いえない'],['身長 x cm の人の体重 y kg','いえない'],['1個150円のケーキ x 個を200円の箱につめた代金 y 円','いえる'],['自然数 x を3でわったときの余り y','いえる'],['自然数 x の約数 y','いえない'],['総ページ数 x ページの本の定価 y 円','いえない'],['長さ150cmのひもから x cm 使ったときの残り y cm','いえる']];
+const M1PRE = [['1枚25円の画用紙を x 枚買ったときの代金 y 円','25'],['分速80mで x 分間歩いたときの道のり y m','80'],['底辺 x cm、高さ4cm の三角形の面積 y cm²','2'],['1m あたり16g の針金 x m の重さ y g','16'],['毎分1.5L で水を入れるとき、x 分後の水の量 y L','1.5'],['時速90km で x 時間走ったときの道のり y km','90'],['1辺 x cm の正三角形の周の長さ y cm','3'],['毎分2L ずつ水を入れるとき、x 分後の水の量 y L','2']];
+const M1HIE = [['面積10cm² の平行四辺形の底辺 x cm と高さ y cm',10],['2000m の道のりを分速 x m で進むときにかかる時間 y 分',2000],['1m（100cm）のリボンを x 等分したときの1本の長さ y cm',100],['24L 入る容器に毎分 x L 入れて満水になるまでの時間 y 分',24],['360脚のいすを1列に x 脚ずつ並べたときの列の数 y',360],['面積18cm² の三角形の底辺 x cm と高さ y cm',36],['180ページの本を1日 x ページずつ読むときの日数 y 日',180]];
+const M1USE1 = [['画用紙20枚の厚さは6mm です。画用紙全部の厚さが96mm のとき、画用紙は何枚？','320枚',['300枚','160枚','640枚'],'厚さは枚数に比例する。y＝'+frH(3,10)+'x に y＝96'],
+  ['厚さが一定の鉄板で、縦6cm・横8cm の鉄板の重さは16g です。縦24cm・横40cm の鉄板の重さは？','320g',['80g','160g','640g'],'重さは面積に比例：48cm² で16g → 960cm² で 320g'],
+  ['24L 入る容器に毎分1.5L の割合で水を入れます。水が18L になるのは何分後？','12分後',['16分後','27分後','9分後'],'y＝1.5x に y＝18'],
+  ['ある自動車はガソリン20L で320km 走れます。80km 走るには何L のガソリンが必要？','5L',['4L','16L','8L'],'1L で16km。80÷16＝5'],
+  ['4km の道のりを分速200m で走るとき、1.8km 進むのは走り始めてから何分後？','9分後',['20分後','18分後','36分後'],'y＝200x に y＝1800'],
+  ['袋の米から28g を取り出して数えると1456粒でした。袋の米30kg は約何粒？（十万の位までの概数）','約1600000粒',['約1500000粒','約16000000粒','約160000粒'],'30000÷28×1456＝1560000 → 約1600000']];
+const M1USE2 = [['体育館に、いすを1列に12脚ずつ30列並べました。1列に18脚ずつ並べかえると何列？','20列',['45列','24列','18列'],'全部で360脚。y＝'+frH(360,'x')+' に x＝18'],
+  ['壁に絵が1列に12枚ずつ8列はってあります。1列に16枚ずつにすると何列？','6列',['10列','12列','4列'],'全部で96枚。96÷16＝6'],
+  ['毎日、3教科を40分ずつ学習しています。同じ時間で4教科を学習するには、1教科何分ずつにすればよい？','30分',['40分','53分','20分'],'全部で120分。120÷4＝30'],
+  ['歯数20の歯車Bが1分間に4回転しています。かみ合う歯車A（歯数 x）が1分間に10回転するとき、Aの歯数は？','8',['50','10','2'],'歯数×回転数は等しい：20×4＝80、80÷10＝8'],
+  ['歯数 x の歯車Aが1分間に y 回転し、歯数20の歯車Bが1分間に4回転してかみ合っています。y を x の式で表すと？','y＝'+frH(80,'x'),['y＝80x','y＝'+frH('x',80),'y＝'+frH(20,'x')],'xy＝20×4＝80'],
+  ['面積24cm² の長方形で、縦が6cm のとき横は4cm です。縦を8cm にすると横は？','3cm',['5.3cm','2cm','6cm'],'縦×横＝24 で一定']];
+Object.assign(G,{
+  m1Hp0(){ const [q,a]=kaPick(M1HP0); return mq2('比例・反比例・どちらでもない？', q, a, ['比例','反比例','どちらでもない'].filter(v=>v!==a), '一方を2倍、3倍…にすると他方は？ 和や差が一定ならどちらでもない。', `${q} → ${a}`, { words:true }); },
+  m1Fn(){ const [q,a]=kaPick(M1FN); return mq2('y は x の関数であるといえる？', q, a, [a==='いえる'?'いえない':'いえる'], 'x の値を決めると、y の値がただ1つに決まるとき、y は x の関数。', a==='いえる'?'x を決めると y がただ1つに決まる。':'x を決めても y が1つに決まらない。', { words:true }); },
+  m1Hen(){ if(Math.random()<.3){ const a=nz(-8,8), t=pick([['以上','≧'],['以下','≦'],['より大きい','＞'],['より小さい','＜'],['未満','＜']]); const A=`x${t[1]}${fmt(a)}`;
+      return mq2('不等号で表すと？', `x の変域が ${fmt(a)} ${t[0]}`, A, ['≧','≦','＞','＜'].filter(s=>s!==t[1]).map(s=>`x${s}${fmt(a)}`), '以上・以下はその数をふくむ（≦、≧）。より大きい・より小さい・未満はふくまない（＜、＞）。', A); }
+    let a=ri(-8,6), b=ri(a+1,9); const L=pick([['より大きく','＜'],['以上','≦']]), Rr=pick([['より小さい','＜'],['未満','＜'],['以下','≦']]); const A=`${fmt(a)}${L[1]}x${Rr[1]}${fmt(b)}`;
+    const all=[['＜','＜'],['＜','≦'],['≦','＜'],['≦','≦']].map(([p,q])=>`${fmt(a)}${p}x${q}${fmt(b)}`);
+    return mq2('不等号で表すと？', `x の変域が ${fmt(a)} ${L[0]} ${fmt(b)} ${Rr[0]}`, A, all.filter(v=>v!==A).concat([`${fmt(b)}${L[1]}x${Rr[1]}${fmt(a)}`]), '以上・以下 → ≦（その数をふくむ）、より大きい・より小さい・未満 → ＜（ふくまない）', `${A}（数直線では ${L[1]==='≦'?'●':'○'} と ${Rr[1]==='≦'?'●':'○'}）`); },
+  m1PrE(){ const [q,k]=kaPick(M1PRE); const A=`y＝${k}x`; return mq2('式で表すと？（比例定数も確かめよう）', q, A, [`y＝${frH(k,'x')}`,`y＝x＋${k}`,`y＝${frH('x',k)}`], 'y＝ax の形で表されれば比例。a が比例定数。', `${A}（比例定数 ${k}）`, { words:true }); },
+  m1HiE(){ const [q,k]=kaPick(M1HIE); const A=m1Yh(k); return mq2('式で表すと？', q, A, [`y＝${k}x`,`y＝${frH('x',k)}`,`y＝${k}−x`], 'xy が一定なら y＝'+frH('a','x')+'（反比例）。', `xy＝${k} なので ${A}`, { words:true }); },
+  m1PrP(){ const a=nz(-6,6), t=ri(0,2);
+    if(t===0){ const x=nz(-5,5), y=a*x; return mq2(`比例 ${m1Ye(a)} で、x＝${fmt(x)} のときの y の値は？`, m1Ye(a), fmt(y), [fmt(-y), fmt(a+x), fmt(y+a), fmt(y-a)], 'x の値を代入する。', `${fmt(a)}×${p0(x)}＝${fmt(y)}`); }
+    if(t===1){ return mq2(`比例 ${m1Ye(a)} で、x の値が2倍、3倍…になると、y の値は？`, m1Ye(a), '2倍、3倍…になる', [''+frH(1,2)+'倍、'+frH(1,3)+'倍…になる','変わらない',`${Math.abs(a)}ずつ${a>0?'増える':'減る'}`], '比例定数が負の数でも、比例の性質は同じ。', 'x が2倍、3倍…になると y も2倍、3倍…'); }
+    const x=nz(-5,5); return mq2(`比例 ${m1Ye(a)} で、対応する x と y の値の商 ${frH('y','x')} は？`, `x＝${fmt(x)}、y＝${fmt(a*x)}`, fmt(a), [fmt(-a), fmt(a*x*x), m1F(1,a), fmt(a+1), fmt(a-1), fmt(a+2)], frH('y','x')+' は一定で、比例定数に等しい。', `${fmt(a*x)}÷${p0(x)}＝${fmt(a)}`); },
+  m1PrF(){ const d=pick([1,1,2,3,4]), n=nz(-6,6); if(gcd(n,d)>1||(d>1&&Math.abs(n)===d)) return G.m1PrF(); const p=d*nz(-3,3), q=n*p/d; const A=m1Ye(n,d);
+    if(Math.random()<.6) return mq2('y は x に比例する。式で表すと？', `x＝${fmt(p)} のとき y＝${fmt(q)}`, A, [m1Ye(d,n), m1Ye(-n,d), m1Yh(p*q), m1Ye(q*p,1), m1Ye(n+d,d), m1Ye(n+2*d,d), m1Ye(-n-d,d)].filter(v=>v!==A), 'y＝ax に x、y の値を代入して a を求める。', `${fmt(q)}＝a×${p0(p)}、a＝${m1F(n,d)}`, { words:true });
+    const r=d*nz(-4,4), v=n*r/d; return mq2(`y は x に比例し、x＝${fmt(p)} のとき y＝${fmt(q)}。x＝${fmt(r)} のときの y の値は？`, A.replace('y＝','（式：y＝')+'）', fmt(v), [fmt(-v), fmt(v+n), fmt(r*q), fmt(v+1), fmt(v-1), fmt(v+2)], 'まず式を求めてから、x の値を代入。', `${A}、x＝${fmt(r)} を代入して ${fmt(v)}`, { words:true }); },
+  m1Zahyo(){ const p=nz(-5,5), q=Math.random()<.15?0:nz(-5,5); if(Math.abs(p)===Math.abs(q)) return G.m1Zahyo(); const c=(a,b)=>`(${fmt(a)}, ${fmt(b)})`; const A=c(p,q);
+    return mq2('点Aの座標は？', m1Grid({pts:[['A',p,q]]}), A, [c(q,p),c(-p,q),c(p,-q),c(-p,-q),c(p+1,q),c(p,q+1)].filter(v=>v!==A), '(x座標, y座標) の順に書く。1目もりは1。', `x座標 ${fmt(p)}、y座標 ${fmt(q)} なので ${A}`); },
+  m1PrG(){ const S=[[2,1],[-3,1],[1,2],[-2,3],[3,4],[-1,1],[1,1],[4,1],[-1,3],[5,4],[-5,2],[3,1],[-1,2],[2,3]]; const [n,d]=pick(S); const A=m1Ye(n,d);
+    const w=[m1Ye(-n,d), m1Ye(d,n), m1Ye(-d,n)].concat(shuffle(S.filter(s=>s[0]*d!==n*s[1])).slice(0,4).map(s=>m1Ye(s[0],s[1]))).filter((v,i,a)=>v!==A&&a.indexOf(v)===i);
+    return mq2('このグラフの式は？', m1Grid({lines:[{n,d}]}), A, w, '原点ともう1つ、目もりがちょうど交わる点を読んで y＝ax の a を求める。', `点 (${d}, ${fmt(n)}) を通るので a＝${m1F(n,d)}、${A}`); },
+  m1PrInc(){ if(Math.random()<.5){ const neg=[[-2,1],[-1,1],[-3,4],[-5,2]], pos=[[3,1],[1,2],[2,3],[4,1],[5,3]]; const A=pick(neg); const ws=shuffle(pos).slice(0,3);
+      return mq2('x の値が増加すると y の値が減少するのは？', '比例のグラフ', m1Ye(...A), ws.map(s=>m1Ye(...s)), '比例定数が負の数のとき、グラフは右下がりで、x が増加すると y は減少する。', `${m1Ye(...A)} は比例定数が負なので減少する。`); }
+    const a=nz(-5,5), A=a>0?`${a}ずつ増加する`:`${-a}ずつ減少する`; return mq2(`比例 ${m1Ye(a)} で、x の値が1ずつ増加すると、y の値は？`, m1Ye(a), A, [a>0?`${a}ずつ減少する`:`${-a}ずつ増加する`, `${Math.abs(a)+1}ずつ${a>0?'増加':'減少'}する`, '変わらない', '1ずつ増加する'], 'x が1増えると、y は比例定数 a だけ変わる。', A); },
+  m1HiP(){ const a=pick([6,8,12,-12,-6,24,-24,18,-18]), t=ri(0,2), ds=[1,2,3,4,6].filter(v=>a%v===0);
+    if(t===0){ const x=pick(ds)*pick([1,-1]), y=a/x; return mq2(`反比例 ${m1Yh(a)} で、x＝${fmt(x)} のときの y の値は？`, m1Yh(a), fmt(y), [fmt(-y), fmt(a*x), m1F(x,a), fmt(y+1)], 'x の値を代入して、a÷x を計算。', `${a}÷${p0(x)}＝${fmt(y)}`); }
+    if(t===1) return mq2(`反比例 ${m1Yh(a)} で、x の値が2倍、3倍…になると、y の値は？`, m1Yh(a), frH(1,2)+'倍、'+frH(1,3)+'倍…になる', ['2倍、3倍…になる','変わらない','2ずつ減る'], '反比例では、x が2倍、3倍…になると y は '+frH(1,2)+'倍、'+frH(1,3)+'倍…', '反比例の性質');
+    const x=pick(ds); return mq2(`反比例 ${m1Yh(a)} で、対応する x と y の値の積 xy は？`, `x＝${x}、y＝${fmt(a/x)}`, fmt(a), [fmt(-a), m1F(a,x*x), fmt(a/x+x), fmt(a*2)], 'xy は一定で、比例定数に等しい。', `${x}×${p0(a/x)}＝${fmt(a)}`); },
+  m1HiF(){ const p=nz(-6,6), q=nz(-6,6), a=p*q; if(Math.abs(a)<2) return G.m1HiF(); const A=m1Yh(a);
+    if(Math.random()<.6) return mq2('y は x に反比例する。式で表すと？', `x＝${fmt(p)} のとき y＝${fmt(q)}`, A, [m1Yh(-a), 'y＝'+m1Cv(q,p,'x'), m1Ye(a), m1Yh(a+p), m1Yh(a+1), m1Yh(a*2)].filter(v=>v!==A), 'y＝'+frH('a','x')+' に代入して a＝xy を求める。', `a＝${fmt(p)}×${p0(q)}＝${fmt(a)}`, { words:true });
+    const ds=[1,2,3,4,6,8,9,12].filter(v=>a%v===0&&v!==Math.abs(p)); if(!ds.length) return G.m1HiF(); const r=pick(ds)*pick([1,-1]), v=a/r;
+    return mq2(`y は x に反比例し、x＝${fmt(p)} のとき y＝${fmt(q)}。x＝${fmt(r)} のときの y の値は？`, `（式：${A}）`, fmt(v), [fmt(-v), fmt(a*r), fmt(v+1), fmt(v-1), fmt(v+2)], 'まず a＝xy を求めてから代入。', `${A}、x＝${fmt(r)} を代入して ${fmt(v)}`, { words:true }); },
+  m1HiG(){ const L=[6,-6,4,-4,8,-8,12,-12,2,-2,10,-10]; const a=pick(L), A=m1Yh(a);
+    const w=[m1Yh(-a), m1Yh(a>0?a+(a<10?a:-2):a-(a>-10?-a:-2))].concat(shuffle(L.filter(v=>Math.abs(v)!==Math.abs(a))).slice(0,2).map(m1Yh)).filter((v,i,s)=>v!==A&&s.indexOf(v)===i);
+    return mq2('このグラフの式は？', m1Grid({hyps:[{a}]}), A, w, '曲線上の、目もりがちょうど交わる点 (x, y) を読んで、a＝xy を求める。', `点 (1, ${fmt(a)}) などを通るので a＝${fmt(a)}、${A}`); },
+  m1Use1(){ const [q,a,w,e]=kaPick(M1USE1); return mq2('比例を利用して求めよう', q, a, w, '比例する2つの数量を見つけて、y＝ax の式をつくる。', e, { words:true }); },
+  m1Use2(){ const [q,a,w,e]=kaPick(M1USE2); return mq2('反比例を利用して求めよう', q, a, w, '積が一定になる2つの数量を見つけて、y＝'+frH('a','x')+' の式をつくる。', e, { words:true }); },
+});
+const M1C4_CARDS = [
+  ['関数','ともなって変わる2つの変数 x、y があり、x の値を決めると y の値がただ1つに決まるとき、y は x の関数であるという。'],
+  ['変数','x、y のように、いろいろな値をとる文字。'],
+  ['変域','変数のとる値の範囲。不等号 ＜、＞、≦、≧ で表す。'],
+  ['以上・以下・未満','以上・以下はその数をふくむ（≦、≧、数直線で●）。未満・より大きい・より小さいはふくまない（＜、＞、○）。'],
+  ['比例','y が x の関数で、y＝ax（a は定数）で表されるとき、y は x に比例するという。'],
+  ['比例定数','y＝ax や y＝a/x の定数 a のこと。'],
+  ['比例の性質','x が2倍、3倍…になると y も2倍、3倍…。商 y/x は一定で比例定数 a に等しい。'],
+  ['座標','点の位置を (x座標, y座標) の数の組で表したもの。'],
+  ['座標軸・原点','横の x 軸と縦の y 軸をあわせて座標軸、2つの軸の交点 O を原点という。'],
+  ['比例のグラフ','原点を通る直線。a＞0 なら右上がり、a＜0 なら右下がり。'],
+  ['反比例','y が x の関数で、y＝a/x（a は定数）で表されるとき、y は x に反比例するという。'],
+  ['反比例の性質','x が2倍、3倍…になると y は 1/2倍、1/3倍…。積 xy は一定で比例定数 a に等しい。'],
+  ['反比例のグラフ','原点について対称な、なめらかな2つの曲線（双曲線）。x 軸・y 軸にかぎりなく近づくが交わらない。'],
+  ['比例の式の求め方','y＝ax に x、y の値の組を代入して a を求める。'],
+  ['反比例の式の求め方','a＝xy で比例定数を求め、y＝a/x に表す。'],
+];
+const M1C4_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'比例と反比例', sub:'小学6年', plan:Array(5).fill('m1Hp0'), body:()=>`
+    <section class="panel"><h3>比例</h3>${rule('x が2倍、3倍、4倍…になると、y も2倍、3倍、4倍…<br>y ＝ 決まった数 × x')}${kmTbl([['x（cm）','1','2','3','4'],['y（cm²）','3','6','9','12']],['底辺と面積（高さ6cm）','','','',''])}</section>
+    <section class="panel"><h3>反比例</h3>${rule('x が2倍、3倍…になると、y は '+frH(1,2)+'倍、'+frH(1,3)+'倍…<br>y ＝ 決まった数 ÷ x')}${ex('面積100cm² の長方形の縦 x と横 y → y＝100÷x')}<p class="small muted">1000円から使ったお金と残りのお金のように、和が一定のものは比例でも反比例でもない。</p></section>` },
+  { id:'1-1', sec:'1　関数', t:'関数', sub:'ただ1つに決まる', plan:Array(5).fill('m1Fn'), body:()=>`
+    <section class="panel"><h3>関数</h3>${rule('ともなって変わる2つの変数 x、y があり、<br>x の値を決めると y の値がただ1つに決まるとき、<br>y は x の関数であるという')}${ex('A市からB市まで30km。進んだ道のり x km、残りの道のり y km<br>→ y＝30−x（y は x の関数）')}${kmTbl([['進んだ道のり x（km）','5','10','15','20','25'],['残りの道のり y（km）','25','20','15','10','5']],['','','','','',''])}<p class="small muted">x、y のように、いろいろな値をとる文字を 変数 という。</p></section>` },
+  { id:'1-2', t:'変域', sub:'不等号で表す', plan:Array(5).fill('m1Hen'), body:()=>`
+    <section class="panel"><h3>変域の表し方</h3>${rule('変数のとる値の範囲を 変域 という')}${ex('x が −4 より大きく 3 以下 → −4＜x≦3')}${kmTbl([['以上・以下','ふくむ','≦、≧','●'],['より大きい・より小さい・未満','ふくまない','＜、＞','○']],['ことば','その数','記号','数直線'])}${ex('y＝30−x（0≦x≦30）のように、式に変域をつけることもある')}</section>` },
+  { id:'2-1', sec:'2　比例', t:'比例の式', sub:'y＝ax・比例定数', plan:Array(5).fill('m1PrE'), body:()=>`
+    <section class="panel"><h3>比例の関係</h3>${rule('y が x の関数で、y＝ax（a は定数）で表されるとき、<br>y は x に比例するといい、a を 比例定数 という')}${ex('1枚25円の画用紙 x 枚の代金 y 円<br>y＝25x → 比例、比例定数は 25')}</section>` },
+  { id:'2-2', t:'比例の性質', sub:'2倍・3倍、商 y/x', plan:Array(5).fill('m1PrP'), body:()=>`
+    <section class="panel"><h3>比例定数が負の数でも（y＝−3x）</h3>${kmTbl([['y','12','9','6','3','0','−3','−6','−9','−12']],['x','−4','−3','−2','−1','0','1','2','3','4'])}${rule('① x が2倍、3倍…になると、y も2倍、3倍…<br>② 商 '+frH('y','x')+' は一定で、比例定数 a に等しい')}</section>` },
+  { id:'2-3', t:'比例の式を求める', sub:'1組の値から a を', plan:Array(5).fill('m1PrF'), body:()=>`
+    <section class="panel"><h3>式の求め方</h3>${ex('y は x に比例し、x＝7 のとき y＝42<br>y＝ax に代入：42＝a×7、a＝6<br>→ y＝6x')}<p class="small muted">比例の式は、x と y の値の組が1組わかれば求められる。</p></section>` },
+  { id:'2-4', t:'座標', sub:'(x座標, y座標)', plan:Array(5).fill('m1Zahyo'), body:()=>`
+    <section class="panel"><h3>点の座標</h3>${m1Grid({pts:[['A',3,2],['B',-4,3],['C',-2,-3],['D',4,0]]})}${rule('点の位置は (x座標, y座標) で表す')}${ex('A(3, 2)　B(−4, 3)　C(−2, −3)　D(4, 0)')}<p class="small muted">x 軸と y 軸をあわせて 座標軸、交点 O を 原点 という。</p></section>` },
+  { id:'2-5', t:'比例のグラフ', sub:'原点を通る直線', plan:['m1PrG','m1PrG','m1PrG','m1PrInc','m1PrInc'], body:()=>`
+    <section class="panel"><h3>比例のグラフ</h3>${m1Grid({lines:[{n:1,d:2,lab:'(1)'},{n:-3,d:1,lab:'(2)'}],pts:[['',2,1],['',1,-3]]})}${ex('(1) y＝'+frH(1,2)+'x → 原点と点(2, 1)を通る直線')}${ex('(2) y＝−3x → 原点と点(1, −3)を通る直線')}${rule('a＞0 → 右上がり（x が増加すると y も増加）<br>a＜0 → 右下がり（x が増加すると y は減少）')}</section>` },
+  { id:'3-1', sec:'3　反比例', t:'反比例の式', sub:'y＝a/x', plan:Array(5).fill('m1HiE'), body:()=>`
+    <section class="panel"><h3>反比例の関係</h3>${rule('y が x の関数で、y＝'+frH('a','x')+'（a は定数）で表されるとき、<br>y は x に反比例するといい、a を 比例定数 という')}${ex('面積10cm² の平行四辺形の底辺 x cm、高さ y cm<br>xy＝10 → y＝'+frH(10,'x')+'、比例定数は 10')}</section>` },
+  { id:'3-2', t:'反比例の性質', sub:'積 xy が一定', plan:Array(5).fill('m1HiP'), body:()=>`
+    <section class="panel"><h3>反比例の性質（y＝−${frH(12,'x')}）</h3>${kmTbl([['y','3','4','6','12','×','−12','−6','−4','−3']],['x','−4','−3','−2','−1','0','1','2','3','4'])}${rule('① x が2倍、3倍…になると、y は '+frH(1,2)+'倍、'+frH(1,3)+'倍…<br>② 積 xy は一定で、比例定数 a に等しい')}<p class="small muted">x＝0 に対応する y の値はない（×）。</p></section>` },
+  { id:'3-3', t:'反比例の式を求める', sub:'a＝xy', plan:Array(5).fill('m1HiF'), body:()=>`
+    <section class="panel"><h3>式の求め方</h3>${ex('y は x に反比例し、x＝3 のとき y＝7<br>a＝xy＝3×7＝21<br>→ y＝'+frH(21,'x'))}</section>` },
+  { id:'3-4', t:'反比例のグラフ', sub:'双曲線', plan:Array(5).fill('m1HiG'), body:()=>`
+    <section class="panel"><h3>反比例のグラフ</h3>${m1Grid({hyps:[{a:8},{a:-8}]})}${ex('y＝'+frH(8,'x')+'（赤）、y＝−'+frH(8,'x')+'（青）')}${rule('反比例のグラフは、原点について対称な 双曲線<br>x 軸・y 軸にかぎりなく近づくが、交わらない')}<p class="small muted">対応する x、y の値の組をたくさんとって、なめらかな曲線で結ぶ。</p></section>` },
+  { id:'4-1', sec:'4　比例，反比例の利用', t:'比例の利用', sub:'枚数・重さ・時間', plan:Array(5).fill('m1Use1'), body:()=>`
+    <section class="panel"><h3>比例を使う</h3>${ex('画用紙20枚で6mm。全部で96mm のときの枚数<br>y＝'+frH(3,10)+'x に y＝96 → x＝320（枚）')}${ex('4km を分速200m：y＝200x（0≦x≦20）')}<p class="small muted">x の変域にも注意しよう。</p></section>` },
+  { id:'4-2', t:'反比例の利用', sub:'積が一定', plan:Array(5).fill('m1Use2'), body:()=>`
+    <section class="panel"><h3>反比例を使う</h3>${ex('いす1列12脚で30列 → 全部で360脚<br>y＝'+frH(360,'x')+' に x＝18 → y＝20（列）')}${ex('かみ合う歯車：歯数×回転数 が等しい')}</section>` },
+  { id:'5-1', sec:'章末テスト', t:'章末テスト', sub:'4章の総まとめ', test:true, plan:['m1Fn','m1Hen','m1PrE','m1PrP','m1PrF','m1Zahyo','m1PrG','m1HiE','m1HiP','m1HiF','m1HiG','m1Use1'], body:()=>`
+    <section class="panel"><h3>4章　変化と対応　章末テスト</h3><p>1節〜4節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度そのしずくを見直しましょう。</p></section>` },
 ];
 
 /* ===== 中2数学 2章 連立方程式 ===== */
@@ -16416,6 +16539,7 @@ const UNITS = {
   civ0:{ no:'', title:'コラム　公民とは', subject:'社会', course:'jso', subj:10, lessons:CIV0_LESSONS },
   hist0:{ no:'', title:'コラム　歴史とは', subject:'社会', course:'jso', subj:3, lessons:HIST0_LESSONS },
   geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
+  m1c4:{ no:'4', title:'変化と対応', subject:'数学', course:'j1', subj:0, lessons:M1C4_LESSONS, cards:M1C4_CARDS },
   m1c3:{ no:'3', title:'方程式', subject:'数学', course:'j1', subj:0, lessons:M1C3_LESSONS, cards:M1C3_CARDS, drill:'m1c3' },
   m1c2:{ no:'2', title:'文字の式', subject:'数学', course:'j1', subj:0, lessons:M1C2_LESSONS, cards:M1C2_CARDS, drill:'m1c2' },
   pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:M1C1_LESSONS, cards:true, drill:'m1c1' },
