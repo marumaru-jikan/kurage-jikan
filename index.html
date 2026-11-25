@@ -17309,6 +17309,7 @@ function seaFeed(arg){
 }
 
 const VIEWS={ jk:vJk, setup:vSetup, home:vHome, course:vCourse, subject:vSubject, unit:vUnit, lesson:vLesson, cards:vCards, quiz:vQuiz, result:vResult, record:vRecord, settings:vSettings, install:vInstall, drill:vDrill, pdf:vPdf, sea:vSea };
+function scriptXY(root){ const MAP={x:'𝔁',y:'𝔂'}; const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest('svg,script,style,input,textarea')?NodeFilter.FILTER_REJECT:(/[xy]/.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)}); const ns=[]; while(w.nextNode()) ns.push(w.currentNode); ns.forEach(n=>{ n.nodeValue=n.nodeValue.replace(/(^|[^A-Za-z])([xy]+)(?=[^A-Za-z]|$)/g,(m,p,v)=>p+v.replace(/[xy]/g,c=>MAP[c])); }); }
 function render(){
   app.innerHTML=VIEWS[S.view]();
   tabs.hidden = S.view==='setup';
@@ -17322,6 +17323,7 @@ function render(){
   if ((S.view==='lesson'||S.view==='unit') && S.uid==='k1') kjFontLoad();
   if (S.view==='sea' && S.hatched){ const tw=document.getElementById('tankwrap'); if(tw) tw.scrollLeft=tw.scrollWidth; }
   if (S.view==='pdf') renderPdf();
+  if (S.uid==='m1c2' && ['lesson','quiz','result'].includes(S.view)) scriptXY(app);
   if (S.view==='quiz'){ setupPad(); const Q=S.quiz, q=Q.qs[Q.i]; if(q.autoSay && Q.picked===null && Q.said!==Q.i){ Q.said=Q.i; say(q.say); } }
 }
 function answerQ(ok, picked){
