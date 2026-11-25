@@ -661,6 +661,11 @@ const cardLabel = i => `${CTYPE[KCARDS[i].t]}　No.${cardNo(i)}`;
 // 演習問題PDF。pdf フォルダに入れたファイル名を書きます。空なら「準備中」と表示されます。
 const PDF = {
   'ch1-lv1': { q:'', a:'' }, 'ch1-lv2': { q:'', a:'' }, 'ch1-lv3': { q:'', a:'' }, 'ch1-lv4': { q:'', a:'' }, 'ch1-lv5': { q:'', a:'' },
+  'm1c1-lv1': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[1,1], ar:[2,2] },
+  'm1c1-lv2': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[3,4], ar:[5,6] },
+  'm1c1-lv3': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[7,8], ar:[9,10] },
+  'm1c1-lv4': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[11,12], ar:[13,14] },
+  'm1c1-lv5': { q:'pdf/m1c1.pdf', a:'pdf/m1c1.pdf', qr:[15,16], ar:[17,18] },
   'm2c1-lv1': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[1,1], ar:[2,2] },
   'm2c1-lv2': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[3,4], ar:[5,6] },
   'm2c1-lv3': { q:'pdf/m2c1.pdf', a:'pdf/m2c1.pdf', qr:[7,9], ar:[10,11] },
@@ -16237,7 +16242,7 @@ const UNITS = {
   hist0:{ no:'', title:'コラム　歴史とは', subject:'社会', course:'jso', subj:3, lessons:HIST0_LESSONS },
   geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
   m1c2:{ no:'2', title:'文字の式', subject:'数学', course:'j1', subj:0, lessons:M1C2_LESSONS },
-  pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:M1C1_LESSONS, cards:true, drill:'ch1' },
+  pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:M1C1_LESSONS, cards:true, drill:'m1c1' },
   kuku:{ no:'1', title:'九九', subject:'算数', course:'rev', subj:0, lessons:KUKU_LESSONS },
   wari:{ no:'2', title:'わり算', subject:'算数', course:'rev', subj:0, lessons:WARI_LESSONS },
   abc: { no:'A', title:'アルファベット', subject:'英語', course:'rev', subj:2, lessons:ABC_LESSONS },
