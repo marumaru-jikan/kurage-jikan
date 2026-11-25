@@ -7085,12 +7085,76 @@ Object.assign(G,{
   m1Diff(){ const base=pick([20,25,30]), x=base+nz(-9,9), y=base+nz(-9,9), dx=x-base, dy=y-base;
     return mq2('考えよう', `基準を ${base} とすると、${x} は基準より何大きい？（負の数も使って答える）`, dx>0?'+'+dx:fmt(dx), [dx>0?fmt(-dx):'+'+(-dx), String(x), String(Math.abs(dx)+1)], '基準とのちがい＝その数−基準', `${x}−${base}＝${fmt(dx)}`, { words:true }); },
 });
+const m1NLsvg = (v,lab='A') => { const x0=20, W=300, X=t=>x0+t/3*W; let t='';
+  for(let i=0;i<=30;i++){ const x=X(i/10), big=i%10===0, mid=i%5===0; t+=`<line x1="${x}" y1="${big?20:mid?24:27}" x2="${x}" y2="${big?40:mid?36:33}" stroke="currentColor" stroke-width="${big?1.6:1}"/>`; if(big) t+=`<text x="${x}" y="56" text-anchor="middle" font-size="13" fill="currentColor">${i/10}</text>`; }
+  const pv = v===null?'':`<path d="M${X(v)-6} 4 h12 l-6 12Z" fill="#e0457b"/><text x="${X(v)}" y="0" text-anchor="middle" font-size="14" font-weight="700" fill="#e0457b">${lab}</text>`;
+  return `<svg viewBox="0 -14 340 76" style="width:100%;max-width:360px;display:block;margin:6px auto"><line x1="${x0-8}" y1="30" x2="${x0+W+8}" y2="30" stroke="currentColor" stroke-width="1.6"/>${t}${pv}</svg>`; };
+const m1Dc = v => String(Math.round(v*100)/100);
+Object.assign(G,{
+  m1NL(){ if(Math.random()<.55){ const k=ri(1,29); if(k%10===0) return G.m1NL(); const v=k/10;
+      return mq2('点Aが表す数は？', m1NLsvg(v), m1Dc(v), [m1Dc(v+.1), m1Dc(Math.max(.1,v-.1)), m1Dc(k%10>=5?Math.floor(v)+.5:v+1), String(k), m1Dc(v+1)], '1目もりは 0.1 です。', `1目もりは 0.1。A は ${Math.floor(v)} から ${k%10} 目もり右なので ${m1Dc(v)}。`); }
+    const pool=shuffle([[3,10],[1,2],[3,2],[6,5],[11,5],[7,4],[1,4],[9,10],[5,2],[2,5]]).slice(0,3).map(([n,d])=>({s:frH(n,d),v:n/d}));
+    const decs=shuffle([0.6,1.2,0.4,2.3,1.7,0.8,2.6]).slice(0,2).map(v=>({s:String(v),v}));
+    const all=pool.concat(decs).filter((o,i,a)=>a.findIndex(p=>p.v===o.v)===i); const mn=all.reduce((a,b)=>a.v<b.v?a:b), mx=all.reduce((a,b)=>a.v>b.v?a:b);
+    const big=Math.random()<.5, A=big?mx:mn;
+    return mq2(big?'いちばん大きい数は？':'いちばん小さい数は？', all.map(o=>o.s).join('，　'), A.s, all.filter(o=>o!==A).map(o=>o.s), '分数を小数に直してくらべよう（分子÷分母）。', all.map(o=>`${o.s} ＝ ${m1Dc(o.v)}`).join('<br>')); },
+  m1Ineq0(){ const P=[[3,'2.9'],[2,frH(9,4),2,9/4],[frH(7,10),'0.8',.7,.8],[frH(5,3),frH(5,4),5/3,5/4],['0.5',frH(1,2),.5,.5],[frH(3,4),'0.75',.75,.75],['1.2',frH(6,5),1.2,1.2],[frH(2,3),'0.6',2/3,.6],['2.5',frH(9,4),2.5,2.25],[frH(4,5),frH(5,6),.8,5/6],['0.3',frH(1,3),.3,1/3],[frH(7,8),'1',7/8,1]];
+    let it=pick(P); if(it.length===2) it=[String(it[0]),it[1],it[0],parseFloat(it[1])]; const [a,b,va,vb]=it; const A=Math.abs(va-vb)<1e-9?'＝':va<vb?'＜':'＞';
+    return mq2('□に入る記号は？', `${a} □ ${b}`, A, ['＜','＞','＝'].filter(x=>x!==A), '分数は 分子÷分母 で小数に直してくらべよう。', `${a} ＝ ${m1Dc(va)}、${b} ＝ ${m1Dc(vb)} なので ${a} ${A} ${b}`); },
+  m1FrAS2(){ if(Math.random()<.6) return G.m1FrAS(); const w1=ri(1,3), w2=ri(1,3), d1=pick([3,4,6]), d2=pick([2,3,4,6,12].filter(x=>x!==d1)), n1=ri(1,d1-1), n2=ri(1,d2-1), op=pick(['＋','−']);
+    const L=d1*d2/gcd(d1,d2); let a=(w1*d1+n1)*(L/d1), b=(w2*d2+n2)*(L/d2); if(op==='−'&&a<=b) return G.m1FrAS2(); const n=op==='＋'?a+b:a-b; const [rn,rd]=m1R(n,L);
+    const mixed=(n,d)=>{ const w=Math.floor(n/d), r=n%d; return w&&r?`${w}${frH(r,d)}`:r?frH(r,d):String(w); };
+    const A=mixed(rn,rd); return mq2('計算しよう', `${w1}${frH(n1,d1)} ${op} ${w2}${frH(n2,d2)}`, A, [mixed(rn+1,rd), mixed(Math.abs(rn-rd)||1,rd), mixed(rn,rd+1), op==='＋'?mixed(rn+rd,rd):mixed(rn+2,rd)], '帯分数は、整数部分と分数部分に分けるか、仮分数に直して計算しよう。', `仮分数に直すと ${frH(w1*d1+n1,d1)} ${op} ${frH(w2*d2+n2,d2)} ＝ ${frH(a,L)} ${op} ${frH(b,L)} ＝ ${frH(n,L)} ＝ ${A}`); },
+  m1DecAS(){ const op=pick(['＋','−']); let a=ri(3,89)/10, b=ri(3,89)/10; if(op==='−'&&a<b) [a,b]=[b,a]; if(a===b) return G.m1DecAS(); const v=Math.round((op==='＋'?a+b:a-b)*10)/10;
+    return mq2('計算しよう', `${a} ${op} ${b}`, m1Dc(v), [m1Dc(v+1), m1Dc(Math.abs(v-1)), m1Dc(v+.1), m1Dc(Math.round((op==='＋'?a-b:a+b)*10)/10), m1Dc(v*10)], '小数点の位置（位）をそろえて計算しよう。', `${a} ${op} ${b} ＝ ${m1Dc(v)}`); },
+  m1FrMD2(){ if(Math.random()<.5) return G.m1FrMD(); const t=ri(0,2);
+    if(t===0){ const k=pick([2,3,4,6,8,10,12,15,20]), n=ri(1,5), d=pick([3,4,5,6]); if(gcd(n,d)>1) return G.m1FrMD2(); const A=m1F(k*n,d); return mq2('計算しよう', `${k} × ${frH(n,d)}`, A, [m1F(n,k*d), m1F(k*n+1,d), m1F(k+n,d), m1F(k*d,n)], '整数は 分子にかける。', `${frH(k+'×'+n,d)} ＝ ${A}`); }
+    if(t===1){ const n=ri(1,5), d=pick([3,4,5,6,7]), k=pick([2,3,4,6,12]); if(gcd(n,d)>1) return G.m1FrMD2(); const A=m1F(n,d*k); return mq2('計算しよう', `${frH(n,d)} ÷ ${k}`, A, [m1F(n*k,d), m1F(n,d+k), m1F(d,n*k), m1F(n+1,d*k)], 'わり算は逆数をかける。整数 k の逆数は '+frH(1,'k')+'。', `${frH(n,d)} × ${frH(1,k)} ＝ ${A}`); }
+    const a=[ri(1,4),pick([3,5,6,7])], b=pick([2,3]), c=[ri(1,4),pick([4,5,8])]; if(gcd(a[0],a[1])>1||gcd(c[0],c[1])>1) return G.m1FrMD2(); const [n,d]=m1R(a[0]*b*c[1], a[1]*c[0]); const A=m1F(n,d);
+    return mq2('計算しよう', `${frH(a[0],a[1])} × ${b} ÷ ${frH(c[0],c[1])}`, A, [m1F(a[0]*b*c[0],a[1]*c[1]), m1F(n+1,d), m1F(d,n), m1F(n,d+1)], 'わる数を逆数にして、1つの分数にまとめてから約分。', `${frH(a[0],a[1])} × ${b} × ${frH(c[1],c[0])} ＝ ${A}`); },
+  m1Ord0(){ const a=ri(2,9), b=ri(2,9), c=pick([2,3,4]), d=c*ri(1,4), t=ri(0,3);
+    const E=[[`${a}×${b} − ${d}÷${c}`, a*b-d/c],[`(${a}×${b} − ${d})÷${c}`, (a*b-d)/c],[`${a}×(${b+d/c+1} − ${d}÷${c})`, a*(b+1)],[`${a} ＋ ${b}×${c}`, a+b*c]][t];
+    if(!Number.isInteger(E[1])||E[1]<0) return G.m1Ord0(); const v=E[1];
+    return mq2('計算しよう', E[0], String(v), [String(v+1), String(Math.abs(v-1)||v+2), String(v+c), String(v*2), String(v+2), String(v+3)], '( )の中 → ×・÷ → ＋・− の順に計算します。', `計算の順序：かっこの中、かけ算・わり算を先に計算して ${v}`); },
+  m1Law(){ const t=ri(0,2);
+    if(t===0){ const a=ri(11,89)/10, c=Math.round((pick([5,10])-a%1-Math.floor(a))*10)/10; const b=ri(11,59)/10; if(c<=0) return G.m1Law(); const v=Math.round((a+b+c)*10)/10;
+      return mq2('くふうして計算しよう', `${a} ＋ ${b} ＋ ${c}`, m1Dc(v), [m1Dc(v+1), m1Dc(v-1), m1Dc(v+.1), m1Dc(v-.1)], '(a＋b)＋c ＝ a＋(b＋c)、a＋b ＝ b＋a を使って、計算しやすい組み合わせに。', `${a} ＋ ${c} ＝ ${m1Dc(a+c)} を先に計算すると、${m1Dc(a+c)} ＋ ${b} ＝ ${m1Dc(v)}`); }
+    if(t===1){ const x=pick([[2,5],[4,25],[5,20],[8,125],[25,4]]), y=ri(3,9), z=ri(2,9), v=x[0]*x[1]*y*z;
+      return mq2('くふうして計算しよう', `${x[0]}×${y}×${x[1]}×${z}`, String(v), [String(v+10), String(v-10), String(v*2), String(v/2)], 'a×b ＝ b×a を使って、かけるとキリのよい数になる組を先に。', `${x[0]}×${x[1]} ＝ ${x[0]*x[1]} を先に計算：${x[0]*x[1]}×${y*z} ＝ ${v}`); }
+    const L=[['(a＋b)×c ＝ a×c ＋ □','b×c',['a×b','b＋c','a×c']],['a×b ＝ □','b×a',['a＋b','a×a','b×b']],['(a×b)×c ＝ a×(□)','b×c',['a×c','a×b','b＋c']],['(a−b)×c ＝ a×c − □','b×c',['a×b','a−c','c×c']],['a＋b ＝ □','b＋a',['a×b','a−b','b−a']]];
+    const [q,a,w]=pick(L); return mq2('□に入る式は？', q, a, w, '交換法則・結合法則・分配法則を思い出そう。', q.replace('□','<b>'+a+'</b>')); },
+  m1Kufu(){ const t=ri(0,2);
+    if(t===0){ const a=ri(12,89), n=pick([99,98,101,102]), v=a*n, d=n-100;
+      return mq2('くふうして計算しよう', `${a}×${n}`, String(v), [String(v+a), String(v-a), String(a*100), String(v+10)], `${n} ＝ 100 ${d<0?'−':'＋'} ${Math.abs(d)} と考えて、分配法則を使おう。`, `${a}×(100${d<0?'−':'＋'}${Math.abs(d)}) ＝ ${a*100} ${d<0?'−':'＋'} ${a*Math.abs(d)} ＝ ${v}`); }
+    if(t===1){ const m=pick([8,12,16,28,32,36,44]), v=25*m; return mq2('くふうして計算しよう', `25×${m}`, String(v), [String(v+25), String(v-25), String(v+100), String(250*m/10+50)], '25×4 ＝ 100 を使おう。', `25×${m} ＝ 25×4×${m/4} ＝ 100×${m/4} ＝ ${v}`); }
+    const a=ri(12,49), b=ri(2,8), c=10-b, v=a*10; return mq2('くふうして計算しよう', `${a}×${b} ＋ ${a}×${c}`, String(v), [String(v+a), String(a*b+c), String(v-a), String(a*(b+c+1))], 'a×b＋a×c ＝ a×(b＋c)（分配法則を逆に使う）', `${a}×(${b}＋${c}) ＝ ${a}×10 ＝ ${v}`); },
+});
+const M1C0 = [
+  { id:'0-1', sec:'0　この章のための復習', t:'数直線', sub:'小学5年　分数と小数', plan:['m1NL','m1NL','m1NL','m1NL','m1NL'], body:()=>`
+    <section class="panel"><h3>数直線の読み方</h3>${rule('まず 1目もりがいくつかを調べる')}${m1NLsvg(1.3)}<p class="small muted">0 と 1 の間が 10 等分されているので、1目もりは 0.1。A は 1.3 です。</p></section>
+    <section class="panel"><h3>分数と小数</h3>${rule('分数 ＝ 分子 ÷ 分母 で、小数に直せる')}${ex(frH(3,10)+' ＝ 0.3　　'+frH(3,2)+' ＝ 1.5　　2'+frH(1,5)+' ＝ 2.2')}<p class="small muted">小数にそろえると、数直線上の位置や大きさがくらべやすくなります。</p></section>` },
+  { id:'0-2', t:'不等号', sub:'小学3年・5年　数の大小', plan:['m1Ineq0','m1Ineq0','m1Ineq0','m1Ineq0','m1Ineq0'], body:()=>`
+    <section class="panel"><h3>等号と不等号</h3>${rule('等しいことを表す記号 ＝ を 等号<br>大小を表す記号 ＞、＜ を 不等号 という')}${ex(frH(8,8)+' ＝ 1　　1 ＞ '+frH(5,8)+'　　'+frH(3,8)+' ＜ '+frH(5,8))}<p class="small muted">不等号は、開いているほうが大きい数です。</p></section>
+    <section class="panel"><h3>分数と小数をくらべる</h3>${ex(frH(7,10)+' □ 0.8<br>→ '+frH(7,10)+' ＝ 0.7 なので '+frH(7,10)+' ＜ 0.8')}</section>` },
+  { id:'0-3', t:'分数の足し算・引き算', sub:'小学5年', plan:['m1FrAS','m1FrAS','m1FrAS2','m1FrAS2','m1FrAS2'], body:()=>`
+    <section class="panel"><h3>通分してから計算</h3>${rule('分母がちがう分数は、分母をそろえて（通分して）から計算する')}${ex(frH(1,3)+' ＋ '+frH(1,2)+'<br>＝ '+frH(2,6)+' ＋ '+frH(3,6)+' ＝ '+frH(5,6))}${ex(frH(9,10)+' − '+frH(11,15)+'<br>＝ '+frH(27,30)+' − '+frH(22,30)+' ＝ '+frH(5,30)+' ＝ '+frH(1,6))}<p class="small muted">答えが約分できるときは、約分しておこう。</p></section>
+    <section class="panel"><h3>帯分数の計算</h3>${ex('3'+frH(1,3)+' − 2'+frH(11,12)+'<br>＝ '+frH(10,3)+' − '+frH(35,12)+'<br>＝ '+frH(40,12)+' − '+frH(35,12)+' ＝ '+frH(5,12))}<p class="small muted">仮分数に直すと、くり下がりで迷いません。</p></section>` },
+  { id:'0-4', t:'小数の足し算・引き算', sub:'小学4年', plan:Array(5).fill('m1DecAS'), body:()=>`
+    <section class="panel"><h3>位をそろえる</h3>${rule('小数点の位置（位）をそろえて、整数と同じように計算する')}${ex('0.7 ＋ 2.4 ＝ 3.1')}${ex('7.1 − 2.6 ＝ 4.5')}<p class="small muted">答えの小数点は、上の小数点にそろえてうちます。</p></section>` },
+  { id:'0-5', t:'分数の掛け算・割り算', sub:'小学6年', plan:['m1FrMD','m1FrMD','m1FrMD2','m1FrMD2','m1FrMD2'], body:()=>`
+    <section class="panel"><h3>かけ算</h3>${rule('分子どうし、分母どうしをかける（とちゅうで約分できる）')}${ex('20 × '+frH(3,4)+' ＝ '+frH('20×3',4)+' ＝ 15')}${ex(frH(5,12)+' × '+frH(4,15)+' ＝ '+frH('5×4','12×15')+' ＝ '+frH(1,9))}</section>
+    <section class="panel"><h3>わり算</h3>${rule('わる数の 逆数 をかける')}${ex(frH(3,8)+' ÷ '+frH(15,16)+' ＝ '+frH(3,8)+' × '+frH(16,15)+' ＝ '+frH(2,5))}${ex(frH(1,6)+' × 3 ÷ '+frH(5,4)+' ＝ '+frH('1×3×4','6×5')+' ＝ '+frH(2,5))}</section>` },
+  { id:'0-6', t:'式と計算の順序', sub:'小学4年', plan:Array(5).fill('m1Ord0'), body:()=>`
+    <section class="panel"><h3>計算の順序</h3>${rule('① ( )の中<br>② ×、÷<br>③ ＋、−')}${ex('3×8 − 4÷2 ＝ 24 − 2 ＝ 22')}${ex('(3×8 − 4)÷2 ＝ 20÷2 ＝ 10')}${ex('3×(8 − 4÷2) ＝ 3×6 ＝ 18')}<p class="small muted">同じ数字でも、順序がかわると答えがかわります。</p></section>` },
+  { id:'0-7', t:'計算のきまり', sub:'小学4〜6年', plan:Array(5).fill('m1Law'), body:()=>`
+    <section class="panel"><h3>交換法則・結合法則</h3>${rule('a＋b ＝ b＋a　　a×b ＝ b×a<br>(a＋b)＋c ＝ a＋(b＋c)<br>(a×b)×c ＝ a×(b×c)')}${ex('6.3＋2.8＋3.7 ＝ (6.3＋3.7)＋2.8 ＝ 10＋2.8 ＝ 12.8')}${ex('2×8×5×7 ＝ (2×5)×(8×7) ＝ 10×56 ＝ 560')}</section>
+    <section class="panel"><h3>分配法則</h3>${rule('(a＋b)×c ＝ a×c＋b×c<br>(a−b)×c ＝ a×c−b×c')}${ex('10×('+frH(1,5)+'＋'+frH(1,2)+') ＝ 10×'+frH(1,5)+'＋10×'+frH(1,2)+' ＝ 2＋5 ＝ 7')}</section>` },
+  { id:'0-8', t:'計算の工夫', sub:'小学4年', plan:Array(5).fill('m1Kufu'), body:()=>`
+    <section class="panel"><h3>キリのよい数をつくる</h3>${rule('99 ＝ 100−1、25×4 ＝ 100 などを使う')}${ex('57×99 ＝ 57×(100−1)<br>＝ 5700 − 57 ＝ 5643')}${ex('25×32 ＝ (25×4)×8<br>＝ 100×8 ＝ 800')}${ex('18×7＋18×3 ＝ 18×(7＋3)<br>＝ 18×10 ＝ 180')}</section>` },
+];
+
 const M1C1_LESSONS = [
-  { id:'0-1', sec:'0　この章のための復習', t:'分数のたし算・ひき算', sub:'小学校の復習', plan:Array(5).fill('m1FrAS'), body:()=>`
-    <section class="panel"><h3>通分してから計算</h3>${rule('分母がちがう分数は、分母をそろえて（通分して）から計算する')}${ex(frH(1,2)+' ＋ '+frH(1,3)+'<br>＝ '+frH(3,6)+' ＋ '+frH(2,6)+' ＝ '+frH(5,6))}${ex(frH(3,4)+' − '+frH(1,6)+'<br>＝ '+frH(9,12)+' − '+frH(2,12)+' ＝ '+frH(7,12))}<p class="small muted">答えが約分できるときは、約分しておこう。</p></section>` },
-  { id:'0-2', t:'分数のかけ算・わり算', sub:'小学校の復習', plan:Array(5).fill('m1FrMD'), body:()=>`
-    <section class="panel"><h3>かけ算</h3>${rule('分子どうし、分母どうしをかける')}${ex(frH(2,3)+' × '+frH(4,5)+' ＝ '+frH('2×4','3×5')+' ＝ '+frH(8,15))}</section>
-    <section class="panel"><h3>わり算</h3>${rule('わる数の分母と分子を入れかえて（逆数にして）かける')}${ex(frH(3,4)+' ÷ '+frH(2,5)+' ＝ '+frH(3,4)+' × '+frH(5,2)+' ＝ '+frH(15,8))}</section>` },
+  ...M1C0,
   { id:'1-1', sec:'1　正の数・負の数', t:'正の数・負の数', sub:'0より小さい数・符号・自然数', plan:['sign','sign','less','nat','nat'], body:()=>`
     <section class="panel"><h3>0 より小さい数</h3><p>冬の朝、気温が 0℃ より 3℃ 低いことを <span class="ex">${M}3℃</span> と表します。</p>
     ${rule('0 より大きい数 → 正の数（＋：正の符号）<br>0 より小さい数 → 負の数（−：負の符号）<br>0 は 正の数でも負の数でもない')}</section>
@@ -16069,8 +16133,8 @@ function vSubject(){
   return `${top(c.name+'　'+sb.name)}<div class="stack"><p class="muted small">準備ができた${sb.uw||(c.id==='jso'?'項目':'章')}から順に公開します。</p><div class="list">
   ${(()=>{ let k=0; return sb.units.map((un,i)=>{ const lab=un.lab||(++k); const u=un.ready&&UNITS[un.ready], gh=un.grp?`<div class="secrow">${un.grp}</div>`:''; const sc=un.secs?`<span class="secs">${un.secs.map((x,j)=>`<span>${j+1}節　${x}</span>`).join('')}</span>`:'';
     if(u){ const d=doneCount(un.ready), n=u.lessons.length;
-      return gh+`<button class="item" data-act="unit" data-arg="${un.ready}"><span class="lid">${lab}</span><span class="body"><b>${un.t}</b>${sc||'<br>'}<span class="small muted">${n}しずく　1しずく約5分</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
-    return gh+`<button class="item" disabled><span class="lid">${lab}</span><span class="body"><b>${un.t}</b>${sc||'<br>'}<span class="small muted">準備中</span></span></button>`; }).join(''); })()}</div></div>`;
+      return gh+`<button class="item" data-act="unit" data-arg="${un.ready}"><span class="lid">${lab}</span><span class="body"><b>${un.t}</b><br><span class="small muted">${n}しずく　1しずく約5分</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
+    return gh+`<button class="item" disabled><span class="lid">${lab}</span><span class="body"><b>${un.t}</b><br><span class="small muted">準備中</span></span></button>`; }).join(''); })()}</div></div>`;
 }
 function vUnit(){
   const u=CU(), uid=S.uid;
