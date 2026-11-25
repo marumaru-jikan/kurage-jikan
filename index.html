@@ -7826,6 +7826,42 @@ const M5F_ARC = m5V(200,160,`<circle cx="90" cy="80" r="60"/><path d="M146.4 59.
 const M5F_TAN = m5V(200,140,`<circle cx="100" cy="60" r="50"/><line x1="10" y1="110" x2="190" y2="110" stroke="${M5PK}" stroke-width="2"/><line x1="100" y1="60" x2="100" y2="110"/><path d="M100 100 h10 v10" stroke-width="1.2"/><circle cx="100" cy="60" r="2.5" fill="currentColor"/><circle cx="100" cy="110" r="2.5" fill="currentColor"/>${m5T(86,64,'O')}${m5T(96,128,'A')}${m5T(180,104,'ℓ','font-style="italic"')}`, 220);
 const M5F_SEC = m5V(200,150,`<path d="M30 130 L160 130 A130 130 0 0 0 113.6 30.4 Z" fill="${M5FILL}"/><path d="M160 130 A130 130 0 0 0 113.6 30.4" stroke="${M5BL}" stroke-width="3"/><path d="M55 130 A25 25 0 0 0 46 111" stroke-width="1.2"/>${m5T(60,122,'a°','font-style="italic" font-size="13"')}${m5T(90,146,'r','font-style="italic"')}${m5T(150,70,'ℓ','font-style="italic" fill="'+M5BL+'"')}${m5T(95,100,'S','font-style="italic"')}${m5T(18,142,'O')}`, 230);
 const M5F_SHORT = m5V(220,150,`<line x1="10" y1="80" x2="210" y2="80" stroke="${M5BL}"/><circle cx="60" cy="40" r="3" fill="currentColor"/><circle cx="170" cy="25" r="3" fill="currentColor"/><circle cx="60" cy="120" r="3" fill="currentColor"/><line x1="60" y1="40" x2="60" y2="120" stroke-dasharray="3 3" stroke-width="1"/><line x1="60" y1="120" x2="170" y2="25" stroke-dasharray="5 4" stroke-width="1.2"/><line x1="60" y1="40" x2="106.4" y2="80" stroke="${M5PK}" stroke-width="2"/><line x1="106.4" y1="80" x2="170" y2="25" stroke="${M5PK}" stroke-width="2"/><circle cx="106.4" cy="80" r="3" fill="${M5PK}" stroke="none"/>${m5T(46,40,'A')}${m5T(174,24,'B')}${m5T(44,128,'A′')}${m5T(100,98,'P')}${m5T(198,74,'ℓ','font-style="italic"')}`, 250);
+let M5AN=0;
+const m5Anim = (w,h,base,steps,mw=260,T=11) => { const id='k5a'+(++M5AN); let css='', g='', k=0;
+  const nk=()=>id+'_'+(k++);
+  steps.forEach((st,i)=>{ const s=st.s, e=st.e, nxt=i<steps.length-1?steps[i+1].s:94;
+    if(st.d){ const a=nk(); css+=`@keyframes ${a}{0%,${s}%{stroke-dashoffset:1;opacity:0}${s+0.2}%{stroke-dashoffset:.998;opacity:1}${e}%,94%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}`;
+      g+=`<path d="${st.d}" pathLength="1" stroke="${st.col||M5BL}" stroke-width="${st.w||1.8}" style="stroke-dasharray:1;stroke-dashoffset:1;animation:${a} ${T}s linear infinite"/>`; }
+    if(st.lab){ const a=nk(); css+=`@keyframes ${a}{0%,${e}%{opacity:0}${Math.min(e+2,93)}%,94%{opacity:1}100%{opacity:0}}`; g+=`<g style="opacity:0;animation:${a} ${T}s linear infinite">${st.lab}</g>`; }
+    if(st.cap){ const a=nk(); css+=`@keyframes ${a}{0%{opacity:0}${s}%{opacity:${s?0:1}}${s+0.5}%,${nxt-0.5}%{opacity:1}${nxt}%,100%{opacity:0}}`; g+=`<text x="${w/2}" y="${h-6}" text-anchor="middle" font-size="12.5" font-family="sans-serif" fill="${M5PK}" stroke="none" style="opacity:0;animation:${a} ${T}s linear infinite">${st.cap}</text>`; }
+  });
+  return m5V(w,h,`<style>${css}</style>${base}${g}`,mw)+'<p class="small muted" style="text-align:center;margin-top:-2px">▶ 作図の手順をくり返し再生</p>'; };
+const M5A_PB = m5Anim(200,185,`<line x1="30" y1="80" x2="170" y2="80"/><circle cx="30" cy="80" r="2.5" fill="currentColor"/><circle cx="170" cy="80" r="2.5" fill="currentColor"/>${m5T(14,84,'A')}${m5T(176,84,'B')}`,[
+  {s:0,e:16,d:'M87.9 11.1 A90 90 0 0 1 87.9 148.9',cap:'① A を中心に円をかく'},
+  {s:20,e:36,d:'M112.1 11.1 A90 90 0 0 0 112.1 148.9',cap:'① B を中心に、同じ半径の円をかく'},
+  {s:42,e:46,lab:`<circle cx="100" cy="23.4" r="3" fill="${M5PK}" stroke="none"/><circle cx="100" cy="136.6" r="3" fill="${M5PK}" stroke="none"/>${m5T(106,22,'P')}${m5T(106,150,'Q')}`,cap:'② 2つの円の交点を P、Q とする'},
+  {s:56,e:72,d:'M100 6 L100 156',col:M5PK,w:2.4,cap:'③ 直線 PQ をひく → 垂直二等分線'}],240);
+const M5A_AB = m5Anim(200,180,`<line x1="20" y1="140" x2="195" y2="140"/><line x1="20" y1="140" x2="122.9" y2="17.4"/>${m5T(8,148,'O')}${m5T(186,136,'X')}${m5T(118,14,'Y')}`,[
+  {s:0,e:14,d:'M90 140 A70 70 0 0 0 65 86.4',cap:'① O を中心に円をかく'},
+  {s:16,e:20,lab:`<circle cx="90" cy="140" r="3" fill="${M5PK}" stroke="none"/><circle cx="65" cy="86.4" r="3" fill="${M5PK}" stroke="none"/>${m5T(84,156,'P')}${m5T(48,84,'Q')}`,cap:'① OX、OY との交点を P、Q とする'},
+  {s:28,e:40,d:'M106 82.2 A60 60 0 0 1 139.4 106',cap:'② P を中心に円をかく'},
+  {s:44,e:56,d:'M122.8 70.4 A60 60 0 0 1 119.6 111.3',cap:'② Q を中心に、同じ半径の円をかく'},
+  {s:58,e:62,lab:`<circle cx="124.9" cy="91.1" r="3" fill="${M5PK}" stroke="none"/>${m5T(130,84,'R')}`,cap:'② 交点を R とする'},
+  {s:66,e:80,d:'M20 140 L183 64',col:M5PK,w:2.4,cap:'③ 半直線 OR をひく（完成）'}],240);
+const M5A_PL = m5Anim(220,165,`<line x1="10" y1="120" x2="210" y2="120"/><circle cx="110" cy="120" r="2.5" fill="currentColor"/>${m5T(104,136,'P')}${m5T(196,114,'ℓ','font-style="italic"')}`,[
+  {s:0,e:16,d:'M60 120 A50 50 0 0 1 160 120',cap:'① P を中心に円をかく'},
+  {s:18,e:22,lab:`<circle cx="60" cy="120" r="3" fill="${M5PK}" stroke="none"/><circle cx="160" cy="120" r="3" fill="${M5PK}" stroke="none"/>${m5T(52,136,'A')}${m5T(158,136,'B')}`,cap:'① ℓ との交点を A、B とする'},
+  {s:30,e:42,d:'M93.8 47.5 A80 80 0 0 1 123.9 71.9',cap:'② A を中心に円をかく'},
+  {s:46,e:58,d:'M96.1 71.9 A80 80 0 0 1 126.2 47.5',cap:'② B を中心に、同じ半径の円をかく'},
+  {s:60,e:64,lab:`<circle cx="110" cy="57.6" r="3" fill="${M5PK}" stroke="none"/>${m5T(117,42,'Q')}`,cap:'② 交点を Q とする'},
+  {s:68,e:80,d:'M110 18 L110 125',col:M5PK,w:2.4,cap:'③ 直線 PQ をひく → 垂線'}],250);
+const M5A_PL2 = m5Anim(220,225,`<line x1="10" y1="100" x2="210" y2="100"/><circle cx="110" cy="30" r="2.5" fill="currentColor"/>${m5T(116,28,'P')}${m5T(196,94,'ℓ','font-style="italic"')}`,[
+  {s:0,e:16,d:'M178.9 87.9 A90 90 0 0 1 41.1 87.9',cap:'① P を中心に円をかく'},
+  {s:18,e:22,lab:`<circle cx="53.4" cy="100" r="3" fill="${M5PK}" stroke="none"/><circle cx="166.6" cy="100" r="3" fill="${M5PK}" stroke="none"/>${m5T(42,117,'A')}${m5T(168,117,'B')}`,cap:'① ℓ との交点を A、B とする'},
+  {s:30,e:42,d:'M126.1 153 A90 90 0 0 1 89.9 182.3',cap:'② A を中心に円をかく'},
+  {s:46,e:58,d:'M130.1 182.3 A90 90 0 0 1 93.9 153',cap:'② B を中心に、同じ半径の円をかく'},
+  {s:60,e:64,lab:`<circle cx="110" cy="170" r="3" fill="${M5PK}" stroke="none"/>${m5T(115,203,'Q')}`,cap:'② 交点を Q とする'},
+  {s:68,e:80,d:'M110 15 L110 190',col:M5PK,w:2.4,cap:'③ 直線 PQ をひく → 垂線'}],250);
 /* --- 問題バンク --- */
 const M5SYM = [['正三角形','線対称のみ'],['二等辺三角形','線対称のみ'],['正方形','線対称・点対称の両方'],['長方形','線対称・点対称の両方'],['ひし形','線対称・点対称の両方'],['平行四辺形','点対称のみ'],['円','線対称・点対称の両方'],['正五角形','線対称のみ'],['正六角形','線対称・点対称の両方'],['等脚台形（上底と下底以外の2辺が等しい台形）','線対称のみ'],['3辺の長さがすべてちがう三角形','どちらでもない']];
 const M5SYMP = [
@@ -7992,12 +8028,12 @@ const M1C5_LESSONS = [
   { id:'2-4', t:'移動の組み合わせ', sub:'平行・回転・対称', plan:Array(5).fill('k5Mv4'), body:()=>`
     <section class="panel"><h3>移動を見分ける</h3><p><b>〇 正方形 ABCD（各辺の中点 E、F、G、H、対角線の交点 O）で、△OAE を移動して重なる三角形は？</b></p>${M5F_SQ}${kmTbl([['平行移動','△OFC'],['点 O を中心に 180° 回転','△OCG'],['直線 EG について対称移動','△OEB'],['直線 HF について対称移動','△ODG']],['移動','重なる三角形'])}<p class="small muted">頂点の対応（A→？、E→？、O→？）を順に考えると、まちがえにくい。</p></section>` },
   { id:'2-5', t:'垂直二等分線の作図', sub:'線分の中点', plan:Array(5).fill('k5Con'), body:()=>`
-    <section class="panel"><h3>線分 AB の垂直二等分線</h3>${rule('線分の中点を通り、その線分に垂直な直線を 垂直二等分線 という')}${M5F_PB}${ex('① 点 A、B を中心として、等しい半径の円をかく<br>② その2円の交点を P、Q とする<br>③ 直線 PQ をひく')}<p class="small muted">垂直二等分線上の点は、2点 A、B から等しい距離にある。作図は定規とコンパスだけを使う。</p></section>` },
+    <section class="panel"><h3>線分 AB の垂直二等分線</h3>${rule('線分の中点を通り、その線分に垂直な直線を 垂直二等分線 という')}${M5A_PB}${ex('① 点 A、B を中心として、等しい半径の円をかく<br>② その2円の交点を P、Q とする<br>③ 直線 PQ をひく')}<p class="small muted">垂直二等分線上の点は、2点 A、B から等しい距離にある。作図は定規とコンパスだけを使う。</p></section>` },
   { id:'2-6', t:'角の二等分線の作図', sub:'∠XOY を2等分', plan:Array(5).fill('k5Con'), body:()=>`
-    <section class="panel"><h3>∠XOY の二等分線</h3>${M5F_AB}${ex('① 点 O を中心とする円をかき、OX、OY との交点を P、Q とする<br>② P、Q を中心として等しい半径の円をかき、その交点を R とする<br>③ 半直線 OR をひく')}<p class="small muted">角の二等分線上の点は、角の2辺から等しい距離にある。</p></section>` },
+    <section class="panel"><h3>∠XOY の二等分線</h3>${M5A_AB}${ex('① 点 O を中心とする円をかき、OX、OY との交点を P、Q とする<br>② P、Q を中心として等しい半径の円をかき、その交点を R とする<br>③ 半直線 OR をひく')}<p class="small muted">角の二等分線上の点は、角の2辺から等しい距離にある。</p></section>` },
   { id:'2-7', t:'垂線の作図', sub:'点を通る垂線', plan:Array(5).fill('k5Con'), body:()=>`
-    <section class="panel"><h3>直線上の点 P を通る垂線</h3>${M5F_PL}${ex('① 点 P を中心とする円をかき、ℓ との交点を A、B とする<br>② A、B を中心として等しい半径の円をかき、交点を Q とする<br>③ 直線 PQ をひく')}<p class="small muted">180° の角（∠APB）の二等分線とみることができる。</p></section>
-    <section class="panel"><h3>直線上にない点 P を通る垂線</h3>${ex('① 点 P を中心とする円をかき、ℓ との交点を A、B とする<br>② A、B を中心として等しい半径の円をかき、交点の1つを Q とする<br>③ 直線 PQ をひく')}<p class="small muted">線分 AB の垂直二等分線をひくのと同じ考え方。</p></section>` },
+    <section class="panel"><h3>直線上の点 P を通る垂線</h3>${M5A_PL}${ex('① 点 P を中心とする円をかき、ℓ との交点を A、B とする<br>② A、B を中心として等しい半径の円をかき、交点を Q とする<br>③ 直線 PQ をひく')}<p class="small muted">180° の角（∠APB）の二等分線とみることができる。</p></section>
+    <section class="panel"><h3>直線上にない点 P を通る垂線</h3>${M5A_PL2}${ex('① 点 P を中心とする円をかき、ℓ との交点を A、B とする<br>② A、B を中心として等しい半径の円をかき、交点の1つを Q とする<br>③ 直線 PQ をひく')}<p class="small muted">線分 AB の垂直二等分線をひくのと同じ考え方。</p></section>` },
   { id:'2-8', t:'作図の利用', sub:'最短距離・いろいろな角', plan:Array(5).fill('k5Use'), body:()=>`
     <section class="panel"><h3>最短距離</h3><p><b>〇 AP＋PB が最短となる、直線 ℓ 上の点 P の位置は？</b></p>${M5F_SHORT}${ex('A を ℓ について対称移動した点を A′ とすると AP＝A′P<br>AP＋PB＝A′P＋PB が最短 → A′、P、B が一直線上<br>A′B と ℓ の交点を P とする')}</section>
     <section class="panel"><h3>いろいろな角</h3>${kmTbl([['60°','正三角形をかく'],['30°','60° の二等分線'],['90°','垂線'],['45°','90° の二等分線'],['15°','30° の二等分線（60° の '+frH(1,4)+'）']],['角','作図のしかた'])}</section>` },
