@@ -7196,9 +7196,11 @@ const M1C0 = [
     <section class="panel"><h3>わり算</h3>${rule('わる数の 逆数（分母と分子を入れかえた数）をかける')}${ex(frH(15,16)+' の逆数 → '+frH(16,15))}${ex(frH(3,8)+' ÷ '+frH(15,16)+' ＝ '+frH(3,8)+' × '+frH(16,15)+' ＝ '+frH(u(3,1)+'×'+u(16,2),d(8,1)+'×'+d(15,5))+' ＝ '+frH(2,5))}${ex(frH(1,6)+' × 3 ÷ '+frH(5,4)+' ＝ '+frH('1×'+u(3,1)+'×'+u(4,2),d(6,1)+'×5')+' ＝ '+frH(2,5))}</section>`; } },
   { id:'0-6', t:'式と計算の順序', sub:'小学4年', plan:Array(5).fill('m1Ord0'), body:()=>`
     <section class="panel"><h3>計算の順序</h3>${rule('① ( )の中<br>② ×、÷<br>③ ＋、−')}${ex('3×8 − 4÷2 ＝ 24 − 2 ＝ 22')}${ex('(3×8 − 4)÷2 ＝ 20÷2 ＝ 10')}${ex('3×(8 − 4÷2) ＝ 3×6 ＝ 18')}<p class="small muted">同じ数字でも、順序がかわると答えがかわります。</p></section>` },
-  { id:'0-7', t:'計算のきまり', sub:'小学4〜6年', plan:Array(5).fill('m1Law'), body:()=>`
-    <section class="panel"><h3>交換法則・結合法則</h3>${rule('a＋b ＝ b＋a　　a×b ＝ b×a<br>(a＋b)＋c ＝ a＋(b＋c)<br>(a×b)×c ＝ a×(b×c)')}${ex('6.3＋2.8＋3.7 ＝ (6.3＋3.7)＋2.8 ＝ 10＋2.8 ＝ 12.8')}${ex('2×8×5×7 ＝ (2×5)×(8×7) ＝ 10×56 ＝ 560')}</section>
-    <section class="panel"><h3>分配法則</h3>${rule('(a＋b)×c ＝ a×c＋b×c<br>(a−b)×c ＝ a×c−b×c')}${ex('10×('+frH(1,5)+'＋'+frH(1,2)+') ＝ 10×'+frH(1,5)+'＋10×'+frH(1,2)+' ＝ 2＋5 ＝ 7')}</section>` },
+  { id:'0-7', t:'計算のきまり', sub:'小学4〜6年', plan:Array(5).fill('m1Law'), body:()=>{ const dist=(op,up)=>{ const y=up?40:20, by=up?y-17:y+7, cy=up?-6:58, mid='m'+(up?'u':'d'), ar=(x1,x2)=>`<path d="M${x1} ${by} Q${(x1+x2)/2} ${cy} ${x2+2} ${by}" fill="none" stroke="#e0457b" stroke-width="1.8" marker-end="url(#${mid})"/>`;
+      return `<svg viewBox="0 0 270 ${up?46:58}" style="width:100%;max-width:300px;display:block;margin:2px 0" font-size="19" fill="#7a1f45" font-weight="700"><defs><marker id="${mid}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#e0457b"/></marker></defs><text x="4" y="${y}">(</text><text x="13" y="${y}">a</text><text x="28" y="${y}">${op}</text><text x="47" y="${y}">b</text><text x="60" y="${y}">)</text><text x="70" y="${y}">×</text><text x="87" y="${y}">c</text><text x="104" y="${y}">＝ a×c${op}b×c</text>${ar(92,17)}${ar(92,52)}</svg>`; };
+      return `
+    <section class="panel"><h3>交換法則・結合法則</h3>${rule('<b>○交換法則</b>：計算の順番を入れかえても、結果は同じ<br>a＋b＝b＋a　　a×b＝b×a<br><b>○結合法則</b>：どこから計算しても、結果は同じ<br>(a＋b)＋c＝a＋(b＋c)<br>(a×b)×c＝a×(b×c)')}${ex('6.3＋2.8＋3.7 ＝ (6.3＋3.7)＋2.8 ＝ 10＋2.8 ＝ 12.8')}${ex('2×8×5×7 ＝ (2×5)×(8×7) ＝ 10×56 ＝ 560')}</section>
+    <section class="panel"><h3>分配法則</h3><div class="rule">${dist('＋',true)}${dist('−',false)}</div>${ex('10×('+frH(1,5)+'＋'+frH(1,2)+') ＝ 10×'+frH(1,5)+'＋10×'+frH(1,2)+' ＝ 2＋5 ＝ 7')}</section>`; } },
   { id:'0-8', t:'計算の工夫', sub:'小学4年', plan:Array(5).fill('m1Kufu'), body:()=>`
     <section class="panel"><h3>キリのよい数をつくる</h3>${rule('99 ＝ 100−1、25×4 ＝ 100 などを使う')}${ex('57×99 ＝ 57×(100−1)<br>＝ 5700 − 57 ＝ 5643')}${ex('25×32 ＝ (25×4)×8<br>＝ 100×8 ＝ 800')}${ex('18×7＋18×3 ＝ 18×(7＋3)<br>＝ 18×10 ＝ 180')}</section>` },
 ];
