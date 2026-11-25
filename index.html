@@ -7513,7 +7513,7 @@ const M1C2_LESSONS = [
   { id:'1-5', t:'式の値', sub:'代入する', plan:['m1Val1','m1Val1','m1Val1','m1ValF','m1Val1'], body:()=>`
     <section class="panel"><h3>代入と式の値</h3>${rule('式の文字に数をあてはめることを 代入 する、<br>代入して計算した結果を 式の値 という')}${ex('a＝4 のとき 2a＋3 ＝ 2×4＋3 ＝ 11')}${ex('x＝−2 のとき −x ＝ (−1)×(−2) ＝ 2')}${ex('x＝−3 のとき '+frH(9,'x')+' ＝ 9÷(−3) ＝ −3')}${ex('a＝−4 のとき a² ＝ (−4)² ＝ 16')}<p class="small muted">負の数を代入するときは ( ) をつける。</p></section>` },
   { id:'1-6', t:'文字が2つ以上ある式の値', sub:'それぞれ代入', plan:Array(5).fill('m1Val2'), body:()=>`
-    <section class="panel"><h3>2つの文字</h3>${ex('x＝3、y＝6 のとき 4x＋3y<br>＝ 4×3＋3×6 ＝ 12＋18 ＝ 30')}${ex('a＝−2、b＝4 のとき −7a＋5b<br>＝ (−7)×(−2)＋5×4 ＝ 14＋20 ＝ 34')}</section>` },
+    <section class="panel"><h3>2つの文字</h3><p><b>x＝3、y＝6 のとき</b></p>${ex('4x＋3y<br>＝ 4×3＋3×6<br>＝ 12＋18<br>＝ 30')}<p><b>a＝−2、b＝4 のとき</b></p>${ex('−7a＋5b<br>＝ (−7)×(−2)＋5×4<br>＝ 14＋20<br>＝ 34')}</section>` },
   { id:'2-1', sec:'2　文字式の計算', t:'項と係数・一次式', sub:'式のしくみ', plan:Array(5).fill('m1Term2'), body:()=>`
     <section class="panel"><h3>項と係数</h3>${rule('＋で結ばれた1つ1つを 項、<br>文字をふくむ項の数の部分を その文字の 係数 という')}${ex('2x−y−3 ＝ 2x＋(−y)＋(−3)<br>項：2x，−y，−3　x の係数 2、y の係数 −1')}${ex(frH('a',2)+'−3b → a の係数 '+frH(1,2)+'、b の係数 −3')}</section>
     <section class="panel"><h3>一次式</h3>${rule('文字が1つだけの項を 1次の項、<br>1次の項だけ、または1次の項と数の項の和の式を 一次式 という')}<p class="small">例：3x＋1、−4a、2x−5</p></section>` },
