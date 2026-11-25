@@ -7014,6 +7014,140 @@ const M2C1_LESSONS = [
     <section class="panel"><h3>1章　式の計算　章末テスト</h3><p>1節・2節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
 ];
 
+/* ===== 中1数学 1章 正の数・負の数（作り直し） ===== */
+const m1R = (n,d) => { if(d<0){ n=-n; d=-d; } const g=gcd(n,d)||1; return [n/g,d/g]; };
+const m1F = (n,d) => { [n,d]=m1R(n,d); return d===1 ? fmt(n) : (n<0?M:'')+frH(Math.abs(n),d); };
+const m1Fp = (n,d) => { [n,d]=m1R(n,d); return n<0 ? '('+m1F(n,d)+')' : (d===1?'(+'+n+')':'(+'+frH(n,d)+')'); };
+const m1FrU = (n,d) => frH(n,d);
+const M1OPP = [
+  ['500円の利益を +500円 と表すとき、300円の損失は？','−300円',['+300円','−500円','+800円'],'損失は利益の反対なので「−」を使う。'],
+  ['5cm 長いことを +5cm と表すとき、2cm 短いことは？','−2cm',['+2cm','−5cm','+3cm'],'短いは長いの反対なので「−」。'],
+  ['8kg 増えることを +8kg と表すとき、3kg 減ることは？','−3kg',['+3kg','−8kg','+5kg'],'減るは増えるの反対なので「−」。'],
+  ['海面より 200m 高いところを +200m と表すとき、海面より 50m 低いところは？','−50m',['+50m','−200m','+150m'],'低いは高いの反対なので「−」。'],
+  ['今から3時間後を +3時間 と表すとき、2時間前は？','−2時間',['+2時間','−3時間','+5時間'],'前は後の反対なので「−」。'],
+  ['北へ 4km を +4km と表すとき、南へ 6km は？','−6km',['+6km','−4km','+2km'],'南は北の反対なので「−」。'],
+  ['「−7℃」を「上がる・下がる」を使って言いかえると？（上がることを＋とする）','7℃ 下がる',['7℃ 上がる','−7℃ 下がる','0℃ になる'],'「−」がついているので反対の意味の「下がる」。'],
+  ['「−4kg 減る」を、正の数を使って言いかえると？','4kg 増える',['4kg 減る','−4kg 増える','8kg 減る'],'「−4減る」は「4増える」と同じ意味。'],
+  ['「−200円の利益」を、正の数を使って言いかえると？','200円の損失',['200円の利益','−200円の損失','400円の損失'],'負の数の利益は、損失と同じ意味。'],
+];
+const M1SET = [
+  ['自然数どうしの「ひき算」の答えは、いつも自然数になる？','ならないことがある',['いつもなる','必ず負の数になる','必ず0になる'],'例えば 2−5＝−3 は自然数ではない。'],
+  ['自然数どうしの「かけ算」の答えは、いつも自然数になる？','いつもなる',['ならないことがある','必ず負の数になる','必ず分数になる'],'自然数×自然数は、必ず自然数。'],
+  ['整数どうしの「わり算」の答えは、いつも整数になる？','ならないことがある',['いつもなる','必ず負の数になる','必ず0になる'],'例えば 1÷3＝1/3 は整数ではない。'],
+  ['整数どうしの「ひき算」の答えは、いつも整数になる？','いつもなる',['ならないことがある','必ず自然数になる','必ず正の数になる'],'整数の範囲なら、ひき算はいつもできる。'],
+  ['数の範囲を「整数」から「数全体」に広げると、いつもできるようになる計算は？','わり算（0でわる場合を除く）',['ひき算だけ','たし算だけ','どれもできない'],'分数や小数まで考えると、わり算もいつもできる。'],
+];
+const M1PRIME=[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47];
+const m1Fac = n => { const f=[]; let p=2; while(n>1){ while(n%p===0){ f.push(p); n/=p; } p++; } return f; };
+const m1FacS = f => { const c={}; f.forEach(p=>c[p]=(c[p]||0)+1); return Object.keys(c).map(p=>c[p]>1?`${p}<sup>${c[p]}</sup>`:p).join('×'); };
+Object.assign(G,{
+  m1FrAS(){ const d1=pick([2,3,4,5,6]), d2=pick([2,3,4,6,8].filter(x=>x!==d1)), n1=ri(1,d1-1), n2=ri(1,d2-1), op=pick(['＋','−']);
+    let a=n1*d2, b=n2*d1; if(op==='−'&&a<b){ return G.m1FrAS(); } const n=op==='＋'?a+b:a-b, d=d1*d2; if(n===0) return G.m1FrAS();
+    const A=m1F(n,d); return mq2('計算しよう', `${frH(n1,d1)} ${op} ${frH(n2,d2)}`, A, [m1F(op==='＋'?n1+n2:Math.abs(n1-n2)||1,d1+d2), m1F(n+1,d), m1F(n,d+1), m1F(op==='＋'?a-b||1:a+b,d)], '分母をそろえて（通分して）から計算しよう。', `${frH(n1,d1)} ${op} ${frH(n2,d2)} ＝ ${frH(a,d)} ${op} ${frH(b,d)} ＝ ${A}`); },
+  m1FrMD(){ const n1=ri(1,5), d1=ri(2,7), n2=ri(1,5), d2=ri(2,7), op=pick(['×','÷']); if(gcd(n1,d1)>1||gcd(n2,d2)>1||n1===d1||n2===d2) return G.m1FrMD();
+    const [n,d]= op==='×'?[n1*n2,d1*d2]:[n1*d2,d1*n2]; const A=m1F(n,d);
+    return mq2('計算しよう', `${frH(n1,d1)} ${op} ${frH(n2,d2)}`, A, [m1F(op==='×'?n1*d2:n1*n2, op==='×'?d1*n2:d1*d2), m1F(n+1,d), m1F(d,n), m1F(n1+n2,d1+d2), m1F(n+2,d), m1F(n,d+2), m1F(n+3,d+1)], op==='×'?'分子どうし、分母どうしをかける。':'わる数の逆数をかける。', op==='×'?`${frH(n1+'×'+n2,d1+'×'+d2)} ＝ ${A}`:`${frH(n1,d1)} × ${frH(d2,n2)} ＝ ${A}`); },
+  m1Opp(){ const [q,a,w,e]=kaPick(M1OPP); return mq2('どう表す？', q, a, w, '反対の性質をもつ量は、反対の符号で表せます。', e, { words:true }); },
+  m1AbsInt(){ if(Math.random()<.5){ const n=ri(2,6), lt=Math.random()<.5, k=lt?2*(n-1)+1:2*n+1;
+      return mq2('いくつある？', `絶対値が ${n} ${lt?'未満':'以下'} の整数は何個？`, k+'個', [(k-1)+'個',(lt?2*n+1:2*(n-1)+1)+'個',(lt?n:n+1)+'個',(k+1)+'個',(k+3)+'個'], '0 をふくめて、負の数も数えよう。', `${lt?'−'+(n-1)+' から '+(n-1):'−'+n+' から '+n} までの整数で、0 をふくめて ${k} 個。`, { words:true }); }
+    const n=ri(1,9); return mq2('どれ？', `絶対値が ${n} になる数は？`, `+${n} と ${M}${n}`, [`+${n} だけ`,`${M}${n} だけ`,`0 と ${n}`], '0 からの距離が同じ数は、正と負の2つあります。', `0 から ${n} 離れた数は +${n} と ${M}${n} の2つ。`, { words:true }); },
+  m1Dec(){ if(Math.random()<.5){ const a=nz(-30,30)/10, b=nz(-30,30)/10, s=Math.round((a+b)*10)/10; if(s===0) return G.m1Dec(); const f=v=>v<0?'('+M+Math.abs(v)+')':'(+'+v+')';
+      return mq2('計算しよう', `${f(a)} ＋ ${f(b)}`, fmt(s), [fmt(Math.round((a-b)*10)/10), fmt(-s), fmt(Math.round((s+1)*10)/10), fmt(Math.round((s-1)*10)/10), fmt(Math.round((s+0.1)*10)/10)], '小数でも、整数のときと同じルールで計算します。', `${f(a)} ＋ ${f(b)} ＝ ${fmt(s)}`); }
+    const d=pick([2,3,4,6]), n1=nz(-5,5), n2=nz(-5,5); const S=m1F(n1*1+n2*1,d), op=pick(['＋','−']), r=op==='＋'?n1+n2:n1-n2; if(r===0) return G.m1Dec();
+    return mq2('計算しよう', `${m1Fp(n1,d)} ${op} ${m1Fp(n2,d)}`, m1F(r,d), [m1F(-r,d), m1F(op==='＋'?n1-n2||7:n1+n2||7,d), m1F(r,2*d), m1F(r+1,d), m1F(r-1,d)], '分母が同じなら、分子どうしを計算します。'+(op==='−'?'ひく数の符号を変えて、たし算に。':''), `${m1Fp(n1,d)} ${op} ${m1Fp(n2,d)} ＝ ${m1F(r,d)}`); },
+  m1Term(){ const t=[nz(-9,9),nz(-9,9),nz(-9,9)]; const expr=fmt(t[0])+t.slice(1).map(v=>v>0?` ＋ ${v}`:` − ${-v}`).join('');
+    const A=t.map(v=>v>0?'+'+v:fmt(v)).join('，'); return mq2('この式の項は？', expr, A, [t.map(v=>String(Math.abs(v))).join('，'), t.map(v=>v>0?fmt(-v):'+'+(-v)).join('，'), [t[0],-t[1],t[2]].map(v=>v>0?'+'+v:fmt(v)).join('，')], '加法だけの式に直して、たされている数を見よう。', `${t.map(sg).join(' ＋ ')} と同じなので、項は ${A}。`); },
+  m1Recip(){ if(Math.random()<.5){ const n=nz(-9,9); if(Math.abs(n)===1) return G.m1Recip(); const A=m1F(1,n); return mq2('逆数は？', `${fmt(n)} の逆数`, A, [m1F(-1,n), fmt(-n), m1F(n,1)==fmt(n)?m1F(1,2*n):''].concat([fmt(n)]), '積が 1 になる数が逆数。符号はそのまま。', `${fmt(n)} × ${A} ＝ 1 なので、逆数は ${A}。`); }
+    const a=nz(-5,5), b=ri(2,7); if(Math.abs(a)===b||gcd(a,b)>1) return G.m1Recip(); const A=m1F(b,a); return mq2('逆数は？', `${m1F(a,b)} の逆数`, A, [m1F(-b,a), m1F(-a,b), m1F(a,b)], '分母と分子を入れかえる。符号はそのまま。', `${m1F(a,b)} × ${A} ＝ 1`); },
+  m1DivR(){ const a=nz(-9,9), b=pick([2,3,4,5]), c=nz(-5,5); if(gcd(c,b)>1) return G.m1DivR(); const [n,d]=m1R(a*b,c), A=m1F(n,d);
+    return mq2('計算しよう', `${sg(a)} ÷ ${m1Fp(c,b)}`, A, [m1F(a*c,b), m1F(-n,d), m1F(n+1,d)], 'わる数の逆数をかけて、かけ算に直そう。', `${sg(a)} × ${m1Fp(b,c)} ＝ ${A}`); },
+  m1MD3(){ const a=nz(-6,6), b=nz(-4,4), c=nz(-4,4), p=a*b; if(p%c) return G.m1MD3(); const r=p/c, k=[a,b,c].filter(v=>v<0).length;
+    return mq2('計算しよう', `${sg(a)} × ${sg(b)} ÷ ${sg(c)}`, fmt(r), [fmt(-r), fmt(a*b*c), fmt(r+1), fmt(r-1), fmt(r+2)], 'わり算は逆数のかけ算に直し、まず符号を決めよう。', `負の数が ${k} 個なので ${k%2?'−':'＋'}。絶対値は ${Math.abs(a)}×${Math.abs(b)}÷${Math.abs(c)}＝${Math.abs(r)}。`); },
+  m1Pow(){ const t=ri(0,3), n=ri(2,5), e=n<=3?pick([2,3]):2;
+    if(t===0){ const v=(-n)**e; return mq2('計算しよう', `(${M}${n})<sup>${e}</sup>`, fmt(v), [fmt(-v), fmt(-n*e), fmt(n*e), fmt(v+1), fmt(v-1)], `(${M}${n}) を ${e} 回かけます。`, `(${M}${n})<sup>${e}</sup> ＝ ${Array(e).fill('('+M+n+')').join('×')} ＝ ${fmt(v)}`); }
+    if(t===1){ const v=-(n**e); return mq2('計算しよう', `${M}${n}<sup>${e}</sup>`, fmt(v), [fmt(-v), fmt(-n*e), fmt((-n)**(e+1)), fmt(v-1), fmt(v+1)], `${M}${n}<sup>${e}</sup> は −(${n}<sup>${e}</sup>)。${n} だけを ${e} 回かけます。`, `${M}${n}<sup>${e}</sup> ＝ −(${Array(e).fill(n).join('×')}) ＝ ${fmt(v)}`); }
+    if(t===2){ return mq2('累乗の指数を使って表すと？', `${Array(n).fill('a').join('×')}`, `a<sup>${n}</sup>`, [`${n}a`,`a<sup>${n+1}</sup>`,`a+${n}`], '同じ数を何回かけたかを、右上に小さく書く（指数）。', `a を ${n} 回かけているので a<sup>${n}</sup>。`); }
+    const a=nz(-3,3), v=(a**2)*n; return mq2('計算しよう', `${n} × ${sg(a)}<sup>2</sup>`, fmt(v), [fmt(-v), fmt((n*a)**2), fmt(n*a*2), fmt(v+1), fmt(v-1)], '累乗を先に計算します。', `${sg(a)}<sup>2</sup> ＝ ${a*a}、${n}×${a*a}＝${fmt(v)}`); },
+  m1Four(){ const t=ri(0,2);
+    if(t===0){ const a=nz(-9,9), b=nz(-5,5), c=nz(-5,5), v=a+b*c; return mq2('計算しよう', `${fmt(a)} ＋ ${sg(b)} × ${sg(c)}`, fmt(v), [fmt((a+b)*c), fmt(a-b*c), fmt(-v), fmt(v+1), fmt(v-1)], 'かけ算・わり算を、たし算・ひき算より先に。', `${sg(b)}×${sg(c)}＝${fmt(b*c)}、${fmt(a)}＋${sg(b*c)}＝${fmt(v)}`); }
+    if(t===1){ const a=nz(-6,6), b=nz(-6,6), c=nz(-4,4), v=(a+b)*c; if(a+b===0) return G.m1Four(); return mq2('計算しよう', `(${fmt(a)} ＋ ${fmt(b)}) × ${sg(c)}`, fmt(v), [fmt(a+b*c), fmt(-v), fmt((a-b)*c), fmt(v+1), fmt(v-1)], 'かっこの中を先に計算します。', `(${fmt(a)}＋${fmt(b)})＝${fmt(a+b)}、${sg(a+b)}×${sg(c)}＝${fmt(v)}`); }
+    const a=nz(-9,9), b=nz(-3,3), c=nz(-4,4), v=a-b*b*c; return mq2('計算しよう', `${fmt(a)} − ${sg(b)}<sup>2</sup> × ${sg(c)}`, fmt(v), [fmt(a+b*b*c), fmt((a-b*b)*c), fmt(a-2*b*c), fmt(v+1), fmt(v-1)], '累乗 → かけ算・わり算 → たし算・ひき算 の順。', `${sg(b)}<sup>2</sup>＝${b*b}、${b*b}×${sg(c)}＝${fmt(b*b*c)}、${fmt(a)}−${sg(b*b*c)}＝${fmt(v)}`); },
+  m1Dist(){ const k=pick([12,18,24,30,36]), d1=pick([2,3,4,6].filter(x=>k%x===0)), d2=pick([2,3,4,6].filter(x=>k%x===0&&x!==d1)), n1=nz(-3,3), n2=nz(-3,3); const v=k*n1/d1+k*n2/d2; const s=nz(-1,1)<0?-1:1, K=s*k, V=s*v; if(V===0) return G.m1Dist();
+    return mq2('分配法則を使って計算しよう', `(${m1F(n1,d1)} ${n2<0?'−':'＋'} ${m1F(Math.abs(n2),d2)}) × ${sg(K)}`, fmt(V), [fmt(-V), fmt(s*k*n1/d1+n2), fmt(V+s), fmt(V-s*2), fmt(V+3)], 'a×(b＋c)＝a×b＋a×c。それぞれにかけてから、たそう。', `${m1F(n1,d1)}×${sg(K)}＝${fmt(s*k*n1/d1)}、${m1F(n2,d2)}×${sg(K)}＝${fmt(s*k*n2/d2)}、合わせて ${fmt(V)}`); },
+  m1Set(){ const [q,a,w,e]=kaPick(M1SET); return mq2('考えよう', q, a, w, '反例（うまくいかない例）が1つでもあれば「ならないことがある」。', e, { words:true }); },
+  m1Prime(){ if(Math.random()<.4){ const p=pick(M1PRIME.filter(x=>x<40)); const nonp=shuffle([1,9,15,21,27,33,39,49,51,57,25,35].filter(x=>x!==p)).slice(0,3);
+      return mq2('素数はどれ？', '1とその数自身のほかに約数がない数', String(p), nonp.map(String), '1 は素数ではありません。', `${p} の約数は 1 と ${p} だけなので素数。`); }
+    const n=pick([12,18,20,24,28,30,36,40,42,45,48,50,54,60,63,72,84,90,98,100]); const f=m1Fac(n), A=m1FacS(f);
+    const w1=m1FacS(f.slice(0,-1))+'×'+f[f.length-1]*1, w2=f.length>2?m1FacS([f[0]*f[1],...f.slice(2)]).replace(/^(\d+)/,'$1'):'2×'+n/2;
+    return mq2('素因数分解しよう', String(n), A, [f.join('×')===A?f.slice(0,-2).concat([f[f.length-2]*f[f.length-1]]).join('×'):f.join('×'), w2, `${f[0]}×${n/f[0]}`, `${n}×1`], '小さい素数から順にわっていこう（2→3→5→7…）。同じ数は累乗で表す。', `${n} ＝ ${f.join('×')} ＝ ${A}`); },
+  m1Avg(){ const base=pick([50,60,70,80,150]), d=[nz(-8,8),nz(-8,8),nz(-8,8),nz(-8,8)], s=d.reduce((a,b)=>a+b,0); if(s%4||s===0) return G.m1Avg(); const av=base+s/4;
+    return mq2('平均はいくつ？', `基準を ${base} として、4人の記録の基準とのちがいは ${d.map(v=>v>0?'+'+v:fmt(v)).join('，')} でした。4人の平均は？`, String(av), [String(base+s), String(base), String(base-s/4), String(av+1), String(av-1)], '平均＝基準＋（基準とのちがいの平均）', `ちがいの合計は ${fmt(s)}、平均は ${fmt(s)}÷4＝${fmt(s/4)}。${base}${s<0?'−':'＋'}${Math.abs(s/4)}＝${av}`, { words:true }); },
+  m1Diff(){ const base=pick([20,25,30]), x=base+nz(-9,9), y=base+nz(-9,9), dx=x-base, dy=y-base;
+    return mq2('考えよう', `基準を ${base} とすると、${x} は基準より何大きい？（負の数も使って答える）`, dx>0?'+'+dx:fmt(dx), [dx>0?fmt(-dx):'+'+(-dx), String(x), String(Math.abs(dx)+1)], '基準とのちがい＝その数−基準', `${x}−${base}＝${fmt(dx)}`, { words:true }); },
+});
+const M1C1_LESSONS = [
+  { id:'0-1', sec:'0　この章のための復習', t:'分数のたし算・ひき算', sub:'小学校の復習', plan:Array(5).fill('m1FrAS'), body:()=>`
+    <section class="panel"><h3>通分してから計算</h3>${rule('分母がちがう分数は、分母をそろえて（通分して）から計算する')}${ex(frH(1,2)+' ＋ '+frH(1,3)+'<br>＝ '+frH(3,6)+' ＋ '+frH(2,6)+' ＝ '+frH(5,6))}${ex(frH(3,4)+' − '+frH(1,6)+'<br>＝ '+frH(9,12)+' − '+frH(2,12)+' ＝ '+frH(7,12))}<p class="small muted">答えが約分できるときは、約分しておこう。</p></section>` },
+  { id:'0-2', t:'分数のかけ算・わり算', sub:'小学校の復習', plan:Array(5).fill('m1FrMD'), body:()=>`
+    <section class="panel"><h3>かけ算</h3>${rule('分子どうし、分母どうしをかける')}${ex(frH(2,3)+' × '+frH(4,5)+' ＝ '+frH('2×4','3×5')+' ＝ '+frH(8,15))}</section>
+    <section class="panel"><h3>わり算</h3>${rule('わる数の分母と分子を入れかえて（逆数にして）かける')}${ex(frH(3,4)+' ÷ '+frH(2,5)+' ＝ '+frH(3,4)+' × '+frH(5,2)+' ＝ '+frH(15,8))}</section>` },
+  { id:'1-1', sec:'1　正の数・負の数', t:'正の数・負の数', sub:'0より小さい数・符号・自然数', plan:['sign','sign','less','nat','nat'], body:()=>`
+    <section class="panel"><h3>0 より小さい数</h3><p>冬の朝、気温が 0℃ より 3℃ 低いことを <span class="ex">${M}3℃</span> と表します。</p>
+    ${rule('0 より大きい数 → 正の数（＋：正の符号）<br>0 より小さい数 → 負の数（−：負の符号）<br>0 は 正の数でも負の数でもない')}</section>
+    <section class="panel"><h3>数直線で見てみよう</h3><p class="small muted">つまみを左右に動かしてみよう。</p>${slider('sign')}</section>
+    <section class="panel"><h3>自然数</h3>${rule('自然数 ＝ 正の整数（1, 2, 3, …）')}<p class="small muted">0 や 負の整数は 自然数ではありません。</p></section>` },
+  { id:'1-2', t:'反対の性質をもつ量', sub:'＋と−で表す', plan:['ew','m1Opp','m1Opp','m1Opp','m1Opp'], body:()=>`
+    <section class="panel"><h3>反対の方向・性質</h3>${rule('基準からみて 反対の性質をもつ量は<br>一方を正の数、もう一方を負の数で表せる')}
+    ${kmTbl([['東へ 3km<br>→ +3km','西へ 3km<br>→ −3km'],['500円の利益<br>→ +500円','500円の損失<br>→ −500円'],['5kg 増える<br>→ +5kg','5kg 減る<br>→ −5kg']],['正の数で表す','負の数で表す'])}</section>
+    <section class="panel"><h3>言いかえ</h3>${ex('「−3kg 増える」＝「3kg 減る」')}<p class="small muted">負の数を使うと、反対のことばに言いかえられます。</p></section>` },
+  { id:'1-3', t:'数の大小', sub:'数直線・不等号', plan:['compare','compare','compare','ineq','ineq'], body:()=>`
+    <section class="panel"><h3>大小の比べ方</h3>${rule('数直線で 右にあるほど 大きい<br>負の数は 絶対値が大きいほど 小さい')}
+    <p>だから <span class="ex">${M}8 &lt; ${M}2</span>。</p><p class="small muted">不等号「&lt;」「&gt;」は、開いているほうが大きい数です。3つの数は ${M}5 &lt; ${M}1 &lt; 3 のように書きます。</p></section>` },
+  { id:'1-4', t:'絶対値', sub:'0からの距離', plan:['abs','abs','m1AbsInt','m1AbsInt','m1AbsInt'], body:()=>`
+    <section class="panel"><h3>絶対値</h3>${rule('絶対値 ＝ 数直線で 0 からの距離')}<p class="small muted">つまみを動かして、オレンジの長さを確認しよう。</p>${slider('abs')}</section>
+    <section class="panel"><h3>例</h3>${ex('+5 の絶対値は 5、'+M+'5 の絶対値も 5')}${ex('絶対値が 2 以下の整数<br>→ '+M+'2, '+M+'1, 0, 1, 2 の 5個')}</section>` },
+  { id:'2-1', sec:'2　正の数・負の数の計算', t:'加法', sub:'同じ符号・ちがう符号', plan:['add','add','add','add','add'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('同じ符号 → 絶対値の和に、共通の符号<br>ちがう符号 → 絶対値の差に、絶対値の大きいほうの符号')}</section>
+    <section class="panel"><h3>例1　ちがう符号</h3><p class="ex">(+3) ＋ (${M}5) ＝ ${M}2</p>${arrowLine(3,-5)}<p class="small muted">0 から右へ 3、そこから左へ 5 進むと ${M}2。</p></section>
+    <section class="panel"><h3>例2　同じ符号</h3><p class="ex">(${M}2) ＋ (${M}4) ＝ ${M}6</p>${arrowLine(-2,-4)}</section>` },
+  { id:'2-2', t:'減法', sub:'加法に直す', plan:['sub','sub','sub','sub','sub'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('ひく数の符号を変えて、加法に直す')}</section>
+    <section class="panel"><h3>例</h3><p class="ex">(+2) − (${M}4)<br>＝ (+2) ＋ (+4) ＝ 6</p><p class="ex">(${M}3) − (+5)<br>＝ (${M}3) ＋ (${M}5) ＝ ${M}8</p>${arrowLine(-3,-5)}<p class="small muted">0 から ある数をひくと、符号だけが変わる：0 − (${M}7) ＝ 7</p></section>` },
+  { id:'2-3', t:'小数・分数の加法・減法', sub:'整数と同じルール', plan:['m1Dec','m1Dec','m1Dec','m1Dec','m1Dec'], body:()=>`
+    <section class="panel"><h3>小数・分数でも同じ</h3>${rule('小数や分数でも、整数と同じルールで計算する')}${ex('(+1.2) ＋ ('+M+'3.5) ＝ '+M+'2.3')}${ex('('+M+frH(1,4)+') − (+'+frH(3,4)+') ＝ ('+M+frH(1,4)+') ＋ ('+M+frH(3,4)+') ＝ '+M+'1')}</section>` },
+  { id:'2-4', t:'加法と減法の混じった計算', sub:'項・正の項と負の項', plan:['m1Term','m1Term','mix3','mix3','mix3'], body:()=>`
+    <section class="panel"><h3>項</h3><p>${M}3 ＋ 8 − 2 は、(${M}3) ＋ (+8) ＋ (${M}2) と同じ意味です。</p>${rule('加法だけの式で、＋で結ばれた1つ1つの数を「項」という')}<p class="small">項は ${M}3，+8，${M}2　（正の項 +8、負の項 ${M}3 と ${M}2）</p></section>
+    <section class="panel"><h3>計算のしかた</h3>${rule('正の項どうし、負の項どうしを まとめてから計算')}${ex(M+'3 ＋ 8 − 2<br>＝ 8 − 3 − 2<br>＝ 8 − 5 ＝ 3')}</section>` },
+  { id:'2-5', t:'乗法', sub:'符号のルール', plan:['mul','mul','mul','mul','mul'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('同じ符号どうし → ＋（絶対値の積）<br>ちがう符号どうし → −（絶対値の積）')}
+    <div class="signs"><div>(＋)×(＋) → ＋</div><div>(${M})×(${M}) → ＋</div><div>(＋)×(${M}) → ${M}</div><div>(${M})×(＋) → ${M}</div></div></section>
+    <section class="panel"><h3>例</h3><p class="ex">(${M}4) × (${M}3) ＝ 12<br>(+5) × (${M}2) ＝ ${M}10</p><p class="small muted">どんな数に 0 をかけても 0。</p></section>` },
+  { id:'2-6', t:'累乗', sub:'指数・(−3)²と−3²', plan:['m1Pow','m1Pow','m1Pow','m1Pow','m1Pow'], body:()=>`
+    <section class="panel"><h3>累乗と指数</h3>${rule('同じ数をいくつかかけたものを 累乗 という<br>右上の小さい数（かけた個数）を 指数 という')}${ex('5×5 ＝ 5<sup>2</sup>（5の2乗）　　a×a×a ＝ a<sup>3</sup>（aの3乗）')}</section>
+    <section class="panel"><h3>ちがいに注意</h3>${ex('('+M+'3)<sup>2</sup> ＝ ('+M+'3)×('+M+'3) ＝ 9')}${ex(M+'3<sup>2</sup> ＝ '+M+'(3×3) ＝ '+M+'9')}<p class="small muted">かっこがないときは、3 だけを2回かけます。</p></section>` },
+  { id:'2-7', t:'除法', sub:'符号のルール・逆数', plan:['div','div','m1Recip','m1Recip','m1DivR'], body:()=>`
+    <section class="panel"><h3>ルール</h3>${rule('符号のルールは 乗法と同じ<br>同じ符号 → ＋　ちがう符号 → −')}<p class="ex">(${M}12) ÷ (+3) ＝ ${M}4<br>(${M}6) ÷ (${M}2) ＝ 3</p><p class="small muted">0 をどんな数でわっても 0。0 でわることは考えない。</p></section>
+    <section class="panel"><h3>逆数</h3>${rule('2つの数の積が 1 のとき、一方を他方の 逆数 という')}${ex(M+frH(2,3)+' の逆数は '+M+frH(3,2)+'　（符号はそのまま）')}${rule('わる数の逆数をかけて、乗法に直せる')}${ex('(+6) ÷ ('+M+frH(2,3)+') ＝ (+6) × ('+M+frH(3,2)+') ＝ '+M+'9')}</section>` },
+  { id:'2-8', t:'乗法と除法の混じった計算', sub:'負の数の個数で符号', plan:['mul3','mul3','m1MD3','m1MD3','m1MD3'], body:()=>`
+    <section class="panel"><h3>符号を先に決める</h3>${rule('負の数が 偶数個 → ＋<br>負の数が 奇数個 → −')}${ex('('+M+'2) × 3 × ('+M+'4) ＝ +(2×3×4) ＝ 24')}</section>
+    <section class="panel"><h3>乗法だけの式に直す</h3>${ex('(+12) × ('+M+'3) ÷ ('+M+'4)<br>＝ (+12) × ('+M+'3) × ('+M+frH(1,4)+')<br>＝ +'+frH('12×3','4')+' ＝ 9')}</section>` },
+  { id:'2-9', t:'四則の混じった計算', sub:'計算の順序・分配法則', plan:['m1Four','m1Four','m1Four','m1Dist','m1Dist'], body:()=>`
+    <section class="panel"><h3>計算の順序</h3>${rule('① かっこの中・累乗<br>② 乗法・除法<br>③ 加法・減法')}${ex('5 ＋ ('+M+'3) × 4<br>＝ 5 ＋ ('+M+'12) ＝ '+M+'7')}${ex('('+M+'2)<sup>2</sup> − 10 ÷ 5<br>＝ 4 − 2 ＝ 2')}</section>
+    <section class="panel"><h3>分配法則</h3>${rule('(a＋b)×c ＝ a×c＋b×c<br>c×(a＋b) ＝ c×a＋c×b')}${ex('('+frH(1,2)+' − '+frH(1,3)+') × 12<br>＝ '+frH(1,2)+'×12 − '+frH(1,3)+'×12 ＝ 6 − 4 ＝ 2')}</section>` },
+  { id:'2-10', t:'数の集合と四則', sub:'計算がいつもできるか', plan:Array(5).fill('m1Set'), body:()=>`
+    <section class="panel"><h3>数の範囲と計算</h3>${kmTbl([['自然数','○','△','○','△'],['整数','○','○','○','△'],['数全体','○','○','○','○']],['','加法','減法','乗法','除法'])}<p class="small muted">○：いつもできる　△：できないことがある（0 でわる場合は除く）</p>
+    ${ex('自然数どうしの減法：2 − 5 ＝ '+M+'3（自然数ではない）')}${ex('整数どうしの除法：1 ÷ 3 ＝ '+frH(1,3)+'（整数ではない）')}</section>` },
+  { id:'3-1', sec:'3　正の数・負の数の利用', t:'素数と素因数分解', sub:'自然数を素数の積に', plan:['m1Prime','m1Prime','m1Prime','m1Prime','m1Prime'], body:()=>`
+    <section class="panel"><h3>素数</h3>${rule('1 とその数自身のほかに 約数がない自然数を 素数 という<br>（1 は素数にふくめない）')}<p class="small">2, 3, 5, 7, 11, 13, 17, 19, 23, 29, …</p></section>
+    <section class="panel"><h3>素因数分解</h3>${rule('自然数を 素数だけの積で表すこと')}<table style="margin:6px auto;border-collapse:collapse;font-size:1.05rem"><tr><td style="padding:2px 6px;text-align:right">2</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">60</td></tr><tr><td style="padding:2px 6px;text-align:right">2</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">30</td></tr><tr><td style="padding:2px 6px;text-align:right">3</td><td style="padding:2px 10px;border-left:2px solid currentColor;border-bottom:2px solid currentColor">15</td></tr><tr><td></td><td style="padding:2px 10px">5</td></tr></table>${ex('60 ＝ 2×2×3×5 ＝ 2<sup>2</sup>×3×5')}<p class="small muted">小さい素数から順にわっていこう。</p></section>` },
+  { id:'3-2', t:'基準とのちがいと平均', sub:'正の数・負の数を使って', plan:['m1Diff','m1Diff','m1Avg','m1Avg','m1Avg'], body:()=>`
+    <section class="panel"><h3>基準とのちがい</h3>${rule('基準より大きい → 正の数　基準より小さい → 負の数')}
+    ${kmTbl([['Aさん','52','+2'],['Bさん','47',M+'3'],['Cさん','55','+5'],['Dさん','46',M+'4']],['','記録','基準50とのちがい'])}</section>
+    <section class="panel"><h3>平均の求め方</h3>${rule('平均 ＝ 基準 ＋（ちがいの合計 ÷ 個数）')}${ex('ちがいの合計：(+2)＋('+M+'3)＋(+5)＋('+M+'4) ＝ 0<br>平均：50 ＋ 0÷4 ＝ 50')}<p class="small muted">大きな数をそのままたすより、計算が楽になります。</p></section>` },
+  { id:'4-1', sec:'章末テスト', t:'章末テスト', sub:'1章の総まとめ', test:true, plan:['m1Opp','compare','m1AbsInt','add','sub','m1Dec','mix3','m1Pow','m1MD3','m1Four','m1Prime','m1Avg'], body:()=>`
+    <section class="panel"><h3>1章　正の数・負の数　章末テスト</h3><p>1節〜3節の範囲から12問出題します。</p><p class="small muted">まちがえた問題は、もう一度その小単元を見直しましょう。</p></section>` },
+];
+
 /* ===== 中2数学 2章 連立方程式 ===== */
 const w3f = n => n<0 ? '−'+(-n) : String(n);
 const w3eq = (a,b,c) => `${pfmt(mk([a,'x'],[b,'y']))}＝${w3f(c)}`;
@@ -15767,7 +15901,7 @@ const UNITS = {
   civ0:{ no:'', title:'コラム　公民とは', subject:'社会', course:'jso', subj:10, lessons:CIV0_LESSONS },
   hist0:{ no:'', title:'コラム　歴史とは', subject:'社会', course:'jso', subj:3, lessons:HIST0_LESSONS },
   geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
-  pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:LESSONS, cards:true, drill:'ch1' },
+  pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:M1C1_LESSONS, cards:true, drill:'ch1' },
   kuku:{ no:'1', title:'九九', subject:'算数', course:'rev', subj:0, lessons:KUKU_LESSONS },
   wari:{ no:'2', title:'わり算', subject:'算数', course:'rev', subj:0, lessons:WARI_LESSONS },
   abc: { no:'A', title:'アルファベット', subject:'英語', course:'rev', subj:2, lessons:ABC_LESSONS },
