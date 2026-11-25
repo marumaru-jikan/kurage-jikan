@@ -248,6 +248,7 @@ ol.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
 .hatch{display:flex;gap:12px;align-items:center;background:linear-gradient(172deg,#14507A,#0B2E4A);color:#E6F4FA;border:0}
 .hatch h3{color:#fff;margin:2px 0}.hatch .muted{color:#BFE3F3}
 .hjf{width:110px;height:110px;flex:none}
+.secs{display:block;margin:2px 0 0}.secs span{display:block;font-size:.74rem;line-height:1.5;color:var(--ink2,#567);font-weight:400}
 .zukan{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
 .zk{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:8px 4px;border-radius:12px;background:linear-gradient(172deg,#14507A,#0B2E4A);color:#E6F4FA}
 .zk svg{width:64px;height:72px}.zk b{font-size:.78rem}.zk span{font-size:.66rem;line-height:1.35;color:#BFE3F3}
@@ -1139,7 +1140,14 @@ const CATALOG = [
       { name:'国語', k:'国', units:U('小学校の漢字','言葉のきまり','文章の読み方') },
       { name:'英語', k:'英', units:U({ t:'アルファベット', ready:'abc' },{ t:'英語のルール', ready:'rule' },'フォニックス') } ] },
     { id:'j1', name:'中1', k:'1', grade:1, subjects:[
-      { name:'数学', k:'数', units:U({ t:'正負の数', ready:'pn' },'文字の式','方程式','比例と反比例','平面図形','空間図形','データの活用') },
+      { name:'数学', k:'数', units:U(
+        { t:'正の数・負の数', ready:'pn', secs:['正の数・負の数','正の数・負の数の計算','正の数・負の数の利用'] },
+        { t:'文字の式', secs:['文字を使った式','文字式の計算'] },
+        { t:'方程式', secs:['方程式','方程式の利用'] },
+        { t:'変化と対応', secs:['関数','比例','反比例','比例，反比例の利用'] },
+        { t:'平面図形', secs:['直線と図形','移動と作図','円とおうぎ形'] },
+        { t:'空間図形', secs:['立体と空間図形','立体の体積と表面積'] },
+        { t:'データの活用', secs:['ヒストグラムと相対度数','データにもとづく確率'] }) },
       { name:'理科', k:'理', units:U('いろいろな生物とその共通点','身のまわりの物質','光・音・力','大地の変化') } ] },
     { id:'j2', name:'中2', k:'2', grade:2, subjects:[
       { name:'数学', k:'数', units:U({ t:'式の計算', ready:'m2c1' },{ t:'連立方程式', ready:'m2c2' },{ t:'一次関数', ready:'m2c3' },{ t:'図形の調べ方', ready:'m2c4' },{ t:'図形の性質と証明', ready:'m2c5' },{ t:'場合の数と確率', ready:'m2c6' },{ t:'箱ひげ図とデータの活用', ready:'m2c7' }) },
@@ -15759,7 +15767,7 @@ const UNITS = {
   civ0:{ no:'', title:'コラム　公民とは', subject:'社会', course:'jso', subj:10, lessons:CIV0_LESSONS },
   hist0:{ no:'', title:'コラム　歴史とは', subject:'社会', course:'jso', subj:3, lessons:HIST0_LESSONS },
   geo0:{ no:'', title:'コラム　地理とは', subject:'社会', course:'jso', subj:0, lessons:GEO0_LESSONS },
-  pn:  { no:'1', title:'正負の数', subject:'数学', course:'j1', subj:0, lessons:LESSONS, cards:true, drill:'ch1' },
+  pn:  { no:'1', title:'正の数・負の数', subject:'数学', course:'j1', subj:0, lessons:LESSONS, cards:true, drill:'ch1' },
   kuku:{ no:'1', title:'九九', subject:'算数', course:'rev', subj:0, lessons:KUKU_LESSONS },
   wari:{ no:'2', title:'わり算', subject:'算数', course:'rev', subj:0, lessons:WARI_LESSONS },
   abc: { no:'A', title:'アルファベット', subject:'英語', course:'rev', subj:2, lessons:ABC_LESSONS },
@@ -15925,10 +15933,10 @@ function vCourse(){
 function vSubject(){
   const c=courseById(S.course), sb=c.subjects[S.subj];
   return `${top(c.name+'　'+sb.name)}<div class="stack"><p class="muted small">準備ができた${sb.uw||(c.id==='jso'?'項目':'章')}から順に公開します。</p><div class="list">
-  ${(()=>{ let k=0; return sb.units.map((un,i)=>{ const lab=un.lab||(++k); const u=un.ready&&UNITS[un.ready], gh=un.grp?`<div class="secrow">${un.grp}</div>`:'';
+  ${(()=>{ let k=0; return sb.units.map((un,i)=>{ const lab=un.lab||(++k); const u=un.ready&&UNITS[un.ready], gh=un.grp?`<div class="secrow">${un.grp}</div>`:''; const sc=un.secs?`<span class="secs">${un.secs.map((x,j)=>`<span>${j+1}節　${x}</span>`).join('')}</span>`:'';
     if(u){ const d=doneCount(un.ready), n=u.lessons.length;
-      return gh+`<button class="item" data-act="unit" data-arg="${un.ready}"><span class="lid">${lab}</span><span class="body"><b>${un.t}</b><br><span class="small muted">${n}しずく　1しずく約5分</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
-    return gh+`<button class="item" disabled><span class="lid">${lab}</span><span class="body"><b>${un.t}</b><br><span class="small muted">準備中</span></span></button>`; }).join(''); })()}</div></div>`;
+      return gh+`<button class="item" data-act="unit" data-arg="${un.ready}"><span class="lid">${lab}</span><span class="body"><b>${un.t}</b>${sc||'<br>'}<span class="small muted">${n}しずく　1しずく約5分</span></span><span class="tag ${d===n?'done':d?'mid':''}">${d}/${n}</span><span class="chev">›</span></button>`; }
+    return gh+`<button class="item" disabled><span class="lid">${lab}</span><span class="body"><b>${un.t}</b>${sc||'<br>'}<span class="small muted">準備中</span></span></button>`; }).join(''); })()}</div></div>`;
 }
 function vUnit(){
   const u=CU(), uid=S.uid;
