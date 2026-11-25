@@ -7495,7 +7495,7 @@ Object.assign(G,{
 const p0 = n => n<0?'('+fmt(n)+')':fmt(n);
 const M1C2_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'文字と式', sub:'小学6年', plan:Array(5).fill('m1W0'), body:()=>`
-    <section class="panel"><h3>□や△のかわりに x、y</h3>${ex('おかし1個50円、3個の代金<br>50 × 3 ＝ 150（円）')}${rule('おかし1個の値段 × 個数 ＝ 代金')}${ex('□ × 3 ＝ △<br>x × 3 ＝ y')}<p class="small muted">わからない数や、いろいろ変わる数を文字で表します。</p></section>` },
+    <section class="panel"><h3>□や△のかわりに x、y</h3><p><b>〇 1個50円のおかしを3個買ったときの代金は？</b></p>${ex('50 × 3 ＝ 150（円）')}${rule('おかし1個の値段 × 個数 ＝ 代金')}<p>おかし1個の値段を <span style="display:inline-block;width:1em;height:1em;border:2px solid currentColor;border-radius:2px;vertical-align:-0.15em;margin:0 .15em"></span> 円、代金を △ 円とすると、</p>${ex('<span style="display:inline-block;width:1em;height:1em;border:2px solid currentColor;border-radius:2px;vertical-align:-0.15em;margin:0 .15em"></span> × 3 ＝ △')}<p><span style="display:inline-block;width:1em;height:1em;border:2px solid currentColor;border-radius:2px;vertical-align:-0.15em;margin:0 .15em"></span> ＝ x、△ ＝ y とすると、</p>${ex('x × 3 ＝ y')}<p class="small muted">わからない数や、いろいろ変わる数を文字で表します。</p></section>` },
   { id:'0-2', t:'式が表すもの', sub:'小学6年', plan:Array(5).fill('m1W0b'), body:()=>`
     <section class="panel"><h3>式を読む</h3>${kmTbl([['ノート1冊','x 円'],['鉛筆1本','40円'],['消しゴム1個','70円']],['値段表',''])}${ex('x×8 → ノート8冊の代金')}${ex('x＋40 → ノート1冊と鉛筆1本の代金')}${ex('x×4＋70 → ノート4冊と消しゴム1個の代金')}</section>` },
   { id:'1-1', sec:'1　文字を使った式', t:'文字を使った式', sub:'数量を文字で表す', plan:Array(5).fill('m1Ex'), body:()=>`
