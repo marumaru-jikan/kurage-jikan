@@ -13,6 +13,7 @@
 <style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head><body>
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.mv{font-family:'Times New Roman','Liberation Serif',Georgia,serif;font-style:italic;font-weight:inherit;padding:0 .04em}
+td:has(.k7sl){background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cline x1='0' y1='100' x2='100' y2='0' stroke='%236b7f8c' stroke-width='1.2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center/100% 100% no-repeat!important}
 </style></head><body>
 <title>海月時間</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -8441,7 +8442,7 @@ const k7Make = (N) => { const c=pick(K7CTX), k=ri(5,6), n=N||pick([20,25,40,50])
   do{ const w=Array.from({length:k},(_,i)=>Math.max(0.2, 1.2-Math.abs(i-(k-1)/2+ri(-1,1)*0.5)*0.45+Math.random()*0.3)); const s=w.reduce((a,b)=>a+b,0); f=w.map(x=>Math.max(1,Math.round(x/s*n))); let d=n-f.reduce((a,b)=>a+b,0); let g=0; while(d!==0&&g<50){ const i=ri(0,k-1); if(d>0){f[i]++;d--;} else if(f[i]>1){f[i]--;d++;} g++; } }while(f.reduce((a,b)=>a+b,0)!==n||new Set(f).size<3||f.filter(x=>x===Math.max(...f)).length>1);
   const cls=f.map((_,i)=>[c[2]+i*c[3], c[2]+(i+1)*c[3]]); return {c,f,n,cls,mid:cls.map(([a,b])=>(a+b)/2)}; };
 const k7Tab = (T,o={}) => { const rows=T.cls.map(([a,b],i)=>{ const r=[`${a}〜${b}`, String(T.f[i])]; if(o.rel) r.push(o.hideRel===i?'？':(T.f[i]/T.n).toFixed(2)); if(o.cum) r.push(o.hideCum===i?'？':String(T.f.slice(0,i+1).reduce((x,y)=>x+y,0))); return r; });
-  rows.push(['計', String(T.n), ...(o.rel?['1.00']:[]), ...(o.cum?['']:[])]); return kmTbl(rows, [`${T.c[0]}（${T.c[1]}）`, '度数', ...(o.rel?['相対度数']:[]), ...(o.cum?['累積度数']:[])]); };
+  rows.push(['計', String(T.n), ...(o.rel?['1.00']:[]), ...(o.cum?['<span class="k7sl"></span>']:[])]); return kmTbl(rows, [`${T.c[0]}（${T.c[1]}）`, '度数', ...(o.rel?['相対度数']:[]), ...(o.cum?['累積度数']:[])]); };
 const k7Hist = (T,o={}) => { const k=T.f.length, W=280, H=190, L=34, B=30, Tp=12, R=12, mx=Math.max(...T.f), ys=mx>12?4:mx>6?2:1, ym=Math.ceil((mx+1)/ys)*ys, bw=(W-L-R)/(k+2), px=i=>L+(i+1)*bw, py=v=>H-B-v*(H-B-Tp)/ym; let g='';
   for(let v=0;v<=ym;v+=ys) g+=`<line x1="${L}" y1="${py(v)}" x2="${W-R}" y2="${py(v)}" stroke="#d5e3ea" stroke-width=".7"/>`+m5T(L-5,py(v)+4,v,'font-size="10" text-anchor="end"');
   T.f.forEach((v,i)=>{ g+=`<rect x="${px(i)}" y="${py(v)}" width="${bw}" height="${py(0)-py(v)}" fill="${o.hl===i?'rgba(224,69,123,.45)':'rgba(43,123,185,.25)'}" stroke-width="1.1"/>`; });
