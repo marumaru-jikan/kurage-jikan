@@ -8449,9 +8449,11 @@ const k7Hist = (T,o={}) => { const k=T.f.length, W=280, H=190, L=34, B=30, Tp=12
   if(o.poly){ const pts=[[px(-1)+bw/2,py(0)],...T.f.map((v,i)=>[px(i)+bw/2,py(v)]),[px(k)+bw/2,py(0)]]; g+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" stroke="${M5PK}" stroke-width="2"/>`+pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="${M5PK}" stroke="none"/>`).join(''); }
   g+=`<line x1="${L}" y1="${py(0)}" x2="${W-R}" y2="${py(0)}" stroke-width="1.3"/><line x1="${L}" y1="${py(0)}" x2="${L}" y2="${Tp-4}" stroke-width="1.3"/>`+m5T(W-R,H-2,`（${T.c[1]}）`,'font-size="10" text-anchor="end" font-family="sans-serif"')+m5T(L+4,Tp+2,'（人）','font-size="10" font-family="sans-serif"');
   return m5V(W,H,g,300); };
-const k7Dot = (vals,lo,hi) => { const W=300, px=v=>20+(v-lo)*(W-40)/(hi-lo), cnt={}; let g=`<line x1="14" y1="110" x2="${W-10}" y2="110" stroke-width="1.3"/>`;
-  for(let v=lo;v<=hi;v++) g+=`<line x1="${px(v)}" y1="106" x2="${px(v)}" y2="114" stroke-width="1"/>`+((v-lo)%2===0?m5T(px(v),128,v,'font-size="11" text-anchor="middle"'):'');
-  vals.forEach(v=>{ cnt[v]=(cnt[v]||0)+1; g+=`<circle cx="${px(v)}" cy="${110-cnt[v]*12}" r="5" fill="rgba(43,123,185,.35)" stroke-width="1.1"/>`; }); return m5V(W,135,g,310); };
+const k7Dot = (vals,lo,hi,marks=[]) => { const W=300, top=marks.length?54:0, px=v=>20+(v-lo)*(W-40)/(hi-lo), cnt={}, Y0=110+top; let g=`<line x1="14" y1="${Y0}" x2="${W-10}" y2="${Y0}" stroke-width="1.3"/>`;
+  for(let v=lo;v<=hi;v++) g+=`<line x1="${px(v)}" y1="${Y0-4}" x2="${px(v)}" y2="${Y0+4}" stroke-width="1"/>`+((v-lo)%2===0?m5T(px(v),Y0+18,v,'font-size="11" text-anchor="middle"'):'');
+  vals.forEach(v=>{ cnt[v]=(cnt[v]||0)+1; g+=`<circle cx="${px(v)}" cy="${Y0-cnt[v]*12}" r="5" fill="rgba(43,123,185,.35)" stroke-width="1.1"/>`; });
+  marks.forEach(([v,lab,col],k)=>{ const x=px(v), y2=Y0-((cnt[v]||0)*12)-10, y1=14+k*0; g+=`<line x1="${x}" y1="${y1+14}" x2="${x}" y2="${y2}" stroke="${col}" stroke-width="2"/><path d="M${x-5} ${y2-8} L${x} ${y2} L${x+5} ${y2-8}" stroke="${col}" stroke-width="2" fill="none"/>`+m5T(x+(k%2?-6:6),y1+8,lab,`font-size="12" text-anchor="${k%2?'start':'end'}" font-family="sans-serif" fill="${col}" font-weight="700"`); });
+  return m5V(W,135+top,g,310); };
 const K7TERM = [
   ['データの最大値と最小値の差を何という？','範囲（レンジ）',['階級','度数','平均値']],['度数分布表で、区切られたそれぞれの区間を何という？','階級',['度数','範囲','階級値']],
   ['区間の幅を何という？','階級の幅',['範囲','度数','相対度数']],['それぞれの階級にはいるデータの個数を何という？','度数',['階級','相対度数','累積度数']],
@@ -8508,7 +8510,7 @@ const K7EX = { c:['50m走の記録','秒',7,0.5], f:[1,5,8,5,1], n:20, cls:[[7,7
 const K7EH = { c:['身長','cm',140,5], f:[1,3,6,7,5,3], n:25, cls:[140,145,150,155,160,165].map(a=>[a,a+5]), mid:[142.5,147.5,152.5,157.5,162.5,167.5] };
 const M1C7_LESSONS = [
   { id:'0-1', sec:'0　この章のための復習', t:'平均値・中央値・最頻値', sub:'小学6年', plan:Array(5).fill('k7Rep0'), body:()=>`
-    <section class="panel"><h3>代表値</h3>${rule('平均値＝データの値の合計÷データの個数<br>中央値…データを大きさの順に並べたとき、ちょうどまん中の値<br>最頻値…データの値の中で、いちばん多い値')}<p><b>〇 ドットプロットは10人のソフトボール投げの記録（m）。平均値・中央値・最頻値は？</b></p>${k7Dot([16,18,18,20,21,21,21,23,25,27],15,25+2)}${ex('平均値　210÷10＝21（m）<br>中央値　5番目と6番目の平均　(21＋21)÷2＝21（m）<br>最頻値　21（m）')}<p class="small muted">データの個数が偶数のときは、まん中の2つの値の平均を中央値とする。</p></section>` },
+    <section class="panel"><h3>代表値</h3>${rule('平均値＝データの値の合計÷データの個数<br>中央値…データを大きさの順に並べたとき、ちょうどまん中の値<br>最頻値…データの値の中で、いちばん多い値')}<p><b>〇 ドットプロットは10人のソフトボール投げの記録（m）。平均値・中央値・最頻値は？</b></p>${k7Dot([16,18,18,18,20,21,23,24,25,27],15,27,[[18,'最頻値 18',M5PK],[20.5,'中央値 20.5',M5BL]])}${ex('平均値　(16＋18＋18＋…＋27)÷10＝210÷10＝21（m）<br>中央値　5番目と6番目の平均　(20＋21)÷2＝20.5（m）<br>最頻値　いちばん多い 18（m）')}<p class="small muted">データの個数が偶数のときは、まん中の2つの値の平均を中央値とする。</p></section>` },
   { id:'0-2', t:'ちらばりを表やグラフに表す', sub:'小学6年', plan:Array(5).fill('k7Hist0'), body:()=>`
     <section class="panel"><h3>度数分布表とヒストグラム</h3>${rule('データをいくつかの区間に分けて数えた表を 度数分布表、それを柱のように表したグラフを ヒストグラム（柱状グラフ）という')}${k7Tab(K7EH)}${k7Hist(K7EH)}<p class="small muted">「以上」はその数をふくみ、「未満」はふくまない。</p></section>` },
   { id:'1-1', sec:'1　ヒストグラムと相対度数', t:'度数分布表と範囲', sub:'階級・度数・範囲', plan:['k7Class','k7Range','k7Class','k7Term','k7Class'], body:()=>`
