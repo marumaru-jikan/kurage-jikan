@@ -163,8 +163,8 @@ input[type=range]{width:100%;accent-color:var(--teal)}
 .kv{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .kv:first-child{border-top:0}
 
-input[type=text],input[type=password]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
-input[type=text]:focus-visible,input[type=password]:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+input[type=text]:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
 ol.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
 
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
@@ -1006,10 +1006,8 @@ const PDF = {
   'nov1-lv5': { q:'pdf/nov1-lv5-q.pdf', a:'pdf/nov1-lv5-a.pdf', d:'第五章・第六章・終章' },
 };
 
-/* ===== 生徒番号（アルファベット3文字＋数字3けた　例：ABC123。3年間同じ番号） ===== */
-const CODE_RE = /^[A-Z]{3}[0-9]{3}$/;
-const PW_RE = /^[\x21-\x7e]{4,20}$/;
-async function pwHash(code,pw){ const t='kurage|'+code+'|'+pw; try{ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }catch(e){ let h=5381; for(const ch of t) h=((h*33)^ch.charCodeAt(0))>>>0; return 'd'+h.toString(16); } }
+/* ===== 生徒番号（学校の記号＋番号　例：A123。3年間同じ番号） ===== */
+const CODE_RE = /^[A-Z][1-9][0-9]{2}$/;
 const normCode = v => String(v).trim().replace(/[Ａ-Ｚａ-ｚ０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0)-0xFEE0)).toUpperCase();
 
 /* ===== 保存（この端末の中） ===== */
@@ -17539,7 +17537,7 @@ const doneCount = uid => UNITS[uid].lessons.filter(l=>R.lessons[lkey(uid,l.id)])
 const nextOf = uid => { const u=UNITS[uid]; return u.lessons.find(l=>!R.lessons[lkey(uid,l.id)]) || u.lessons[u.lessons.length-1]; };
 
 /* ===== 画面 ===== */
-const S = { view: (R.code && R.pw && CODE_RE.test(R.code)) ? 'home' : 'setup', stack:[], uid:'pn', quiz:null, deck:null, flipped:false, sl:{sign:-3, abs:-4}, lessonStart:0, reward:null, viewCard:null, pad:{strokes:[]}, padImg:'', jmsg:'' };
+const S = { view: R.code ? 'home' : 'setup', stack:[], uid:'pn', quiz:null, deck:null, flipped:false, sl:{sign:-3, abs:-4}, lessonStart:0, reward:null, viewCard:null, pad:{strokes:[]}, padImg:'', jmsg:'' };
 const CU = () => UNITS[S.uid];
 const LX = id => CU().lessons.find(l=>l.id===id);
 const app = document.getElementById('app'), tabs = document.querySelector('.tabs');
@@ -17552,14 +17550,10 @@ const isLetter = s => /^[A-Za-z]$/.test(s);
 const sayBtn = c => c && canSpeak ? `<button class="saybtn" data-act="say" data-arg="${esc(c)}" aria-label="読み方を聞く">🔊</button>` : '';
 
 function vSetup(){
-  const re=!!(R.name||R.answered);
-  return `<div class="stack" style="padding-top:24px"><div class="sea" style="min-height:140px">${seaArt()}<div class="txt"><span class="name">海月時間</span></div></div><div class="hello"><div class="eyebrow">${re?'生徒番号の登録':'はじめまして'}</div><h1>${re?'生徒番号とパスワードを登録':'海月時間へ ようこそ'}</h1>${re?'<p class="small muted">生徒番号の形式が変わりました。新しい生徒番号とパスワードを登録してください。これまでの記録はそのまま残ります。</p>':''}</div>
-  <div class="panel stack"><label for="su-code"><b>生徒番号</b><br><span class="small muted">アルファベット3文字＋数字3けた（先生から受け取った番号）<br>3年間、同じ番号を使います</span></label><input type="text" id="su-code" maxlength="6" placeholder="例：ABC123" autocomplete="username" inputmode="latin" autocapitalize="characters" style="text-transform:uppercase">
-  <label for="su-pw"><b>パスワード</b><br><span class="small muted">半角の英数字・記号で4〜20文字。忘れないようにしよう</span></label><input type="password" id="su-pw" maxlength="20" autocomplete="new-password" autocapitalize="off">
-  <label for="su-pw2"><b>パスワード（確認）</b><br><span class="small muted">もう一度、同じパスワードを入力</span></label><input type="password" id="su-pw2" maxlength="20" autocomplete="new-password" autocapitalize="off">
-  <label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="su-show"> パスワードを表示する</label>
-  <label for="su-name"><b>呼び名</b><br><span class="small muted">先生にも表示されます（ニックネームでOK）</span></label><input type="text" id="su-name" maxlength="12" placeholder="例：なぎ" autocomplete="off" value="${esc(R.name||'')}">
-  <p class="small" id="su-err" style="color:var(--bad)" hidden></p>
+  return `<div class="stack" style="padding-top:24px"><div class="sea" style="min-height:140px">${seaArt()}<div class="txt"><span class="name">海月時間</span></div></div><div class="hello"><div class="eyebrow">はじめまして</div><h1>海月時間へ ようこそ</h1></div>
+  <div class="panel stack"><label for="su-code"><b>生徒番号</b><br><span class="small muted">学校の記号＋番号（先生から受け取った番号）<br>3年間、同じ番号を使います</span></label><input type="text" id="su-code" maxlength="6" placeholder="例：A123" autocomplete="off" inputmode="latin" style="text-transform:uppercase">
+  <label for="su-name"><b>呼び名</b><br><span class="small muted">先生にも表示されます（ニックネームでOK）</span></label><input type="text" id="su-name" maxlength="12" placeholder="例：はると" autocomplete="off">
+  <p class="small" id="su-err" style="color:var(--bad)" hidden>生徒番号は「A123」のように、アルファベット1文字と数字3けたで入力してください。</p>
   <button class="btn wide" data-act="setupDone">始める</button></div></div>`;
 }
 function jellyG(x,y,k,h,cls){
@@ -17689,12 +17683,8 @@ function vRecord(){
 function vSettings(){
   const send = !GAS_URL ? `<span class="status">送信先がまだ設定されていません</span>` : R.outbox.length ? `<span class="status wait">送信待ち ${R.outbox.length}件（つながったら送ります）</span>` : `<span class="status ok">先生に送信済み</span>`;
   return `<div class="stack"><div class="hello"><div class="eyebrow">設定</div><h1>生徒情報と記録</h1></div>
-  <div class="panel stack"><label for="st-code"><b>生徒番号</b></label><input type="text" id="st-code" value="${esc(R.code)}" maxlength="6" autocomplete="off" style="text-transform:uppercase"><p class="small muted">アルファベット3文字＋数字3けた（例：ABC123）。3年間、同じ番号を使います。変えるときはパスワードが必要です。</p>
+  <div class="panel stack"><label for="st-code"><b>生徒番号</b></label><input type="text" id="st-code" value="${esc(R.code)}" maxlength="6" autocomplete="off" style="text-transform:uppercase"><p class="small muted">学校の記号＋番号（例：A123）。3年間、同じ番号を使います。</p>
   <label for="st-name"><b>呼び名</b></label><input type="text" id="st-name" value="${esc(R.name)}" maxlength="12" autocomplete="off"></div>
-  <div class="panel stack"><h3>パスワードの変更</h3><label for="pw-cur" class="small"><b>いまのパスワード</b></label><input type="password" id="pw-cur" maxlength="20" autocomplete="current-password">
-  <label for="pw-new" class="small"><b>新しいパスワード</b>（半角4〜20文字）</label><input type="password" id="pw-new" maxlength="20" autocomplete="new-password">
-  <label for="pw-new2" class="small"><b>新しいパスワード（確認）</b></label><input type="password" id="pw-new2" maxlength="20" autocomplete="new-password">
-  <p class="small" id="pw-msg" hidden></p><button class="btn ghost wide" data-act="pwChange">パスワードを変更する</button></div>
   <div class="panel stack"><h3>先生への記録</h3><p class="small">${send}</p><p class="small muted">しずくを終えるたびに、生徒番号・呼び名・点数・かかった時間が先生に届きます。</p></div>
 </div>`;
 }
@@ -18189,8 +18179,7 @@ function render(){
   document.querySelectorAll('[data-slider]').forEach(box=>{ const mode=box.dataset.slider, inp=box.querySelector('input');
     inp.addEventListener('input',e=>{ S.sl[mode]=+e.target.value; box.querySelector('.sl-svg').innerHTML=sliderLine(S.sl[mode],mode); box.querySelector('.sl-info').innerHTML=sliderInfo(S.sl[mode],mode); }); });
   const c=document.getElementById('st-code'), n=document.getElementById('st-name');
-  if(c) c.addEventListener('change',e=>{ const v=normCode(e.target.value); if(CODE_RE.test(v)&&v!==R.code){ const pw=prompt('生徒番号を変えるには、パスワードを入力してください。'); if(pw!==null) pwHash(R.code,pw).then(h=>{ if(h===R.pw) pwHash(v,pw).then(h2=>{ R.code=v; R.pw=h2; save(); e.target.value=R.code; }); else { e.target.value=R.code; const m=document.getElementById('pw-msg'); if(m){ m.textContent='パスワードがちがうため、生徒番号は変わっていません。'; m.style.color='var(--bad)'; m.hidden=false; } } }); } e.target.value=R.code; });
-  const sh=document.getElementById('su-show'); if(sh) sh.addEventListener('change',()=>['su-pw','su-pw2'].forEach(id=>document.getElementById(id).type=sh.checked?'text':'password'));
+  if(c) c.addEventListener('change',e=>{ const v=normCode(e.target.value); if(CODE_RE.test(v)){ R.code=v; save(); } e.target.value=R.code; });
   if(n) n.addEventListener('input',e=>{ R.name=e.target.value.trim(); save(); });
   if ((S.view==='lesson'||S.view==='unit') && S.uid==='k1') kjFontLoad();
   if (S.view==='sea' && S.hatched){ const tw=document.getElementById('tankwrap'); if(tw) tw.scrollLeft=tw.scrollWidth; }
@@ -18228,19 +18217,8 @@ document.addEventListener('click', e=>{
   else if(a==='course'){ S.course=arg; go('course'); }
   else if(a==='subject'){ S.subj=+arg; go('subject'); }
   else if(a==='unit'){ S.uid=arg; go('unit'); }
-  else if(a==='setupDone'){ const $=id=>document.getElementById(id), err=m=>{ $('su-err').textContent=m; $('su-err').hidden=false; };
-    const code=normCode($('su-code').value), pw=$('su-pw').value, pw2=$('su-pw2').value;
-    if(!CODE_RE.test(code)) return err('生徒番号は「ABC123」のように、アルファベット3文字と数字3けたで入力してください。');
-    if(!PW_RE.test(pw)) return err('パスワードは、半角の英数字・記号で4〜20文字にしてください。');
-    if(pw!==pw2) return err('確認のパスワードが一致しません。もう一度入力してください。');
-    const nm=$('su-name').value.trim(); b.disabled=true;
-    pwHash(code,pw).then(h=>{ R.code=code; R.pw=h; R.name=nm; save(); S.stack=[]; S.view='home'; render(); window.scrollTo(0,0); }); }
-  else if(a==='pwChange'){ const $=id=>document.getElementById(id), msg=(m,ok)=>{ const e=$('pw-msg'); e.textContent=m; e.style.color=ok?'var(--good, #2a8a5a)':'var(--bad)'; e.hidden=false; };
-    const cur=$('pw-cur').value, nw=$('pw-new').value, nw2=$('pw-new2').value;
-    pwHash(R.code,cur).then(h=>{ if(h!==R.pw) return msg('いまのパスワードがちがいます。');
-      if(!PW_RE.test(nw)) return msg('新しいパスワードは、半角の英数字・記号で4〜20文字にしてください。');
-      if(nw!==nw2) return msg('確認のパスワードが一致しません。');
-      return pwHash(R.code,nw).then(h2=>{ R.pw=h2; save(); ['pw-cur','pw-new','pw-new2'].forEach(id=>$(id).value=''); msg('パスワードを変更しました。',true); }); }); }
+  else if(a==='setupDone'){ const code=normCode(document.getElementById('su-code').value); if(!CODE_RE.test(code)){ document.getElementById('su-err').hidden=false; return; }
+    R.code=code; R.name=document.getElementById('su-name').value.trim(); save(); S.stack=[]; S.view='home'; render(); }
   else if(a==='lesson'){ if(b.dataset.uid&&(S.view==='lesson'||S.view==='unit')&&b.dataset.uid!==S.uid) S.jumpFrom=[S.uid,S.lid]; if(b.dataset.uid) S.uid=b.dataset.uid; S.lid=arg; go('lesson'); }
   else if(a==='lessonNext'){ const u=CU(); S.lid=arg; S.course=u.course; S.subj=u.subj; S.stack=['home','course','subject','unit']; S.view='lesson'; render(); window.scrollTo(0,0); }
   else if(a==='quiz') startQuiz();
