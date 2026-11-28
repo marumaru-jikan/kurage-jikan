@@ -18141,7 +18141,7 @@ function vSea(){
   const s=seaInit(), g=growOf(s.fed), got=new Set(s.tank.map(t=>t.sp).filter(id=>SP.some(x=>x.id===id))), h=S.hatched?spOf(S.hatched):null;
   const need=SEA_NEED-s.fed, nextG=GROW.find(x=>x.at>s.fed);
   return `<div class="stack"><div class="hello"><div class="eyebrow">クラゲの海</div><h1>しずくでクラゲを育てよう</h1></div>
-  <div class="seabox">${tankSVG(s.tank)}<div class="seacount"><span>水そうのクラゲ <b class="num">${s.tank.length}</b> ひき</span><span>図鑑 <b class="num">${got.size}</b> / ${SP.length}</span></div></div>
+  <div class="seabox">${tankSVG(s.tank)}<div class="seacount"><span>水そうのクラゲ <b class="num">${s.tank.length}</b> ひき</span></div></div>
   ${h?`<div class="panel hatch pop"><svg viewBox="0 0 120 120" class="hjf">${jfSVG(h,60,62,1.3)}</svg><div><p class="small muted">クラゲになりました！</p><h3>${h.name}</h3><p class="small">${h.note}</p></div></div>`:''}
   <div class="panel grow"><div class="growtop"><div><p class="small muted">いま育てているクラゲ</p><h3>${g.n}</h3><p class="small">${g.d}</p></div>${stageSVG(s.fed)}</div>
     <div class="meter"><i style="width:${s.fed/SEA_NEED*100}%"></i></div>
@@ -18150,7 +18150,6 @@ function vSea(){
     ${S.seaMsg?`<p class="seamsg pop">${S.seaMsg}</p>`:''}
     <div class="two"><button class="btn" data-act="feed" data-arg="1" ${s.drops?'':'disabled'}>しずくを1つあげる</button><button class="btn ghost" data-act="feed" data-arg="all" ${s.drops?'':'disabled'}>まとめてあげる</button></div>
     ${s.drops?'':'<p class="small muted">まだクリアしていないしずく（5分の学習）を1つクリアすると、しずくが1つたまります。</p>'}</div>
-  <div class="panel"><h3>クラゲ図鑑</h3><div class="zukan">${SP.map(sp=>got.has(sp.id)?`<div class="zk"><svg viewBox="0 0 80 90">${jfSVG(sp,40,42,.9)}</svg><b>${sp.name}</b><span>${sp.note}</span></div>`:`<div class="zk no"><svg viewBox="0 0 80 90"><path d="M18 46 Q18 14 40 14 Q62 14 62 46 Q51 50 40 46 Q29 50 18 46Z" fill="currentColor" opacity=".18"/></svg><b>？？？</b></div>`).join('')}</div></div>
   </div>`;
 }
 function seaFeed(arg){
